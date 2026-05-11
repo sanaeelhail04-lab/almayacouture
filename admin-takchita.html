@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Almaya Admin | التحكم في صفحة التكشيطة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f7f3ef; direction: rtl; }
+    .admin-card { background: white; border-radius: 28px; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); border: 1px solid #e9dbcf; transition: all 0.2s; }
+    .gold-btn { background: #D4AF37; color: #2E241F; font-weight: bold; transition: 0.2s; border-radius: 40px; }
+    .gold-btn:hover { background: #c19b2e; transform: scale(1.01); }
+    .delete-btn { background: #b91c1c; color: white; }
+    .delete-btn:hover { background: #991b1b; }
+    input, textarea, select { border: 1px solid #e2d4c8; border-radius: 20px; padding: 8px 16px; width: 100%; background: #fffcf9; outline: none; transition: 0.2s; }
+    input:focus, textarea:focus { border-color: #D4AF37; box-shadow: 0 0 0 2px rgba(212,175,55,0.2); }
+    label { font-weight: 600; margin-bottom: 6px; display: block; color: #3E2C23; }
+    .item-card { background: #fffcf7; border-radius: 20px; border-right: 5px solid #D4AF37; transition: 0.2s; margin-bottom: 12px; }
+    .item-card:hover { background: #fff9f0; transform: translateX(-3px); }
+    .image-preview-sm { width: 50px; height: 50px; object-fit: cover; border-radius: 10px; background: #f0e9e0; }
+    .tab-active { background: #D4AF37; color: #2E241F; }
+    .tab-inactive { background: #e9dbcf; color: #5A4438; }
+    .tab-btn { transition: all 0.2s; border-radius: 40px; padding: 8px 24px; font-weight: bold; cursor: pointer; }
+    .media-preview { max-width: 100px; max-height: 80px; border-radius: 12px; margin-top: 8px; border: 2px solid #D4AF37; }
+    .section-category { background: #fef8f0; border-radius: 20px; padding: 15px; margin-bottom: 20px; }
+    .section-category h3 { color: #D4AF37; font-weight: bold; margin-bottom: 12px; border-right: 3px solid #D4AF37; padding-right: 10px; }
+  </style>
+</head>
+<body class="p-5 md:p-8">
+
+<div class="max-w-7xl mx-auto">
+  <div class="flex justify-between items-center flex-wrap gap-4 mb-6">
+    <div>
+      <h1 class="text-3xl font-black text-[#3E2C23]"><i class="fas fa-crown text-[#D4AF37] ml-2"></i> إدارة صفحة التكشيطة</h1>
+      <p class="text-sm text-gray-500 mt-1">التحكم الكامل في الأقمشة، القصات، التطريز، النصوص، الألوان والصور</p>
+    </div>
+    <button onclick="resetAllData()" class="bg-gray-800 text-white px-5 py-2 rounded-full text-sm hover:bg-gray-900"><i class="fas fa-undo-alt ml-1"></i> إعادة تعيين الكل</button>
+  </div>
+
+  <div class="flex gap-3 mb-6 flex-wrap">
+    <button id="tab-items-btn" onclick="showTab('items')" class="tab-btn tab-active"><i class="fas fa-tshirt ml-2"></i> العناصر (أقمشة/تطريز...)</button>
+    <button id="tab-texts-btn" onclick="showTab('texts')" class="tab-btn tab-inactive"><i class="fas fa-font ml-2"></i> النصوص واللوغو والألوان</button>
+  </div>
+
+  <!-- تبويب العناصر -->
+  <div id="items-tab" class="space-y-6">
+    <div class="admin-card p-6"><div class="section-category"><h3><i class="fas fa-circle ml-2"></i> الأقمشة التحتية (Under Fabrics)</h3><div id="underFabrics-list" class="space-y-2"></div><button onclick="openItemModal('underFabrics')" class="gold-btn mt-3 px-4 py-1 text-sm"><i class="fas fa-plus ml-1"></i> إضافة قماش تحتي</button></div></div>
+    <div class="admin-card p-6"><div class="section-category"><h3><i class="fas fa-scissors ml-2"></i> قصات التحتية (Under Cuts)</h3><div id="underCuts-list" class="space-y-2"></div><button onclick="openItemModal('underCuts')" class="gold-btn mt-3 px-4 py-1 text-sm"><i class="fas fa-plus ml-1"></i> إضافة قصة</button></div></div>
+    <div class="admin-card p-6"><div class="section-category"><h3><i class="fas fa-gem ml-2"></i> الأقمشة العلوية (Top Fabrics)</h3><div id="topFabrics-list" class="space-y-2"></div><button onclick="openItemModal('topFabrics')" class="gold-btn mt-3 px-4 py-1 text-sm"><i class="fas fa-plus ml-1"></i> إضافة قماش علوي</button></div></div>
+    <div class="admin-card p-6"><div class="section-category"><h3><i class="fas fa-spa ml-2"></i> التطريز (Embroidery)</h3><div id="embroidery-list" class="space-y-2"></div><button onclick="openItemModal('embroidery')" class="gold-btn mt-3 px-4 py-1 text-sm"><i class="fas fa-plus ml-1"></i> إضافة تطريز</button></div></div>
+    <div class="admin-card p-6"><div class="section-category"><h3><i class="fas fa-hand-peace ml-2"></i> الأكمام (Sleeves)</h3><div id="sleeves-list" class="space-y-2"></div><button onclick="openItemModal('sleeves')" class="gold-btn mt-3 px-4 py-1 text-sm"><i class="fas fa-plus ml-1"></i> إضافة نوع كم</button></div></div>
+    <div class="admin-card p-6"><div class="section-category"><h3><i class="fas fa-border-all ml-2"></i> السفيفة والعقاد (Sfifa & Aqad)</h3><div id="sfifa-list" class="space-y-2"></div><button onclick="openItemModal('sfifa')" class="gold-btn mt-3 px-4 py-1 text-sm"><i class="fas fa-plus ml-1"></i> إضافة نوع</button></div></div>
+    <div class="admin-card p-6"><div class="section-category"><h3><i class="fas fa-belt ml-2"></i> المضمة (Mdomma)</h3><div id="mdomma-list" class="space-y-2"></div><button onclick="openItemModal('mdomma')" class="gold-btn mt-3 px-4 py-1 text-sm"><i class="fas fa-plus ml-1"></i> إضافة نوع مضمة</button></div></div>
+  </div>
+
+  <!-- تبويب النصوص والألوان واللوغو -->
+  <div id="texts-tab" class="admin-card p-6 hidden">
+    <h2 class="text-2xl font-bold mb-4 text-[#D4AF37]"><i class="fas fa-font ml-2"></i> النصوص واللوغو والألوان</h2>
+    
+    <div class="border-b pb-6 mb-6">
+      <h3 class="text-lg font-bold mb-3"><i class="fas fa-image ml-2 text-[#D4AF37]"></i> الشعار (Logo)</h3>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div><label>📁 رفع صورة اللوغو</label><input type="file" id="logo-file" accept="image/*"><div id="logo-preview-area" class="mt-2"></div></div>
+        <div><label>🔗 رابط اللوغو المباشر</label><input type="text" id="logo-url" class="w-full" placeholder="رابط الصورة"></div>
+      </div>
+    </div>
+
+    <div class="border-b pb-6 mb-6">
+      <h3 class="text-lg font-bold mb-3"><i class="fas fa-heading ml-2 text-[#D4AF37]"></i> نصوص الصفحة</h3>
+      <div class="grid gap-4">
+        <div><label>🏷️ العنوان الرئيسي (H1)</label><input type="text" id="main-title" class="w-full" placeholder="Almaya Couture"></div>
+        <div><label>📝 النص التعريفي تحت العنوان</label><input type="text" id="main-subtitle" class="w-full" placeholder="خياطة المعلم المغربية الأصيلة · تكشيطة راقية بلمسات يدوية فريدة"></div>
+      </div>
+    </div>
+
+    <div class="border-b pb-6 mb-6">
+      <h3 class="text-lg font-bold mb-3"><i class="fas fa-palette ml-2 text-[#D4AF37]"></i> الألوان</h3>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div><label>🎨 لون الخلفية</label><div class="flex gap-2"><input type="color" id="bg-color" class="w-16 h-10 rounded"><input type="text" id="bg-color-text" class="flex-1"></div></div>
+        <div><label>🎨 لون العناوين الذهبية</label><div class="flex gap-2"><input type="color" id="title-color" class="w-16 h-10 rounded"><input type="text" id="title-color-text" class="flex-1"></div></div>
+        <div><label>🎨 لون الحدود الذهبية</label><div class="flex gap-2"><input type="color" id="border-color" class="w-16 h-10 rounded"><input type="text" id="border-color-text" class="flex-1"></div></div>
+        <div><label>🎨 لون الخط الذهبي (gold-line)</label><div class="flex gap-2"><input type="color" id="goldline-color" class="w-16 h-10 rounded"><input type="text" id="goldline-color-text" class="flex-1"></div></div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-bold mb-3"><i class="fab fa-whatsapp ml-2 text-[#D4AF37]"></i> رقم الواتساب</h3>
+      <div><label>📞 رقم الواتساب (مثال: 212612345678)</label><input type="text" id="whatsapp-number" class="w-full" placeholder="212612345678"></div>
+    </div>
+
+    <button onclick="saveTextsSettings()" class="gold-btn w-full mt-6 py-2 text-lg"><i class="fas fa-save ml-2"></i> حفظ جميع الإعدادات</button>
+  </div>
+</div>
+
+<!-- مودال إضافة/تعديل عنصر -->
+<div id="itemModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" style="display: none;">
+  <div class="bg-white rounded-2xl p-6 w-full max-w-md m-4">
+    <h3 id="modalTitle" class="text-xl font-bold mb-4 text-[#D4AF37]">إضافة عنصر</h3>
+    <input type="hidden" id="modalCategory"><input type="hidden" id="modalItemId">
+    <div class="mb-3"><label>🏷️ العنوان</label><input type="text" id="itemTitle" class="w-full border rounded-xl p-2"></div>
+    <div class="mb-3"><label>📝 الوصف</label><input type="text" id="itemDesc" class="w-full border rounded-xl p-2"></div>
+    <div class="mb-3">
+      <label>🖼️ الصورة</label>
+      <input type="file" id="itemImageFile" accept="image/*" class="mb-2 w-full">
+      <input type="text" id="itemImageUrl" placeholder="أو رابط الصورة المباشر" class="w-full border rounded-xl p-2">
+      <div id="modalImagePreview" class="mt-2"></div>
+    </div>
+    <div class="mb-3" id="weightField" style="display: none;">
+      <label>⚖️ الوزن (للأقمشة العلوية فقط)</label>
+      <select id="itemWeight" class="w-full border rounded-xl p-2">
+        <option value="light">خفيف (light)</option>
+        <option value="medium">متوسط (medium)</option>
+        <option value="heavy">ثقيل (heavy)</option>
+      </select>
+    </div>
+    <div class="flex gap-3 mt-4"><button onclick="saveItem()" class="gold-btn px-4 py-2">💾 حفظ</button><button onclick="closeModal()" class="bg-gray-300 px-4 py-2 rounded-full">إلغاء</button></div>
+  </div>
+</div>
+
+<script>
+  // ===================== البيانات الافتراضية =====================
+  const defaultData = {
+    underFabrics: [
+      { id: "under_satin_duchesse", title: "ساتان دوشيس", desc: "لمعة ملكية ناعمة", image: "https://placehold.co/400x400/E8DDD0/C5A059?text=Satin+Duchesse" },
+      { id: "under_crepe_sicilien", title: "كريب حرير صقلي", desc: "نعومة وخفّة فاخرة", image: "https://placehold.co/400x400/E5D9CE/C5A059?text=Crepe+Sicilien" },
+      { id: "under_jawhara_nice", title: "جوهرة النيس", desc: "تطريز مدمج بأحجار خفيفة", image: "https://placehold.co/400x400/DCCCB8/C5A059?text=Jawhara+Nice" }
+    ],
+    underCuts: [
+      { id: "cut_ras", title: "قصّة مستقيمة (راس)", desc: "كلاسيك أنيق", image: "https://placehold.co/400x400/EAD6C4/C5A059?text=Coupe+droite" },
+      { id: "cut_evase", title: "قصّة واسعة (إفزيه)", desc: "اتساع مخملي", image: "https://placehold.co/400x400/F0E0D0/C5A059?text=Evase" }
+    ],
+    topFabrics: [
+      { id: "top_brocade_rbati", title: "البروكار الرباطي", desc: "عراقة الصنعة المراكشية", image: "https://placehold.co/400x400/C8B28B/C5A059?text=Brocade+Rbati", weight: "heavy" },
+      { id: "top_network_embroidered", title: "ثوب الشبكة المطرز باليد", desc: "تطريز يدوي دقيق", image: "https://placehold.co/400x400/D2C0A4/C5A059?text=Filet+brode", weight: "medium" },
+      { id: "top_moubra_moufara", title: "الموبرة المحفرة", desc: "دفء و فخامة ثقيلة", image: "https://placehold.co/400x400/BFA98A/C5A059?text=Moubra", weight: "heavy" },
+      { id: "top_organza_nabta", title: "الأورجانزا المنبتة", desc: "شفافية راقية بالأزهار", image: "https://placehold.co/400x400/EADCC8/C5A059?text=Organza+Nabta", weight: "light" }
+    ],
+    embroidery: [
+      { id: "emb_nataa_fassi", title: "طرز النطع الفاسي بالصقلي الحر", desc: "ترصيع ثمين", image: "https://placehold.co/400x400/DBCBB4/C5A059?text=Nataa+Fassi" },
+      { id: "emb_hisab", title: "طرز الحساب", desc: "دقة هندسية أصيلة", image: "https://placehold.co/400x400/E0CFB9/C5A059?text=Hisab" },
+      { id: "emb_tanbat_mouzoun", title: "التنبات بـ الموزون والأحجار الكريمة", desc: "لمسة ملكية راقية", image: "https://placehold.co/400x400/CAB888/C5A059?text=Tanbat" }
+    ],
+    sleeves: [
+      { id: "sleeve_cloche", title: "كم جرس (كلوش)", desc: "واسع تقليدي", image: "https://placehold.co/400x400/EEDCCE/C5A059?text=Cloche" },
+      { id: "sleeve_parchemin", title: "خياطة البرشمان", desc: "تفصيل ضيق بلمسة معلم", image: "https://placehold.co/400x400/F9E8D8/C5A059?text=Parchemin" }
+    ],
+    sfifa: [
+      { id: "sfifa_dhbana", title: "سفيفة الذبانة", desc: "خياطة مزركشة تقليدية", image: "https://placehold.co/400x400/DFCEB6/C5A059?text=Dhabana" },
+      { id: "sfifa_trasen", title: "التراسن الرقيقة", desc: "تطريز رفيع", image: "https://placehold.co/400x400/E9DCCB/C5A059?text=Trasen" },
+      { id: "sfifa_aqad_baldia", title: "العقاد البلدية المخدومة باليد", desc: "ربط يدوي أصيل", image: "https://placehold.co/400x400/D0BB9C/C5A059?text=Aqad" }
+    ],
+    mdomma: [
+      { id: "mdomma_majdoul", title: "المجدول التقليدي", desc: "حزام مبروم يدوي", image: "https://placehold.co/400x400/D5C1A2/C5A059?text=Majdoul" },
+      { id: "mdomma_sikli_morsaa", title: "مضمة الصقلي المرصعة", desc: "مرصعة بأحجار الغالية", image: "https://placehold.co/400x400/CAB48B/C5A059?text=Sikli+Morsaa" },
+      { id: "mdomma_makhzen", title: "مضمة المخزن العريضة", desc: "هيبة ووقار", image: "https://placehold.co/400x400/BFAA84/C5A059?text=Makhzen" }
+    ]
+  };
+
+  const defaultTexts = {
+    logo: "",
+    mainTitle: "Almaya Couture",
+    mainSubtitle: "خياطة المعلم المغربية الأصيلة · تكشيطة راقية بلمسات يدوية فريدة",
+    whatsapp: "212612345678"
+  };
+
+  const defaultColors = {
+    bgColor: "#FAF9F6",
+    titleColor: "#C5A059",
+    borderColor: "#C5A059",
+    goldlineColor: "#C5A059"
+  };
+
+  let currentData = {}, currentTexts = {}, currentColors = {};
+
+  // ===================== تحميل البيانات =====================
+  function loadAllData() {
+    const stored = localStorage.getItem('almaya_takchita_data');
+    if (stored) {
+      const d = JSON.parse(stored);
+      currentData = d.items || JSON.parse(JSON.stringify(defaultData));
+      currentTexts = d.texts || JSON.parse(JSON.stringify(defaultTexts));
+      currentColors = d.colors || JSON.parse(JSON.stringify(defaultColors));
+    } else {
+      currentData = JSON.parse(JSON.stringify(defaultData));
+      currentTexts = JSON.parse(JSON.stringify(defaultTexts));
+      currentColors = JSON.parse(JSON.stringify(defaultColors));
+    }
+    renderAllLists();
+    loadTextsToForm();
+    loadColorsToForm();
+  }
+
+  function saveAll() {
+    localStorage.setItem('almaya_takchita_data', JSON.stringify({
+      items: currentData,
+      texts: currentTexts,
+      colors: currentColors
+    }));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'almaya_takchita_data' }));
+    alert("✅ تم حفظ جميع البيانات بنجاح!");
+  }
+
+  // ===================== عرض القوائم =====================
+  function renderList(containerId, items, category) {
+    const c = document.getElementById(containerId);
+    if (!c) return;
+    if (!items || !items.length) {
+      c.innerHTML = '<div class="text-gray-400 text-sm p-2">لا توجد عناصر</div>';
+      return;
+    }
+    c.innerHTML = items.map(item => `
+      <div class="item-card p-2 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="${item.image}" class="image-preview-sm" onerror="this.src='https://placehold.co/100x100/F1EBE0/D4AF37?text=Image'">
+          <div><div class="font-bold text-sm">${item.title}</div><div class="text-xs text-gray-500">${item.desc || ''}</div></div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="editItem('${category}','${item.id}')" class="bg-amber-100 px-3 py-1 rounded-full text-xs"><i class="fas fa-edit"></i></button>
+          <button onclick="deleteItem('${category}','${item.id}')" class="delete-btn px-3 py-1 rounded-full text-xs"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderAllLists() {
+    renderList('underFabrics-list', currentData.underFabrics, 'underFabrics');
+    renderList('underCuts-list', currentData.underCuts, 'underCuts');
+    renderList('topFabrics-list', currentData.topFabrics, 'topFabrics');
+    renderList('embroidery-list', currentData.embroidery, 'embroidery');
+    renderList('sleeves-list', currentData.sleeves, 'sleeves');
+    renderList('sfifa-list', currentData.sfifa, 'sfifa');
+    renderList('mdomma-list', currentData.mdomma, 'mdomma');
+  }
+
+  // ===================== إدارة العناصر =====================
+  let modalCat = null, editId = null;
+
+  function openItemModal(cat) {
+    modalCat = cat; editId = null;
+    document.getElementById('modalTitle').innerText = 'إضافة عنصر جديد';
+    document.getElementById('itemTitle').value = '';
+    document.getElementById('itemDesc').value = '';
+    document.getElementById('itemImageUrl').value = '';
+    document.getElementById('itemImageFile').value = '';
+    document.getElementById('modalImagePreview').innerHTML = '';
+    document.getElementById('weightField').style.display = cat === 'topFabrics' ? 'block' : 'none';
+    document.getElementById('itemWeight').value = 'medium';
+    document.getElementById('modalCategory').value = cat;
+    document.getElementById('modalItemId').value = '';
+    document.getElementById('itemModal').style.display = 'flex';
+  }
+
+  function editItem(cat, id) {
+    const item = currentData[cat].find(i => i.id === id);
+    if (!item) return;
+    modalCat = cat; editId = id;
+    document.getElementById('modalTitle').innerText = 'تعديل العنصر';
+    document.getElementById('itemTitle').value = item.title;
+    document.getElementById('itemDesc').value = item.desc || '';
+    document.getElementById('itemImageUrl').value = (item.image && !item.image.startsWith('data:') && !item.image.startsWith('blob:')) ? item.image : '';
+    document.getElementById('itemImageFile').value = '';
+    document.getElementById('weightField').style.display = cat === 'topFabrics' ? 'block' : 'none';
+    if (cat === 'topFabrics' && item.weight) document.getElementById('itemWeight').value = item.weight;
+    const pa = document.getElementById('modalImagePreview');
+    pa.innerHTML = item.image ? `<img src="${item.image}" class="media-preview">` : '';
+    document.getElementById('modalCategory').value = cat;
+    document.getElementById('modalItemId').value = id;
+    document.getElementById('itemModal').style.display = 'flex';
+  }
+
+  function saveItem() {
+    const title = document.getElementById('itemTitle').value.trim();
+    const desc = document.getElementById('itemDesc').value.trim();
+    let image = document.getElementById('itemImageUrl').value.trim();
+    const weight = document.getElementById('itemWeight')?.value || null;
+
+    if (!title) { alert("⚠️ خاصك تكتبي العنوان"); return; }
+
+    const file = document.getElementById('itemImageFile').files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => { image = e.target.result; finalSave(title, desc, image, weight); };
+      reader.readAsDataURL(file);
+    } else {
+      if (!image) image = "https://placehold.co/400x400/F4EDE6/B78C48?text=" + encodeURIComponent(title);
+      finalSave(title, desc, image, weight);
+    }
+  }
+
+  function finalSave(title, desc, image, weight) {
+    const cat = modalCat;
+    const id = editId || Date.now().toString();
+    const newItem = { id, title, desc, image };
+    if (cat === 'topFabrics' && weight) newItem.weight = weight;
+
+    if (editId) {
+      const idx = currentData[cat].findIndex(i => i.id === editId);
+      if (idx !== -1) currentData[cat][idx] = newItem;
+    } else {
+      currentData[cat].push(newItem);
+    }
+    saveAll();
+    renderAllLists();
+    closeModal();
+    alert(editId ? "✅ تم التعديل بنجاح" : "✅ تمت الإضافة بنجاح");
+  }
+
+  function deleteItem(cat, id) {
+    if (confirm("⚠️ هل أنت متأكدة من حذف هذا العنصر؟")) {
+      currentData[cat] = currentData[cat].filter(i => i.id !== id);
+      saveAll();
+      renderAllLists();
+      alert("🗑️ تم الحذف");
+    }
+  }
+
+  function closeModal() { document.getElementById('itemModal').style.display = 'none'; }
+
+  // ===================== النصوص واللوغو والألوان =====================
+  function previewLogo() {
+    const f = document.getElementById('logo-file').files[0];
+    const pa = document.getElementById('logo-preview-area');
+    if (f) {
+      const reader = new FileReader();
+      reader.onload = e => { pa.innerHTML = `<img src="${e.target.result}" class="media-preview"><p class="text-xs text-green-600">✓ تم تحميل الشعار</p>`; };
+      reader.readAsDataURL(f);
+    } else pa.innerHTML = '';
+  }
+  document.getElementById('logo-file')?.addEventListener('change', previewLogo);
+
+  function loadTextsToForm() {
+    document.getElementById('logo-url').value = currentTexts.logo || '';
+    document.getElementById('main-title').value = currentTexts.mainTitle || '';
+    document.getElementById('main-subtitle').value = currentTexts.mainSubtitle || '';
+    document.getElementById('whatsapp-number').value = currentTexts.whatsapp || '';
+  }
+
+  function saveTextsSettings() {
+    let logoValue = document.getElementById('logo-url').value;
+    const logoFile = document.getElementById('logo-file').files[0];
+    if (logoFile) {
+      const reader = new FileReader();
+      reader.onload = e => { logoValue = e.target.result; finalSaveTexts(logoValue); };
+      reader.readAsDataURL(logoFile);
+    } else finalSaveTexts(logoValue);
+  }
+
+  function finalSaveTexts(logoValue) {
+    currentTexts = {
+      logo: logoValue,
+      mainTitle: document.getElementById('main-title').value,
+      mainSubtitle: document.getElementById('main-subtitle').value,
+      whatsapp: document.getElementById('whatsapp-number').value
+    };
+    saveAll();
+    document.getElementById('logo-file').value = '';
+    document.getElementById('logo-preview-area').innerHTML = '';
+  }
+
+  function loadColorsToForm() {
+    document.getElementById('bg-color').value = currentColors.bgColor;
+    document.getElementById('bg-color-text').value = currentColors.bgColor;
+    document.getElementById('title-color').value = currentColors.titleColor;
+    document.getElementById('title-color-text').value = currentColors.titleColor;
+    document.getElementById('border-color').value = currentColors.borderColor;
+    document.getElementById('border-color-text').value = currentColors.borderColor;
+    document.getElementById('goldline-color').value = currentColors.goldlineColor;
+    document.getElementById('goldline-color-text').value = currentColors.goldlineColor;
+  }
+
+  function saveColorSettings() {
+    currentColors = {
+      bgColor: document.getElementById('bg-color').value,
+      titleColor: document.getElementById('title-color').value,
+      borderColor: document.getElementById('border-color').value,
+      goldlineColor: document.getElementById('goldline-color').value
+    };
+    saveAll();
+    alert("✅ تم حفظ الألوان بنجاح!");
+  }
+
+  function bindColorInputs() {
+    const colors = ['bg', 'title', 'border', 'goldline'];
+    colors.forEach(c => {
+      const pick = document.getElementById(c + '-color');
+      const txt = document.getElementById(c + '-color-text');
+      if (pick && txt) {
+        pick.addEventListener('input', () => txt.value = pick.value);
+        txt.addEventListener('input', () => pick.value = txt.value);
+      }
+    });
+  }
+
+  // ===================== التبويب =====================
+  function showTab(tab) {
+    document.getElementById('items-tab').classList.add('hidden');
+    document.getElementById('texts-tab').classList.add('hidden');
+    const itemsBtn = document.getElementById('tab-items-btn');
+    const textsBtn = document.getElementById('tab-texts-btn');
+    itemsBtn.classList.remove('tab-active', 'tab-inactive');
+    textsBtn.classList.remove('tab-active', 'tab-inactive');
+    if (tab === 'items') {
+      document.getElementById('items-tab').classList.remove('hidden');
+      itemsBtn.classList.add('tab-active');
+      textsBtn.classList.add('tab-inactive');
+    } else if (tab === 'texts') {
+      document.getElementById('texts-tab').classList.remove('hidden');
+      loadTextsToForm();
+      loadColorsToForm();
+      itemsBtn.classList.add('tab-inactive');
+      textsBtn.classList.add('tab-active');
+    }
+  }
+
+  // ===================== إعادة تعيين =====================
+  function resetAllData() {
+    if (confirm("⚠️ تحذير نهائي: سيتم حذف جميع البيانات الحالية واستعادة البيانات الافتراضية. هل تتابعين؟")) {
+      currentData = JSON.parse(JSON.stringify(defaultData));
+      currentTexts = JSON.parse(JSON.stringify(defaultTexts));
+      currentColors = JSON.parse(JSON.stringify(defaultColors));
+      saveAll();
+      renderAllLists();
+      loadTextsToForm();
+      loadColorsToForm();
+      alert("تمت إعادة التعيين إلى البيانات الافتراضية");
+    }
+  }
+
+  window.onload = () => {
+    loadAllData();
+    bindColorInputs();
+  };
+</script>
+</body>
+</html>

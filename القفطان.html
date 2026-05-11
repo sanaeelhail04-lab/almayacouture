@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Almaya Couture | مصمم القفطان المغربي - الأتيلير الإبداعي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Amiri:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #FFF9F5;
+      font-family: 'Inter', sans-serif;
+      color: #3A2C24;
+      direction: rtl;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem 120px; }
+    
+    /* Animated Logo */
+    .logo-section {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+      background: rgba(255,249,245,0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 0 0 40px 40px;
+      padding: 0.8rem 1rem;
+      transition: all 0.3s;
+    }
+    .logo-section.scrolled { padding: 0.4rem 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .brand-logo {
+      max-width: 180px;
+      height: auto;
+      border-radius: 28px;
+      transition: all 0.3s ease;
+    }
+    .logo-section.scrolled .brand-logo { max-width: 100px; }
+    .atelier-sub { color: #B8860B; font-size: 0.85rem; margin-top: 6px; font-family: 'Amiri', serif; }
+    
+    /* Title */
+    .page-title {
+      text-align: center;
+      margin: 1rem 0 1.5rem;
+    }
+    .page-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #B8860B;
+    }
+    .page-title p { color: #7A6248; }
+    
+    /* Style Tabs */
+    .style-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .style-btn {
+      background: #FFF;
+      border: 1.5px solid #E2D1BF;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-family: 'Amiri', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #5E4B34;
+    }
+    .style-btn.active {
+      background: #C5A059;
+      border-color: #C5A059;
+      color: white;
+    }
+    
+    /* Sections */
+    .config-section {
+      background: rgba(255,255,250,0.9);
+      border-radius: 32px;
+      margin-bottom: 1.8rem;
+      padding: 1.5rem 1.8rem;
+      border: 1px solid #F0E2D4;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #B8860B;
+      border-right: 4px solid #D4AF7A;
+      padding-right: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .cards-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin: 1rem 0;
+    }
+    .choice-card {
+      flex: 1 1 180px;
+      background: white;
+      border-radius: 28px;
+      border: 1px solid #EDE0D4;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    .choice-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 20px;
+      background: #F7F0E8;
+      margin-bottom: 8px;
+    }
+    .choice-card.selected-card {
+      border: 2px solid #C5A059;
+      background: #FFFCF7;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(197,160,89,0.15);
+    }
+    .card-title { font-weight: 700; font-size: 0.9rem; }
+    .best-tag { font-size: 0.65rem; background: #FEF2E6; color: #B8860B; border-radius: 50px; padding: 2px 12px; display: inline-block; margin-top: 6px; }
+    
+    .measure-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+      gap: 1rem;
+      background: #FEFAF5;
+      padding: 1.2rem;
+      border-radius: 28px;
+    }
+    .input-field label { font-size: 0.7rem; font-weight: 600; color: #B8860B; text-transform: uppercase; }
+    .input-field input { width: 100%; padding: 10px; border-radius: 40px; border: 1px solid #E2CFBC; background: white; }
+    
+    .color-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+    .color-circle { width: 44px; height: 44px; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .color-circle.selected-color { transform: scale(1.12); border: 3px solid #C5A059; }
+    
+    .design-sheet {
+      background: linear-gradient(145deg, #FFFFFF, #FEF9F0);
+      border-radius: 40px;
+      border: 1px solid #EADCCB;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+    .design-sheet:before {
+      content: "⚜️ BON DE COMMANDE - CAFTAN ⚜️";
+      position: absolute;
+      top: -14px;
+      right: 28px;
+      background: #FFF9F5;
+      padding: 0 16px;
+      font-size: 0.7rem;
+      color: #C5A059;
+      font-weight: bold;
+    }
+    .sheet-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed #E9DDD0;
+      padding: 0.8rem 0;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .upload-btn {
+      background: #F0E2D6;
+      padding: 8px 18px;
+      border-radius: 40px;
+      display: inline-block;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-top: 8px;
+    }
+    .fixed-bottom-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(255,251,245,0.98);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid #EADCCB;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      z-index: 1000;
+    }
+    .whatsapp-btn { background: #25D366; border: none; color: white; padding: 10px 28px; border-radius: 60px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    @media (max-width: 700px) { .container { padding: 1rem 1rem 120px; } .choice-card { flex: 1 1 140px; } }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="logo-section" id="logoSection">
+    <img src="images/logo.jpg" alt="Almaya Couture" class="brand-logo" onerror="this.src='https://placehold.co/400x150/FDF5E6/B8860B?text=Almaya+Couture'">
+    <div class="atelier-sub">خياطة المعلم المغربية الأصيلة</div>
+  </div>
+
+  <div class="page-title">
+    <h1><i class="fas fa-crown"></i> مصمم القفطان المغربي</h1>
+    <p>قفطان أحلامك بتفاصيل خياط المعلم</p>
+  </div>
+
+  <div class="style-tabs">
+    <button class="style-btn" data-style="royal"><i class="fas fa-crown"></i> قفطان مخزني (Royal)</button>
+    <button class="style-btn active" data-style="modern"><i class="fas fa-mobile-alt"></i> قفطان عصري (Chic)</button>
+    <button class="style-btn" data-style="boho"><i class="fas fa-feather-alt"></i> قفطان شبابي (Vibrant)</button>
+  </div>
+
+  <!-- القياسات -->
+  <div class="config-section">
+    <div class="section-title">📏 قياسات القفطان (سم)</div>
+    <div class="measure-grid">
+      <div class="input-field"><label>الكتف</label><input type="number" id="shoulder" placeholder="مثال: 38" step="0.5"></div>
+      <div class="input-field"><label>الصدر</label><input type="number" id="bust" placeholder="مثال: 88" step="0.5"></div>
+      <div class="input-field"><label>الخصر</label><input type="number" id="waist" placeholder="مثال: 70" step="0.5"></div>
+      <div class="input-field"><label>الورك</label><input type="number" id="hips" placeholder="مثال: 96" step="0.5"></div>
+      <div class="input-field"><label>الطول الكلي</label><input type="number" id="length" placeholder="من الكتف" step="0.5"></div>
+      <div class="input-field"><label>طول الكم</label><input type="number" id="sleeve" placeholder="سم" step="0.5"></div>
+      <div class="input-field"><label>دورة الذراع</label><input type="number" id="armCirc" placeholder="للكم" step="0.5"></div>
+    </div>
+  </div>
+
+  <!-- الأقمشة الخاصة بالقفطان -->
+  <div class="config-section">
+    <div class="section-title">🧶 أثواب القفطان الفاخرة</div>
+    <div class="cards-grid" id="fabricContainer"></div>
+  </div>
+
+  <!-- فصالة القفطان -->
+  <div class="config-section">
+    <div class="section-title">✂️ فصالة القفطان والتفاصيل</div>
+    <div class="cards-grid" id="cutContainer"></div>
+    <div class="cards-grid" id="openingContainer" style="margin-top: 1rem;"></div>
+  </div>
+
+  <!-- تطريز القفطان والزواق -->
+  <div class="config-section">
+    <div class="section-title">🧵 تطريز القفطان واللمسة الحرفية</div>
+    <div class="cards-grid" id="finishingContainer"></div>
+  </div>
+
+  <!-- ألوان القفطان -->
+  <div class="config-section">
+    <div class="section-title">🎨 ألوان القفطان</div>
+    <div id="paletteContainer"></div>
+  </div>
+
+  <!-- وثيقة التصميم -->
+  <div class="design-sheet">
+    <div class="section-title" style="border-right:none; font-size:1.2rem;">📜 فاتورة تصميم القفطان</div>
+    <div id="designSheetContent">
+      <div class="sheet-row"><span>👑 الذوق:</span><span id="summaryStyle">—</span></div>
+      <div class="sheet-row"><span>🧶 القماش:</span><span id="summaryFabric">—</span></div>
+      <div class="sheet-row"><span>✂️ الفصالة:</span><span id="summaryCut">—</span></div>
+      <div class="sheet-row"><span>🚪 الفتحة:</span><span id="summaryOpening">—</span></div>
+      <div class="sheet-row"><span>🧵 التطريز:</span><span id="summaryFinish">—</span></div>
+      <div class="sheet-row"><span>🎨 اللون:</span><span id="summaryColor">—</span></div>
+      <div class="sheet-row"><span>📏 المقاسات:</span><span id="summaryMeasure">—</span></div>
+    </div>
+  </div>
+
+  <!-- إلهام -->
+  <div class="config-section">
+    <div class="section-title">🌟 إلهامك للقفطان</div>
+    <textarea id="specialNotes" rows="2" placeholder="ملاحظاتك للمعلمة: نوع التطريز، الإضافات، مستوحى من..." style="width:100%; padding:12px; border-radius:24px; border:1px solid #E2CFBC;"></textarea>
+    <div class="upload-btn" id="uploadTrigger">📸 صورة إلهام للقفطان</div>
+    <input type="file" id="inspirePhoto" accept="image/*" style="display:none">
+    <div id="photoPreview" style="font-size:12px; margin-top:8px; color:#B8860B;"></div>
+  </div>
+</div>
+
+<div class="fixed-bottom-bar">
+  <div id="quickSummary" style="font-size:0.75rem; background:#F9EFE6; padding:6px 16px; border-radius:40px;">✨ ملخص القفطان</div>
+  <button class="whatsapp-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i> إرسال طلب القفطان للمعلمة</button>
+</div>
+
+<script>
+  let currentStyle = "modern";
+  let selections = { fabric: null, cut: null, opening: null, finishing: null, color: null };
+
+  // قواعد بيانات القفطان حسب الذوق
+  const fabricsDB = {
+    royal: [
+      { id: "fab_melifa", title: "المليفة الحريرية الملكية", best: "دفء وفخمة", img: "/images/melifa.jpg" },
+      { id: "fab_soussi", title: "السوسدي التقليدي", best: "للمناسبات", img: "/images/soussi.jpg" },
+      { id: "fab_nice", title: "ثوب النيس المرصع", best: "أحجار كريمة", img: "/images/nice.jpg" },
+      { id: "fab_brocade", title: "البروكار الرباطي", best: "أصالة", img: "/images/brocade.jpg" }
+    ],
+    modern: [
+      { id: "fab_crepe_dior", title: "كريب ديور", best: "خفيف وعصري", img: "/images/crepe-dior.jpg" },
+      { id: "fab_cashmere", title: "كشمير ناعم", best: "سين فاخر", img: "/images/cashmere.jpg" },
+      { id: "fab_satin", title: "ساتان دوشيس", best: "لمعة أنيقة", img: "/images/satin.jpg" }
+    ],
+    boho: [
+      { id: "fab_lin_boho", title: "اللين المطرز", best: "بوهو ملون", img: "/images/lin-boho.jpg" },
+      { id: "fab_jawhara", title: "جوهرة حرة بألوان جريئة", best: "شبابي", img: "/images/jawhara-boho.jpg" },
+      { id: "fab_chiffon", title: "شيفون منبت", best: "خفيف ورومانسي", img: "/images/chiffon.jpg" }
+    ]
+  };
+
+  const cutsDB = {
+    royal: [
+      { id: "cut_makhzani", title: "فصالة مخزنية عريضة", desc: "كتاف طايحة", img: "/images/makhzani.jpg" },
+      { id: "cut_baladi", title: "فصالة بلادي أصيلة", desc: "تقليدية", img: "/images/baladi.jpg" }
+    ],
+    modern: [
+      { id: "cut_cintree", title: "فصالة Cintrée نحيفة", desc: "قصّة عصرية", img: "/images/cintree.jpg" },
+      { id: "cut_evase", title: "فصالة إيفازي خفيفة", desc: "محتضنة", img: "/images/evase.jpg" }
+    ],
+    boho: [
+      { id: "cut_jbalia", title: "فصالة جبلية مريحة", desc: "فضفاضة", img: "/images/jbalia.jpg" },
+      { id: "cut_bell_sleeve", title: "أكمام جرس (Bell Sleeves)", desc: "عصرية", img: "/images/bell.jpg" }
+    ]
+  };
+
+  const openingsDB = {
+    royal: [{ id: "open_jnab", title: "فتيحة جناب واسعة", img: "/images/jnab.jpg" }],
+    modern: [{ id: "open_qdam", title: "فتيحة قدام أنيقة", img: "/images/qdam.jpg" }, { id: "open_no_hood", title: "بدون قب", img: "/images/no-hood.jpg" }],
+    boho: [{ id: "open_hood", title: "قب صغير (ودينة)", img: "/images/hood.jpg" }, { id: "open_v_neck", title: "فتحة V عصرية", img: "/images/vneck.jpg" }]
+  };
+
+  const finishingDB = {
+    royal: [
+      { id: "fin_parchemin", title: "خياطة البرشمان اليدوية", desc: "خدمة المعلم", img: "/images/parchemin.jpg" },
+      { id: "fin_aqad", title: "العقاد والمجدول", desc: "تفاصيل ذهبية", img: "/images/aqad.jpg" },
+      { id: "fin_trasen", title: "التراسن الرقيقة", desc: "تطريز رفيع", img: "/images/trasen.jpg" }
+    ],
+    modern: [
+      { id: "fin_zips", title: "سحّاب منسوج مخفي", desc: "لمسة عصرية", img: "/images/zips.jpg" },
+      { id: "fin_randa_light", title: "راندا خفيفة", desc: "بساطة أنيقة", img: "/images/randa-light.jpg" }
+    ],
+    boho: [
+      { id: "fin_sfifa_big", title: "سفائف عريضة ملونة", desc: "طابع فني", img: "/images/sfifa-big.jpg" },
+      { id: "fin_tarz_color", title: "طرز يدوي ملون", desc: "تنبات بألوان", img: "/images/tarz-hand.jpg" }
+    ]
+  };
+
+  const colorGroups = [
+    { name: "ذهبي & ملكي", colors: ["#C5A059","#B8860B","#DAA520","#FDF5E6"] },
+    { name: "ألوان قفطان تقليدية", colors: ["#8B0000","#006747","#1B2F4F","#4B0082"] },
+    { name: "ألوان عصرية", colors: ["#2C3E50","#E8D5B7","#A8D5BA","#D4A5A5"] },
+    { name: "ألوان شبابية", colors: ["#E63946","#F4A261","#2A9D8F","#D90368"] }
+  ];
+
+  function renderItems(containerId, items, selectedKey, onSelect) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = items.map(item => `
+      <div class="choice-card ${selectedKey === item.id ? 'selected-card' : ''}" data-id="${item.id}">
+        <img src="${item.img}" alt="${item.title}" onerror="this.src='https://placehold.co/200x140/F4EDE6/B8860B?text=${encodeURIComponent(item.title)}'">
+        <div class="card-title">${item.title}</div>
+        ${item.best ? `<div class="best-tag">${item.best}</div>` : ''}
+        ${item.desc ? `<div style="font-size:0.7rem; color:#8f765e;">${item.desc}</div>` : ''}
+      </div>
+    `).join('');
+    container.querySelectorAll('.choice-card').forEach(el => {
+      el.addEventListener('click', () => { onSelect(el.dataset.id === selectedKey ? null : el.dataset.id); renderUI(); updateSheet(); });
+    });
+  }
+
+  function renderUI() {
+    renderItems('fabricContainer', fabricsDB[currentStyle], selections.fabric, (id) => selections.fabric = id);
+    renderItems('cutContainer', cutsDB[currentStyle], selections.cut, (id) => selections.cut = id);
+    renderItems('openingContainer', openingsDB[currentStyle], selections.opening, (id) => selections.opening = id);
+    renderItems('finishingContainer', finishingDB[currentStyle], selections.finishing, (id) => selections.finishing = id);
+  }
+
+  function renderPalette() {
+    const container = document.getElementById('paletteContainer');
+    let html = '';
+    colorGroups.forEach(g => {
+      html += `<div style="margin-bottom:1rem;"><div style="font-size:0.8rem; font-weight:600; color:#B8860B;">${g.name}</div><div class="color-swatches">`;
+      g.colors.forEach(c => { html += `<div class="color-circle" style="background:${c};" data-color="${c}"></div>`; });
+      html += `</div></div>`;
+    });
+    container.innerHTML = html;
+    document.querySelectorAll('.color-circle').forEach(el => {
+      el.addEventListener('click', () => { selections.color = el.dataset.color; document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected-color')); el.classList.add('selected-color'); updateSheet(); });
+    });
+  }
+
+  function updateSheet() {
+    const fabricObj = fabricsDB[currentStyle]?.find(f => f.id === selections.fabric);
+    const cutObj = cutsDB[currentStyle]?.find(c => c.id === selections.cut);
+    const openingObj = openingsDB[currentStyle]?.find(o => o.id === selections.opening);
+    const finishObj = finishingDB[currentStyle]?.find(f => f.id === selections.finishing);
+    const styleMap = { royal: "مخزني ملكي", modern: "عصري شيك", boho: "شبابي فيبرانت" };
+    const vals = ['shoulder','bust','waist','hips','length','sleeve','armCirc'].map(id => document.getElementById(id).value || '—');
+    document.getElementById('summaryStyle').innerText = styleMap[currentStyle];
+    document.getElementById('summaryFabric').innerText = fabricObj?.title || '—';
+    document.getElementById('summaryCut').innerText = cutObj?.title || '—';
+    document.getElementById('summaryOpening').innerText = openingObj?.title || '—';
+    document.getElementById('summaryFinish').innerText = finishObj?.title || '—';
+    document.getElementById('summaryColor').innerText = selections.color || '—';
+    document.getElementById('summaryMeasure').innerHTML = `كتف ${vals[0]} | صدر ${vals[1]} | خصر ${vals[2]} | ورك ${vals[3]} | طول ${vals[4]} | كم ${vals[5]}`;
+    document.getElementById('quickSummary').innerText = `قفطان ${styleMap[currentStyle]} | ${fabricObj?.title || '?'}`;
+  }
+
+  function buildMessage() {
+    const fabricObj = fabricsDB[currentStyle]?.find(f => f.id === selections.fabric) || { title: 'غير محدد' };
+    const cutObj = cutsDB[currentStyle]?.find(c => c.id === selections.cut) || { title: 'غير محدد' };
+    const openingObj = openingsDB[currentStyle]?.find(o => o.id === selections.opening) || { title: 'غير محدد' };
+    const finishObj = finishingDB[currentStyle]?.find(f => f.id === selections.finishing) || { title: 'غير محدد' };
+    const styleMap = { royal: "مخزني ملكي", modern: "عصري شيك", boho: "شبابي فيبرانت" };
+    const shoulder = document.getElementById('shoulder').value || '—';
+    const bust = document.getElementById('bust').value || '—';
+    const waist = document.getElementById('waist').value || '—';
+    const hips = document.getElementById('hips').value || '—';
+    const length = document.getElementById('length').value || '—';
+    const sleeve = document.getElementById('sleeve').value || '—';
+    const notes = document.getElementById('specialNotes').value || 'لا توجد';
+    return encodeURIComponent(`🌹 *طلب قفطان - Almaya Couture* 🌹\n━━━━━━━━━━━━━━━━\n👑 الذوق: ${styleMap[currentStyle]}\n🧶 القماش: ${fabricObj.title}\n✂️ الفصالة: ${cutObj.title}\n🚪 الفتحة: ${openingObj.title}\n🧵 التطريز: ${finishObj.title}\n🎨 اللون: ${selections.color || 'غير محدد'}\n\n📏 المقاسات (سم):\nالكتف: ${shoulder} | الصدر: ${bust} | الخصر: ${waist}\nالورك: ${hips} | الطول: ${length} | الكم: ${sleeve}\n\n📝 ملاحظات: ${notes}\n✨ ننتظر تأكيدكم 🤲`);
+  }
+
+  document.querySelectorAll('.style-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentStyle = btn.dataset.style;
+      document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selections = { fabric: null, cut: null, opening: null, finishing: null, color: selections.color };
+      renderUI(); updateSheet();
+    });
+  });
+
+  document.getElementById('whatsappBtn').addEventListener('click', () => window.open(`https://wa.me/212601245733?text=${buildMessage()}`, '_blank'));
+  document.getElementById('uploadTrigger').addEventListener('click', () => document.getElementById('inspirePhoto').click());
+  document.getElementById('inspirePhoto').addEventListener('change', (e) => { if(e.target.files.length) document.getElementById('photoPreview').innerHTML = `📸 تم رفع: ${e.target.files[0].name.substring(0,35)}`; });
+  ['shoulder','bust','waist','hips','length','sleeve','armCirc'].forEach(id => document.getElementById(id).addEventListener('input', () => updateSheet()));
+  document.getElementById('specialNotes').addEventListener('input', () => updateSheet());
+
+  window.addEventListener('scroll', () => {
+    const logo = document.getElementById('logoSection');
+    if (window.scrollY > 40) logo.classList.add('scrolled');
+    else logo.classList.remove('scrolled');
+  });
+
+  renderPalette(); renderUI(); updateSheet();
+</script>
+</body>
+</html>

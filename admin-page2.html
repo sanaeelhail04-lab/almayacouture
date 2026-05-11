@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Almaya Admin | التحكم في المجموعة الكاملة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f7f3ef; direction: rtl; }
+    .admin-card { background: white; border-radius: 28px; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); border: 1px solid #e9dbcf; transition: all 0.2s; }
+    .gold-btn { background: #D4AF37; color: #2E241F; font-weight: bold; transition: 0.2s; border-radius: 40px; }
+    .gold-btn:hover { background: #c19b2e; transform: scale(1.01); }
+    .delete-btn { background: #b91c1c; color: white; }
+    .delete-btn:hover { background: #991b1b; }
+    input, textarea, select { border: 1px solid #e2d4c8; border-radius: 20px; padding: 8px 16px; width: 100%; background: #fffcf9; outline: none; transition: 0.2s; }
+    input:focus, textarea:focus { border-color: #D4AF37; box-shadow: 0 0 0 2px rgba(212,175,55,0.2); }
+    label { font-weight: 600; margin-bottom: 6px; display: block; color: #3E2C23; }
+    .category-card-admin { background: #fffcf7; border-radius: 20px; border-right: 5px solid #D4AF37; transition: 0.2s; }
+    .category-card-admin:hover { background: #fff9f0; transform: translateX(-3px); }
+    .image-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 12px; background: #f0e9e0; }
+    .tab-active { background: #D4AF37; color: #2E241F; }
+    .tab-inactive { background: #e9dbcf; color: #5A4438; }
+    .tab-btn { transition: all 0.2s; border-radius: 40px; padding: 8px 24px; font-weight: bold; cursor: pointer; }
+    .media-preview { max-width: 150px; max-height: 100px; border-radius: 16px; margin-top: 10px; border: 2px solid #D4AF37; }
+    .color-preview { width: 40px; height: 40px; border-radius: 12px; border: 2px solid #ddd; display: inline-block; margin-right: 10px; vertical-align: middle; }
+  </style>
+</head>
+<body class="p-5 md:p-8">
+
+<div class="max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="flex justify-between items-center flex-wrap gap-4 mb-6">
+    <div>
+      <h1 class="text-3xl font-black text-[#3E2C23]"><i class="fas fa-layer-group text-[#D4AF37] ml-2"></i> إدارة المجموعة الكاملة</h1>
+      <p class="text-sm text-gray-500 mt-1">التحكم الكامل في الأقسام، الألوان، النصوص، والصور</p>
+    </div>
+    <button onclick="resetAllData()" class="bg-gray-800 text-white px-5 py-2 rounded-full text-sm hover:bg-gray-900"><i class="fas fa-undo-alt ml-1"></i> إعادة تعيين الكل</button>
+  </div>
+
+  <!-- أزرار التبويب الرئيسية -->
+  <div class="flex gap-3 mb-6 flex-wrap">
+    <button id="tab-categories-btn" onclick="showTab('categories')" class="tab-btn tab-active"><i class="fas fa-tshirt ml-2"></i> الأقسام</button>
+    <button id="tab-settings-btn" onclick="showTab('settings')" class="tab-btn tab-inactive"><i class="fas fa-palette ml-2"></i> المظهر والألوان</button>
+    <button id="tab-texts-btn" onclick="showTab('texts')" class="tab-btn tab-inactive"><i class="fas fa-font ml-2"></i> النصوص واللوغو</button>
+  </div>
+
+  <!-- ===================== تبويب الأقسام ===================== -->
+  <div id="categories-tab" class="space-y-8">
+    <!-- قسم إضافة قسم جديد -->
+    <div class="admin-card p-6">
+      <h2 class="text-2xl font-bold mb-4 text-[#D4AF37]"><i class="fas fa-plus-circle ml-2"></i> إضافة قسم جديد</h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div>
+          <label>🖼️ صورة القسم</label>
+          <input type="file" id="cat-image-file" accept="image/*" class="mb-2">
+          <input type="text" id="cat-image-url" placeholder="أو رابط الصورة المباشر" class="mt-1">
+          <div id="image-preview-area" class="mt-2 hidden"></div>
+        </div>
+        <div><label>🏷️ اسم القسم *</label><input type="text" id="cat-name" placeholder="مثال: الجلابة"></div>
+        <div><label>📝 النص الفرعي *</label><input type="text" id="cat-subtitle" placeholder="مثال: نعومة خالدة"></div>
+        <div><label>🔗 رابط الصفحة</label><input type="text" id="cat-link" placeholder="الجلبابة.html"></div>
+      </div>
+      <div class="flex gap-3 mt-5">
+        <button onclick="addCategory()" class="gold-btn px-6 py-2 text-lg"><i class="fas fa-save ml-2"></i> إضافة القسم</button>
+        <button onclick="clearCategoryForm()" class="bg-gray-200 px-5 py-2 rounded-full">تفريغ</button>
+      </div>
+    </div>
+
+    <!-- قائمة الأقسام -->
+    <div class="admin-card p-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap">
+        <h2 class="text-2xl font-bold"><i class="fas fa-list ml-2 text-[#D4AF37]"></i> جميع الأقسام</h2>
+        <span class="text-sm text-gray-400" id="categories-count"></span>
+      </div>
+      <div id="categories-list" class="space-y-3 max-h-[500px] overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <!-- ===================== تبويب المظهر والألوان ===================== -->
+  <div id="settings-tab" class="admin-card p-6 hidden">
+    <h2 class="text-2xl font-bold mb-4 text-[#D4AF37]"><i class="fas fa-palette ml-2"></i> تخصيص الألوان والمظهر</h2>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label>🎨 لون خلفية الصفحة</label>
+        <div class="flex items-center gap-2">
+          <input type="color" id="bg-color" class="w-16 h-12 rounded-lg border">
+          <input type="text" id="bg-color-text" class="flex-1" placeholder="#F9F7F2">
+        </div>
+      </div>
+      <div>
+        <label>🎨 لون العناوين الرئيسية (h2)</label>
+        <div class="flex items-center gap-2">
+          <input type="color" id="title-color" class="w-16 h-12 rounded-lg border">
+          <input type="text" id="title-color-text" class="flex-1" placeholder="#b78c48">
+        </div>
+      </div>
+      <div>
+        <label>🎨 لون عناوين البطاقات (card-title)</label>
+        <div class="flex items-center gap-2">
+          <input type="color" id="card-title-color" class="w-16 h-12 rounded-lg border">
+          <input type="text" id="card-title-color-text" class="flex-1" placeholder="#b68644">
+        </div>
+      </div>
+      <div>
+        <label>🎨 لون النص الفرعي (card-sub)</label>
+        <div class="flex items-center gap-2">
+          <input type="color" id="subtitle-color" class="w-16 h-12 rounded-lg border">
+          <input type="text" id="subtitle-color-text" class="flex-1" placeholder="#8f846f">
+        </div>
+      </div>
+      <div>
+        <label>🎨 لون حدود الزر (gold-btn)</label>
+        <div class="flex items-center gap-2">
+          <input type="color" id="btn-border-color" class="w-16 h-12 rounded-lg border">
+          <input type="text" id="btn-border-color-text" class="flex-1" placeholder="#c8a86b">
+        </div>
+      </div>
+      <div>
+        <label>🎨 لون خلفية البطاقات عند المرور (hover)</label>
+        <div class="flex items-center gap-2">
+          <input type="color" id="card-hover-color" class="w-16 h-12 rounded-lg border">
+          <input type="text" id="card-hover-color-text" class="flex-1" placeholder="#fff9f0">
+        </div>
+      </div>
+    </div>
+    
+    <button onclick="saveColorSettings()" class="gold-btn w-full mt-6 py-2 text-lg"><i class="fas fa-save ml-2"></i> حفظ إعدادات الألوان</button>
+  </div>
+
+  <!-- ===================== تبويب النصوص واللوغو ===================== -->
+  <div id="texts-tab" class="admin-card p-6 hidden">
+    <h2 class="text-2xl font-bold mb-4 text-[#D4AF37]"><i class="fas fa-font ml-2"></i> النصوص واللوغو</h2>
+    
+    <div class="border-b border-gray-200 pb-6 mb-6">
+      <h3 class="text-lg font-bold mb-3"><i class="fas fa-image ml-2 text-[#D4AF37]"></i> الشعار (Logo)</h3>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div>
+          <label>📁 رفع صورة اللوغو</label>
+          <input type="file" id="logo-file" accept="image/*">
+          <div id="logo-preview-area" class="mt-2"></div>
+        </div>
+        <div>
+          <label>🔗 رابط اللوغو</label>
+          <input type="text" id="logo-url" placeholder="images/logo.jpg">
+        </div>
+      </div>
+    </div>
+
+    <div class="border-b border-gray-200 pb-6 mb-6">
+      <h3 class="text-lg font-bold mb-3"><i class="fas fa-heading ml-2 text-[#D4AF37]"></i> النصوص الرئيسية</h3>
+      <div class="grid gap-5">
+        <div><label>🏷️ عنوان الصفحة الرئيسي</label><input type="text" id="page-title" placeholder="مجموعة الأزياء الراقية"></div>
+        <div><label>📝 النص التعريفي</label><input type="text" id="page-description" placeholder="تصاميم حصرية · إرث من الأناقة المغربية"></div>
+<div><label>💬 النص أسفل اللوغو (Slogan)</label><input type="text" id="logo-text" class="w-full" placeholder="خياطة المعلم · حرفة مغربية أصيلة"></div>      </div>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-bold mb-3"><i class="fas fa-link ml-2 text-[#D4AF37]"></i> روابط</h3>
+      <div class="grid gap-5">
+        <div><label>🔗 رابط صفحة التحكم (Admin)</label><input type="text" id="admin-link" placeholder="admin-page2.html"></div>
+      </div>
+    </div>
+
+    <button onclick="saveTextsSettings()" class="gold-btn w-full mt-6 py-2 text-lg"><i class="fas fa-save ml-2"></i> حفظ النصوص والإعدادات</button>
+  </div>
+</div>
+
+<script>
+  // ===================== البيانات الافتراضية =====================
+  const defaultCategories = [
+    { id: 1, name: "الجلابة", subtitle: "نعومة خالدة", image: "jellaba.jpg", link: "الجلبابة.html" },
+    { id: 2, name: "القفطان", subtitle: "فخامة ملكية", image: "caftan.jpg", link: "القفطان.html" },
+    { id: 3, name: "التكشيطة", subtitle: "أناقة العرائس", image: "takchita.jpg", link: "التكشيطة.html" },
+    { id: 4, name: "الجبادور", subtitle: "رقي رجالي", image: "jabador.jpg", link: "الجبادور.html" },
+    { id: 5, name: "العباية", subtitle: "عصرية ووقورة", image: "abaya.jpg", link: "العباية.html" }
+  ];
+  
+  const defaultColors = {
+    bgColor: "#F9F7F2",
+    titleColor: "#b78c48",
+    cardTitleColor: "#b68644",
+    subtitleColor: "#8f846f",
+    btnBorderColor: "#c8a86b",
+    cardHoverColor: "#fff9f0"
+  };
+  
+  const defaultTexts = {
+    logo: "images/logo.jpg",
+    pageTitle: "مجموعة الأزياء الراقية",
+    pageDescription: "تصاميم حصرية · إرث من الأناقة المغربية",
+    logoText: "خياطة المعلم · حرفة مغربية أصيلة",
+    adminLink: "admin-page2.html"
+  };
+
+  let currentCategories = [];
+
+  // ===================== وظائف التبويب =====================
+  function showTab(tab) {
+    document.getElementById('categories-tab').classList.add('hidden');
+    document.getElementById('settings-tab').classList.add('hidden');
+    document.getElementById('texts-tab').classList.add('hidden');
+    
+    const categoriesBtn = document.getElementById('tab-categories-btn');
+    const settingsBtn = document.getElementById('tab-settings-btn');
+    const textsBtn = document.getElementById('tab-texts-btn');
+    
+    [categoriesBtn, settingsBtn, textsBtn].forEach(btn => {
+      btn.classList.remove('tab-active', 'tab-inactive');
+    });
+    
+    if (tab === 'categories') {
+      document.getElementById('categories-tab').classList.remove('hidden');
+      categoriesBtn.classList.add('tab-active');
+      settingsBtn.classList.add('tab-inactive');
+      textsBtn.classList.add('tab-inactive');
+    } else if (tab === 'settings') {
+      document.getElementById('settings-tab').classList.remove('hidden');
+      loadColorsToForm();
+      categoriesBtn.classList.add('tab-inactive');
+      settingsBtn.classList.add('tab-active');
+      textsBtn.classList.add('tab-inactive');
+    } else if (tab === 'texts') {
+      document.getElementById('texts-tab').classList.remove('hidden');
+      loadTextsToForm();
+      categoriesBtn.classList.add('tab-inactive');
+      settingsBtn.classList.add('tab-inactive');
+      textsBtn.classList.add('tab-active');
+    }
+  }
+
+  // ===================== تحميل وحفظ البيانات =====================
+  function loadAllData() {
+    const stored = localStorage.getItem('almaya_page2_data');
+    if (stored) {
+      const data = JSON.parse(stored);
+      currentCategories = data.categories || [...defaultCategories];
+    } else {
+      currentCategories = [...defaultCategories];
+      saveAllToLocalStorage();
+    }
+    renderCategoriesList();
+    applyStylesToPreview();
+  }
+
+  function getCurrentColors() {
+    const stored = localStorage.getItem('almaya_page2_data');
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.colors || defaultColors;
+    }
+    return defaultColors;
+  }
+
+  function getCurrentTexts() {
+    const stored = localStorage.getItem('almaya_page2_data');
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.texts || defaultTexts;
+    }
+    return defaultTexts;
+  }
+
+  function saveAllToLocalStorage(categories = currentCategories, colors = null, texts = null) {
+    let currentColors = colors;
+    let currentTexts = texts;
+    
+    if (!currentColors) {
+      const stored = localStorage.getItem('almaya_page2_data');
+      if (stored) {
+        const oldData = JSON.parse(stored);
+        currentColors = oldData.colors || defaultColors;
+        currentTexts = oldData.texts || defaultTexts;
+      } else {
+        currentColors = defaultColors;
+        currentTexts = defaultTexts;
+      }
+    }
+    
+    if (!currentTexts) {
+      const stored = localStorage.getItem('almaya_page2_data');
+      if (stored) {
+        const oldData = JSON.parse(stored);
+        currentTexts = oldData.texts || defaultTexts;
+      } else {
+        currentTexts = defaultTexts;
+      }
+    }
+    
+    const dataToStore = {
+      categories: categories,
+      colors: currentColors,
+      texts: currentTexts,
+      images: "{}"
+    };
+    
+    localStorage.setItem('almaya_page2_data', JSON.stringify(dataToStore));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'almaya_page2_data', newValue: JSON.stringify(dataToStore) }));
+    applyStylesToPreview();
+  }
+
+  // ===================== تطبيق الألوان على الصفحة =====================
+  function applyStylesToPreview() {
+    const colors = getCurrentColors();
+    const styleTag = document.getElementById('dynamic-page2-styles');
+    if (styleTag) styleTag.remove();
+    
+    const newStyle = document.createElement('style');
+    newStyle.id = 'dynamic-page2-styles';
+    newStyle.textContent = `
+      body { background-color: ${colors.bgColor} !important; }
+      .section-header h2 { color: ${colors.titleColor} !important; }
+      .card-title { color: ${colors.cardTitleColor} !important; }
+      .card-sub { color: ${colors.subtitleColor} !important; }
+      .gold-btn { border-color: ${colors.btnBorderColor} !important; color: ${colors.btnBorderColor} !important; }
+      .gold-btn:hover { background: ${colors.btnBorderColor} !important; color: white !important; }
+      .category-card-admin:hover { background: ${colors.cardHoverColor} !important; }
+    `;
+    document.head.appendChild(newStyle);
+  }
+
+  // ===================== معاينة الصورة =====================
+  function previewImage() {
+    const file = document.getElementById('cat-image-file').files[0];
+    const urlInput = document.getElementById('cat-image-url');
+    const previewArea = document.getElementById('image-preview-area');
+    
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewArea.innerHTML = `<img src="${e.target.result}" class="image-preview border-2 border-[#D4AF37] p-1"> <span class="text-xs text-green-600 mr-2">✓ جاهزة</span>`;
+        previewArea.classList.remove('hidden');
+        urlInput.value = "";
+      };
+      reader.readAsDataURL(file);
+    } else if (urlInput.value.trim()) {
+      previewArea.innerHTML = `<img src="${urlInput.value.trim()}" class="image-preview border p-1" onerror="this.src='https://placehold.co/200x200/F1EBE0/D4AF37?text=Error'"> <span class="text-xs text-blue-600 mr-2">رابط خارجي</span>`;
+      previewArea.classList.remove('hidden');
+    } else {
+      previewArea.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('cat-image-file')?.addEventListener('change', previewImage);
+  document.getElementById('cat-image-url')?.addEventListener('input', previewImage);
+
+  function previewLogo() {
+    const file = document.getElementById('logo-file').files[0];
+    const previewArea = document.getElementById('logo-preview-area');
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewArea.innerHTML = `<img src="${e.target.result}" class="media-preview"> <p class="text-xs text-green-600 mt-1">✓ تم تحميل الشعار</p>`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewArea.innerHTML = '';
+    }
+  }
+
+  document.getElementById('logo-file')?.addEventListener('change', previewLogo);
+
+  // ===================== إدارة الأقسام =====================
+  let editingId = null;
+
+  function addCategory() {
+    const name = document.getElementById('cat-name').value.trim();
+    const subtitle = document.getElementById('cat-subtitle').value.trim();
+    let image = document.getElementById('cat-image-url').value.trim();
+    const link = document.getElementById('cat-link').value.trim();
+
+    if (!name) { alert("⚠️ خاصك تكتبي اسم القسم"); return; }
+    if (!subtitle) { alert("⚠️ خاصك تكتبي النص الفرعي"); return; }
+
+    const file = document.getElementById('cat-image-file').files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        image = e.target.result;
+        saveCategoryToArray(name, subtitle, image, link);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      if (!image) image = "https://placehold.co/600x780/F4EDE6/B78C48?text=" + encodeURIComponent(name);
+      saveCategoryToArray(name, subtitle, image, link);
+    }
+  }
+
+  function saveCategoryToArray(name, subtitle, image, link) {
+    const newId = Date.now();
+    const newCategory = {
+      id: newId, name, subtitle, image, link: link || "#"
+    };
+    currentCategories.push(newCategory);
+    saveAllToLocalStorage(currentCategories);
+    renderCategoriesList();
+    clearCategoryForm();
+    alert(`✅ تمت إضافة القسم "${name}" بنجاح!`);
+  }
+
+  function deleteCategory(id) {
+    if (confirm("⚠️ هل أنت متأكدة من حذف هذا القسم نهائياً؟")) {
+      currentCategories = currentCategories.filter(c => c.id !== id);
+      saveAllToLocalStorage(currentCategories);
+      renderCategoriesList();
+      alert("🗑️ تم حذف القسم");
+    }
+  }
+
+  function editCategory(id) {
+    const cat = currentCategories.find(c => c.id === id);
+    if (!cat) return;
+    editingId = cat.id;
+    document.getElementById('cat-name').value = cat.name;
+    document.getElementById('cat-subtitle').value = cat.subtitle;
+    document.getElementById('cat-image-url').value = (cat.image && !cat.image.startsWith('data:') && !cat.image.startsWith('blob:')) ? cat.image : '';
+    document.getElementById('cat-link').value = cat.link;
+    
+    const previewArea = document.getElementById('image-preview-area');
+    if (cat.image && cat.image !== "#") {
+      previewArea.innerHTML = `<img src="${cat.image}" class="image-preview border p-1" onerror="this.src='https://placehold.co/200x200/F1EBE0/D4AF37?text=Image'"> <span class="text-xs text-amber-600 mr-2">✏️ جاري التعديل</span>`;
+      previewArea.classList.remove('hidden');
+    } else {
+      previewArea.classList.add('hidden');
+    }
+    
+    const addBtn = document.querySelector('#categories-tab .gold-btn');
+    if (addBtn) {
+      addBtn.innerHTML = '<i class="fas fa-pen ml-2"></i> تحديث القسم';
+      addBtn.setAttribute('onclick', 'updateCategory()');
+    }
+    
+    let cancelBtn = document.getElementById('cancel-edit-btn');
+    if (!cancelBtn && document.querySelector('#categories-tab .flex.gap-3.mt-5')) {
+      cancelBtn = document.createElement('button');
+      cancelBtn.id = 'cancel-edit-btn';
+      cancelBtn.className = 'bg-gray-400 text-white px-4 py-2 rounded-full mr-2';
+      cancelBtn.innerHTML = '<i class="fas fa-times ml-1"></i> إلغاء التعديل';
+      cancelBtn.onclick = () => { clearCategoryForm(); location.reload(); };
+      document.querySelector('#categories-tab .flex.gap-3.mt-5').appendChild(cancelBtn);
+    }
+  }
+
+  function updateCategory() {
+    const name = document.getElementById('cat-name').value.trim();
+    const subtitle = document.getElementById('cat-subtitle').value.trim();
+    let image = document.getElementById('cat-image-url').value.trim();
+    const link = document.getElementById('cat-link').value.trim();
+
+    if (!name || !subtitle) { alert("الاسم والنص الفرعي إجبارية"); return; }
+
+    const file = document.getElementById('cat-image-file').files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        image = e.target.result;
+        updateCategoryInArray(editingId, name, subtitle, image, link);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      if (!image) image = "https://placehold.co/600x780/F4EDE6/B78C48?text=" + encodeURIComponent(name);
+      updateCategoryInArray(editingId, name, subtitle, image, link);
+    }
+  }
+
+  function updateCategoryInArray(id, name, subtitle, image, link) {
+    const index = currentCategories.findIndex(c => c.id === id);
+    if (index !== -1) {
+      currentCategories[index] = { ...currentCategories[index], name, subtitle, image, link };
+      saveAllToLocalStorage(currentCategories);
+      renderCategoriesList();
+      clearCategoryForm();
+      alert("✏️ تم تحديث القسم بنجاح");
+      const addBtn = document.querySelector('#categories-tab .gold-btn');
+      if (addBtn) {
+        addBtn.innerHTML = '<i class="fas fa-save ml-2"></i> إضافة القسم';
+        addBtn.setAttribute('onclick', 'addCategory()');
+      }
+      const cancelBtn = document.getElementById('cancel-edit-btn');
+      if (cancelBtn) cancelBtn.remove();
+      editingId = null;
+    }
+  }
+
+  function clearCategoryForm() {
+    document.getElementById('cat-name').value = '';
+    document.getElementById('cat-subtitle').value = '';
+    document.getElementById('cat-image-url').value = '';
+    document.getElementById('cat-link').value = '';
+    document.getElementById('cat-image-file').value = '';
+    document.getElementById('image-preview-area').classList.add('hidden');
+    
+    const addBtn = document.querySelector('#categories-tab .gold-btn');
+    if (addBtn) {
+      addBtn.innerHTML = '<i class="fas fa-save ml-2"></i> إضافة القسم';
+      addBtn.setAttribute('onclick', 'addCategory()');
+    }
+    const cancelBtn = document.getElementById('cancel-edit-btn');
+    if (cancelBtn) cancelBtn.remove();
+    editingId = null;
+  }
+
+  function renderCategoriesList() {
+    const container = document.getElementById('categories-list');
+    const countSpan = document.getElementById('categories-count');
+    if (!container) return;
+    if (currentCategories.length === 0) {
+      container.innerHTML = '<div class="text-center text-gray-400 py-10">✨ لا توجد أقسام، أضيفي أول قسم ✨</div>';
+      if(countSpan) countSpan.innerText = "(0)";
+      return;
+    }
+    if(countSpan) countSpan.innerText = `(${currentCategories.length})`;
+    container.innerHTML = currentCategories.map(cat => `
+      <div class="category-card-admin p-4 flex flex-wrap md:flex-nowrap gap-4 items-center">
+        <img src="${cat.image}" class="image-preview w-16 h-16 rounded-xl object-cover" onerror="this.src='https://placehold.co/200x200/F1EBE0/D4AF37?text=Image'">
+        <div class="flex-1 min-w-[180px]">
+          <div class="font-bold text-lg">${cat.name}</div>
+          <div class="text-[#D4AF37] text-sm">${cat.subtitle}</div>
+          <div class="text-xs text-gray-400 truncate mt-1">🔗 ${cat.link}</div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="editCategory(${cat.id})" class="bg-amber-100 px-4 py-2 rounded-full text-sm font-semibold"><i class="fas fa-edit ml-1"></i> تعديل</button>
+          <button onclick="deleteCategory(${cat.id})" class="delete-btn px-4 py-2 rounded-full text-sm"><i class="fas fa-trash ml-1"></i> حذف</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ===================== إعدادات الألوان =====================
+  function loadColorsToForm() {
+    const colors = getCurrentColors();
+    document.getElementById('bg-color').value = colors.bgColor;
+    document.getElementById('bg-color-text').value = colors.bgColor;
+    document.getElementById('title-color').value = colors.titleColor;
+    document.getElementById('title-color-text').value = colors.titleColor;
+    document.getElementById('card-title-color').value = colors.cardTitleColor;
+    document.getElementById('card-title-color-text').value = colors.cardTitleColor;
+    document.getElementById('subtitle-color').value = colors.subtitleColor;
+    document.getElementById('subtitle-color-text').value = colors.subtitleColor;
+    document.getElementById('btn-border-color').value = colors.btnBorderColor;
+    document.getElementById('btn-border-color-text').value = colors.btnBorderColor;
+    document.getElementById('card-hover-color').value = colors.cardHoverColor;
+    document.getElementById('card-hover-color-text').value = colors.cardHoverColor;
+  }
+
+  function saveColorSettings() {
+    const newColors = {
+      bgColor: document.getElementById('bg-color').value,
+      titleColor: document.getElementById('title-color').value,
+      cardTitleColor: document.getElementById('card-title-color').value,
+      subtitleColor: document.getElementById('subtitle-color').value,
+      btnBorderColor: document.getElementById('btn-border-color').value,
+      cardHoverColor: document.getElementById('card-hover-color').value
+    };
+    saveAllToLocalStorage(currentCategories, newColors, null);
+    alert("✅ تم حفظ إعدادات الألوان بنجاح!");
+  }
+
+  // ربط مدخلات الألوان
+  function bindColorInputs() {
+    const colorInputs = ['bg-color', 'title-color', 'card-title-color', 'subtitle-color', 'btn-border-color', 'card-hover-color'];
+    colorInputs.forEach(id => {
+      const colorPicker = document.getElementById(id);
+      const textInput = document.getElementById(id + '-text');
+      if (colorPicker && textInput) {
+        colorPicker.addEventListener('input', () => { textInput.value = colorPicker.value; });
+        textInput.addEventListener('input', () => { colorPicker.value = textInput.value; });
+      }
+    });
+  }
+
+  // ===================== إعدادات النصوص =====================
+  function loadTextsToForm() {
+    const texts = getCurrentTexts();
+    document.getElementById('logo-url').value = texts.logo || defaultTexts.logo;
+    document.getElementById('page-title').value = texts.pageTitle || defaultTexts.pageTitle;
+    document.getElementById('page-description').value = texts.pageDescription || defaultTexts.pageDescription;
+    document.getElementById('logo-text').value = texts.logoText || defaultTexts.logoText;
+    document.getElementById('admin-link').value = texts.adminLink || defaultTexts.adminLink;
+  }
+
+  function saveTextsSettings() {
+    let logoValue = document.getElementById('logo-url').value;
+    const logoFile = document.getElementById('logo-file').files[0];
+    
+    if (logoFile) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        logoValue = e.target.result;
+        finalSaveTexts(logoValue);
+      };
+      reader.readAsDataURL(logoFile);
+    } else {
+      finalSaveTexts(logoValue);
+    }
+  }
+
+  function finalSaveTexts(logoValue) {
+    const newTexts = {
+      logo: logoValue,
+      pageTitle: document.getElementById('page-title').value,
+      pageDescription: document.getElementById('page-description').value,
+      logoText: document.getElementById('logo-text').value,
+      adminLink: document.getElementById('admin-link').value
+    };
+    saveAllToLocalStorage(currentCategories, null, newTexts);
+    document.getElementById('logo-file').value = '';
+    document.getElementById('logo-preview-area').innerHTML = '';
+    alert("✅ تم حفظ النصوص واللوغو بنجاح!");
+  }
+
+  // ===================== إعادة تعيين الكل =====================
+  function resetAllData() {
+    if(confirm("⚠️ تحذير نهائي: سيتم حذف جميع البيانات الحالية واستعادة البيانات الافتراضية. هل تتابعين؟")) {
+      currentCategories = [...defaultCategories];
+      saveAllToLocalStorage(currentCategories, defaultColors, defaultTexts);
+      renderCategoriesList();
+      clearCategoryForm();
+      loadColorsToForm();
+      loadTextsToForm();
+      alert("تمت إعادة التعيين إلى البيانات الافتراضية");
+    }
+  }
+
+  window.onload = () => {
+    loadAllData();
+    bindColorInputs();
+  };
+</script>
+</body>
+</html>

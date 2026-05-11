@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Almaya Couture | مصمم العباية العصرية - عباية أحلامك بتفاصيل المعلم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Amiri:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #F8F6F2;
+      font-family: 'Inter', sans-serif;
+      color: #3A2C24;
+      direction: rtl;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem 120px; }
+    
+    /* Animated Logo Section */
+    .logo-section {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+      background: rgba(248,246,242,0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 0 0 40px 40px;
+      padding: 0.8rem 1rem;
+      transition: all 0.3s ease;
+    }
+    .logo-section.scrolled { padding: 0.4rem 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .brand-logo {
+      max-width: 180px;
+      height: auto;
+      border-radius: 28px;
+      transition: all 0.3s ease;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
+    }
+    .logo-section.scrolled .brand-logo { max-width: 100px; }
+    .atelier-sub { color: #B8860B; font-size: 0.85rem; margin-top: 6px; font-family: 'Amiri', serif; }
+    
+    /* Page Title */
+    .page-title { text-align: center; margin: 0.5rem 0 1.5rem; }
+    .page-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #B8860B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .page-title p { color: #7A6248; font-size: 0.9rem; margin-top: 5px; }
+    
+    /* Style Tabs - 3 أنماط للعباية */
+    .style-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .style-btn {
+      background: #FFF;
+      border: 1.5px solid #E2D1BF;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-family: 'Amiri', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #5E4B34;
+    }
+    .style-btn.active {
+      background: #C5A059;
+      border-color: #C5A059;
+      color: white;
+      box-shadow: 0 4px 12px rgba(197,160,89,0.3);
+    }
+    .style-btn:hover { transform: translateY(-2px); }
+    
+    /* Sections */
+    .config-section {
+      background: rgba(255,255,250,0.9);
+      border-radius: 32px;
+      margin-bottom: 1.8rem;
+      padding: 1.5rem 1.8rem;
+      border: 1px solid #F0E2D4;
+      transition: all 0.2s;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #B8860B;
+      border-right: 4px solid #D4AF7A;
+      padding-right: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .cards-grid { display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 1rem 0; }
+    .choice-card {
+      flex: 1 1 180px;
+      background: white;
+      border-radius: 28px;
+      border: 1px solid #EDE0D4;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    .choice-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 20px;
+      background: #F7F0E8;
+      margin-bottom: 8px;
+    }
+    .choice-card.selected-card {
+      border: 2px solid #C5A059;
+      background: #FFFCF7;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(197,160,89,0.15);
+    }
+    .choice-card:hover { transform: translateY(-3px); border-color: #D4AF7A; }
+    .card-title { font-weight: 700; font-size: 0.9rem; color: #3A2C24; }
+    .best-tag { font-size: 0.65rem; background: #FEF2E6; color: #B8860B; border-radius: 50px; padding: 2px 12px; display: inline-block; margin-top: 6px; }
+    .desc-tag { font-size: 0.65rem; color: #8f765e; margin-top: 4px; }
+    
+    /* Measurements Grid */
+    .measure-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+      gap: 1rem;
+      background: #FEFAF5;
+      padding: 1.2rem;
+      border-radius: 28px;
+    }
+    .input-field label { font-size: 0.7rem; font-weight: 600; color: #B8860B; text-transform: uppercase; display: block; margin-bottom: 4px; }
+    .input-field input { width: 100%; padding: 10px; border-radius: 40px; border: 1px solid #E2CFBC; background: white; outline: none; transition: 0.2s; }
+    .input-field input:focus { border-color: #C5A059; box-shadow: 0 0 0 2px rgba(197,160,89,0.2); }
+    
+    /* Color Palette */
+    .palette-group { margin-bottom: 1.2rem; }
+    .color-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+    .color-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: all 0.15s ease;
+    }
+    .color-circle.selected-color { transform: scale(1.12); border: 3px solid #C5A059; box-shadow: 0 0 0 2px white, 0 0 0 4px #C5A059; }
+    .color-circle:hover { transform: scale(1.05); }
+    
+    /* Design Sheet - Bon de Commande */
+    .design-sheet {
+      background: linear-gradient(145deg, #FFFFFF, #FEF9F0);
+      border-radius: 40px;
+      border: 1px solid #EADCCB;
+      padding: 1.8rem;
+      margin: 2rem 0;
+      box-shadow: 0 16px 28px -12px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .design-sheet:before {
+      content: "⚜️ BON DE COMMANDE - ABAYA ⚜️";
+      position: absolute;
+      top: -14px;
+      right: 28px;
+      background: #F8F6F2;
+      padding: 0 16px;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      color: #C5A059;
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+    }
+    .sheet-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed #E9DDD0;
+      padding: 0.8rem 0;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .sheet-label { font-weight: 700; color: #5D4E2C; }
+    .sheet-value { color: #3A2C24; font-weight: 500; }
+    
+    /* Creative Zone */
+    .upload-btn {
+      background: #F0E2D6;
+      padding: 8px 18px;
+      border-radius: 40px;
+      display: inline-block;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-top: 8px;
+      transition: 0.2s;
+    }
+    .upload-btn:hover { background: #E5D5C6; }
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 24px;
+      border: 1px solid #E2CFBC;
+      background: white;
+      font-family: inherit;
+      resize: vertical;
+      margin: 8px 0;
+    }
+    textarea:focus { outline: none; border-color: #C5A059; }
+    
+    /* Floating Bottom Bar */
+    .fixed-bottom-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(248,246,242,0.98);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid #EADCCB;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      z-index: 1000;
+    }
+    .whatsapp-btn {
+      background: #25D366;
+      border: none;
+      color: white;
+      padding: 10px 28px;
+      border-radius: 60px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+    .whatsapp-btn:hover { background: #128C7E; transform: scale(1.02); }
+    .reset-btn {
+      background: transparent;
+      border: 1.5px solid #B8860B;
+      color: #B8860B;
+      padding: 8px 20px;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .reset-btn:hover { background: #F0E2D6; }
+    
+    @media (max-width: 700px) {
+      .container { padding: 1rem 1rem 120px; }
+      .choice-card { flex: 1 1 140px; }
+      .design-sheet:before { font-size: 0.55rem; right: 12px; }
+      .fixed-bottom-bar { flex-direction: column; align-items: stretch; }
+      .whatsapp-btn, .reset-btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Animated Logo -->
+  <div class="logo-section" id="logoSection">
+    <img src="images/logo.jpg" alt="Almaya Couture" class="brand-logo" onerror="this.src='https://placehold.co/400x150/FDF5E6/B8860B?text=Almaya+Couture'">
+    <div class="atelier-sub">الأناقة العصرية بلمسة مغربية أصيلة</div>
+  </div>
+
+  <div class="page-title">
+    <h1><i class="fas fa-robe"></i> مصمم العباية العصرية <i class="fas fa-star"></i></h1>
+    <p>صممي عبايتك بتفاصيل دقيقة - من الكلاسيك إلى العصري والكاجوال</p>
+  </div>
+
+  <!-- Style Tabs: 3 أذواق للعباية -->
+  <div class="style-tabs">
+    <button class="style-btn" data-style="classic"><i class="fas fa-crown"></i> كلاسيكية فخمة</button>
+    <button class="style-btn active" data-style="modern"><i class="fas fa-mobile-alt"></i> عصرية (Chic)</button>
+    <button class="style-btn" data-style="casual"><i class="fas fa-feather-alt"></i> كاجوال (Daily)</button>
+  </div>
+
+  <!-- Section 1: Measurements -->
+  <div class="config-section">
+    <div class="section-title">📏 قياسات العباية الدقيقة (سم)</div>
+    <div class="measure-grid">
+      <div class="input-field"><label>الكتف</label><input type="number" id="shoulder" placeholder="مثال: 38" step="0.5"></div>
+      <div class="input-field"><label>الصدر</label><input type="number" id="bust" placeholder="مثال: 88" step="0.5"></div>
+      <div class="input-field"><label>الخصر</label><input type="number" id="waist" placeholder="مثال: 70" step="0.5"></div>
+      <div class="input-field"><label>الورك</label><input type="number" id="hips" placeholder="مثال: 96" step="0.5"></div>
+      <div class="input-field"><label>الطول الكلي</label><input type="number" id="length" placeholder="من الكتف" step="0.5"></div>
+      <div class="input-field"><label>طول الكم</label><input type="number" id="sleeve" placeholder="سم" step="0.5"></div>
+      <div class="input-field"><label>دورة الذراع</label><input type="number" id="armCirc" placeholder="للكم" step="0.5"></div>
+    </div>
+  </div>
+
+  <!-- Section 2: Fabrics -->
+  <div class="config-section">
+    <div class="section-title">🧶 أقمشة العبايات الفاخرة</div>
+    <div class="cards-grid" id="fabricContainer"></div>
+  </div>
+
+  <!-- Section 3: Design & Cuts -->
+  <div class="config-section">
+    <div class="section-title">✂️ تصميم وقصة العباية</div>
+    <div class="cards-grid" id="cutContainer"></div>
+    <div class="cards-grid" id="openingContainer" style="margin-top: 1rem;"></div>
+  </div>
+
+  <!-- Section 4: Finishing & Embroidery -->
+  <div class="config-section">
+    <div class="section-title">🧵 تشطيبات وتطريز العباية</div>
+    <div class="cards-grid" id="finishingContainer"></div>
+  </div>
+
+  <!-- Section 5: Color Palette -->
+  <div class="config-section">
+    <div class="section-title">🎨 باليت ألوان العباية</div>
+    <div id="paletteContainer"></div>
+  </div>
+
+  <!-- Design Sheet - Premium Invoice -->
+  <div class="design-sheet">
+    <div class="section-title" style="border-right:none; font-size:1.2rem;">📜 فاتورة التصميم | Bon de Commande</div>
+    <div id="designSheetContent">
+      <div class="sheet-row"><span class="sheet-label">🕌 نمط العباية:</span><span class="sheet-value" id="summaryStyle">—</span></div>
+      <div class="sheet-row"><span class="sheet-label">🧶 القماش:</span><span class="sheet-value" id="summaryFabric">—</span></div>
+      <div class="sheet-row"><span class="sheet-label">✂️ القصة:</span><span class="sheet-value" id="summaryCut">—</span></div>
+      <div class="sheet-row"><span class="sheet-label">🚪 التصميم/الفتحة:</span><span class="sheet-value" id="summaryOpening">—</span></div>
+      <div class="sheet-row"><span class="sheet-label">🧵 التشطيب والتطريز:</span><span class="sheet-value" id="summaryFinish">—</span></div>
+      <div class="sheet-row"><span class="sheet-label">🎨 اللون المختار:</span><span class="sheet-value" id="summaryColor">—</span></div>
+      <div class="sheet-row"><span class="sheet-label">📏 المقاسات التفصيلية:</span><span class="sheet-value" id="summaryMeasure">—</span></div>
+    </div>
+  </div>
+
+  <!-- Creative Inspiration Zone -->
+  <div class="config-section">
+    <div class="section-title">🌟 إلهامك وملاحظاتك للمعلمة</div>
+    <textarea id="specialNotes" rows="2" placeholder="اكتبي أي ملاحظة: نوع التطريز المفضل، المناسبة، تفاصيل إضافية، مستوحى من صورة..."></textarea>
+    <div class="upload-btn" id="uploadTrigger">📸 أضيفي صورة إلهام للعباية</div>
+    <input type="file" id="inspirePhoto" accept="image/*" style="display:none">
+    <div id="photoPreview" style="font-size:12px; margin-top:8px; color:#B8860B;"></div>
+  </div>
+</div>
+
+<!-- Floating Bottom Bar -->
+<div class="fixed-bottom-bar">
+  <div id="quickSummary" style="font-size:0.75rem; background:#F9EFE6; padding:6px 16px; border-radius:40px; color:#6E533A;">✨ ملخص العباية</div>
+  <div style="display: flex; gap: 12px;">
+    <button class="reset-btn" id="resetBtn"><i class="fas fa-undo-alt"></i> إعادة ضبط</button>
+    <button class="whatsapp-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i> إرسال الطلب للمعلمة</button>
+  </div>
+</div>
+
+<script>
+  // ----------------------------- Abaya Configuration -----------------------------
+  let currentStyle = "modern"; // classic, modern, casual
+  let selections = { fabric: null, cut: null, opening: null, finishing: null, color: null };
+
+  // ========== ABAYA DATABASES ==========
+  
+  // Fabrics for Abaya
+  const fabricsDB = {
+    classic: [
+      { id: "fab_crepe_classic", title: "كريب فاخر", best: "كلاسيكي أنيق", img: "/images/crepe-abaya.jpg", desc: "نعومة وثبات" },
+      { id: "fab_satin_matte", title: "ساتان مطفي", best: "لمعة ناعمة", img: "/images/satin-abaya.jpg", desc: "إطلالة ملكية" },
+      { id: "fab_jersey_heavy", title: "جيرسي ثقيل", best: "وقار وثبات", img: "/images/jersey-heavy.jpg", desc: "للمناسبات" }
+    ],
+    modern: [
+      { id: "fab_chiffon", title: "شيفون شفاف", best: "عصري وخفيف", img: "/images/chiffon-abaya.jpg", desc: "انسيابية راقية" },
+      { id: "fab_lin", title: "كتان طبيعي", best: "مودرن وناعم", img: "/images/lin-abaya.jpg", desc: "طبيعي 100%" },
+      { id: "fab_cady", title: "كادي مطاطي", best: "رياضي شيك", img: "/images/cady.jpg", desc: "مريح وعملي" },
+      { id: "fab_crepe_georgette", title: "كريب جورجيت", best: "خفيف ومموج", img: "/images/georgette.jpg", desc: "لمسة عصرية" }
+    ],
+    casual: [
+      { id: "fab_cotton", title: "قطن فاخر", best: "مريح يومي", img: "/images/cotton.jpg", desc: "ناعم وقابل للتنفس" },
+      { id: "fab_jersey", title: "جيرسي ناعم", best: "مرن وكاجوال", img: "/images/jersey.jpg", desc: "يطاوع الحركة" },
+      { id: "fab_linen_blend", title: "مخلوط كتان", best: "طبيعي وعملي", img: "/images/linen-blend.jpg", desc: "للكل يوم" }
+    ]
+  };
+
+  // Cuts & Styles for Abaya
+  const cutsDB = {
+    classic: [
+      { id: "cut_aline", title: "قصّة A-Line", desc: "كلاسيكية متسعة", img: "/images/aline.jpg" },
+      { id: "cut_straight", title: "قصّة مستقيمة", desc: "أنيقة وعملية", img: "/images/straight.jpg" }
+    ],
+    modern: [
+      { id: "cut_overlay", title: "طبقات (Overlay)", desc: "عصرية ومتداخلة", img: "/images/overlay.jpg" },
+      { id: "cut_belted", title: "بحزام (Belted)", desc: "مودرن ومحدد", img: "/images/belted.jpg" },
+      { id: "cut_asymmetric", title: "غير متناظرة", desc: "جريئة وعصرية", img: "/images/asymmetric-cut.jpg" }
+    ],
+    casual: [
+      { id: "cut_open_front", title: "مفتوحة (Open Front)", desc: "كاجوال وسهلة", img: "/images/openfront.jpg" },
+      { id: "cut_relaxed", title: "فضفاضة Relaxed", desc: "مريحة جداً", img: "/images/relaxed-casual.jpg" }
+    ]
+  };
+
+  // Openings / Necklines / Hoods
+  const openingsDB = {
+    classic: [
+      { id: "open_classic", title: "فتحة كلاسيكية أمامية", img: "/images/classic-open.jpg" }
+    ],
+    modern: [
+      { id: "open_asymmetric_slit", title: "فتحة غير متناظرة", img: "/images/asymmetric.jpg" },
+      { id: "open_side_slit", title: "فتحة جناب (Side Slit)", img: "/images/side-slit.jpg" },
+      { id: "open_v_neck", title: "فتحة V عصرية", img: "/images/vneck-abaya.jpg" }
+    ],
+    casual: [
+      { id: "open_hood", title: "بقب صغير (ودينة)", img: "/images/hood-casual.jpg" },
+      { id: "open_round", title: "فتحة دائرية بسيطة", img: "/images/round-open.jpg" }
+    ]
+  };
+
+  // Finishing / Embroidery / Details
+  const finishingDB = {
+    classic: [
+      { id: "fin_lace", title: "تطريز دانتيل فاخر", desc: "أناقة كلاسيكية", img: "/images/lace.jpg" },
+      { id: "fin_simple", title: "تشطيب بسيط ناعم", desc: "نظيف وملكي", img: "/images/simple-finish.jpg" },
+      { id: "fin_gold_thread", title: "تطريز بخيوط ذهبية", desc: "فخامة", img: "/images/gold-thread.jpg" }
+    ],
+    modern: [
+      { id: "fin_border_emb", title: "تطريز على الحواف", desc: "عصري ومميز", img: "/images/border-emb.jpg" },
+      { id: "fin_metallic", title: "خيوط معدنية لامعة", desc: "لمسة عصرية", img: "/images/metallic.jpg" },
+      { id: "fin_minimalist", title: "تشطيب مينيمال", desc: "بساطة أنيقة", img: "/images/minimalist.jpg" }
+    ],
+    casual: [
+      { id: "fin_no_emb", title: "بدون تطريز - ناعم", desc: "نظيف كاجوال", img: "/images/no-emb.jpg" },
+      { id: "fin_contrast", title: "تطريز بسيط متباين", desc: "لمسة بسيطة", img: "/images/contrast-stitch.jpg" }
+    ]
+  };
+
+  // Color Palettes for Abaya
+  const colorGroups = [
+    { name: "👑 ألوان كلاسيكية فخمة", colors: ["#1A1A1A","#2C2C2C","#4A4A4A","#6B6B6B","#8B0000","#1B2F4F"] },
+    { name: "✨ ألوان عصرية راقية", colors: ["#C5A059","#B8860B","#8B7355","#FDF5E6","#D4AF37","#2C3E50"] },
+    { name: "🌸 ألوان باستيل ناعمة", colors: ["#FADADD","#E6E6FA","#B0E0E6","#FDE2C4","#D8BFD8","#C5E0B4"] },
+    { name: "🎨 ألوان جريئة وشبابية", colors: ["#E63946","#F4A261","#2A9D8F","#D90368","#9B5DE5","#00BBF9"] }
+  ];
+
+  // Helper: Render Items
+  function renderItems(containerId, items, selectedKey, onSelect) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = items.map(item => `
+      <div class="choice-card ${selectedKey === item.id ? 'selected-card' : ''}" data-id="${item.id}">
+        <img src="${item.img}" alt="${item.title}" onerror="this.src='https://placehold.co/200x140/F4EDE6/B8860B?text=${encodeURIComponent(item.title)}'">
+        <div class="card-title">${item.title}</div>
+        ${item.best ? `<div class="best-tag">${item.best}</div>` : ''}
+        ${item.desc ? `<div class="desc-tag">${item.desc}</div>` : ''}
+      </div>
+    `).join('');
+    container.querySelectorAll('.choice-card').forEach(el => {
+      el.addEventListener('click', () => {
+        const newId = el.dataset.id;
+        onSelect(newId === selectedKey ? null : newId);
+        renderCurrentUI();
+        updateDesignSheet();
+      });
+    });
+  }
+
+  // Render all UI based on current style
+  function renderCurrentUI() {
+    const fabrics = fabricsDB[currentStyle] || fabricsDB.modern;
+    const cuts = cutsDB[currentStyle] || cutsDB.modern;
+    const openings = openingsDB[currentStyle] || openingsDB.modern;
+    const finishes = finishingDB[currentStyle] || finishingDB.modern;
+    
+    renderItems('fabricContainer', fabrics, selections.fabric, (id) => selections.fabric = id);
+    renderItems('cutContainer', cuts, selections.cut, (id) => selections.cut = id);
+    renderItems('openingContainer', openings, selections.opening, (id) => selections.opening = id);
+    renderItems('finishingContainer', finishes, selections.finishing, (id) => selections.finishing = id);
+  }
+
+  // Render Color Palette
+  function renderPalette() {
+    const container = document.getElementById('paletteContainer');
+    let html = '';
+    colorGroups.forEach(g => {
+      html += `<div class="palette-group">
+        <div style="font-size:0.8rem; font-weight:600; color:#B8860B; margin-bottom:6px;">${g.name}</div>
+        <div class="color-swatches">`;
+      g.colors.forEach(c => { html += `<div class="color-circle" style="background:${c};" data-color="${c}"></div>`; });
+      html += `</div></div>`;
+    });
+    container.innerHTML = html;
+    
+    document.querySelectorAll('.color-circle').forEach(el => {
+      el.addEventListener('click', () => {
+        selections.color = el.dataset.color;
+        document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected-color'));
+        el.classList.add('selected-color');
+        updateDesignSheet();
+      });
+      if (selections.color && el.dataset.color === selections.color) {
+        el.classList.add('selected-color');
+      }
+    });
+  }
+
+  // Update Design Sheet & Quick Summary
+  function updateDesignSheet() {
+    const fabrics = fabricsDB[currentStyle] || fabricsDB.modern;
+    const cuts = cutsDB[currentStyle] || cutsDB.modern;
+    const openings = openingsDB[currentStyle] || openingsDB.modern;
+    const finishes = finishingDB[currentStyle] || finishingDB.modern;
+    
+    const fabricObj = fabrics.find(f => f.id === selections.fabric);
+    const cutObj = cuts.find(c => c.id === selections.cut);
+    const openingObj = openings.find(o => o.id === selections.opening);
+    const finishObj = finishes.find(f => f.id === selections.finishing);
+    
+    const styleMap = { classic: "كلاسيكية فخمة", modern: "عصرية (Chic)", casual: "كاجوال (Daily)" };
+    
+    const shoulder = document.getElementById('shoulder').value || '—';
+    const bust = document.getElementById('bust').value || '—';
+    const waist = document.getElementById('waist').value || '—';
+    const hips = document.getElementById('hips').value || '—';
+    const length = document.getElementById('length').value || '—';
+    const sleeve = document.getElementById('sleeve').value || '—';
+    const armCirc = document.getElementById('armCirc').value || '—';
+    
+    document.getElementById('summaryStyle').innerText = styleMap[currentStyle];
+    document.getElementById('summaryFabric').innerText = fabricObj?.title || '—';
+    document.getElementById('summaryCut').innerText = cutObj?.title || '—';
+    document.getElementById('summaryOpening').innerText = openingObj?.title || '—';
+    document.getElementById('summaryFinish').innerText = finishObj?.title || '—';
+    document.getElementById('summaryColor').innerText = selections.color || '—';
+    document.getElementById('summaryMeasure').innerHTML = `كتف ${shoulder} | صدر ${bust} | خصر ${waist} | ورك ${hips} | طول ${length} | كم ${sleeve} | ذراع ${armCirc}`;
+    
+    const shortSummary = `عباية ${styleMap[currentStyle]} | ${fabricObj?.title || '?'} | ${cutObj?.title || '?'} | لون:${selections.color || '?'}`;
+    document.getElementById('quickSummary').innerHTML = `<i class="fas fa-robe"></i> ${shortSummary}`;
+  }
+
+  // Build WhatsApp Message (Detailed Order)
+  function buildWhatsAppMessage() {
+    const fabrics = fabricsDB[currentStyle] || fabricsDB.modern;
+    const cuts = cutsDB[currentStyle] || cutsDB.modern;
+    const openings = openingsDB[currentStyle] || openingsDB.modern;
+    const finishes = finishingDB[currentStyle] || finishingDB.modern;
+    
+    const fabricObj = fabrics.find(f => f.id === selections.fabric) || { title: 'غير محدد' };
+    const cutObj = cuts.find(c => c.id === selections.cut) || { title: 'غير محدد' };
+    const openingObj = openings.find(o => o.id === selections.opening) || { title: 'غير محدد' };
+    const finishObj = finishes.find(f => f.id === selections.finishing) || { title: 'غير محدد' };
+    
+    const styleMap = { classic: "كلاسيكية فخمة", modern: "عصرية شيك", casual: "كاجوال يومي" };
+    
+    const shoulder = document.getElementById('shoulder').value || '—';
+    const bust = document.getElementById('bust').value || '—';
+    const waist = document.getElementById('waist').value || '—';
+    const hips = document.getElementById('hips').value || '—';
+    const length = document.getElementById('length').value || '—';
+    const sleeve = document.getElementById('sleeve').value || '—';
+    const armCirc = document.getElementById('armCirc').value || '—';
+    const notes = document.getElementById('specialNotes').value || 'لا توجد ملاحظات';
+    const photoStatus = document.getElementById('photoPreview')?.innerText || 'بدون صورة';
+    
+    return encodeURIComponent(`🌹 *طلب عباية - Almaya Couture* 🌹
+━━━━━━━━━━━━━━━━━━━━
+👗 *نمط العباية:* ${styleMap[currentStyle]}
+🧶 *القماش:* ${fabricObj.title}
+✂️ *القصة:* ${cutObj.title}
+🚪 *التصميم/الفتحة:* ${openingObj.title}
+🧵 *التشطيب والتطريز:* ${finishObj.title}
+🎨 *اللون:* ${selections.color || 'غير محدد'}
+
+📏 *المقاسات الدقيقة (سم):*
+الكتف: ${shoulder} | الصدر: ${bust} | الخصر: ${waist}
+الورك: ${hips} | الطول الكلي: ${length} | طول الكم: ${sleeve}
+دورة الذراع: ${armCirc}
+
+📝 *ملاحظات المعلمة:*
+${notes}
+
+🖼️ *صورة مرفقة:* ${photoStatus}
+
+✨ ننتظر تأكيدكم لتطريز العباية بإتقان وحرفية.
+شكراً لثقتكم 🤲`);
+  }
+
+  // Reset all selections
+  function resetAll() {
+    selections = { fabric: null, cut: null, opening: null, finishing: null, color: null };
+    ['shoulder','bust','waist','hips','length','sleeve','armCirc'].forEach(id => {
+      const input = document.getElementById(id);
+      if (input) input.value = '';
+    });
+    document.getElementById('specialNotes').value = '';
+    document.getElementById('photoPreview').innerHTML = '';
+    document.getElementById('inspirePhoto').value = '';
+    renderCurrentUI();
+    renderPalette();
+    updateDesignSheet();
+  }
+
+  // Event Listeners
+  function bindEvents() {
+    // Style buttons
+    document.querySelectorAll('.style-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentStyle = btn.dataset.style;
+        document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selections = { fabric: null, cut: null, opening: null, finishing: null, color: selections.color };
+        renderCurrentUI();
+        renderPalette();
+        updateDesignSheet();
+      });
+    });
+    
+    // Measurement inputs
+    ['shoulder','bust','waist','hips','length','sleeve','armCirc'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => updateDesignSheet());
+    });
+    
+    // Notes
+    document.getElementById('specialNotes').addEventListener('input', () => updateDesignSheet());
+    
+    // WhatsApp button
+    document.getElementById('whatsappBtn').addEventListener('click', () => {
+      window.open(`https://wa.me/212601245733?text=${buildWhatsAppMessage()}`, '_blank');
+    });
+    
+    // Reset button
+    document.getElementById('resetBtn').addEventListener('click', resetAll);
+    
+    // Photo upload
+    document.getElementById('uploadTrigger').addEventListener('click', () => {
+      document.getElementById('inspirePhoto').click();
+    });
+    document.getElementById('inspirePhoto').addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length) {
+        document.getElementById('photoPreview').innerHTML = `📸 تم رفع: ${e.target.files[0].name.substring(0, 40)}`;
+      }
+    });
+  }
+  
+  // Scroll animation for logo
+  window.addEventListener('scroll', () => {
+    const logoSection = document.getElementById('logoSection');
+    if (window.scrollY > 40) {
+      logoSection.classList.add('scrolled');
+    } else {
+      logoSection.classList.remove('scrolled');
+    }
+  });
+  
+  // Initialize
+  function init() {
+    renderCurrentUI();
+    renderPalette();
+    updateDesignSheet();
+    bindEvents();
+  }
+  
+  init();
+</script>
+</body>
+</html>

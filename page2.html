@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>المايا كوتور | Almaya Couture - التشكيلة الكاملة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style id="dynamic-styles-page2">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: #F9F7F2; font-family: 'Inter', sans-serif; color: #2c2a27; transition: opacity 0.55s cubic-bezier(0.23,1,0.32,1); }
+    body.page-transition { opacity: 0; pointer-events: none; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem 2rem 5rem 2rem; }
+    .logo-section { text-align: center; margin-bottom: 2rem; padding: 1rem 0 0.5rem 0; border-bottom: 1px solid rgba(183,140,72,0.2); }
+    .brand-logo { max-width: 220px; height: auto; transition: transform 0.3s ease; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08)); }
+    .brand-logo:hover { transform: scale(1.02); }
+    .section-header { text-align: center; margin-bottom: 2.5rem; }
+    .section-header h2 { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 2.6rem; border-bottom: 1px solid rgba(183,140,72,0.25); display: inline-block; padding-bottom: 0.5rem; }
+    .section-header p { margin-top: 0.75rem; }
+    .single-row-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.8rem; margin-top: 1rem; }
+    .category-card { background: transparent; border-radius: 0; transition: transform 0.3s ease; text-decoration: none; cursor: pointer; display: block; width: 100%; }
+    .card-image { position: relative; width: 100%; padding-bottom: 130%; background-color: #eae6df; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08); transition: box-shadow 0.3s ease; }
+    .category-card:hover .card-image { box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15); }
+    .real-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .category-card:hover .real-image { transform: scale(1.06); }
+    .card-overlay-btn { position: absolute; inset: 0; background: rgba(249,247,242,0.82); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; border-radius: 24px; }
+    .category-card:hover .card-overlay-btn { opacity: 1; pointer-events: auto; }
+    .gold-btn { background: transparent; border: 1.5px solid #c8a86b; padding: 0.7rem 1.3rem; font-weight: 500; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: #9e7a47; background-color: rgba(249,247,242,0.92); transition: all 0.3s ease; cursor: pointer; border-radius: 40px; text-decoration: none; display: inline-block; }
+    .gold-btn:hover { background: #c8a86b; color: #F9F7F2; transform: scale(0.96); }
+    .card-info { margin-top: 1rem; text-align: center; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .card-sub { font-size: 0.7rem; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
+    @media (max-width: 1100px) { .single-row-grid { gap: 1.2rem; } .card-title { font-size: 1.3rem; } }
+    @media (max-width: 850px) { .container { padding: 1rem 1rem 3rem 1rem; } .card-title { font-size: 1.1rem; } .brand-logo { max-width: 150px; } }
+    @media (max-width: 650px) { .single-row-grid { gap: 0.6rem; } .card-title { font-size: 0.95rem; } .gold-btn { padding: 0.3rem 0.6rem; font-size: 0.55rem; } }
+    .admin-link { position: fixed; bottom: 15px; right: 15px; z-index: 100; background: rgba(212,175,55,0.9); color: #2E241F; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: all 0.3s; opacity: 0.5; }
+    .admin-link:hover { opacity: 1; transform: scale(1.1); }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="logo-section">
+    <img id="site-logo" src="images/logo.jpg" alt="Almaya Couture Logo" class="brand-logo" onerror="this.src='https://placehold.co/400x150/F9F7F2/B78C48?text=Almaya+Couture'">
+    <div id="logo-text" class="logo-text" style="font-family:'Playfair Display'; font-size:0.9rem; margin-top:0.5rem;">خياطة المعلم · حرفة مغربية أصيلة</div>
+  </div>
+  <div class="section-header">
+    <h2 id="page-title">مجموعة الأزياء الراقية</h2>
+    <p id="page-description">تصاميم حصرية · إرث من الأناقة المغربية</p>
+    <div style="height:2px; width:60px; background:#dcc48e; margin:1rem auto 0;"></div>
+  </div>
+  <div class="single-row-grid" id="categories-container"></div>
+</div>
+<a href="admin-page2.html" id="admin-link" class="admin-link" title="إدارة الأقسام"><i class="fas fa-crown"></i></a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true });
+  
+  let defaultCategories = [
+    { id:1, name:"الجلابة", subtitle:"نعومة خالدة", image:"jellaba.jpg", link:"الجلبابة.html" },
+    { id:2, name:"القفطان", subtitle:"فخامة ملكية", image:"caftan.jpg", link:"القفطان.html" },
+    { id:3, name:"التكشيطة", subtitle:"أناقة العرائس", image:"takchita.jpg", link:"التكشيطة.html" },
+    { id:4, name:"الجبادور", subtitle:"رقي رجالي", image:"jabador.jpg", link:"الجبادور.html" },
+    { id:5, name:"العباية", subtitle:"عصرية ووقورة", image:"abaya.jpg", link:"العباية.html" }
+  ];
+  
+  function applyStyles(colors) {
+    if (!colors) return;
+    const styleTag = document.getElementById('dynamic-styles-page2');
+    if (!styleTag) return;
+    styleTag.textContent = styleTag.textContent + `
+      body { background-color: ${colors.bgColor} !important; }
+      .section-header h2 { color: ${colors.titleColor} !important; border-bottom-color: ${colors.titleColor}40 !important; }
+      .card-title { color: ${colors.cardTitleColor} !important; }
+      .card-sub { color: ${colors.subtitleColor} !important; }
+      .gold-btn { border-color: ${colors.btnBorderColor} !important; color: ${colors.btnBorderColor} !important; }
+      .gold-btn:hover { background: ${colors.btnBorderColor} !important; color: white !important; }
+    `;
+  }
+  
+  function loadCategories() {
+    const siteData = localStorage.getItem('almaya_page2_data');
+    let cats = defaultCategories;
+    let images = {};
+    
+    if(siteData) {
+      const data = JSON.parse(siteData);
+      if(data.categories && data.categories.length) cats = data.categories;
+      if(data.images) images = JSON.parse(data.images);
+      
+      if(data.texts) {
+        if(data.texts.logo) document.getElementById('site-logo').src = data.texts.logo;
+        if(data.texts.pageTitle) document.getElementById('page-title').innerText = data.texts.pageTitle;
+        if(data.texts.pageDescription) document.getElementById('page-description').innerText = data.texts.pageDescription;
+        if(data.texts.logoText) document.getElementById('logo-text').innerText = data.texts.logoText;
+        if(data.texts.adminLink) document.getElementById('admin-link').href = data.texts.adminLink;
+      }
+      
+      if(data.colors) applyStyles(data.colors);
+    }
+    
+    const container = document.getElementById('categories-container');
+    if(!container) return;
+    
+    container.innerHTML = cats.map((cat, idx) => {
+      let imgSrc = (images[cat.image] && images[cat.image] !== "{}") ? images[cat.image] : cat.image;
+      if(!imgSrc || imgSrc === "") imgSrc = `images/${cat.image}`;
+      return `<a href="${cat.link}" class="category-card" data-aos="fade-up" data-aos-delay="${idx*100}">
+        <div class="card-image">
+          <img class="real-image" src="${imgSrc}" alt="${cat.name}" onerror="this.src='https://placehold.co/600x780/F4EDE6/B78C48?text=${encodeURIComponent(cat.name)}'">
+          <div class="card-overlay-btn"><span class="gold-btn">صمم قطعتك</span></div>
+        </div>
+        <div class="card-info">
+          <div class="card-title">${cat.name}</div>
+          <div class="card-sub">${cat.subtitle}</div>
+        </div>
+      </a>`;
+    }).join('');
+    
+    AOS.refresh();
+  }
+  
+  document.addEventListener('DOMContentLoaded', loadCategories);
+  window.addEventListener('storage', (e) => { 
+    if(e.key === 'almaya_page2_data') loadCategories();
+  });
+</script>
+</body>
+</html>
