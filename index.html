@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Almaya Couture | أزياء تقليدية مغربية فاخرة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind + Font Awesome + AOS (تبقى للصفحة كاملة) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- أنماط الصفحة الرئيسية فقط (لا يوجد أي تخصيص للـ header) -->
   <style id="dynamic-styles">
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: linear-gradient(135deg, #F5EDE2 0%, #EFE4D5 100%); font-family: 'Montserrat', 'Cairo', sans-serif; color: #3E2C23; scroll-behavior: smooth; overflow-x: hidden; }
@@ -34,46 +37,19 @@
     .video-container { height: 100%; min-height: 380px; background: linear-gradient(145deg, #E3D9CA, #D4C5B0); border-radius: 32px; overflow: hidden; position: relative; }
     .step-card { background: #FFFFFF; border: 1px solid rgba(212,175,55,0.15); transition: all 0.4s; border-radius: 2rem; color: #3E2C23; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
     .step-card:hover { border-color: rgba(212,175,55,0.4); transform: translateY(-5px); }
-    .nav-bar { background: rgba(245,237,226,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.15); }
-    .logo-center { display: flex; justify-content: center; align-items: center; padding: 1.8rem 0; background: transparent; }
-    .logo-main { width: 180px; height: auto; transition: all 0.5s; cursor: pointer; }
-    .logo-main:hover { transform: scale(1.05); filter: drop-shadow(0 10px 25px rgba(212,175,55,0.2)); }
-    .whatsapp-float { position: fixed; bottom: 24px; left: 24px; z-index: 100; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 25px rgba(37,211,102,0.3); transition: all 0.4s ease; font-size: 1.8rem; text-decoration: none; animation: pulse-wa 2s infinite; }
-    @keyframes pulse-wa { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); } 70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
-    .login-luxe { background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 40px; padding: 0.4rem 1.2rem; transition: all 0.3s; font-size: 0.7rem; color: #D4AF37; }
-    .login-luxe:hover { background: rgba(212,175,55,0.2); border-color: #D4AF37; transform: translateY(-1px); }
-    .contact-link { transition: all 0.3s; text-decoration: none; color: #3E2C23; }
-    .contact-link:hover { color: #D4AF37; }
-    .quality-line { font-size: 0.6rem; line-height: 1.35; color: #6F4E37; border-top: 1px solid #F0E4D5; padding-top: 0.5rem; margin-top: 0.5rem; }
     .section-title { position: relative; display: inline-block; }
     .section-title span { position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 70px; height: 3px; background: linear-gradient(90deg, #D4AF37, #C6A13A); border-radius: 3px; }
-    @media (max-width: 768px) { .hero-split { flex-direction: column-reverse; } .logo-main { width: 130px; } .whatsapp-float { width: 50px; height: 50px; font-size: 1.4rem; } }
+    @media (max-width: 768px) { .hero-split { flex-direction: column-reverse; } }
     h1, h2, h3 { font-family: 'Playfair Display', 'Cairo', serif; color: #3E2C23; }
     .price-tag { font-weight: 700; font-size: 0.85rem; }
   </style>
 </head>
 <body>
-  <div class="logo-center" data-aos="fade-down"><img id="site-logo" src="images/logo.jpg" alt="Almaya Couture Logo" class="logo-main" onerror="this.src='https://placehold.co/400x150/F9F7F2/B78C48?text=Almaya+Couture'"></div>
-  <nav class="nav-bar sticky top-0 z-50 w-full py-3 px-5 md:px-10 shadow-sm">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-      <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-xs md:text-sm w-full md:w-auto mx-auto">
-        <a href="#hero" class="hover:gold-text transition font-medium text-[#3E2C23]">الرئيسية</a>
-        <a href="#ready-to-wear" class="hover:gold-text transition font-medium text-[#3E2C23]">المجموعة الجاهزة</a>
-        <a href="#custom-order" class="hover:gold-text transition font-medium text-[#3E2C23]">الطلب حسب الطلب</a>
-        <a href="page2.html" class="hover:gold-text transition font-medium text-[#3E2C23]">المجموعة الكاملة</a>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2 text-[0.7rem] bg-white/60 rounded-full px-3 py-1.5 shadow-sm">
-          <a href="https://wa.me/212601245733" target="_blank" class="contact-link flex items-center gap-1"><i class="fab fa-whatsapp text-[#25D366]"></i><span class="font-mono" id="whatsapp-number-display">0601245733</span></a>
-          <span class="text-[#D4AF37]/40">|</span>
-          <a href="mailto:almayacouture@gmail.com" class="contact-link text-[0.65rem] hidden sm:inline" id="email-display">almayacouture@gmail.com</a>
-        </div>
-        <a href="admin.html" class="login-luxe flex items-center gap-2"><i class="fas fa-crown text-xs"></i><span class="hidden sm:inline">Admin</span></a>
-      </div>
-    </div>
-  </nav>
-  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" id="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+  <!-- الهيدر سيتم حقنه هنا من header.html عبر fetch -->
+
   <main class="max-w-[1600px] mx-auto">
+    <!-- محتوى الصفحة كما هو بدون تغيير -->
     <section id="hero" class="w-full py-8 md:py-16 px-5 md:px-10 lg:px-16">
       <div class="hero-split flex flex-wrap md:flex-nowrap gap-8 md:gap-16 items-stretch">
         <div class="w-full md:w-1/2 rounded-[2rem] overflow-hidden shadow-xl video-container relative order-first md:order-last" data-aos="fade-left">
@@ -99,8 +75,18 @@
     </section>
     <footer class="bg-[#E8DDD0] text-[#3E2C23] py-8 px-5"><div class="text-center text-[0.6rem] text-[#8B6B51]">© 2025 Almaya Couture — Morocco</div></footer>
   </main>
+
   <script>
     AOS.init({ duration: 800, once: true, offset: 100 });
+
+    // تحميل الهيدر المستقل
+    fetch('header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.body.insertAdjacentHTML('afterbegin', data);
+      })
+      .catch(error => console.error('خطأ في تحميل header.html:', error));
+
     let currentProducts = [];
     function loadAllData(){
       const siteData = localStorage.getItem('almaya_site_data');
