@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Almaya Couture | أزياء تقليدية مغربية فاخرة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style id="dynamic-styles">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: linear-gradient(135deg, #F5EDE2 0%, #EFE4D5 100%); font-family: 'Montserrat', 'Cairo', sans-serif; color: #3E2C23; scroll-behavior: smooth; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #E3D9CA; }
+    ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+    .gold-text, .price-tag { color: #D4AF37; }
+    .gold-bg { background: linear-gradient(135deg, #D4AF37 0%, #C6A13A 100%); }
+    .gold-btn { background: linear-gradient(135deg, #D4AF37 0%, #C6A13A 100%); transition: all 0.3s ease; color: #2E241F; box-shadow: 0 4px 12px rgba(212,175,55,0.2); position: relative; overflow: hidden; }
+    .gold-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+    .gold-btn:hover::before { left: 100%; }
+    .gold-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(212,175,55,0.35); }
+    .outline-gold { border: 1.5px solid #D4AF37; background: rgba(212,175,55,0.05); transition: all 0.3s ease; color: #3E2C23; }
+    .outline-gold:hover { background: rgba(212,175,55,0.12); transform: translateY(-2px); }
+    .product-card { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); background: #FFFFFF; border-radius: 24px; overflow: hidden; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(62,44,35,0.08); position: relative; }
+    .product-card::after { content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 2px; background: linear-gradient(135deg, #D4AF37, transparent); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .product-card:hover::after { opacity: 1; }
+    .product-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 25px 35px -12px rgba(212,175,55,0.2); }
+    .img-placeholder { background: linear-gradient(145deg, #F1EBE0 0%, #E3D9CA 100%); width: 100%; aspect-ratio: 1 / 0.95; position: relative; overflow: hidden; }
+    .img-placeholder img { transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); width: 100%; height: 100%; object-fit: cover; }
+    .product-card:hover .img-placeholder img { transform: scale(1.08); }
+    .badge-overlay { position: absolute; top: 12px; right: 12px; background: linear-gradient(135deg, #D4AF37, #C6A13A); color: #2E241F; font-size: 0.55rem; font-weight: 800; padding: 0.25rem 0.8rem; border-radius: 40px; z-index: 2; }
+    .video-container { height: 100%; min-height: 380px; background: linear-gradient(145deg, #E3D9CA, #D4C5B0); border-radius: 32px; overflow: hidden; position: relative; }
+    .step-card { background: #FFFFFF; border: 1px solid rgba(212,175,55,0.15); transition: all 0.4s; border-radius: 2rem; color: #3E2C23; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+    .step-card:hover { border-color: rgba(212,175,55,0.4); transform: translateY(-5px); }
+    .nav-bar { background: rgba(245,237,226,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.15); }
+    .logo-center { display: flex; justify-content: center; align-items: center; padding: 1.8rem 0; background: transparent; }
+    .logo-main { width: 180px; height: auto; transition: all 0.5s; cursor: pointer; }
+    .logo-main:hover { transform: scale(1.05); filter: drop-shadow(0 10px 25px rgba(212,175,55,0.2)); }
+    .whatsapp-float { position: fixed; bottom: 24px; left: 24px; z-index: 100; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 25px rgba(37,211,102,0.3); transition: all 0.4s ease; font-size: 1.8rem; text-decoration: none; animation: pulse-wa 2s infinite; }
+    @keyframes pulse-wa { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); } 70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+    .login-luxe { background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 40px; padding: 0.4rem 1.2rem; transition: all 0.3s; font-size: 0.7rem; color: #D4AF37; }
+    .login-luxe:hover { background: rgba(212,175,55,0.2); border-color: #D4AF37; transform: translateY(-1px); }
+    .contact-link { transition: all 0.3s; text-decoration: none; color: #3E2C23; }
+    .contact-link:hover { color: #D4AF37; }
+    .quality-line { font-size: 0.6rem; line-height: 1.35; color: #6F4E37; border-top: 1px solid #F0E4D5; padding-top: 0.5rem; margin-top: 0.5rem; }
+    .section-title { position: relative; display: inline-block; }
+    .section-title span { position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 70px; height: 3px; background: linear-gradient(90deg, #D4AF37, #C6A13A); border-radius: 3px; }
+    @media (max-width: 768px) { .hero-split { flex-direction: column-reverse; } .logo-main { width: 130px; } .whatsapp-float { width: 50px; height: 50px; font-size: 1.4rem; } }
+    h1, h2, h3 { font-family: 'Playfair Display', 'Cairo', serif; color: #3E2C23; }
+    .price-tag { font-weight: 700; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="logo-center" data-aos="fade-down"><img id="site-logo" src="images/logo.jpg" alt="Almaya Couture Logo" class="logo-main" onerror="this.src='https://placehold.co/400x150/F9F7F2/B78C48?text=Almaya+Couture'"></div>
+  <nav class="nav-bar sticky top-0 z-50 w-full py-3 px-5 md:px-10 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-xs md:text-sm w-full md:w-auto mx-auto">
+        <a href="#hero" class="hover:gold-text transition font-medium text-[#3E2C23]">الرئيسية</a>
+        <a href="#ready-to-wear" class="hover:gold-text transition font-medium text-[#3E2C23]">المجموعة الجاهزة</a>
+        <a href="#custom-order" class="hover:gold-text transition font-medium text-[#3E2C23]">الطلب حسب الطلب</a>
+        <a href="page2.html" class="hover:gold-text transition font-medium text-[#3E2C23]">المجموعة الكاملة</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 text-[0.7rem] bg-white/60 rounded-full px-3 py-1.5 shadow-sm">
+          <a href="https://wa.me/212601245733" target="_blank" class="contact-link flex items-center gap-1"><i class="fab fa-whatsapp text-[#25D366]"></i><span class="font-mono" id="whatsapp-number-display">0601245733</span></a>
+          <span class="text-[#D4AF37]/40">|</span>
+          <a href="mailto:almayacouture@gmail.com" class="contact-link text-[0.65rem] hidden sm:inline" id="email-display">almayacouture@gmail.com</a>
+        </div>
+        <a href="admin.html" class="login-luxe flex items-center gap-2"><i class="fas fa-crown text-xs"></i><span class="hidden sm:inline">Admin</span></a>
+      </div>
+    </div>
+  </nav>
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" id="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+  <main class="max-w-[1600px] mx-auto">
+    <section id="hero" class="w-full py-8 md:py-16 px-5 md:px-10 lg:px-16">
+      <div class="hero-split flex flex-wrap md:flex-nowrap gap-8 md:gap-16 items-stretch">
+        <div class="w-full md:w-1/2 rounded-[2rem] overflow-hidden shadow-xl video-container relative order-first md:order-last" data-aos="fade-left">
+          <video autoplay loop muted playsinline class="w-full h-full object-cover min-h-[280px] md:min-h-[420px]"><source id="video-source" src="images/intro.mp4" type="video/mp4"></video>
+        </div>
+        <div class="w-full md:w-1/2 flex flex-col justify-center items-start space-y-5 md:space-y-7" data-aos="fade-right">
+          <span class="text-xs tracking-[0.3em] uppercase gold-text font-semibold border-r-4 border-[#D4AF37] pr-3">Almaya Couture</span>
+          <h1 class="text-4xl md:text-6xl font-bold leading-tight" id="hero-title">"غرزة حُب..<br>من يد الميمة لكل مغربية"</h1>
+          <p class="text-[#5A4438] text-sm md:text-base leading-relaxed max-w-lg" id="hero-description">بدأت حكايتنا في ركن دافئ من بيتنا، حيث كانت "ماما" تخيط لنا بيديها قطعاً ليست مجرد لباس، بل قصائد محبة.</p>
+          <p class="text-[#8F6F55] text-[0.75rem] italic border-r-2 border-[#D4AF37]/40 pr-3" id="hero-subtitle">"A Stitch of Love.. From Mom's Hands to Every Moroccan Home"</p>
+          <div class="flex flex-wrap gap-4 pt-3"><button onclick="scrollToShop()" class="gold-btn px-6 py-2.5 rounded-full font-semibold shadow-lg">✨ اكتشفي مجموعتنا الجاهزة</button><button onclick="scrollToCustom()" class="outline-gold px-6 py-2.5 rounded-full font-semibold">خيطي قطعتكِ بكل حب ✨</button></div>
+        </div>
+      </div>
+    </section>
+    <section id="ready-to-wear" class="w-full px-5 md:px-10 lg:px-16 py-14 md:py-20 bg-[#F5EDE2]">
+      <div class="max-w-7xl mx-auto"><div class="text-center mb-12"><h2 class="section-title text-3xl md:text-4xl font-bold inline-block">مختاراتنا الجاهزة<span></span></h2><p class="text-[#A08163] text-sm mt-6">Our Ready-to-Wear: Perfection in Every Detail</p></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="products-container"></div></div>
+    </section>
+    <section id="custom-order" class="w-full px-5 md:px-10 lg:px-16 py-16 md:py-24 bg-[#EFE4D5]">
+      <div class="max-w-6xl mx-auto text-center"><h2 class="text-3xl md:text-5xl font-bold mb-4">قطعتكِ الفريدة.. برؤيتكِ ولمسة خبيرتنا</h2><p class="text-[#B28B65] text-base mb-6">Your Unique Piece, Guided by our Expert Mother</p><div class="w-24 h-[2px] bg-[#D4AF37] mx-auto mb-12"></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"><div class="step-card p-6"><div class="w-16 h-16 rounded-full gold-bg flex items-center justify-center mx-auto mb-4 shadow-md"><span class="text-2xl font-bold text-[#2E241F]">1</span></div><h3 class="text-xl font-bold mb-2">الاستشارة</h3><p class="text-sm">نتواصل معكِ لنفهم ذوقكِ والمناسبة.</p></div><div class="step-card p-6"><div class="w-16 h-16 rounded-full gold-bg flex items-center justify-center mx-auto mb-4 shadow-md"><span class="text-2xl font-bold text-[#2E241F]">2</span></div><h3 class="text-xl font-bold mb-2">الانتقاء</h3><p class="text-sm">نختار أجود الأثواب والخيوط.</p></div><div class="step-card p-6"><div class="w-16 h-16 rounded-full gold-bg flex items-center justify-center mx-auto mb-4 shadow-md"><span class="text-2xl font-bold text-[#2E241F]">3</span></div><h3 class="text-xl font-bold mb-2">التنفيذ</h3><p class="text-sm">رحلة الخياطة اليدوية، نراقب كل غرزة.</p></div></div>
+      <div class="mt-12"><a href="page2.html" class="gold-btn inline-flex items-center gap-3 px-8 py-3 rounded-full text-base font-semibold shadow-lg transition hover:scale-105"><span>🌟</span> ابدئي رحلة تصميم قطعتكِ الآن <span>🌟</span></a></div></div>
+    </section>
+    <footer class="bg-[#E8DDD0] text-[#3E2C23] py-8 px-5"><div class="text-center text-[0.6rem] text-[#8B6B51]">© 2025 Almaya Couture — Morocco</div></footer>
+  </main>
+  <script>
+    AOS.init({ duration: 800, once: true, offset: 100 });
+    let currentProducts = [];
+    function loadAllData(){
+      const siteData = localStorage.getItem('almaya_site_data');
+      if(siteData){
+        const data = JSON.parse(siteData);
+        if(data.products && data.products.length) currentProducts = data.products;
+        else currentProducts = [];
+        renderProducts(data.products || [], data.images ? JSON.parse(data.images) : {});
+        if(data.settings){
+          if(data.settings.logo) document.getElementById('site-logo').src = data.settings.logo;
+          if(data.settings.heroText) document.getElementById('hero-title').innerHTML = `"${data.settings.heroText}"`;
+          if(data.settings.heroSubtitle) document.getElementById('hero-subtitle').innerHTML = data.settings.heroSubtitle;
+          if(data.settings.heroDescription) document.getElementById('hero-description').innerHTML = data.settings.heroDescription;
+          if(data.settings.video) document.getElementById('video-source').src = data.settings.video;
+          if(data.settings.whatsapp){
+            document.getElementById('whatsapp-number-display').innerText = data.settings.whatsapp;
+            document.getElementById('whatsapp-float').href = `https://wa.me/${data.settings.whatsapp}`;
+            document.querySelectorAll('a[href*="wa.me"]').forEach(l=>l.href=`https://wa.me/${data.settings.whatsapp}`);
+          }
+          if(data.settings.email){
+            document.getElementById('email-display').innerText = data.settings.email;
+            document.querySelectorAll('a[href*="mailto"]').forEach(l=>l.href=`mailto:${data.settings.email}`);
+          }
+          if(data.settings.primaryColor){
+            document.documentElement.style.setProperty('--gold-color', data.settings.primaryColor);
+          }
+        }
+      } else { renderProducts(defaultProducts, {}); }
+    }
+    function renderProducts(prods, images){
+      const container = document.getElementById('products-container');
+      if(!container) return;
+      if(!prods.length) prods = [{ id:1, name:"Caftan Joya", price:"1,250 MAD", image:"tswira1.jpg", sizes:"S, M, L, XL", quality:"✨ Luxe et élégance\n✨ Tissu de qualité\n✨ Finitions main", link:"#" }];
+      container.innerHTML = prods.map(p => `<div class="product-card" onclick="window.open('${p.link || '#'}', '_blank')"><div class="img-placeholder"><img src="${images[p.image] || 'images/'+p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/300x300/F1EBE0/D4AF37?text=${p.name}'"><span class="badge-overlay">⭐ ماما</span></div><div class="p-4 bg-white"><div class="flex justify-between"><h3 class="font-bold">${p.name}</h3><span class="price-tag">${p.price}</span></div><div class="mt-2 flex gap-2 text-xs text-[#5A4438] flex-wrap">${(p.sizes||'').split(',').map(s=>`<span class="px-2 py-0.5 bg-[#F5EDE2] rounded-full">${s.trim()}</span>`).join(' ')}</div><div class="quality-line">${(p.quality||'').split('\n').map(l=>`<p>${l}</p>`).join('')}</div></div></div>`).join('');
+    }
+    function scrollToShop(){ document.getElementById('ready-to-wear').scrollIntoView({ behavior: 'smooth' }); }
+    function scrollToCustom(){ document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth' }); }
+    document.addEventListener('DOMContentLoaded', () => { loadAllData(); const v=document.querySelector('video'); if(v) v.play().catch(e=>console.log()); });
+    window.addEventListener('storage', (e) => { if(e.key === 'almaya_site_data') loadAllData(); });
+  </script>
+</body>
+</html>
