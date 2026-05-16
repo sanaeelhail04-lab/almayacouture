@@ -3,128 +3,515 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>المايا كوتور | Almaya Couture - التشكيلة الكاملة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Almaya Couture | اختاري تصاميمك - الإطلاق الرسمي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style id="dynamic-styles-page2">
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background-color: #F9F7F2; font-family: 'Inter', sans-serif; color: #2c2a27; transition: opacity 0.55s cubic-bezier(0.23,1,0.32,1); }
-    body.page-transition { opacity: 0; pointer-events: none; }
-    .container { max-width: 1400px; margin: 0 auto; padding: 2rem 2rem 5rem 2rem; }
-    .logo-section { text-align: center; margin-bottom: 2rem; padding: 1rem 0 0.5rem 0; border-bottom: 1px solid rgba(183,140,72,0.2); }
-    .brand-logo { max-width: 220px; height: auto; transition: transform 0.3s ease; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08)); }
-    .brand-logo:hover { transform: scale(1.02); }
-    .section-header { text-align: center; margin-bottom: 2.5rem; }
-    .section-header h2 { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 2.6rem; border-bottom: 1px solid rgba(183,140,72,0.25); display: inline-block; padding-bottom: 0.5rem; }
-    .section-header p { margin-top: 0.75rem; }
-    .single-row-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.8rem; margin-top: 1rem; }
-    .category-card { background: transparent; border-radius: 0; transition: transform 0.3s ease; text-decoration: none; cursor: pointer; display: block; width: 100%; }
-    .card-image { position: relative; width: 100%; padding-bottom: 130%; background-color: #eae6df; overflow: hidden; border-radius: 24px; box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08); transition: box-shadow 0.3s ease; }
-    .category-card:hover .card-image { box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15); }
-    .real-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94); }
-    .category-card:hover .real-image { transform: scale(1.06); }
-    .card-overlay-btn { position: absolute; inset: 0; background: rgba(249,247,242,0.82); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; border-radius: 24px; }
-    .category-card:hover .card-overlay-btn { opacity: 1; pointer-events: auto; }
-    .gold-btn { background: transparent; border: 1.5px solid #c8a86b; padding: 0.7rem 1.3rem; font-weight: 500; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: #9e7a47; background-color: rgba(249,247,242,0.92); transition: all 0.3s ease; cursor: pointer; border-radius: 40px; text-decoration: none; display: inline-block; }
-    .gold-btn:hover { background: #c8a86b; color: #F9F7F2; transform: scale(0.96); }
-    .card-info { margin-top: 1rem; text-align: center; }
-    .card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .card-sub { font-size: 0.7rem; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
-    @media (max-width: 1100px) { .single-row-grid { gap: 1.2rem; } .card-title { font-size: 1.3rem; } }
-    @media (max-width: 850px) { .container { padding: 1rem 1rem 3rem 1rem; } .card-title { font-size: 1.1rem; } .brand-logo { max-width: 150px; } }
-    @media (max-width: 650px) { .single-row-grid { gap: 0.6rem; } .card-title { font-size: 0.95rem; } .gold-btn { padding: 0.3rem 0.6rem; font-size: 0.55rem; } }
-    .admin-link { position: fixed; bottom: 15px; right: 15px; z-index: 100; background: rgba(212,175,55,0.9); color: #2E241F; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: all 0.3s; opacity: 0.5; }
-    .admin-link:hover { opacity: 1; transform: scale(1.1); }
-  </style>
-</head>
-<body>
-<div class="container">
-  <div class="logo-section">
-    <img id="site-logo" src="images/logo.jpg" alt="Almaya Couture Logo" class="brand-logo" onerror="this.src='https://placehold.co/400x150/F9F7F2/B78C48?text=Almaya+Couture'">
-    <div id="logo-text" class="logo-text" style="font-family:'Playfair Display'; font-size:0.9rem; margin-top:0.5rem;">خياطة المعلم · حرفة مغربية أصيلة</div>
-  </div>
-  <div class="section-header">
-    <h2 id="page-title">مجموعة الأزياء الراقية</h2>
-    <p id="page-description">تصاميم حصرية · إرث من الأناقة المغربية</p>
-    <div style="height:2px; width:60px; background:#dcc48e; margin:1rem auto 0;"></div>
-  </div>
-  <div class="single-row-grid" id="categories-container"></div>
-</div>
-<a href="admin-page2.html" id="admin-link" class="admin-link" title="إدارة الأقسام"><i class="fas fa-crown"></i></a>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-<script>
-  AOS.init({ duration: 800, once: true });
-  
-  let defaultCategories = [
-    { id:1, name:"الجلابة", subtitle:"نعومة خالدة", image:"jellaba.jpg", link:"الجلبابة.html" },
-    { id:2, name:"القفطان", subtitle:"فخامة ملكية", image:"caftan.jpg", link:"القفطان.html" },
-    { id:3, name:"التكشيطة", subtitle:"أناقة العرائس", image:"takchita.jpg", link:"التكشيطة.html" },
-    { id:4, name:"الجبادور", subtitle:"رقي رجالي", image:"jabador.jpg", link:"الجبادور.html" },
-    { id:5, name:"العباية", subtitle:"عصرية ووقورة", image:"abaya.jpg", link:"العباية.html" }
-  ];
-  
-  function applyStyles(colors) {
-    if (!colors) return;
-    const styleTag = document.getElementById('dynamic-styles-page2');
-    if (!styleTag) return;
-    styleTag.textContent = styleTag.textContent + `
-      body { background-color: ${colors.bgColor} !important; }
-      .section-header h2 { color: ${colors.titleColor} !important; border-bottom-color: ${colors.titleColor}40 !important; }
-      .card-title { color: ${colors.cardTitleColor} !important; }
-      .card-sub { color: ${colors.subtitleColor} !important; }
-      .gold-btn { border-color: ${colors.btnBorderColor} !important; color: ${colors.btnBorderColor} !important; }
-      .gold-btn:hover { background: ${colors.btnBorderColor} !important; color: white !important; }
-    `;
-  }
-  
-  function loadCategories() {
-    const siteData = localStorage.getItem('almaya_page2_data');
-    let cats = defaultCategories;
-    let images = {};
-    
-    if(siteData) {
-      const data = JSON.parse(siteData);
-      if(data.categories && data.categories.length) cats = data.categories;
-      if(data.images) images = JSON.parse(data.images);
-      
-      if(data.texts) {
-        if(data.texts.logo) document.getElementById('site-logo').src = data.texts.logo;
-        if(data.texts.pageTitle) document.getElementById('page-title').innerText = data.texts.pageTitle;
-        if(data.texts.pageDescription) document.getElementById('page-description').innerText = data.texts.pageDescription;
-        if(data.texts.logoText) document.getElementById('logo-text').innerText = data.texts.logoText;
-        if(data.texts.adminLink) document.getElementById('admin-link').href = data.texts.adminLink;
-      }
-      
-      if(data.colors) applyStyles(data.colors);
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
-    const container = document.getElementById('categories-container');
-    if(!container) return;
+    body {
+      background: #1A1510;
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      color: #E8DDD0;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
     
-    container.innerHTML = cats.map((cat, idx) => {
-      let imgSrc = (images[cat.image] && images[cat.image] !== "{}") ? images[cat.image] : cat.image;
-      if(!imgSrc || imgSrc === "") imgSrc = `images/${cat.image}`;
-      return `<a href="${cat.link}" class="category-card" data-aos="fade-up" data-aos-delay="${idx*100}">
-        <div class="card-image">
-          <img class="real-image" src="${imgSrc}" alt="${cat.name}" onerror="this.src='https://placehold.co/600x780/F4EDE6/B78C48?text=${encodeURIComponent(cat.name)}'">
-          <div class="card-overlay-btn"><span class="gold-btn">صمم قطعتك</span></div>
-        </div>
-        <div class="card-info">
-          <div class="card-title">${cat.name}</div>
-          <div class="card-sub">${cat.subtitle}</div>
-        </div>
-      </a>`;
-    }).join('');
+    /* كيرسر مخصص ذهبي */
+    .custom-cursor {
+      width: 28px;
+      height: 28px;
+      border: 2px solid #C4A06A;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
+      transform: translate(-50%, -50%);
+    }
+    .custom-cursor.hover {
+      width: 48px;
+      height: 48px;
+      background: rgba(196, 160, 106, 0.15);
+      border-color: #D4B896;
+    }
     
-    AOS.refresh();
-  }
+    /* تخصيص السكرول */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #2A2218;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C4A06A;
+      border-radius: 10px;
+    }
+    
+    .gold-text {
+      color: #C4A06A;
+    }
+    
+    /* زليج مغربي */
+    .zelij-pattern {
+      position: relative;
+    }
+    .zelij-pattern::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3Cpath fill='%23D4B896' d='M50,25 L75,50 L50,75 L25,50 Z'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 45px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    /* نافبار */
+    .nav-bar {
+      background: rgba(26, 21, 16, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196, 160, 106, 0.15);
+      padding: 1rem 2rem;
+    }
+    
+    .logo-img {
+      height: 50px;
+      width: auto;
+      transition: all 0.3s;
+    }
+    .logo-img:hover {
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 12px rgba(196, 160, 106, 0.3));
+    }
+    
+    /* زر ذهبي */
+    .gold-btn {
+      background: transparent;
+      border: 1.5px solid #C4A06A;
+      color: inherit;
+      letter-spacing: 2px;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .gold-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196, 160, 106, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    .gold-btn:hover::before {
+      left: 100%;
+    }
+    .gold-btn:hover {
+      transform: translateY(-2px);
+      border-color: #D4B896;
+    }
+    
+    /* بطاقات الخيارات */
+    .option-card {
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      background: rgba(42, 34, 24, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(196, 160, 106, 0.15);
+    }
+    .option-card:hover {
+      transform: translateY(-10px);
+      background: rgba(42, 34, 24, 0.95);
+      border-color: rgba(196, 160, 106, 0.35);
+      box-shadow: 0 25px 40px -15px rgba(0,0,0,0.5);
+    }
+    
+    .img-placeholder {
+      background: #2A2218;
+      width: 100%;
+      aspect-ratio: 1 / 1.15;
+      position: relative;
+      overflow: hidden;
+    }
+    .img-placeholder img {
+      transition: transform 0.7s;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .option-card:hover .img-placeholder img {
+      transform: scale(1.05);
+    }
+    
+    .badge-overlay {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(196, 160, 106, 0.9);
+      backdrop-filter: blur(4px);
+      color: #1A1510;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.3rem 1.2rem;
+      border-radius: 30px;
+    }
+    
+    /* واتساب فلووتنغ */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 100;
+      background: #25D366;
+      color: white;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+    }
+    
+    .social-icon {
+      transition: all 0.3s;
+      cursor: pointer;
+      color: #A89880;
+    }
+    .social-icon:hover {
+      color: #C4A06A;
+      transform: translateY(-3px);
+    }
+    
+    .go-top {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 40px;
+      height: 40px;
+      background: rgba(196, 160, 106, 0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 99;
+      border: 1px solid rgba(196, 160, 106, 0.3);
+      color: #C4A06A;
+    }
+    .go-top.visible {
+      opacity: 1;
+    }
+    .go-top:hover {
+      background: rgba(196, 160, 106, 0.35);
+      transform: translateY(-3px);
+    }
+    
+    .admin-link {
+      position: fixed;
+      bottom: 100px;
+      left: 30px;
+      width: 40px;
+      height: 40px;
+      background: rgba(196, 160, 106, 0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      z-index: 99;
+      border: 1px solid rgba(196, 160, 106, 0.3);
+      color: #C4A06A;
+      text-decoration: none;
+    }
+    .admin-link:hover {
+      background: rgba(196, 160, 106, 0.35);
+      transform: scale(1.08);
+    }
+    
+    @media (max-width: 768px) {
+      .logo-img { height: 40px; }
+      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
+      .go-top { bottom: 80px; }
+      .admin-link { bottom: 80px; left: 20px; }
+      .nav-bar { padding: 0.8rem 1rem; }
+    }
+    
+    .darija-text {
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+    }
+  </style>
+</head>
+<body class="zelij-pattern">
+
+  <!-- كيرسر مخصص -->
+  <div class="custom-cursor" id="customCursor"></div>
+
+  <!-- نافبار -->
+  <nav class="nav-bar sticky top-0 z-50 w-full">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img id="site-logo" src="images/logo.jpg" alt="Almaya Couture" class="logo-img" onerror="this.src='https://placehold.co/60x60/C4A06A/1A1510?text=AC'">
+        <span class="text-sm font-light gold-text darija-text hidden sm:block">Almaya Couture</span>
+      </div>
+      
+      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-xs uppercase tracking-wide">
+        <a href="index.html" class="hover:gold-text transition text-[#D4B896] darija-text">الرئيسية</a>
+        <a href="index.html#ready-to-wear" class="hover:gold-text transition text-[#D4B896] darija-text">المجموعة</a>
+        <a href="index.html#custom-order" class="hover:gold-text transition text-[#D4B896] darija-text">صممي قطعتك ديالك</a>
+        <a href="index.html#story" class="hover:gold-text transition text-[#D4B896] darija-text">حكايتنا</a>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-2 text-[0.65rem] bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
+          <a href="https://wa.me/212601245733" target="_blank" class="flex items-center gap-1 text-[#A89880] hover:gold-text transition">
+            <i class="fab fa-whatsapp text-[#25D366]"></i>
+            <span id="whatsapp-number-display">0601245733</span>
+          </a>
+        </div>
+        <a href="admin-page2.html" class="admin-link" title="إدارة التشكيلة">
+          <i class="fas fa-crown text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
   
-  document.addEventListener('DOMContentLoaded', loadCategories);
-  window.addEventListener('storage', (e) => { 
-    if(e.key === 'almaya_page2_data') loadCategories();
-  });
-</script>
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" id="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div class="go-top" id="goTop"><i class="fas fa-arrow-up"></i></div>
+  
+  <main>
+    <!-- عنوان الصفحة -->
+    <section class="w-full py-16 md:py-24 px-6 md:px-12 lg:px-20">
+      <div class="max-w-7xl mx-auto text-center">
+        <span class="text-xs tracking-[0.5em] uppercase gold-text font-light">✦ اختاري قطعتك ✦</span>
+        <h1 class="text-4xl md:text-6xl font-bold mt-4 mb-4 darija-text">شنو بغيتي نصممو ليك؟</h1>
+        <p class="text-[#B8A890] text-base max-w-2xl mx-auto darija-text">ختاري من بين هاد التصاميم، والميمة غادي تصمم ليك قطعة أحلامك بكل حب ودقة</p>
+        <div class="w-12 h-px bg-[#C4A06A] mx-auto mt-6"></div>
+      </div>
+    </section>
+
+    <!-- خيارات التصميم - مع ميزة أنفو (AOS) متطورة -->
+    <section class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8" id="options-container"></div>
+      </div>
+    </section>
+    
+    <!-- فوتر -->
+    <footer class="bg-[#2A2218]/50 backdrop-blur-sm text-[#D4B896] py-12 px-6 border-t border-[#C4A06A]/10">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+          <div class="text-center md:text-right">
+            <h3 class="text-xl font-light gold-text mb-1">Almaya Couture</h3>
+            <p class="text-[0.6rem] text-[#8B7B68] darija-text">من أيادي الميمة لدارك</p>
+          </div>
+          <div class="flex gap-8">
+            <a href="https://www.instagram.com/almaya_couture?igsh=djFybmpyZ2tybGN0" target="_blank" class="social-icon"><i class="fab fa-instagram text-lg"></i></a>
+            <a href="https://www.tiktok.com/@almayacouture?_r=1&_t=ZS-96MhTFH69HE" target="_blank" class="social-icon"><i class="fab fa-tiktok text-lg"></i></a>
+            <i class="fab fa-facebook text-lg social-icon"></i>
+          </div>
+          <div class="text-center md:text-left">
+            <a href="https://wa.me/212601245733" class="text-[0.7rem] text-[#8B7B68] hover:gold-text transition flex items-center gap-2 darija-text">
+              <i class="fab fa-whatsapp"></i> 0601245733
+            </a>
+            <a href="mailto:almayacouture@gmail.com" class="text-[0.7rem] text-[#8B7B68] hover:gold-text transition flex items-center gap-2 mt-1 darija-text">
+              <i class="far fa-envelope"></i> almayacouture@gmail.com
+            </a>
+          </div>
+        </div>
+        <div class="border-t border-[#C4A06A]/10 pt-6 text-center">
+          <div class="text-[0.5rem] text-[#8B7B68] darija-text">© 2026 Almaya Couture — المغرب — مرحبا بيك فمرحلة الإطلاق</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // تهيئة AOS مع إعدادات متطورة مثل الكود الأصلي
+    AOS.init({ 
+      duration: 800, 
+      once: true, 
+      offset: 80, 
+      easing: 'ease-out-quad' 
+    });
+    
+    // كيرسر مخصص
+    const cursor = document.getElementById('customCursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+    document.querySelectorAll('a, button, .option-card').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+    
+    // زر الرجوع للأعلى
+    const goTop = document.getElementById('goTop');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 400) goTop.classList.add('visible');
+      else goTop.classList.remove('visible');
+    });
+    goTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    
+    // خيارات التصميم مع وصف تفصيلي والرابط الخاص بكل صفحة
+    const designOptions = [
+      { 
+        id: 1, 
+        name: "الجلابة", 
+        subtitle: "نعومة خالدة", 
+        image: "jellaba.jpg", 
+        link: "الجلابة.html",
+        description: "مناسبة للأيام العادية والمناسبات البسيطة | نعومة وراحة فائقة | تصاميم مغربية أصيلة"
+      },
+      { 
+        id: 2, 
+        name: "القفطان", 
+        subtitle: "فخامة ملكية", 
+        image: "caftan.jpg", 
+        link: "القفطان.html",
+        description: "مناسب للأعراس والحفلات الكبيرة | فخامة وتفاصيل ملكية | تطريزات يدوية فاخرة"
+      },
+      { 
+        id: 3, 
+        name: "التكشيطة", 
+        subtitle: "أناقة العرائس", 
+        image: "takchita.jpg", 
+        link: "التكشيطة.html",
+        description: "خاصة للعرائس والمناسبات السعيدة | أناقة استثنائية | تصميم يجمع بين الأصالة والعصرية"
+      },
+      { 
+        id: 4, 
+        name: "الجبادور", 
+        subtitle: "أناقة عصرية", 
+        image: "jabador.jpg", 
+        link: "الجبادور.html",
+        description: "للنساء العصريات | مناسب للخروجات والسهرات | تصميم حديث بأصالة مغربية"
+      },
+      { 
+        id: 5, 
+        name: "العباية", 
+        subtitle: "عصرية ووقورة", 
+        image: "abaya.jpg", 
+        link: "العباية.html",
+        description: "مناسبة للخروجات اليومية والسفر | أناقة محتشمة وعصرية | أقمشة فاخرة وناعمة"
+      }
+    ];
+    
+    // دالة للتنقل إلى الصفحة المطلوبة
+    function goToPage(link) {
+      window.location.href = link;
+    }
+    
+    function renderOptions() {
+      const container = document.getElementById('options-container');
+      if(!container) return;
+      
+      // استخدام نفس ميزة أنفو من الكود الأصلي (fade-up مع تأخير متدرج)
+      container.innerHTML = designOptions.map((item, idx) => `
+        <div class="option-card group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="${idx * 100}">
+          <div class="img-placeholder">
+            <img src="images/${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/500x550/2A2218/C4A06A?text=${item.name}'">
+            <span class="badge-overlay darija-text">الميمة</span>
+          </div>
+          <div class="p-5">
+            <div class="text-center">
+              <h3 class="font-medium text-2xl darija-text gold-text">${item.name}</h3>
+              <p class="text-xs text-[#A89880] mt-1 darija-text">${item.subtitle}</p>
+              <p class="text-xs text-[#A89880] mt-3 leading-relaxed darija-text">${item.description}</p>
+            </div>
+            <button class="mt-5 w-full gold-btn text-sm py-2.5 rounded-full uppercase tracking-wider darija-text" onclick="goToPage('${item.link}')">
+              <i class="fas fa-heart"></i> صممي
+            </button>
+          </div>
+        </div>
+      `).join('');
+      
+      // تحديث AOS بعد إضافة العناصر الجديدة
+      AOS.refresh();
+    }
+    
+    function loadAllData() {
+      const siteData = localStorage.getItem('almaya_page2_data');
+      if(siteData) {
+        const data = JSON.parse(siteData);
+        if(data.options && data.options.length) {
+          const container = document.getElementById('options-container');
+          if(container) {
+            container.innerHTML = data.options.map((item, idx) => `
+              <div class="option-card group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="${idx * 100}">
+                <div class="img-placeholder">
+                  <img src="images/${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/500x550/2A2218/C4A06A?text=${item.name}'">
+                  <span class="badge-overlay darija-text">الميمة</span>
+                </div>
+                <div class="p-5">
+                  <div class="text-center">
+                    <h3 class="font-medium text-2xl darija-text gold-text">${item.name}</h3>
+                    <p class="text-xs text-[#A89880] mt-1 darija-text">${item.subtitle}</p>
+                    <p class="text-xs text-[#A89880] mt-3 leading-relaxed darija-text">${item.description}</p>
+                  </div>
+                  <button class="mt-5 w-full gold-btn text-sm py-2.5 rounded-full uppercase tracking-wider darija-text" onclick="goToPage('${item.link}')">
+                    <i class="fas fa-heart"></i> صممي
+                  </button>
+                </div>
+              </div>
+            `).join('');
+            AOS.refresh();
+          }
+        } else {
+          renderOptions();
+        }
+        if(data.settings) {
+          if(data.settings.logo) document.getElementById('site-logo').src = data.settings.logo;
+          if(data.settings.whatsapp) {
+            document.getElementById('whatsapp-float').href = `https://wa.me/${data.settings.whatsapp}`;
+            document.getElementById('whatsapp-number-display').innerText = data.settings.whatsapp;
+          }
+        }
+      } else {
+        renderOptions();
+      }
+    }
+    
+    // إتاحة الدالة للاستخدام العالمي
+    window.goToPage = goToPage;
+    
+    document.addEventListener('DOMContentLoaded', loadAllData);
+    
+    window.addEventListener('storage', (e) => {
+      if(e.key === 'almaya_page2_data') loadAllData();
+    });
+  </script>
 </body>
 </html>
