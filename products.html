@@ -97,10 +97,6 @@
       gap:1.5rem;
     }
 
-    @media(max-width:640px){
-      .products-grid{grid-template-columns:repeat(2,1fr);gap:1rem;}
-    }
-
     .prod-card{
       background:var(--bg3);
       border-radius:20px;
@@ -250,19 +246,12 @@
     }
     .modal-overlay.open .modal{transform:translateY(0) scale(1);}
 
-    @media(max-width:600px){
-      .modal{grid-template-columns:1fr;}
-    }
-
     .modal-img-side{
       aspect-ratio:3/4;
       position:relative;
       overflow:hidden;
       border-radius:24px 0 0 24px;
       background:var(--bg3);
-    }
-    @media(max-width:600px){
-      .modal-img-side{border-radius:24px 24px 0 0;aspect-ratio:4/3;}
     }
     .modal-main-img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.3s;}
 
@@ -380,6 +369,540 @@
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
     .prod-card{animation:fadeUp 0.5s ease both;}
+
+    /* ==============================================
+       MEDIA QUERIES - تصميم متجاوب لجميع الأجهزة
+       ============================================== */
+
+    /* الشاشات المتوسطة (حتى 1200px) */
+    @media (max-width: 1200px) {
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.25rem;
+      }
+      
+      .modal {
+        max-width: 650px;
+      }
+      
+      .hero-title {
+        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      }
+    }
+
+    /* التابلت (حتى 1024px) */
+    @media (max-width: 1024px) {
+      .nav-bar {
+        padding: 0.9rem 1.5rem;
+      }
+      
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+      
+      .products-section {
+        padding: 1rem 1rem 4rem;
+      }
+      
+      .prod-info {
+        padding: 0.9rem 0.8rem 1rem;
+      }
+      
+      .prod-name {
+        font-size: 0.9rem;
+      }
+      
+      .prod-price {
+        font-size: 1rem;
+      }
+      
+      .modal {
+        max-width: 600px;
+      }
+      
+      .modal-info-side {
+        padding: 1.5rem 1.25rem;
+        gap: 1rem;
+      }
+      
+      .modal-name {
+        font-size: 1.3rem;
+      }
+      
+      .modal-price {
+        font-size: 1.6rem;
+      }
+      
+      .hero {
+        padding: 1.5rem 1rem 1.5rem;
+      }
+    }
+
+    /* التابلت الصغير والجوال الأفقي (حتى 768px) */
+    @media (max-width: 768px) {
+      .nav-bar {
+        padding: 0.8rem 1rem;
+      }
+      
+      .logo-img {
+        height: 40px;
+      }
+      
+      .nav-bar > div {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+      }
+      
+      .nav-bar div[style*="display:flex; gap:2rem"] {
+        gap: 1.25rem;
+        font-size: 0.65rem;
+        letter-spacing: 1.5px;
+      }
+      
+      .breadcrumb {
+        padding: 1rem 1rem 0;
+        font-size: 0.6rem;
+      }
+      
+      .hero {
+        padding: 1.5rem 1rem;
+      }
+      
+      .hero-title {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+      }
+      
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+      }
+      
+      .products-section {
+        padding: 0.8rem 0.8rem 3rem;
+      }
+      
+      .count-tag {
+        padding: 0 0.8rem;
+        font-size: 0.6rem;
+      }
+      
+      .prod-card {
+        border-radius: 16px;
+      }
+      
+      .prod-info {
+        padding: 0.8rem 0.7rem 0.9rem;
+      }
+      
+      .prod-name {
+        font-size: 0.85rem;
+      }
+      
+      .prod-desc {
+        font-size: 0.65rem;
+      }
+      
+      .prod-price {
+        font-size: 0.95rem;
+      }
+      
+      .prod-sizes {
+        font-size: 0.6rem;
+      }
+      
+      .color-dot {
+        width: 11px;
+        height: 11px;
+      }
+      
+      .quick-btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.7rem;
+      }
+      
+      .whatsapp-float {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        bottom: 20px;
+        left: 20px;
+      }
+      
+      .modal {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+      
+      .modal-img-side {
+        border-radius: 24px 24px 0 0;
+        aspect-ratio: 4/3;
+      }
+      
+      .modal-info-side {
+        padding: 1.25rem;
+        gap: 0.9rem;
+      }
+      
+      .modal-name {
+        font-size: 1.2rem;
+      }
+      
+      .modal-desc {
+        font-size: 0.75rem;
+      }
+      
+      .modal-price {
+        font-size: 1.4rem;
+      }
+      
+      .wa-btn {
+        padding: 0.75rem;
+        font-size: 0.8rem;
+      }
+      
+      .thumb {
+        width: 38px;
+        height: 38px;
+      }
+      
+      footer {
+        padding: 2.5rem 1rem;
+      }
+    }
+
+    /* الجوال (حتى 480px) */
+    @media (max-width: 480px) {
+      .nav-bar {
+        padding: 0.6rem 0.75rem;
+      }
+      
+      .logo-img {
+        height: 35px;
+      }
+      
+      .nav-bar div[style*="display:flex; gap:2rem"] {
+        gap: 0.8rem;
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+      }
+      
+      .nav-bar a[href*="wa.me"] {
+        padding: 0.3rem 0.75rem;
+        font-size: 0.6rem;
+      }
+      
+      .breadcrumb {
+        padding: 0.8rem 0.75rem 0;
+        font-size: 0.55rem;
+        gap: 0.3rem;
+      }
+      
+      .hero {
+        padding: 1.25rem 0.75rem;
+      }
+      
+      .hero-title {
+        font-size: clamp(1.4rem, 6vw, 1.8rem);
+        margin-bottom: 0.5rem;
+      }
+      
+      .hero::after {
+        width: 120px;
+      }
+      
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.7rem;
+      }
+      
+      .products-section {
+        padding: 0.5rem 0.5rem 2.5rem;
+      }
+      
+      .count-tag {
+        padding: 0 0.5rem;
+        font-size: 0.55rem;
+      }
+      
+      .prod-card {
+        border-radius: 14px;
+      }
+      
+      .prod-img-wrap {
+        aspect-ratio: 3/4.5;
+      }
+      
+      .prod-info {
+        padding: 0.7rem 0.6rem 0.8rem;
+      }
+      
+      .prod-name {
+        font-size: 0.8rem;
+      }
+      
+      .prod-desc {
+        font-size: 0.6rem;
+        -webkit-line-clamp: 2;
+        margin-bottom: 0.5rem;
+      }
+      
+      .prod-price {
+        font-size: 0.85rem;
+      }
+      
+      .prod-price span {
+        font-size: 0.6rem;
+      }
+      
+      .prod-sizes {
+        font-size: 0.55rem;
+      }
+      
+      .prod-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+      }
+      
+      .color-dot {
+        width: 10px;
+        height: 10px;
+        border-width: 1px;
+      }
+      
+      .prod-colors-preview {
+        bottom: 8px;
+        left: 8px;
+        gap: 3px;
+      }
+      
+      .quick-btn {
+        padding: 0.45rem 1rem;
+        font-size: 0.65rem;
+        gap: 5px;
+      }
+      
+      .whatsapp-float {
+        width: 42px;
+        height: 42px;
+        font-size: 1.15rem;
+        bottom: 15px;
+        left: 15px;
+      }
+      
+      .modal {
+        max-width: 95%;
+        border-radius: 18px;
+      }
+      
+      .modal-img-side {
+        border-radius: 18px 18px 0 0;
+        aspect-ratio: 16/10;
+      }
+      
+      .modal-info-side {
+        padding: 1rem;
+        gap: 0.75rem;
+      }
+      
+      .modal-close {
+        top: 0.75rem;
+        left: 0.75rem;
+        width: 30px;
+        height: 30px;
+        font-size: 0.7rem;
+      }
+      
+      .modal-name {
+        font-size: 1.1rem;
+      }
+      
+      .modal-desc {
+        font-size: 0.7rem;
+        line-height: 1.6;
+      }
+      
+      .modal-price {
+        font-size: 1.25rem;
+      }
+      
+      .modal-price small {
+        font-size: 0.65rem;
+      }
+      
+      .section-label {
+        font-size: 0.55rem;
+        letter-spacing: 1.5px;
+      }
+      
+      .color-chip {
+        padding: 0.25rem 0.7rem;
+        font-size: 0.65rem;
+      }
+      
+      .wa-btn {
+        padding: 0.7rem;
+        font-size: 0.75rem;
+        border-radius: 12px;
+        gap: 8px;
+      }
+      
+      .thumb {
+        width: 34px;
+        height: 34px;
+        border-radius: 6px;
+      }
+      
+      .modal-thumbs {
+        bottom: 8px;
+        gap: 6px;
+      }
+      
+      footer {
+        padding: 2rem 0.75rem;
+      }
+      
+      footer h3 {
+        font-size: 0.95rem;
+      }
+      
+      footer .gap-8 {
+        gap: 1.25rem;
+      }
+      
+      footer a[href*="wa.me"],
+      footer a[href*="mailto"] {
+        font-size: 0.6rem;
+      }
+    }
+
+    /* الجوال الصغير جداً (حتى 360px) */
+    @media (max-width: 360px) {
+      .nav-bar div[style*="display:flex; gap:2rem"] {
+        gap: 0.5rem;
+        font-size: 0.55rem;
+      }
+      
+      .hero-title {
+        font-size: 1.2rem;
+      }
+      
+      .products-grid {
+        gap: 0.5rem;
+      }
+      
+      .prod-card {
+        border-radius: 12px;
+      }
+      
+      .prod-info {
+        padding: 0.6rem 0.5rem 0.7rem;
+      }
+      
+      .prod-name {
+        font-size: 0.75rem;
+      }
+      
+      .prod-desc {
+        font-size: 0.55rem;
+      }
+      
+      .prod-price {
+        font-size: 0.8rem;
+      }
+      
+      .prod-sizes {
+        font-size: 0.5rem;
+      }
+      
+      .quick-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.6rem;
+      }
+      
+      .whatsapp-float {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+        bottom: 10px;
+        left: 10px;
+      }
+      
+      .modal {
+        max-width: 98%;
+        border-radius: 14px;
+      }
+      
+      .modal-name {
+        font-size: 1rem;
+      }
+      
+      .modal-price {
+        font-size: 1.1rem;
+      }
+      
+      .wa-btn {
+        padding: 0.6rem;
+        font-size: 0.7rem;
+      }
+    }
+
+    /* دعم اللمس - إلغاء تأثيرات hover */
+    @media (hover: none) and (pointer: coarse) {
+      .prod-card:hover {
+        transform: none;
+        border-color: rgba(196,160,106,0.1);
+        box-shadow: none;
+      }
+      
+      .prod-card:hover .prod-img {
+        transform: none;
+      }
+      
+      .prod-card:hover .prod-quick {
+        opacity: 0;
+      }
+      
+      .prod-card:active {
+        transform: scale(0.97);
+        transition: transform 0.15s ease;
+      }
+      
+      .color-chip:hover {
+        border-color: rgba(196,160,106,0.2);
+        color: var(--text-muted);
+        background: transparent;
+      }
+      
+      .color-chip:active {
+        border-color: var(--gold);
+        color: var(--gold);
+        background: var(--gold-dim);
+      }
+      
+      .wa-btn:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      
+      .wa-btn:active {
+        transform: scale(0.98);
+      }
+    }
+
+    /* تقليل الحركة */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -397,9 +920,7 @@
       <div style="display:flex;gap:2rem;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;flex-wrap:wrap;justify-content:center;">
         <a href="index.html" style="color:var(--gold-light);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">الرئيسية</a>
         <a href="collections.html" class="hover:gold-text transition text-[#D4B896] darija-text">المنتجات</a>
-
-        <a href="index.html#ready-to-wear" style="color:var(--gold-light);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">المجموعة</a>
-        <a href="index.html#custom-order" style="color:var(--gold-light);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">صممي قطعتك</a>
+        <a href="design.html" style="color:var(--gold-light);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">صممي قطعتك</a>
       </div>
       <a href="https://wa.me/212601245733" target="_blank" style="display:flex;align-items:center;gap:6px;font-size:0.65rem;color:var(--text-muted);text-decoration:none;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:50px;padding:0.4rem 1rem;transition:all 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#A89880'">
         <i class="fab fa-whatsapp" style="color:#25D366;"></i> 0601245733
@@ -468,10 +989,10 @@
           <a href="https://www.tiktok.com/@almayacouture" target="_blank" style="color:var(--text-muted);transition:all 0.3s;font-size:1.1rem;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#A89880'"><i class="fab fa-tiktok"></i></a>
         </div>
         <div>
-          <a href="https://wa.me/212601245733" style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-dim);text-decoration:none;margin-bottom:4px;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
+          <a href="https://wa.me/212601245733" class="footer-contact" style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-dim);text-decoration:none;margin-bottom:4px;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
             <i class="fab fa-whatsapp"></i> 0601245733
           </a>
-          <a href="mailto:almayacouture@gmail.com" style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-dim);text-decoration:none;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
+          <a href="mailto:almayacouture@gmail.com" class="footer-contact" style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-dim);text-decoration:none;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
             <i class="far fa-envelope"></i> almayacouture@gmail.com
           </a>
         </div>
