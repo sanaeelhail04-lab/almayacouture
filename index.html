@@ -24,93 +24,21 @@
       overflow-x: hidden;
     }
     
-    .custom-cursor {
-      width: 28px;
-      height: 28px;
-      border: 2px solid #C4A06A;
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s ease, width 0.2s, height 0.2s, background 0.2s;
-      transform: translate(-50%, -50%);
-    }
-    .custom-cursor.hover {
-      width: 48px;
-      height: 48px;
-      background: rgba(196, 160, 106, 0.15);
-      border-color: #D4B896;
-    }
-    
-    .cart-icon {
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .cart-icon:hover {
-      transform: scale(1.05);
+    .gold-text {
       color: #C4A06A;
-    }
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -12px;
-      background: #C4A06A;
-      color: #1A1510;
-      font-size: 0.6rem;
-      font-weight: bold;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .cart-sidebar {
-      position: fixed;
-      top: 0;
-      left: -400px;
-      width: 100%;
-      max-width: 400px;
-      height: 100vh;
-      background: rgba(26, 21, 16, 0.98);
-      backdrop-filter: blur(16px);
-      z-index: 1000;
-      transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-      box-shadow: -5px 0 30px rgba(0,0,0,0.5);
-      border-left: 1px solid rgba(196, 160, 106, 0.2);
-      overflow-y: auto;
-    }
-    .cart-sidebar.open {
-      left: 0;
-    }
-    .cart-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-    .cart-overlay.open {
-      opacity: 1;
-      visibility: visible;
     }
     
     .gold-btn {
       background: transparent;
       border: 1.5px solid #C4A06A;
-      color: inherit;
+      color: #E8DDD0;
       letter-spacing: 2px;
       font-weight: 500;
       position: relative;
       overflow: hidden;
       transition: all 0.4s;
+      cursor: pointer;
+      display: inline-block;
     }
     .gold-btn::before {
       content: '';
@@ -128,12 +56,13 @@
     .gold-btn:hover {
       transform: translateY(-2px);
       border-color: #D4B896;
+      color: #D4B896;
     }
     
     .outline-gold {
       border: 1.5px solid rgba(196, 160, 106, 0.5);
       background: rgba(196, 160, 106, 0.05);
-      color: inherit;
+      color: #E8DDD0;
       font-weight: 500;
       transition: all 0.4s;
     }
@@ -143,49 +72,17 @@
       border-color: #C4A06A;
     }
     
-    .product-card {
-      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-      background: rgba(42, 34, 24, 0.85);
+    .nav-bar {
+      background: rgba(26, 21, 16, 0.92);
       backdrop-filter: blur(12px);
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(196, 160, 106, 0.15);
-    }
-    .product-card:hover {
-      transform: translateY(-10px);
-      background: rgba(42, 34, 24, 0.95);
-      border-color: rgba(196, 160, 106, 0.35);
-      box-shadow: 0 25px 40px -15px rgba(0,0,0,0.5);
+      border-bottom: 1px solid rgba(196, 160, 106, 0.15);
+      padding: 1rem 2rem;
     }
     
-    .img-placeholder {
-      background: #2A2218;
-      width: 100%;
-      aspect-ratio: 1 / 1.15;
-      position: relative;
-      overflow: hidden;
-    }
-    .img-placeholder img {
-      transition: transform 0.7s;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .product-card:hover .img-placeholder img {
-      transform: scale(1.05);
-    }
-    
-    .badge-overlay {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(196, 160, 106, 0.9);
-      backdrop-filter: blur(4px);
-      color: #1A1510;
-      font-size: 0.65rem;
-      font-weight: 600;
-      padding: 0.3rem 1.2rem;
-      border-radius: 30px;
+    .logo-img {
+      height: 50px;
+      width: auto;
+      transition: all 0.3s;
     }
     
     .video-container {
@@ -206,50 +103,6 @@
       bottom: 0;
       background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.3) 100%);
       pointer-events: none;
-    }
-    
-    .nav-bar {
-      background: rgba(26, 21, 16, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(196, 160, 106, 0.15);
-      padding: 1rem 2rem;
-    }
-    
-    .logo-img {
-      height: 50px;
-      width: auto;
-      transition: all 0.3s;
-    }
-    
-    .zelij-pattern {
-      position: relative;
-    }
-    .zelij-pattern::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3Cpath fill='%23D4B896' d='M50,25 L75,50 L50,75 L25,50 Z'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 45px;
-      pointer-events: none;
-      z-index: 0;
-    }
-    
-    .typewriter h1 {
-      overflow: hidden;
-      border-left: 3px solid #C4A06A;
-      animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
-    }
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    @keyframes blink-caret {
-      from, to { border-color: transparent; }
-      50% { border-color: #C4A06A; }
     }
     
     @keyframes float {
@@ -274,23 +127,6 @@
       transform: translateY(-6px);
     }
     
-    .moroccan-icon {
-      width: 55px;
-      height: 55px;
-      background: rgba(196, 160, 106, 0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 12px;
-      border: 1px solid rgba(196, 160, 106, 0.2);
-      transition: all 0.3s;
-    }
-    .moroccan-icon:hover {
-      background: rgba(196, 160, 106, 0.2);
-      transform: scale(1.08);
-    }
-    
     .review-form-card {
       background: rgba(42, 34, 24, 0.7);
       backdrop-filter: blur(8px);
@@ -310,41 +146,6 @@
     .review-input:focus {
       outline: none;
       border-color: #C4A06A;
-    }
-    .rating-star {
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 1.5rem;
-    }
-    .rating-star:hover {
-      transform: scale(1.1);
-    }
-    
-    .go-top {
-      position: fixed;
-      bottom: 100px;
-      right: 25px;
-      width: 40px;
-      height: 40px;
-      background: rgba(196, 160, 106, 0.2);
-      backdrop-filter: blur(8px);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      transition: all 0.3s;
-      z-index: 99;
-      border: 1px solid rgba(196, 160, 106, 0.3);
-      color: #C4A06A;
-    }
-    .go-top.visible {
-      opacity: 1;
-    }
-    .go-top:hover {
-      background: rgba(196, 160, 106, 0.35);
-      transform: translateY(-3px);
     }
     
     .whatsapp-float {
@@ -378,49 +179,6 @@
       transform: translateY(-3px);
     }
     
-    .add-to-cart-btn {
-      background: rgba(196, 160, 106, 0.15);
-      border: 1px solid rgba(196, 160, 106, 0.3);
-      transition: all 0.3s;
-    }
-    .add-to-cart-btn:hover {
-      background: rgba(196, 160, 106, 0.3);
-      border-color: #C4A06A;
-    }
-    
-    .cart-item {
-      border-bottom: 1px solid rgba(196, 160, 106, 0.1);
-      padding: 1rem 0;
-    }
-    .quantity-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(196, 160, 106, 0.15);
-      border: 1px solid rgba(196, 160, 106, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .quantity-btn:hover {
-      background: rgba(196, 160, 106, 0.3);
-    }
-    
-    @media (max-width: 768px) {
-      .hero-split { flex-direction: column-reverse; }
-      .logo-img { height: 40px; }
-      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; }
-      .video-container { min-height: 320px; }
-      .nav-bar { padding: 0.8rem 1rem; }
-      .cart-sidebar { max-width: 100%; }
-    }
-    
-    .darija-text {
-      font-family: 'Tajawal', 'Cairo', sans-serif;
-    }
-    
     .section-title {
       position: relative;
       display: inline-block;
@@ -437,44 +195,92 @@
       background: #C4A06A;
     }
     
-    .price-tag {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #C4A06A;
+    .darija-text {
+      font-family: 'Tajawal', 'Cairo', sans-serif;
     }
     
-    .quality-line {
-      font-size: 0.65rem;
-      line-height: 1.5;
+    /* Slider styles */
+    .slider-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .slider-container {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(196, 160, 106, 0.25);
+      cursor: pointer;
+      transition: all 0.4s;
+      position: relative;
+    }
+    .slider-container:hover {
+      border-color: rgba(196, 160, 106, 0.6);
+      box-shadow: 0 20px 40px rgba(196, 160, 106, 0.1);
+    }
+    .slider-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .slider-slide {
+      min-width: 100%;
+      position: relative;
+    }
+    .slider-slide img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      display: block;
+    }
+    .slider-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(26, 21, 16, 0.95));
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+    }
+    .slider-overlay h3 {
+      color: #C4A06A;
+      font-size: 1.6rem;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    .slider-overlay .subtitle {
       color: #A89880;
-      border-top: 1px solid rgba(196, 160, 106, 0.15);
-      padding-top: 0.75rem;
-      margin-top: 0.75rem;
+      font-size: 0.85rem;
+    }
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+    }
+    .slider-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(196, 160, 106, 0.25);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .slider-dot.active {
+      background: #C4A06A;
+      width: 28px;
+      border-radius: 12px;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-split { flex-direction: column-reverse; }
+      .logo-img { height: 40px; }
+      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; }
+      .video-container { min-height: 320px; }
+      .nav-bar { padding: 0.8rem 1rem; }
+      .slider-slide img { height: 280px; }
     }
   </style>
 </head>
-<body class="zelij-pattern">
-
-  <div class="custom-cursor" id="customCursor"></div>
-
-  <!-- السلة الجانبية -->
-  <div class="cart-overlay" id="cartOverlay"></div>
-  <div class="cart-sidebar" id="cartSidebar">
-    <div class="p-5">
-      <div class="flex justify-between items-center mb-6 pb-3 border-b border-[#C4A06A]/20">
-        <h3 class="text-xl font-light darija-text gold-text">🛍️ سلتي</h3>
-        <button id="closeCart" class="text-2xl text-[#A89880] hover:gold-text transition">&times;</button>
-      </div>
-      <div id="cartItems" class="max-h-[50vh] overflow-y-auto"></div>
-      <div class="mt-6 pt-4 border-t border-[#C4A06A]/20">
-        <div class="flex justify-between mb-4">
-          <span class="darija-text">المجموع:</span>
-          <span class="gold-text font-bold" id="cartTotal">0 MAD</span>
-        </div>
-        <button id="checkoutBtn" class="gold-btn w-full py-3 rounded-full text-sm uppercase tracking-wider darija-text">إتمام الطلب</button>
-      </div>
-    </div>
-  </div>
+<body>
 
   <!-- نافبار -->
   <nav class="nav-bar sticky top-0 z-50 w-full">
@@ -485,54 +291,48 @@
       </div>
       
       <div class="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-xs uppercase tracking-wide">
-        <a href="#hero" class="hover:gold-text transition text-[#D4B896] darija-text">الرئيسية</a>
-        <a href="collections.html" class="hover:gold-text transition text-[#D4B896] darija-text">المنتجات</a>
-        <a href="design.html" class="hover:gold-text transition text-[#D4B896] darija-text">صممي قطعتك </a>
-        <a href="#story" class="hover:gold-text transition text-[#D4B896] darija-text">حكايتنا</a>
+        <a href="#hero" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">الرئيسية</a>
+        <a href="collections.html" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">المنتجات</a>
+        <a href="design.html" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">صممي قطعتك </a>
+        <a href="#story" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">حكايتنا</a>
       </div>
       
       <div class="flex items-center gap-4">
-        <div class="cart-icon" id="cartIcon">
-          <i class="fas fa-shopping-bag text-xl"></i>
-          <span class="cart-count" id="cartCount">0</span>
-        </div>
         <div class="hidden md:flex items-center gap-2 text-[0.65rem] bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
-          <a href="https://wa.me/212601245733" target="_blank" class="flex items-center gap-1 text-[#A89880] hover:gold-text transition">
+          <a href="https://wa.me/212601245733" target="_blank" class="flex items-center gap-1 text-[#A89880] hover:text-[#C4A06A] transition">
             <i class="fab fa-whatsapp text-[#25D366]"></i>
-            <span id="whatsapp-number-display">0601245733</span>
+            <span>0601245733</span>
           </a>
         </div>
-        <a href="admin.html" class="flex items-center gap-1 text-[0.6rem] text-[#A89880] hover:gold-text transition">
+        <a href="admin.html" class="flex items-center gap-1 text-[0.6rem] text-[#A89880] hover:text-[#C4A06A] transition">
           <i class="fas fa-crown text-xs"></i>
         </a>
       </div>
     </div>
   </nav>
   
-  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" id="whatsapp-float">
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
     <i class="fab fa-whatsapp"></i>
   </a>
   
-  <div class="go-top" id="goTop"><i class="fas fa-arrow-up"></i></div>
-  
   <main>
-    <!-- Hero Section - فيديو intro1.mp4 -->
+    <!-- Hero Section -->
     <section id="hero" class="w-full py-12 md:py-24 px-6 md:px-12 lg:px-20">
       <div class="flex flex-wrap md:flex-nowrap gap-12 md:gap-16 items-center max-w-7xl mx-auto">
         <div class="w-full md:w-1/2 order-first md:order-last" data-aos="fade-up">
           <div class="video-container float-effect relative">
             <video autoplay loop muted playsinline class="w-full h-full object-cover min-h-[380px] md:min-h-[480px]">
-              <source id="video-source" src="Videos/intro1.mp4" type="video/mp4">
+              <source src="Videos/intro1.mp4" type="video/mp4">
             </video>
           </div>
         </div>
         <div class="w-full md:w-1/2 space-y-5 md:space-y-7" data-aos="fade-right">
-          <span class="text-xs tracking-[0.5em] uppercase gold-text font-light">✦ Almaya Couture ✦</span>
-          <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight darija-text typewriter" id="hero-title">
+          <span class="text-xs tracking-[0.5em] uppercase text-[#C4A06A] font-light">✦ Almaya Couture ✦</span>
+          <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight darija-text">
             مجموعة الإطلاق<br>
             إبداعات الميمة
           </h1>
-          <p class="text-[#B8A890] text-base md:text-lg leading-relaxed max-w-md darija-text" id="hero-description">
+          <p class="text-[#B8A890] text-base md:text-lg leading-relaxed max-w-md darija-text">
             اكتشفي أول إبداعات الميمة فمرحلة الإطلاق. قطع فاخرة كتجمع بين الأصالة المغربية والفخامة العصرية.
           </p>
           <div class="flex flex-wrap gap-4 pt-3">
@@ -542,7 +342,8 @@
         </div>
       </div>
     </section>
- <!-- قسم حكاية الميمة - فيديو intro2.mp4 -->
+
+    <!-- قسم حكاية الميمة -->
     <section id="story" class="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
       <div class="max-w-6xl mx-auto flex flex-wrap md:flex-nowrap gap-12 items-center">
         <div class="w-full md:w-1/2" data-aos="fade-right">
@@ -553,7 +354,7 @@
           </div>
         </div>
         <div class="w-full md:w-1/2 space-y-5" data-aos="fade-left">
-          <span class="text-xs tracking-[0.3em] gold-text darija-text">✦ حكايتنا ✦</span>
+          <span class="text-xs tracking-[0.3em] text-[#C4A06A] darija-text">✦ حكايتنا ✦</span>
           <h2 class="text-3xl md:text-4xl font-bold darija-text">من أيادي الميمة لدارك</h2>
           <p class="text-[#B8A890] text-sm leading-relaxed darija-text">
             السلام عليكم، أنا الميمة. بدات هاد الحكاية فدار صغيرة، كنت كنخيط لولادي ولبناتي بكل حب. الناس شافو شغلي وعجبهم، وبداو يطلبوا مني. دابا، فمرحلة الإطلاق ديال Almaya Couture، كل قطعة كتخرج من يدي باش توصل ليكي بحب و حنان. وليتي كنعتبر أي زبونة عندي هي واحدة من العائلة، وكنخيط ليها بحال ما كنخيط لولدي.
@@ -564,8 +365,6 @@
       </div>
     </section>
 
-    
-    
     <!-- قسم صممي قطعتك ديالك -->
     <section id="custom-order" class="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
       <div class="max-w-6xl mx-auto text-center">
@@ -575,21 +374,21 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           <div class="step-card" data-aos="fade-up">
             <div class="w-14 h-14 rounded-full border border-[#C4A06A] flex items-center justify-center mx-auto mb-4">
-              <span class="text-lg gold-text font-light">01</span>
+              <span class="text-lg text-[#C4A06A] font-light">01</span>
             </div>
             <h3 class="text-lg font-semibold mb-2 darija-text">نتواصلو</h3>
             <p class="text-sm text-[#A89880] darija-text">نتواصلو معاك باش نفهمو شنو بغيتي بالضبط</p>
           </div>
           <div class="step-card" data-aos="fade-up" data-aos-delay="100">
             <div class="w-14 h-14 rounded-full border border-[#C4A06A] flex items-center justify-center mx-auto mb-4">
-              <span class="text-lg gold-text font-light">02</span>
+              <span class="text-lg text-[#C4A06A] font-light">02</span>
             </div>
             <h3 class="text-lg font-semibold mb-2 darija-text">نختارو القماش</h3>
             <p class="text-sm text-[#A89880] darija-text">تختاري معانا أجود الأقمشة والخيوط</p>
           </div>
           <div class="step-card" data-aos="fade-up" data-aos-delay="200">
             <div class="w-14 h-14 rounded-full border border-[#C4A06A] flex items-center justify-center mx-auto mb-4">
-              <span class="text-lg gold-text font-light">03</span>
+              <span class="text-lg text-[#C4A06A] font-light">03</span>
             </div>
             <h3 class="text-lg font-semibold mb-2 darija-text">الخياطة بحب</h3>
             <p class="text-sm text-[#A89880] darija-text">الميمة كتخيط قطعتك بحنان و دقة</p>
@@ -603,18 +402,60 @@
       </div>
     </section>
 
-  <!-- المنتجات -->
+    <!-- منتجاتنا - Slider + زر زيارة المتجر -->
     <section id="ready-to-wear" class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12">
+        <div class="text-center mb-10">
           <h2 class="section-title font-bold inline-block darija-text">منتجاتنا</h2>
-          
+          <p class="text-[#8B7B68] text-sm mt-4 darija-text">اكتشفي مجموعة الإطلاق الحصرية</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="products-container"></div>
+        
+        <!-- Slider بدون أسعار -->
+        <div class="slider-wrapper" data-aos="fade-up">
+          <div class="slider-container" onclick="window.location.href='collections.html'" style="cursor: pointer;">
+            <div class="slider-track" id="sliderTrack">
+              <div class="slider-slide">
+                <img src="produit1.jpg" alt="جبادور ألمايا" onerror="this.src='https://placehold.co/800x450/2A2218/C4A06A?text=جبادور+ألمايا'">
+                <div class="slider-overlay">
+                  <h3 class="darija-text">✨ جبادور ألمايا ✨</h3>
+                  <p class="subtitle darija-text">فخامة الموبرا والستان - خدمة المعلم</p>
+                </div>
+              </div>
+              <div class="slider-slide">
+                <img src="produit2.jpg" alt="جلابة الأصالة" onerror="this.src='https://placehold.co/800x450/2A2218/C4A06A?text=جلابة+الأصالة'">
+                <div class="slider-overlay">
+                  <h3 class="darija-text">✨ جلابة الأصالة ✨</h3>
+                  <p class="subtitle darija-text">طرز رباطي متقن - أناقة خالدة</p>
+                </div>
+              </div>
+              <div class="slider-slide">
+                <img src="produit3.jpg" alt="قفطان الأميرة" onerror="this.src='https://placehold.co/800x450/2A2218/C4A06A?text=قفطان+الأميرة'">
+                <div class="slider-overlay">
+                  <h3 class="darija-text">✨ قفطان الأميرة ✨</h3>
+                  <p class="subtitle darija-text">بروكار فاخر - ذهب خالص</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Slider Dots -->
+            <div class="slider-dots" id="sliderDots">
+              <div class="slider-dot active" data-index="0"></div>
+              <div class="slider-dot" data-index="1"></div>
+              <div class="slider-dot" data-index="2"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- زر قم بزيارة متجرنا -->
+        <div class="text-center mt-10" data-aos="fade-up" data-aos-delay="100">
+          <a href="collections.html" class="gold-btn inline-flex items-center gap-2 px-10 py-3.5 rounded-full text-sm uppercase tracking-wider darija-text">
+            <i class="fas fa-store"></i> قم بزيارة متجرنا
+          </a>
+        </div>
       </div>
     </section>
 
-       <!-- قسم إضافة رأي -->
+    <!-- قسم إضافة رأي -->
     <section class="w-full px-6 md:px-12 lg:px-20 py-16">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-2xl md:text-3xl font-light mb-3 darija-text">✨شاركينا رأيك✨</h2>
@@ -622,11 +463,11 @@
         
         <div class="review-form-card">
           <div class="flex justify-center gap-2 mb-6" id="ratingStars">
-            <i class="far fa-star rating-star gold-text" data-rating="1"></i>
-            <i class="far fa-star rating-star gold-text" data-rating="2"></i>
-            <i class="far fa-star rating-star gold-text" data-rating="3"></i>
-            <i class="far fa-star rating-star gold-text" data-rating="4"></i>
-            <i class="far fa-star rating-star gold-text" data-rating="5"></i>
+            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="1" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
+            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="2" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
+            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="3" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
+            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="4" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
+            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="5" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
           </div>
           <input type="text" id="reviewerName" placeholder="سميتك" class="review-input darija-text mb-3 text-right">
           <textarea id="reviewText" rows="3" placeholder="شاركينا رأيك فهاد التجربة..." class="review-input darija-text mb-4 text-right"></textarea>
@@ -636,12 +477,13 @@
         <div id="reviewsList" class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
       </div>
     </section>
+    
     <!-- فوتر -->
     <footer class="bg-[#2A2218]/50 backdrop-blur-sm text-[#D4B896] py-12 px-6 border-t border-[#C4A06A]/10">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
           <div class="text-center md:text-right">
-            <h3 class="text-xl font-light gold-text mb-1">Almaya Couture</h3>
+            <h3 class="text-xl font-light text-[#C4A06A] mb-1">Almaya Couture</h3>
             <p class="text-[0.6rem] text-[#8B7B68] darija-text">من أيادي الميمة لدارك</p>
           </div>
           <div class="flex gap-8">
@@ -650,10 +492,10 @@
             <i class="fab fa-facebook text-lg social-icon"></i>
           </div>
           <div class="text-center md:text-left">
-            <a href="https://wa.me/212601245733" class="text-[0.7rem] text-[#8B7B68] hover:gold-text transition flex items-center gap-2 darija-text">
+            <a href="https://wa.me/212601245733" class="text-[0.7rem] text-[#8B7B68] hover:text-[#C4A06A] transition flex items-center gap-2 darija-text">
               <i class="fab fa-whatsapp"></i> 0601245733
             </a>
-            <a href="mailto:almayacouture@gmail.com" class="text-[0.7rem] text-[#8B7B68] hover:gold-text transition flex items-center gap-2 mt-1 darija-text">
+            <a href="mailto:almayacouture@gmail.com" class="text-[0.7rem] text-[#8B7B68] hover:text-[#C4A06A] transition flex items-center gap-2 mt-1 darija-text">
               <i class="far fa-envelope"></i> almayacouture@gmail.com
             </a>
           </div>
@@ -665,254 +507,42 @@
     </footer>
   </main>
 
-  <!-- مودال إتمام الطلب -->
-  <div id="checkoutModal" class="fixed inset-0 z-[1000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300">
-    <div class="bg-[#2A2218] rounded-2xl max-w-md w-full p-6 border border-[#C4A06A]/20">
-      <h3 class="text-2xl font-light gold-text text-center mb-4 darija-text">✨ تأكيد الطلب ✨</h3>
-      <p class="text-center text-[#B8A890] text-sm mb-6 darija-text">معلوماتك الشخصية باش نتواصلو معاك</p>
-      
-      <input type="text" id="fullName" placeholder="الاسم الكامل" class="review-input darija-text mb-3">
-      <input type="tel" id="phoneNumber" placeholder="رقم الهاتف" class="review-input darija-text mb-3">
-      <input type="text" id="city" placeholder="المدينة" class="review-input darija-text mb-3">
-      <textarea id="address" rows="2" placeholder="العنوان كامل" class="review-input darija-text mb-4"></textarea>
-      
-      <div class="flex gap-3">
-        <button id="confirmOrderBtn" class="gold-btn flex-1 py-2 rounded-full text-sm darija-text">تأكيد الطلب</button>
-        <button id="closeModalBtn" class="outline-gold flex-1 py-2 rounded-full text-sm darija-text">إلغاء</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
     
-    const cursor = document.getElementById('customCursor');
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-    document.querySelectorAll('a, button, .product-card, .rating-star, .add-to-cart-btn').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
+    // Slider functionality
+    let currentSlide = 0;
+    const totalSlides = 3;
+    const sliderTrack = document.getElementById('sliderTrack');
+    const sliderDots = document.querySelectorAll('.slider-dot');
     
-    // المنتجات: جبادور ألمايا + جلابة الأصالة + قفطان الأميرة
-    const allProducts = [
-      { 
-        id: 1, 
-        name: "جبادور ألمايا", 
-        price: 1300, 
-        priceText: "1,300 MAD", 
-        image: "produit1.jpg", 
-        sizes: "S, M, L, XL", 
-        quality: "✨ الفوقاني مخدوم بـ الموبرا حرير (Velours de Soie) الأصلية بلون Iruzi\n✨ السروال مخدوم بـ ستان (Satin) من النوع الممتاز\n✨ السفيفة، العقيدات، والمجدول باليد خدمة المعلم\n✨ تصميم كيجمع بين الأصالة المغربية والروح العصرية"
-      },
-      { 
-        id: 2, 
-        name: "جلابة الأصالة", 
-        price: 1000, 
-        priceText: "1,000 MAD", 
-        image: "produit2.jpg", 
-        sizes: "S, M, L, XL", 
-        quality: "✨ الثوب: كريب من النوع الممتاز، كيطيح على الجسم بانسيابية رائعة\n✨ الطرز اليدوي: طرز رباطي متقن بلون البيج الذهبي\n✨ الخدمة: سفيفة وعقيدات متناسقة باليد 100%\n✨ اللون: بني شوكولا دافئ، وقار وأناقة عصرية"
-      },
-      { 
-        id: 3, 
-        name: "قفطان الأميرة", 
-        price: 1900, 
-        priceText: "1,900 MAD", 
-        image: "produit3.jpg", 
-        sizes: "S, M, L, XL", 
-        quality: "✨ الثوب: بروكار أبيض فاخر مع طبعة ذهبية براقة\n✨ التشطيب: خدمة المعلم بأدق التفاصيل\n✨ سفيفة وعقيدات من الذهب الخالص\n✨ قصة أنيقة تبرز جمالك مع راحة تامة"
-      }
-    ];
-    
-    let cart = JSON.parse(localStorage.getItem('almaya_cart') || '[]');
-    
-    function saveCart() {
-      localStorage.setItem('almaya_cart', JSON.stringify(cart));
-      updateCartUI();
-    }
-    
-    function updateCartUI() {
-      const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-      document.getElementById('cartCount').innerText = cartCount;
+    function goToSlide(index) {
+      currentSlide = index;
+      sliderTrack.style.transform = `translateX(${currentSlide * 100}%)`;
       
-      const cartItemsContainer = document.getElementById('cartItems');
-      const cartTotalSpan = document.getElementById('cartTotal');
-      
-      if(cart.length === 0) {
-        cartItemsContainer.innerHTML = '<div class="text-center text-[#8B7B68] py-8 darija-text">سلتك فارغة</div>';
-        cartTotalSpan.innerText = '0 MAD';
-        return;
-      }
-      
-      cartItemsContainer.innerHTML = cart.map(item => `
-        <div class="cart-item flex gap-3">
-          <img src="images/${item.image}" class="w-16 h-20 object-cover rounded-lg" onerror="this.src='https://placehold.co/80x100/2A2218/C4A06A'">
-          <div class="flex-1">
-            <p class="font-medium darija-text">${item.name}</p>
-            <p class="text-xs gold-text">${item.priceText}</p>
-            <div class="flex items-center gap-2 mt-2">
-              <div class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">-</div>
-              <span class="text-sm w-8 text-center">${item.quantity}</span>
-              <div class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">+</div>
-              <button class="text-[0.6rem] text-red-400 mr-auto" onclick="removeFromCart(${item.id})">حذف</button>
-            </div>
-          </div>
-          <div class="text-left">
-            <span class="text-sm gold-text">${(item.price * item.quantity).toLocaleString()} MAD</span>
-          </div>
-        </div>
-      `).join('');
-      
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      cartTotalSpan.innerText = total.toLocaleString() + ' MAD';
-    }
-    
-    function addToCart(product) {
-      const existing = cart.find(item => item.id === product.id);
-      if(existing) {
-        existing.quantity++;
-      } else {
-        cart.push({ ...product, quantity: 1 });
-      }
-      saveCart();
-      openCartSidebar();
-    }
-    
-    function changeQuantity(id, delta) {
-      const item = cart.find(item => item.id === id);
-      if(item) {
-        item.quantity += delta;
-        if(item.quantity <= 0) {
-          cart = cart.filter(item => item.id !== id);
+      sliderDots.forEach((dot, i) => {
+        if (i === currentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
         }
-        saveCart();
-      }
-    }
-    
-    function removeFromCart(id) {
-      cart = cart.filter(item => item.id !== id);
-      saveCart();
-    }
-    
-    function openCartSidebar() {
-      document.getElementById('cartSidebar').classList.add('open');
-      document.getElementById('cartOverlay').classList.add('open');
-    }
-    function closeCartSidebar() {
-      document.getElementById('cartSidebar').classList.remove('open');
-      document.getElementById('cartOverlay').classList.remove('open');
-    }
-    
-    document.getElementById('cartIcon').addEventListener('click', openCartSidebar);
-    document.getElementById('closeCart').addEventListener('click', closeCartSidebar);
-    document.getElementById('cartOverlay').addEventListener('click', closeCartSidebar);
-    
-    window.addToCart = addToCart;
-    window.changeQuantity = changeQuantity;
-    window.removeFromCart = removeFromCart;
-    
-    function renderProducts() {
-      const container = document.getElementById('products-container');
-      if(!container) return;
-      container.innerHTML = allProducts.map((p, idx) => `
-        <div class="product-card" data-aos="fade-up" data-aos-delay="${idx * 100}">
-          <div class="img-placeholder">
-            <img src="images/${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/500x550/2A2218/C4A06A?text=${p.name}'">
-            <span class="badge-overlay darija-text">بصمة الميمة</span>
-          </div>
-          <div class="p-5">
-            <div class="flex justify-between items-center">
-              <h3 class="font-medium text-xl darija-text gold-text">${p.name}</h3>
-              <span class="price-tag">${p.priceText}</span>
-            </div>
-            <div class="mt-3 flex gap-2 text-xs text-[#A89880] flex-wrap">
-              ${(p.sizes || '').split(',').map(s => `<span class="px-3 py-1 bg-white/5 rounded-full darija-text">${s.trim()}</span>`).join(' ')}
-            </div>
-            <div class="quality-line">
-              ${(p.quality || '').split('\n').map(l => `<p class="flex items-center gap-2 text-xs darija-text"><i class="fas fa-thread gold-text text-[0.45rem]"></i> ${l}</p>`).join('')}
-            </div>
-            <button class="mt-4 w-full add-to-cart-btn text-xs py-2.5 rounded-full uppercase tracking-wider darija-text text-[#C4A06A]" onclick="addToCart({
-              id: ${p.id},
-              name: '${p.name}',
-              price: ${p.price},
-              priceText: '${p.priceText}',
-              image: '${p.image}'
-            })">
-              <i class="fas fa-shopping-bag ml-1"></i> أضيفي للسلة
-            </button>
-          </div>
-        </div>
-      `).join('');
-    }
-    
-    // مودال الطلب
-    const checkoutModal = document.getElementById('checkoutModal');
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    const confirmOrderBtn = document.getElementById('confirmOrderBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    
-    function openModal() {
-      checkoutModal.classList.remove('opacity-0', 'invisible');
-      checkoutModal.classList.add('opacity-100', 'visible');
-    }
-    function closeModal() {
-      checkoutModal.classList.add('opacity-0', 'invisible');
-      checkoutModal.classList.remove('opacity-100', 'visible');
-    }
-    
-    checkoutBtn.addEventListener('click', () => {
-      if(cart.length === 0) {
-        alert('سلتك فارغة! أضيفي منتجات قبل إتمام الطلب');
-        return;
-      }
-      openModal();
-    });
-    
-    confirmOrderBtn.addEventListener('click', () => {
-      const fullName = document.getElementById('fullName').value.trim();
-      const phoneNumber = document.getElementById('phoneNumber').value.trim();
-      const city = document.getElementById('city').value.trim();
-      const address = document.getElementById('address').value.trim();
-      
-      if(!fullName || !phoneNumber || !city) {
-        alert('الرجاء إدخال الاسم الكامل ورقم الهاتف والمدينة');
-        return;
-      }
-      
-      let orderDetails = `🛍️ طلب جديد من Almaya Couture 🛍️\n\n`;
-      orderDetails += `👤 الاسم: ${fullName}\n`;
-      orderDetails += `📞 الهاتف: ${phoneNumber}\n`;
-      orderDetails += `🏙️ المدينة: ${city}\n`;
-      if(address) orderDetails += `📍 العنوان: ${address}\n`;
-      orderDetails += `\n📦 المنتجات:\n`;
-      
-      cart.forEach(item => {
-        orderDetails += `• ${item.name} × ${item.quantity} = ${(item.price * item.quantity).toLocaleString()} MAD\n`;
       });
-      
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      orderDetails += `\n💰 المجموع: ${total.toLocaleString()} MAD\n`;
-      orderDetails += `\n🙏 شكراً لثقتكم في الميمة ❤️`;
-      
-      const whatsappNumber = "212601245733";
-      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderDetails)}`;
-      
-      cart = [];
-      saveCart();
-      closeModal();
-      
-      document.getElementById('fullName').value = '';
-      document.getElementById('phoneNumber').value = '';
-      document.getElementById('city').value = '';
-      document.getElementById('address').value = '';
-      
-      window.open(whatsappUrl, '_blank');
-      alert('شكراً بزاف على طلبك! غادي نتواصلو معاك فالقريب العاجل ❤️');
-    });
+    }
     
-    closeModalBtn.addEventListener('click', closeModal);
+    // Auto-advance slider every 4 seconds
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      goToSlide(currentSlide);
+    }, 4000);
+    
+    // Dot click events
+    sliderDots.forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent triggering the slider container click
+        const index = parseInt(dot.getAttribute('data-index'));
+        goToSlide(index);
+      });
+    });
     
     // آراء الزبائن
     let reviews = JSON.parse(localStorage.getItem('almaya_reviews') || '[]');
@@ -927,10 +557,10 @@
       container.innerHTML = reviews.map(rev => `
         <div class="review-form-card">
           <div class="flex justify-center mb-2">
-            ${Array(rev.rating).fill('<i class="fas fa-star gold-text text-sm"></i>').join('')}
-            ${Array(5 - rev.rating).fill('<i class="far fa-star gold-text text-sm"></i>').join('')}
+            ${Array(rev.rating).fill('<i class="fas fa-star text-[#C4A06A] text-sm"></i>').join('')}
+            ${Array(5 - rev.rating).fill('<i class="far fa-star text-[#C4A06A] text-sm"></i>').join('')}
           </div>
-          <p class="text-center text-xs gold-text mb-2">${rev.name}</p>
+          <p class="text-center text-xs text-[#C4A06A] mb-2">${rev.name}</p>
           <p class="text-sm text-[#B8A890] text-center darija-text">"${rev.text}"</p>
           <p class="text-center text-[0.5rem] text-[#8B7B68] mt-3">${rev.date}</p>
         </div>
@@ -1002,13 +632,6 @@
       alert('شكراً بزاف على رأيك! ❤️');
     });
     
-    const goTop = document.getElementById('goTop');
-    window.addEventListener('scroll', () => {
-      if(window.scrollY > 400) goTop.classList.add('visible');
-      else goTop.classList.remove('visible');
-    });
-    goTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    
     function scrollToShop() {
       document.getElementById('ready-to-wear').scrollIntoView({ behavior: 'smooth' });
     }
@@ -1019,41 +642,16 @@
     window.scrollToShop = scrollToShop;
     window.scrollToCustom = scrollToCustom;
     
-    function loadAllData() {
-      const siteData = localStorage.getItem('almaya_site_data');
-      if(siteData) {
-        const data = JSON.parse(siteData);
-        if(data.settings) {
-          if(data.settings.logo) document.getElementById('site-logo').src = data.settings.logo;
-          if(data.settings.heroText) document.getElementById('hero-title').innerHTML = data.settings.heroText;
-          if(data.settings.heroDescription) document.getElementById('hero-description').innerHTML = data.settings.heroDescription;
-          if(data.settings.video) document.getElementById('video-source').src = data.settings.video;
-          if(data.settings.whatsapp) {
-            document.getElementById('whatsapp-float').href = `https://wa.me/${data.settings.whatsapp}`;
-            document.getElementById('whatsapp-number-display').innerText = data.settings.whatsapp;
-          }
-        }
-      }
-      renderProducts();
-      renderReviews();
-      updateCartUI();
-    }
-    
     document.addEventListener('DOMContentLoaded', () => {
-      loadAllData();
+      renderReviews();
       const videos = document.querySelectorAll('video');
       videos.forEach(v => v.play().catch(e => console.log('Auto-play prevented')));
     });
     
     window.addEventListener('storage', (e) => {
-      if(e.key === 'almaya_site_data') loadAllData();
       if(e.key === 'almaya_reviews') {
         reviews = JSON.parse(e.newValue || '[]');
         renderReviews();
-      }
-      if(e.key === 'almaya_cart') {
-        cart = JSON.parse(e.newValue || '[]');
-        updateCartUI();
       }
     });
   </script>
