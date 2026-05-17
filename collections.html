@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Almaya Couture | اختاري تصاميمك</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1A1510;
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      color: #E8DDD0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #2A2218; }
+    ::-webkit-scrollbar-thumb { background: #C4A06A; border-radius: 10px; }
+
+    .gold-text { color: #C4A06A; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3Cpath fill='%23D4B896' d='M50,25 L75,50 L50,75 L25,50 Z'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 45px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .nav-bar {
+      background: rgba(26, 21, 16, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196, 160, 106, 0.15);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .logo-img { height: 50px; width: auto; transition: all 0.3s; }
+    .logo-img:hover { transform: scale(1.02); filter: drop-shadow(0 0 12px rgba(196,160,106,0.3)); }
+
+    .slider-section {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      min-height: 500px;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+      will-change: transform;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .slide-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26, 21, 16, 0.88) 0%,
+        rgba(26, 21, 16, 0.30) 50%,
+        rgba(26, 21, 16, 0.10) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 4rem;
+    }
+
+    
+    .slide-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      color: #F5EDD8;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: all 0.6s ease 0.2s;
+    }
+    .slide-sub {
+      font-size: 1rem;
+      color: #B8A890;
+      max-width: 420px;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease 0.3s;
+    }
+    .slide-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      border: 1.5px solid #C4A06A;
+      color: #E8DDD0;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: transparent;
+      border-radius: 50px;
+      transition: all 0.4s;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s, background 0.3s, border-color 0.3s;
+      width: fit-content;
+    }
+    .slide-btn:hover {
+      background: rgba(196,160,106,0.15);
+      border-color: #D4B896;
+    }
+
+    
+    .slide.active .slide-title,
+    .slide.active .slide-sub,
+    .slide.active .slide-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(26,21,16,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(196,160,106,0.3);
+      color: #C4A06A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+    .slider-arrow:hover { background: rgba(196,160,106,0.2); border-color: #C4A06A; }
+    .slider-arrow.prev { right: 1.5rem; }
+    .slider-arrow.next { left: 1.5rem; }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(196,160,106,0.4);
+      cursor: pointer;
+      transition: all 0.4s;
+    }
+    .dot.active {
+      width: 28px;
+      border-radius: 4px;
+      background: #C4A06A;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 2rem;
+      margin: 4rem auto 2rem;
+      max-width: 1200px;
+    }
+    .divider-line { flex: 1; height: 1px; background: rgba(196,160,106,0.2); }
+    .divider-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: #C4A06A;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .divider-diamond {
+      width: 6px; height: 6px;
+      border: 1px solid #C4A06A;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .categories-section {
+      position: relative;
+      z-index: 1;
+      padding: 0 1.5rem 5rem;
+    }
+
+    .categories-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .categories-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .slider-section { height: 65vh; }
+      .slide-overlay { padding: 2rem 1.5rem; }
+      .slider-arrow { width: 38px; height: 38px; font-size: 0.85rem; }
+      .nav-bar { padding: 0.8rem 1rem; }
+      .logo-img { height: 40px; }
+    }
+
+    .cat-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 2/3;
+      background: #2A2218;
+      border: 1px solid rgba(196,160,106,0.12);
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), border-color 0.4s, box-shadow 0.4s;
+    }
+    .cat-card:hover {
+      transform: translateY(-10px) scale(1.01);
+      border-color: rgba(196,160,106,0.4);
+      box-shadow: 0 30px 50px -15px rgba(0,0,0,0.6);
+    }
+
+    .cat-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+    .cat-card:hover .cat-img { transform: scale(1.08); }
+
+    .cat-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,21,16,0.92) 0%, rgba(26,21,16,0.1) 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.25rem 1rem;
+    }
+
+    .cat-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #F5EDD8;
+      line-height: 1.2;
+    }
+    .cat-sub {
+      font-size: 0.65rem;
+      color: #A89880;
+      margin-top: 0.25rem;
+    }
+    .cat-desc {
+      font-size: 0.6rem;
+      color: #8B7B68;
+      margin-top: 0.5rem;
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s;
+      opacity: 0;
+    }
+    .cat-card:hover .cat-desc { max-height: 60px; opacity: 1; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #F5EDD8;
+    }
+    .section-header p {
+      font-size: 0.9rem;
+      color: #B8A890;
+      margin-top: 0.5rem;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 100;
+      background: #25D366;
+      color: white;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(37,211,102,0.4); }
+
+    .go-top {
+      position: fixed;
+      bottom: 95px;
+      right: 25px;
+      width: 40px;
+      height: 40px;
+      background: rgba(196,160,106,0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 99;
+      border: 1px solid rgba(196,160,106,0.3);
+      color: #C4A06A;
+    }
+    .go-top.visible { opacity: 1; }
+    .go-top:hover { background: rgba(196,160,106,0.3); transform: translateY(-3px); }
+
+    .social-icon { transition: all 0.3s; color: #A89880; cursor: pointer; }
+    .social-icon:hover { color: #C4A06A; transform: translateY(-3px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease forwards; }
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+  </style>
+</head>
+<body>
+
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <div class="go-top" id="goTop"><i class="fas fa-arrow-up text-xs"></i></div>
+
+  <nav class="nav-bar">
+    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        <img src="images/logo.jpg" alt="Almaya Couture" class="logo-img" onerror="this.src='https://placehold.co/60x60/C4A06A/1A1510?text=AC'">
+        <span style="font-size:0.8rem; font-weight:300; color:#C4A06A;" class="hidden sm:block">Almaya Couture</span>
+      </div>
+      <div style="display:flex; gap:2rem; font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; flex-wrap:wrap; justify-content:center;">
+        <a href="index.html" style="color:#D4B896; text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">الرئيسية</a>
+        <a href="index.html#ready-to-wear" style="color:#D4B896; text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">المجموعة</a>
+        <a href="index.html#custom-order" style="color:#D4B896; text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">صممي قطعتك</a>
+      </div>
+      <a href="https://wa.me/212601245733" target="_blank" style="display:flex; align-items:center; gap:6px; font-size:0.65rem; color:#A89880; text-decoration:none; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:50px; padding:0.4rem 1rem; transition:all 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#A89880'">
+        <i class="fab fa-whatsapp" style="color:#25D366;"></i> 0601245733
+      </a>
+    </div>
+  </nav>
+
+  <section class="slider-section" id="mainSlider">
+    <div class="slider-track" id="sliderTrack">
+
+      <div class="slide active">
+        <img src="images/jellaba.jpg" alt="الجلابة" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=الجلابة'">
+        <div class="slide-overlay">
+          
+          <h2 class="slide-title">الجلابة</h2>
+          <p class="slide-sub">نعومة خالدة — مناسبة للأيام العادية والمناسبات البسيطة، تصاميم مغربية أصيلة بكل حب</p>
+          <a href="products.html?category=jellaba" class="slide-btn">
+            <i class="fas fa-heart"></i>اشتري الأن
+          </a>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="images/caftan.jpg" alt="القفطان" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=القفطان'">
+        <div class="slide-overlay">
+          
+          <h2 class="slide-title">القفطان</h2>
+          <p class="slide-sub">مناسب للأعراس والحفلات الكبيرة — تطريزات يدوية فاخرة وتفاصيل ملكية لا مثيل لها</p>
+          <a href="products.html?category=caftan" class="slide-btn">
+            <i class="fas fa-heart"></i>اشتري الأن
+          </a>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="images/takchita.jpg" alt="التكشيطة" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=التكشيطة'">
+        <div class="slide-overlay">
+          
+          <h2 class="slide-title">التكشيطة</h2>
+          <p class="slide-sub">خاصة للعرائس والمناسبات السعيدة — تصميم يجمع بين الأصالة والعصرية بأناقة استثنائية</p>
+          <a href="products.html?category=takchita" class="slide-btn">
+            <i class="fas fa-heart"></i>اشتري الأن
+          </a>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="images/jabador.jpg" alt="الجبادور" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=الجبادور'">
+        <div class="slide-overlay">
+         
+          <h2 class="slide-title">الجبادور</h2>
+          <p class="slide-sub">للنساء العصريات — مناسب للخروجات والسهرات بتصميم حديث وأصالة مغربية خالصة</p>
+          <a href="products.html?category=jabador" class="slide-btn">
+            <i class="fas fa-heart"></i>اشتري الأن
+          </a>
+        </div>
+      </div>
+
+      <div class="slide">
+        <img src="images/abaya.jpg" alt="العباية" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=العباية'">
+        <div class="slide-overlay">
+          
+          <h2 class="slide-title">العباية</h2>
+          <p class="slide-sub">مناسبة للخروجات اليومية والسفر — أناقة محتشمة وعصرية بأقمشة فاخرة وناعمة</p>
+          <a href="products.html?category=abaya" class="slide-btn">
+            <i class="fas fa-heart"></i>اشتري الأن
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="slider-arrow prev" id="prevBtn" aria-label="السابق">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+    <button class="slider-arrow next" id="nextBtn" aria-label="التالي">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="slider-dots" id="sliderDots"></div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <span class="divider-text">✦ اختاري تصنيفك ✦</span>
+    <div class="divider-diamond"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>التصنيفات</h2>
+    </div>
+
+    <div class="categories-grid" id="categoriesGrid">
+
+      <div class="cat-card fade-up delay-1" onclick="location.href='products.html?category=jellaba'">
+        <img src="images/jellaba.jpg" alt="الجلابة" class="cat-img" onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=الجلابة'">
+        <div class="cat-overlay">
+          <div class="cat-name">الجلابة</div>
+          <div class="cat-sub">نعومة خالدة</div>
+          <div class="cat-desc">للأيام العادية والمناسبات | تصاميم مغربية أصيلة</div>
+        </div>
+      </div>
+
+      <div class="cat-card fade-up delay-2" onclick="location.href='products.html?category=caftan'">
+        <img src="images/caftan.jpg" alt="القفطان" class="cat-img" onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=القفطان'">
+        <div class="cat-overlay">
+          <div class="cat-name">القفطان</div>
+          <div class="cat-sub">فخامة ملكية</div>
+          <div class="cat-desc">للأعراس والحفلات | تطريزات يدوية فاخرة</div>
+        </div>
+      </div>
+
+      <div class="cat-card fade-up delay-3" onclick="location.href='products.html?category=takchita'">
+        <img src="images/takchita.jpg" alt="التكشيطة" class="cat-img" onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=التكشيطة'">
+        <div class="cat-overlay">
+          <div class="cat-name">التكشيطة</div>
+          <div class="cat-sub">أناقة العرائس</div>
+          <div class="cat-desc">للعرائس والمناسبات | أصالة وعصرية معاً</div>
+        </div>
+      </div>
+
+      <div class="cat-card fade-up delay-4" onclick="location.href='products.html?category=jabador'">
+        <img src="images/jabador.jpg" alt="الجبادور" class="cat-img" onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=الجبادور'">
+        <div class="cat-overlay">
+          <div class="cat-name">الجبادور</div>
+          <div class="cat-sub">أناقة عصرية</div>
+          <div class="cat-desc">للخروجات والسهرات | طابع مغربي حديث</div>
+        </div>
+      </div>
+
+      <div class="cat-card fade-up delay-5" onclick="location.href='products.html?category=abaya'">
+        <img src="images/abaya.jpg" alt="العباية" class="cat-img" onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=العباية'">
+        <div class="cat-overlay">
+          <div class="cat-name">العباية</div>
+          <div class="cat-sub">عصرية ووقورة</div>
+          <div class="cat-desc">للخروجات اليومية | أقمشة فاخرة وناعمة</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer style="background:rgba(42,34,24,0.5); backdrop-filter:blur(8px); border-top:1px solid rgba(196,160,106,0.1); padding:3rem 1.5rem; position:relative; z-index:1;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.5rem; margin-bottom:2rem;">
+        <div>
+          <div style="font-size:1.1rem; color:#C4A06A; font-weight:300;">Almaya Couture</div>
+          <div style="font-size:0.6rem; color:#8B7B68; margin-top:2px;">من أيادي الميمة لدارك</div>
+        </div>
+        <div style="display:flex; gap:1.5rem;">
+          <a href="https://www.instagram.com/almaya_couture?igsh=djFybmpyZ2tybGN0" target="_blank" class="social-icon"><i class="fab fa-instagram text-lg"></i></a>
+          <a href="https://www.tiktok.com/@almayacouture?_r=1&_t=ZS-96MhTFH69HE" target="_blank" class="social-icon"><i class="fab fa-tiktok text-lg"></i></a>
+          <span class="social-icon"><i class="fab fa-facebook text-lg"></i></span>
+        </div>
+        <div>
+          <a href="https://wa.me/212601245733" style="display:flex; align-items:center; gap:6px; font-size:0.7rem; color:#8B7B68; text-decoration:none; margin-bottom:4px;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
+            <i class="fab fa-whatsapp"></i> 0601245733
+          </a>
+          <a href="mailto:almayacouture@gmail.com" style="display:flex; align-items:center; gap:6px; font-size:0.7rem; color:#8B7B68; text-decoration:none;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
+            <i class="far fa-envelope"></i> almayacouture@gmail.com
+          </a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(196,160,106,0.1); padding-top:1.5rem; text-align:center; font-size:0.55rem; color:#8B7B68;">
+        © 2026 Almaya Couture — المغرب — مرحبا بيك فمرحلة الإطلاق
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const track = document.getElementById('sliderTrack');
+    const dotsContainer = document.getElementById('sliderDots');
+    let current = 0;
+    let autoTimer;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function updateDots() {
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      track.style.transform = `translateX(${current * 100}%)`;
+      updateDots();
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      clearInterval(autoTimer);
+      goTo(current - 1);
+      startAuto();
+    });
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      clearInterval(autoTimer);
+      goTo(current + 1);
+      startAuto();
+    });
+
+    function startAuto() {
+      autoTimer = setInterval(() => goTo(current + 1), 5000);
+    }
+    startAuto();
+
+    let touchStartX = 0;
+    const slider = document.getElementById('mainSlider');
+    slider.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    slider.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) {
+        clearInterval(autoTimer);
+        goTo(diff > 0 ? current + 1 : current - 1);
+        startAuto();
+      }
+    });
+
+    const goTopBtn = document.getElementById('goTop');
+    window.addEventListener('scroll', () => {
+      goTopBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+    goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>

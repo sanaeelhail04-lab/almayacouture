@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>المنتجات | Almaya Couture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    :root{
+      --gold:#C4A06A;
+      --gold-light:#D4B896;
+      --gold-dim:rgba(196,160,106,0.15);
+      --bg:#1A1510;
+      --bg2:#221C14;
+      --bg3:#2A2218;
+      --text:#E8DDD0;
+      --text-muted:#A89880;
+      --text-dim:#8B7B68;
+    }
+
+    body{
+      background:var(--bg);
+      font-family:'Tajawal','Cairo',sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--bg2);}
+    ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
+
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3Cpath fill='%23D4B896' d='M50,25 L75,50 L50,75 L25,50 Z'/%3E%3C/svg%3E");
+      background-repeat:repeat;
+      background-size:45px;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .nav-bar{
+      background:rgba(26,21,16,0.92);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(196,160,106,0.15);
+      padding:1rem 2rem;
+      position:sticky;
+      top:0;
+      z-index:50;
+    }
+    .logo-img{height:50px;width:auto;transition:all 0.3s;}
+    .logo-img:hover{transform:scale(1.02);filter:drop-shadow(0 0 12px rgba(196,160,106,0.3));}
+
+    .hero{
+      position:relative;
+      z-index:1;
+      padding:2rem 1rem 2rem;
+      text-align:center;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:'';
+      position:absolute;
+      bottom:0;left:50%;
+      transform:translateX(-50%);
+      width:200px;height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+    .hero-title{
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:900;
+      color:#F5EDD8;
+      line-height:1;
+      margin-bottom:1rem;
+      background:linear-gradient(135deg,#F5EDD8 0%,#C4A06A 50%,#F5EDD8 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .products-section{
+      position:relative;
+      z-index:1;
+      padding:1.5rem 1.5rem 6rem;
+    }
+    .products-grid{
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:1.5rem;
+    }
+
+    @media(max-width:640px){
+      .products-grid{grid-template-columns:repeat(2,1fr);gap:1rem;}
+    }
+
+    .prod-card{
+      background:var(--bg3);
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(196,160,106,0.1);
+      transition:transform 0.4s cubic-bezier(0.23,1,0.32,1),border-color 0.3s,box-shadow 0.4s;
+      cursor:pointer;
+      position:relative;
+    }
+    .prod-card:hover{
+      transform:translateY(-8px);
+      border-color:rgba(196,160,106,0.35);
+      box-shadow:0 25px 50px -12px rgba(0,0,0,0.6);
+    }
+
+    .prod-img-wrap{
+      position:relative;
+      aspect-ratio:3/4;
+      overflow:hidden;
+      background:var(--bg2);
+    }
+    .prod-img{
+      width:100%;height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform 0.6s ease;
+    }
+    .prod-card:hover .prod-img{transform:scale(1.07);}
+
+    .prod-colors-preview{
+      position:absolute;
+      bottom:12px;
+      left:12px;
+      display:flex;
+      gap:5px;
+    }
+    .color-dot{
+      width:14px;height:14px;
+      border-radius:50%;
+      border:1.5px solid rgba(255,255,255,0.5);
+      font-size:0;
+      cursor:default;
+    }
+
+    .prod-quick{
+      position:absolute;
+      inset:0;
+      background:rgba(26,21,16,0.45);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      transition:opacity 0.3s;
+    }
+    .prod-card:hover .prod-quick{opacity:1;}
+    .quick-btn{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:0.65rem 1.5rem;
+      background:rgba(196,160,106,0.95);
+      color:#1A1510;
+      border:none;
+      border-radius:50px;
+      font-size:0.75rem;
+      font-weight:700;
+      font-family:'Tajawal',sans-serif;
+      cursor:pointer;
+      transition:all 0.3s;
+      letter-spacing:0.5px;
+    }
+    .quick-btn:hover{background:#D4B896;transform:scale(1.03);}
+
+    .prod-info{padding:1.1rem 1rem 1.25rem;}
+    .prod-name{
+      font-size:1rem;
+      font-weight:700;
+      color:#F5EDD8;
+      line-height:1.3;
+      margin-bottom:0.35rem;
+    }
+    .prod-desc{
+      font-size:0.7rem;
+      color:var(--text-dim);
+      line-height:1.6;
+      margin-bottom:0.75rem;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    .prod-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:0.5rem;
+    }
+    .prod-price{
+      font-size:1.1rem;
+      font-weight:800;
+      color:var(--gold);
+      direction:ltr;
+    }
+    .prod-price span{font-size:0.65rem;font-weight:400;color:var(--text-dim);margin-right:2px;}
+    .prod-sizes{
+      font-size:0.65rem;
+      color:var(--text-dim);
+      text-align:left;
+    }
+
+    .empty-state{
+      grid-column:1/-1;
+      text-align:center;
+      padding:5rem 1rem;
+      color:var(--text-dim);
+    }
+    .empty-state i{font-size:3rem;margin-bottom:1rem;display:block;}
+
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(10,8,5,0.85);
+      backdrop-filter:blur(8px);
+      z-index:200;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:1rem;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.35s;
+    }
+    .modal-overlay.open{opacity:1;pointer-events:all;}
+
+    .modal{
+      background:var(--bg2);
+      border:1px solid rgba(196,160,106,0.2);
+      border-radius:24px;
+      max-width:700px;
+      width:100%;
+      max-height:90vh;
+      overflow-y:auto;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      transform:translateY(30px) scale(0.97);
+      transition:transform 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .modal-overlay.open .modal{transform:translateY(0) scale(1);}
+
+    @media(max-width:600px){
+      .modal{grid-template-columns:1fr;}
+    }
+
+    .modal-img-side{
+      aspect-ratio:3/4;
+      position:relative;
+      overflow:hidden;
+      border-radius:24px 0 0 24px;
+      background:var(--bg3);
+    }
+    @media(max-width:600px){
+      .modal-img-side{border-radius:24px 24px 0 0;aspect-ratio:4/3;}
+    }
+    .modal-main-img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.3s;}
+
+    .modal-thumbs{
+      position:absolute;
+      bottom:12px;left:50%;
+      transform:translateX(-50%);
+      display:flex;gap:8px;
+    }
+    .thumb{
+      width:44px;height:44px;
+      border-radius:8px;
+      overflow:hidden;
+      border:2px solid transparent;
+      cursor:pointer;
+      transition:border-color 0.3s;
+    }
+    .thumb.active{border-color:var(--gold);}
+    .thumb img{width:100%;height:100%;object-fit:cover;}
+
+    .modal-info-side{
+      padding:2rem 1.5rem;
+      display:flex;
+      flex-direction:column;
+      gap:1.25rem;
+    }
+    .modal-close{
+      position:absolute;
+      top:1rem;left:1rem;
+      width:34px;height:34px;
+      border-radius:50%;
+      background:rgba(26,21,16,0.7);
+      border:1px solid rgba(196,160,106,0.2);
+      color:var(--text-muted);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      font-size:0.8rem;
+      transition:all 0.3s;
+      z-index:5;
+    }
+    .modal-close:hover{color:var(--gold);border-color:var(--gold);}
+
+    .modal-name{font-size:1.5rem;font-weight:800;color:#F5EDD8;line-height:1.2;}
+    .modal-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.8;}
+    .modal-price{font-size:2rem;font-weight:900;color:var(--gold);}
+    .modal-price small{font-size:0.75rem;font-weight:400;color:var(--text-dim);}
+
+    .section-label{font-size:0.6rem;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.5rem;}
+
+    .color-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
+    .color-chip{
+      padding:0.3rem 0.85rem;
+      border-radius:50px;
+      border:1px solid rgba(196,160,106,0.2);
+      font-size:0.7rem;
+      color:var(--text-muted);
+      cursor:pointer;
+      transition:all 0.3s;
+    }
+    .color-chip:hover,.color-chip.selected{
+      border-color:var(--gold);
+      color:var(--gold);
+      background:var(--gold-dim);
+    }
+
+    .wa-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:100%;
+      padding:0.9rem;
+      background:linear-gradient(135deg,#25D366,#128C7E);
+      border:none;
+      border-radius:14px;
+      color:#fff;
+      font-size:0.85rem;
+      font-weight:700;
+      font-family:'Tajawal',sans-serif;
+      cursor:pointer;
+      transition:all 0.3s;
+      margin-top:auto;
+      letter-spacing:0.5px;
+    }
+    .wa-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(37,211,102,0.3);}
+
+    .whatsapp-float{
+      position:fixed;bottom:30px;left:30px;z-index:100;
+      background:#25D366;color:#fff;
+      width:52px;height:52px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      transition:all 0.3s;font-size:1.5rem;text-decoration:none;
+    }
+    .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 8px 25px rgba(37,211,102,0.4);}
+
+    .breadcrumb{
+      position:relative;z-index:1;
+      padding:1.25rem 2rem 0;
+      max-width:1200px;margin:0 auto;
+      display:flex;align-items:center;gap:0.5rem;
+      font-size:0.65rem;letter-spacing:1px;color:var(--text-dim);
+    }
+    .breadcrumb a{color:var(--text-dim);text-decoration:none;transition:color 0.3s;}
+    .breadcrumb a:hover{color:var(--gold);}
+    .breadcrumb i{font-size:0.5rem;}
+
+    .count-tag{
+      position:relative;z-index:1;
+      max-width:1200px;margin:0.5rem auto 0;
+      padding:0 1.5rem;
+      font-size:0.65rem;color:var(--text-dim);letter-spacing:1px;
+    }
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    .prod-card{animation:fadeUp 0.5s ease both;}
+  </style>
+</head>
+<body>
+
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <nav class="nav-bar">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <img src="images/logo.jpg" alt="Almaya Couture" class="logo-img" onerror="this.src='https://placehold.co/60x60/C4A06A/1A1510?text=AC'">
+        <span style="font-size:0.8rem;font-weight:300;color:var(--gold);" class="hidden sm:block">Almaya Couture</span>
+      </div>
+      <div style="display:flex;gap:2rem;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;flex-wrap:wrap;justify-content:center;">
+        <a href="index.html" style="color:var(--gold-light);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">الرئيسية</a>
+        <a href="index.html#ready-to-wear" style="color:var(--gold-light);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">المجموعة</a>
+        <a href="index.html#custom-order" style="color:var(--gold-light);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">صممي قطعتك</a>
+      </div>
+      <a href="https://wa.me/212601245733" target="_blank" style="display:flex;align-items:center;gap:6px;font-size:0.65rem;color:var(--text-muted);text-decoration:none;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:50px;padding:0.4rem 1rem;transition:all 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#A89880'">
+        <i class="fab fa-whatsapp" style="color:#25D366;"></i> 0601245733
+      </a>
+    </div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">الرئيسية</a>
+    <i class="fas fa-chevron-left"></i>
+    <a href="collections.html">التصنيفات</a>
+    <i class="fas fa-chevron-left"></i>
+    <span style="color:var(--gold);" id="categoryBreadcrumb">المنتجات</span>
+  </div>
+
+  <div class="hero">
+    <h1 class="hero-title" id="categoryTitle">المنتجات</h1>
+  </div>
+
+  <div class="count-tag" id="countTag"></div>
+
+  <section class="products-section">
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalBox" style="position:relative;">
+      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+
+      <div class="modal-img-side">
+        <img src="" alt="" class="modal-main-img" id="modalMainImg">
+        <div class="modal-thumbs" id="modalThumbs"></div>
+      </div>
+
+      <div class="modal-info-side">
+        <div>
+          <div class="modal-name" id="modalName"></div>
+        </div>
+        <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div>
+          <div class="section-label">الألوان المتاحة</div>
+          <div class="color-chips" id="modalColors"></div>
+        </div>
+        <div>
+          <div class="section-label">المقاسات المتاحة</div>
+          <div class="color-chips" id="modalSizes"></div>
+        </div>
+        <button class="wa-btn" id="waBtn">
+          <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i>
+          اطلبي عبر واتساب
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer style="background:rgba(42,34,24,0.5);backdrop-filter:blur(8px);border-top:1px solid rgba(196,160,106,0.1);padding:3rem 1.5rem;position:relative;z-index:1;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;margin-bottom:2rem;">
+        <div>
+          <div style="font-size:1.1rem;color:var(--gold);font-weight:300;">Almaya Couture</div>
+          <div style="font-size:0.6rem;color:var(--text-dim);margin-top:2px;">من أيادي الميمة لدارك</div>
+        </div>
+        <div style="display:flex;gap:1.5rem;">
+          <a href="https://www.instagram.com/almaya_couture" target="_blank" style="color:var(--text-muted);transition:all 0.3s;font-size:1.1rem;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#A89880'"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@almayacouture" target="_blank" style="color:var(--text-muted);transition:all 0.3s;font-size:1.1rem;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#A89880'"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <div>
+          <a href="https://wa.me/212601245733" style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-dim);text-decoration:none;margin-bottom:4px;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
+            <i class="fab fa-whatsapp"></i> 0601245733
+          </a>
+          <a href="mailto:almayacouture@gmail.com" style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-dim);text-decoration:none;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
+            <i class="far fa-envelope"></i> almayacouture@gmail.com
+          </a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(196,160,106,0.1);padding-top:1.5rem;text-align:center;font-size:0.55rem;color:var(--text-dim);">
+        © 2026 Almaya Couture — المغرب
+      </div>
+    </div>
+  </footer>
+
+  <script src="products.js"></script>
+  <script>
+    const WA_NUMBER = "212601245733";
+
+    const CATEGORY_MAP = {
+      "jellaba": "الجلابة",
+      "caftan": "القفطان",
+      "takchita": "التكشيطة",
+      "jabador": "الجبادور",
+      "abaya": "العباية"
+    };
+
+    const COLOR_MAP = {
+      "ذهبي":"#C4A06A","بيج":"#D5C5A5","أبيض":"#F5EDD8","أزرق سماوي":"#6BAED6",
+      "رمادي":"#B0B0B0","رمادي فاتح":"#CCC","أحمر خمري":"#8B3A3A",
+      "أخضر زيتي":"#6B7C3A","كحلي":"#2C3E6B","أسود":"#333",
+      "وردي":"#E8A0B0","مرجاني":"#E8785A","أحمر ملكي":"#9B1C1C",
+      "أزرق بتروالي":"#1A4A6B","ذهبي ملكي":"#B8860B","وردي فاتح":"#F4B8C8",
+      "عاجي":"#F5EDD8","ذهبي فاتح":"#E8D48A","أبيض عاجي":"#F5F0E8"
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const CATEGORY = urlParams.get('category') || 'jellaba';
+    const CAT_LABEL = CATEGORY_MAP[CATEGORY] || 'المنتجات';
+
+    document.getElementById('categoryTitle').textContent = CAT_LABEL;
+    document.getElementById('categoryBreadcrumb').textContent = CAT_LABEL;
+
+    let products = [];
+    let activeProduct = null;
+    let selectedColor = null;
+    let selectedSize = null;
+
+    function colorDots(colors){
+      return colors.slice(0,4).map(c=>{
+        const hex = COLOR_MAP[c] || "#888";
+        return `<div class="color-dot" style="background:${hex};" title="${c}"></div>`;
+      }).join("");
+    }
+
+    function renderGrid(){
+      const grid = document.getElementById("productsGrid");
+      const count = document.getElementById("countTag");
+
+      count.textContent = `${products.length} تصميم`;
+
+      if(products.length===0){
+        grid.innerHTML=`<div class="empty-state"><i class="fas fa-box-open" style="color:var(--text-dim)"></i><p>لا توجد منتجات في هذا التصنيف حالياً</p></div>`;
+        return;
+      }
+
+      grid.innerHTML = products.map((p,i)=>`
+        <div class="prod-card" style="animation-delay:${i*0.07}s" onclick="openModal('${p.id}')">
+          <div class="prod-img-wrap">
+            <img src="${p.images[0]}" alt="${p.name}" class="prod-img"
+              onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=${encodeURIComponent(p.name)}'">
+            <div class="prod-colors-preview">${colorDots(p.colors)}</div>
+            <div class="prod-quick">
+              <button class="quick-btn" onclick="event.stopPropagation();openWA('${p.id}')">
+                <i class="fab fa-whatsapp"></i> اطلبي الآن
+              </button>
+            </div>
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">${p.name}</div>
+            <div class="prod-desc">${p.description}</div>
+            <div class="prod-footer">
+              <div class="prod-price">${p.price.toLocaleString('ar-MA')}<span> درهم</span></div>
+              <div class="prod-sizes">المقاس: ${p.sizes ? p.sizes.join('، ') : 'موحد'}</div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function openModal(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return;
+      activeProduct = p;
+      selectedColor = p.colors[0]||null;
+      selectedSize = p.sizes ? p.sizes[0] : null;
+
+      document.getElementById("modalName").textContent = p.name;
+      document.getElementById("modalDesc").textContent = p.description;
+      document.getElementById("modalPrice").innerHTML = `${p.price.toLocaleString('ar-MA')} <small>درهم</small>`;
+
+      const mainImg = document.getElementById("modalMainImg");
+      mainImg.src = p.images[0];
+      mainImg.onerror = ()=>{ mainImg.src=`https://placehold.co/400x600/2A2218/C4A06A?text=${encodeURIComponent(p.name)}`; };
+
+      const thumbsCont = document.getElementById("modalThumbs");
+      if(p.images.length>1){
+        thumbsCont.innerHTML = p.images.map((img,i)=>`
+          <div class="thumb ${i===0?'active':''}" onclick="switchImg(this,'${img}')">
+            <img src="${img}" onerror="this.src='https://placehold.co/60x80/2A2218/C4A06A?text='">
+          </div>`).join("");
+      } else {
+        thumbsCont.innerHTML="";
+      }
+
+      document.getElementById("modalColors").innerHTML = p.colors.map((c,i)=>`
+        <div class="color-chip ${i===0?'selected':''}" onclick="selectColor(this,'${c}')">${c}</div>
+      `).join("");
+
+      const sizesContainer = document.getElementById("modalSizes");
+      if (p.sizes && p.sizes.length > 0) {
+        sizesContainer.innerHTML = p.sizes.map((s,i)=>`
+          <div class="color-chip ${i===0?'selected':''}" onclick="selectSize(this,'${s}')">${s}</div>
+        `).join("");
+      } else {
+        sizesContainer.innerHTML = '<span style="font-size:0.7rem;color:var(--text-dim);">مقاس موحد</span>';
+      }
+
+      document.getElementById("modalOverlay").classList.add("open");
+      document.body.style.overflow="hidden";
+    }
+
+    function switchImg(el, src){
+      document.querySelectorAll(".thumb").forEach(t=>t.classList.remove("active"));
+      el.classList.add("active");
+      document.getElementById("modalMainImg").src = src;
+    }
+
+    function selectColor(el, color){
+      document.querySelectorAll("#modalColors .color-chip").forEach(c=>c.classList.remove("selected"));
+      el.classList.add("selected");
+      selectedColor = color;
+    }
+
+    function selectSize(el, size){
+      document.querySelectorAll("#modalSizes .color-chip").forEach(s=>s.classList.remove("selected"));
+      el.classList.add("selected");
+      selectedSize = size;
+    }
+
+    function openWA(id){
+      const p = products.find(x=>x.id===id)||activeProduct;
+      if(!p) return;
+      const color = selectedColor || p.colors[0] || "";
+      const size = selectedSize || (p.sizes && p.sizes[0]) || "";
+      const msg = `السلام عليكم 🌸\nأنا مهتمة بـ *${p.name}* من تصنيف ${CAT_LABEL}\n💛 اللون: ${color}\n📏 المقاس: ${size}\n💰 السعر: ${p.price} درهم\nواش متوفر؟`;
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
+    }
+
+    document.getElementById("waBtn").addEventListener("click",()=>{ if(activeProduct) openWA(activeProduct.id); });
+
+    document.getElementById("modalClose").addEventListener("click",closeModal);
+    document.getElementById("modalOverlay").addEventListener("click",e=>{
+      if(e.target===document.getElementById("modalOverlay")) closeModal();
+    });
+
+    function closeModal(){
+      document.getElementById("modalOverlay").classList.remove("open");
+      document.body.style.overflow="";
+      activeProduct=null;
+    }
+
+    document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+
+    if(typeof ALMAYA_PRODUCTS!=="undefined"){
+      products = ALMAYA_PRODUCTS[CATEGORY]||[];
+      renderGrid();
+    } else {
+      document.getElementById("productsGrid").innerHTML=`
+        <div class="empty-state">
+          <i class="fas fa-exclamation-circle"></i>
+          <p>يرجى التأكد من وجود ملف products.js في نفس المجلد</p>
+        </div>`;
+    }
+  </script>
+</body>
+</html>
