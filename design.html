@@ -258,16 +258,405 @@
       transform: scale(1.08);
     }
     
-    @media (max-width: 768px) {
-      .logo-img { height: 40px; }
-      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
-      .go-top { bottom: 80px; }
-      .admin-link { bottom: 80px; left: 20px; }
-      .nav-bar { padding: 0.8rem 1rem; }
-    }
-    
     .darija-text {
       font-family: 'Tajawal', 'Cairo', sans-serif;
+    }
+
+    /* ==============================================
+       MEDIA QUERIES - تصميم متجاوب لجميع الأجهزة
+       ============================================== */
+
+    /* الشاشات المتوسطة (حتى 1200px) - لابتوب صغير و تابلت أفقي */
+    @media (max-width: 1200px) {
+      .img-placeholder {
+        aspect-ratio: 1 / 1.2;
+      }
+      
+      .option-card .p-5 {
+        padding: 1rem;
+      }
+      
+      .badge-overlay {
+        top: 12px;
+        right: 12px;
+        font-size: 0.6rem;
+        padding: 0.25rem 1rem;
+      }
+    }
+
+    /* التابلت (حتى 1024px) */
+    @media (max-width: 1024px) {
+      .grid {
+        gap: 1rem;
+      }
+      
+      .option-card h3 {
+        font-size: 1.25rem;
+      }
+      
+      .option-card .p-5 {
+        padding: 0.9rem;
+      }
+      
+      .gold-btn {
+        font-size: 0.75rem;
+        padding: 0.6rem 1rem;
+        letter-spacing: 1.5px;
+      }
+      
+      section:first-of-type {
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+      }
+      
+      section:first-of-type h1 {
+        font-size: 2.5rem;
+      }
+      
+      .badge-overlay {
+        top: 10px;
+        right: 10px;
+        font-size: 0.55rem;
+        padding: 0.2rem 0.8rem;
+      }
+    }
+
+    /* التابلت الصغير والجوال الأفقي (حتى 768px) */
+    @media (max-width: 768px) {
+      .custom-cursor {
+        display: none; /* إخفاء الكيرسر على أجهزة اللمس */
+      }
+      
+      .nav-bar {
+        padding: 0.8rem 1rem;
+      }
+      
+      .logo-img {
+        height: 40px;
+      }
+      
+      .nav-bar .flex-wrap.items-center.justify-between {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .nav-bar .gap-6 {
+        gap: 1rem;
+        font-size: 0.65rem;
+      }
+      
+      section:first-of-type {
+        padding: 2.5rem 1rem;
+      }
+      
+      section:first-of-type h1 {
+        font-size: 2rem;
+      }
+      
+      section:first-of-type p {
+        font-size: 0.85rem;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+      }
+      
+      .option-card {
+        border-radius: 16px;
+      }
+      
+      .option-card h3 {
+        font-size: 1.15rem;
+      }
+      
+      .option-card .p-5 {
+        padding: 0.8rem;
+      }
+      
+      .option-card .text-xs {
+        font-size: 0.6rem;
+      }
+      
+      .gold-btn {
+        font-size: 0.7rem;
+        padding: 0.5rem 0.8rem;
+        margin-top: 0.75rem;
+      }
+      
+      .img-placeholder {
+        aspect-ratio: 1 / 1.25;
+      }
+      
+      .badge-overlay {
+        top: 8px;
+        right: 8px;
+        font-size: 0.5rem;
+        padding: 0.2rem 0.7rem;
+      }
+      
+      .whatsapp-float {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        bottom: 20px;
+        left: 20px;
+      }
+      
+      .go-top {
+        bottom: 80px;
+        right: 20px;
+      }
+      
+      .admin-link {
+        bottom: 80px;
+        left: 20px;
+      }
+      
+      footer {
+        padding: 2.5rem 1rem;
+      }
+      
+      footer .flex-col {
+        text-align: center;
+      }
+    }
+
+    /* الجوال (حتى 480px) */
+    @media (max-width: 480px) {
+      .nav-bar {
+        padding: 0.6rem 0.75rem;
+      }
+      
+      .logo-img {
+        height: 35px;
+      }
+      
+      .nav-bar .gap-6 {
+        gap: 0.7rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.5px;
+      }
+      
+      .nav-bar .hidden.md\\:flex {
+        display: none !important;
+      }
+      
+      section:first-of-type {
+        padding: 2rem 0.75rem;
+      }
+      
+      section:first-of-type h1 {
+        font-size: 1.6rem;
+      }
+      
+      section:first-of-type p {
+        font-size: 0.75rem;
+      }
+      
+      section:first-of-type span {
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.7rem;
+      }
+      
+      .option-card {
+        border-radius: 14px;
+      }
+      
+      .option-card h3 {
+        font-size: 1rem;
+      }
+      
+      .option-card .p-5 {
+        padding: 0.7rem;
+      }
+      
+      .option-card .text-xs.mt-1 {
+        font-size: 0.55rem;
+      }
+      
+      .option-card .text-xs.mt-3 {
+        font-size: 0.5rem;
+        line-height: 1.5;
+      }
+      
+      .gold-btn {
+        font-size: 0.65rem;
+        padding: 0.45rem 0.7rem;
+        letter-spacing: 1px;
+        margin-top: 0.6rem;
+      }
+      
+      .img-placeholder {
+        aspect-ratio: 1 / 1.3;
+      }
+      
+      .badge-overlay {
+        top: 7px;
+        right: 7px;
+        font-size: 0.48rem;
+        padding: 0.15rem 0.6rem;
+      }
+      
+      .whatsapp-float {
+        width: 42px;
+        height: 42px;
+        font-size: 1.15rem;
+        bottom: 15px;
+        left: 15px;
+      }
+      
+      .go-top {
+        width: 35px;
+        height: 35px;
+        bottom: 65px;
+        right: 15px;
+      }
+      
+      .admin-link {
+        width: 35px;
+        height: 35px;
+        bottom: 65px;
+        left: 15px;
+      }
+      
+      footer h3 {
+        font-size: 1rem;
+      }
+      
+      footer .gap-8 {
+        gap: 1.25rem;
+      }
+      
+      footer .text-\\[0\\.7rem\\] {
+        font-size: 0.6rem;
+      }
+    }
+
+    /* الجوال الصغير جداً (حتى 360px) */
+    @media (max-width: 360px) {
+      .nav-bar .gap-6 {
+        gap: 0.5rem;
+        font-size: 0.55rem;
+      }
+      
+      section:first-of-type h1 {
+        font-size: 1.4rem;
+      }
+      
+      .grid {
+        gap: 0.5rem;
+      }
+      
+      .option-card {
+        border-radius: 12px;
+      }
+      
+      .option-card h3 {
+        font-size: 0.9rem;
+      }
+      
+      .option-card .p-5 {
+        padding: 0.5rem;
+      }
+      
+      .option-card .text-xs.mt-3 {
+        font-size: 0.45rem;
+      }
+      
+      .gold-btn {
+        font-size: 0.6rem;
+        padding: 0.4rem 0.6rem;
+        letter-spacing: 0.5px;
+      }
+      
+      .badge-overlay {
+        top: 5px;
+        right: 5px;
+        font-size: 0.42rem;
+        padding: 0.1rem 0.5rem;
+      }
+      
+      .whatsapp-float {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+        bottom: 10px;
+        left: 10px;
+      }
+      
+      .go-top {
+        width: 32px;
+        height: 32px;
+        bottom: 55px;
+        right: 10px;
+      }
+      
+      .admin-link {
+        width: 32px;
+        height: 32px;
+        bottom: 55px;
+        left: 10px;
+      }
+    }
+
+    /* دعم اللمس - إلغاء تأثيرات hover */
+    @media (hover: none) and (pointer: coarse) {
+      .custom-cursor {
+        display: none;
+      }
+      
+      .option-card:hover {
+        transform: none;
+        background: rgba(42, 34, 24, 0.85);
+        border-color: rgba(196, 160, 106, 0.15);
+        box-shadow: none;
+      }
+      
+      .option-card:hover .img-placeholder img {
+        transform: none;
+      }
+      
+      .option-card:active {
+        transform: scale(0.97);
+        transition: transform 0.15s ease;
+        background: rgba(42, 34, 24, 0.95);
+        border-color: rgba(196, 160, 106, 0.35);
+      }
+      
+      .gold-btn:hover::before {
+        left: -100%;
+      }
+      
+      .gold-btn:active::before {
+        left: 100%;
+      }
+      
+      .gold-btn:active {
+        transform: translateY(-2px);
+        border-color: #D4B896;
+      }
+    }
+
+    /* تقليل الحركة للمستخدمين الحساسين */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      
+      .custom-cursor {
+        display: none;
+      }
     }
   </style>
 </head>
