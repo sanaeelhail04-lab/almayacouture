@@ -163,8 +163,6 @@
       transform: scale(1.05);
     }
     
-   
-    
     /* واتساب فلووتنغ */
     .whatsapp-float {
       position: fixed;
@@ -224,9 +222,6 @@
       transform: translateY(-3px);
     }
     
-   
-    
-    
     .darija-text {
       font-family: 'Tajawal', 'Cairo', sans-serif;
     }
@@ -244,8 +239,6 @@
       .option-card .p-5 {
         padding: 1rem;
       }
-      
-     
     }
 
     /* التابلت (حتى 1024px) */
@@ -276,8 +269,6 @@
       section:first-of-type h1 {
         font-size: 2.5rem;
       }
-      
-     
     }
 
     /* التابلت الصغير والجوال الأفقي (حتى 768px) */
@@ -347,8 +338,6 @@
         aspect-ratio: 1 / 1.25;
       }
       
-     
-      
       .whatsapp-float {
         width: 45px;
         height: 45px;
@@ -361,8 +350,6 @@
         bottom: 80px;
         right: 20px;
       }
-      
-      
       
       footer {
         padding: 2.5rem 1rem;
@@ -447,8 +434,6 @@
         aspect-ratio: 1 / 1.3;
       }
       
-   
-      
       .whatsapp-float {
         width: 42px;
         height: 42px;
@@ -464,8 +449,6 @@
         right: 15px;
       }
       
-      
-      
       footer h3 {
         font-size: 1rem;
       }
@@ -474,15 +457,16 @@
         gap: 1.25rem;
       }
       
-     .footer-link {
-  font-size: 0.7rem;
-}}
+      .footer-link {
+        font-size: 0.7rem;
+      }
+    }
 
-@media (max-width: 480px) {
-  .footer-link {
-    font-size: 0.6rem;
-  }
-}
+    @media (max-width: 480px) {
+      .footer-link {
+        font-size: 0.6rem;
+      }
+    }
 
     /* الجوال الصغير جداً (حتى 360px) */
     @media (max-width: 360px) {
@@ -521,8 +505,6 @@
         letter-spacing: 0.5px;
       }
       
-   
-      
       .whatsapp-float {
         width: 38px;
         height: 38px;
@@ -537,8 +519,6 @@
         bottom: 55px;
         right: 10px;
       }
-      
-     
     }
 
     /* دعم اللمس - إلغاء تأثيرات hover */
@@ -601,30 +581,10 @@
   <!-- كيرسر مخصص -->
   <div class="custom-cursor" id="customCursor"></div>
 
-  <!-- نافبار -->
-  <nav class="nav-bar sticky top-0 z-50 w-full">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <img id="site-logo" src="images/logo.jpg" alt="Almaya Couture" class="logo-img" onerror="this.src='https://placehold.co/60x60/C4A06A/1A1510?text=AC'">
-        <span class="text-sm font-light gold-text darija-text hidden sm:block">Almaya Couture</span>
-      </div>
-      
-      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-xs uppercase tracking-wide">
-        <a href="index.html" class="hover:gold-text transition text-[#D4B896] darija-text">الرئيسية</a>
-        <a href="collections.html" class="hover:gold-text transition text-[#D4B896] darija-text">المنتجات</a>
-        <a href="design.html" class="hover:gold-text transition text-[#D4B896] darija-text">صممي قطعتك</a>
-         </div>
-      
-      <div class="flex items-center gap-4">
-        <div class="hidden md:flex items-center gap-2 text-[0.65rem] bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
-          <a href="https://wa.me/212601245733" target="_blank" class="flex items-center gap-1 text-[#A89880] hover:gold-text transition">
-            <i class="fab fa-whatsapp text-[#25D366]"></i>
-            <span id="whatsapp-number-display">0601245733</span>
-          </a>
-       
-    </div>
-  </nav>
+  <!-- ========== HEADER (يتم تحميله من header.js) ========== -->
+  <div id="header-container"></div>
   
+  <!-- ========== WHATSAPP & GO TOP ========== -->
   <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" id="whatsapp-float">
     <i class="fab fa-whatsapp"></i>
   </a>
@@ -649,34 +609,13 @@
       </div>
     </section>
     
-    <!-- فوتر -->
-    <footer class="bg-[#2A2218]/50 backdrop-blur-sm text-[#D4B896] py-12 px-6 border-t border-[#C4A06A]/10">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-          <div class="text-center md:text-right">
-            <h3 class="text-xl font-light gold-text mb-1">Almaya Couture</h3>
-            <p class="text-[0.6rem] text-[#8B7B68] darija-text">من أيادي الميمة لدارك</p>
-          </div>
-          <div class="flex gap-8">
-            <a href="https://www.instagram.com/almaya_couture?igsh=djFybmpyZ2tybGN0" target="_blank" class="social-icon"><i class="fab fa-instagram text-lg"></i></a>
-            <a href="https://www.tiktok.com/@almayacouture?_r=1&_t=ZS-96MhTFH69HE" target="_blank" class="social-icon"><i class="fab fa-tiktok text-lg"></i></a>
-            <i class="fab fa-facebook text-lg social-icon"></i>
-          </div>
-          <div class="text-center md:text-left">
-            <a href="https://wa.me/212601245733" class="text-[0.7rem] text-[#8B7B68] hover:gold-text transition flex items-center gap-2 darija-text">
-              <i class="fab fa-whatsapp"></i> 0601245733
-            </a>
-            <a href="mailto:almayacouture@gmail.com" class="text-[0.7rem] text-[#8B7B68] hover:gold-text transition flex items-center gap-2 mt-1 darija-text">
-              <i class="far fa-envelope"></i> almayacouture@gmail.com
-            </a>
-          </div>
-        </div>
-        <div class="border-t border-[#C4A06A]/10 pt-6 text-center">
-          <div class="text-[0.5rem] text-[#8B7B68] darija-text">© 2026 Almaya Couture — المغرب — مرحبا بيك فمرحلة الإطلاق</div>
-        </div>
-      </div>
-    </footer>
+    <!-- ========== FOOTER (يتم تحميله من footer.js) ========== -->
+    <div id="footer-container"></div>
   </main>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
 
   <script>
     // تهيئة AOS مع إعدادات متطورة مثل الكود الأصلي

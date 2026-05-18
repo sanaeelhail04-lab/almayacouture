@@ -8,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ========== نفس الـ CSS الأساسي كامل (بدون تغيير) ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -92,7 +93,6 @@
       padding: 3rem 4rem;
     }
 
-    
     .slide-title {
       font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 800;
@@ -138,7 +138,6 @@
       border-color: #D4B896;
     }
 
-    
     .slide.active .slide-title,
     .slide.active .slide-sub,
     .slide.active .slide-btn {
@@ -229,443 +228,122 @@
       gap: 1.25rem;
     }
 
-/* ==============================================
-   MEDIA QUERIES - تصميم متجاوب لجميع الأجهزة
-   ============================================== */
-
-/* الشاشات الكبيرة جداً (1200px فأكثر) - التصميم الأساسي */
-/* القيم الافتراضية في الكود الأساسي تنطبق هنا */
-
-/* الشاشات المتوسطة (حتى 1200px) - لابتوب صغير و تابلت أفقي */
-@media (max-width: 1200px) {
-  .categories-grid {
-    gap: 1rem;
-  }
-
-  .slide-overlay {
-    padding: 2.5rem 3rem;
-  }
-
-  .slide-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-  }
-}
-
-/* التابلت (حتى 1024px) */
-@media (max-width: 1024px) {
-  .categories-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .slider-section {
-    height: 70vh;
-    min-height: 400px;
-  }
-
-  .slide-overlay {
-    padding: 2rem 2.5rem;
-  }
-
-  .slide-title {
-    font-size: clamp(1.8rem, 4.5vw, 3rem);
-  }
-
-  .slide-sub {
-    font-size: 0.9rem;
-    max-width: 350px;
-  }
-
-  .slide-btn {
-    padding: 0.65rem 1.75rem;
-    font-size: 0.75rem;
-  }
-
-  .nav-bar {
-    padding: 0.9rem 1.5rem;
-  }
-
-  .divider {
-    margin: 3rem auto 1.5rem;
-    padding: 0 1.5rem;
-  }
-
-  .section-header h2 {
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  }
-
-  .cat-name {
-    font-size: 1.15rem;
-  }
-}
-
-/* التابلت الصغير والجوال الأفقي (حتى 768px) */
-@media (max-width: 768px) {
-  .nav-bar > div {
-    flex-direction: column;
-    gap: 0.75rem;
-    text-align: center;
-  }
-
-  .nav-bar div[style*="display:flex; gap:2rem"] {
-    gap: 1.25rem;
-    font-size: 0.65rem;
-    letter-spacing: 1.5px;
-  }
-
-  .slider-section {
-    height: 60vh;
-    min-height: 350px;
-  }
-
-  .slide-overlay {
-    padding: 1.5rem;
-    background: linear-gradient(
-      to top,
-      rgba(26, 21, 16, 0.92) 0%,
-      rgba(26, 21, 16, 0.35) 50%,
-      rgba(26, 21, 16, 0.10) 100%
-    );
-  }
-
-  .slide-title {
-    font-size: clamp(1.6rem, 6vw, 2.5rem);
-    margin-bottom: 0.5rem;
-  }
-
-  .slide-sub {
-    font-size: 0.8rem;
-    max-width: 280px;
-    line-height: 1.6;
-  }
-
-  .slide-btn {
-    padding: 0.55rem 1.5rem;
-    font-size: 0.7rem;
-    margin-top: 1rem;
-    letter-spacing: 1.5px;
-  }
-
-  .slider-arrow {
-    width: 38px;
-    height: 38px;
-    font-size: 0.85rem;
-  }
-  .slider-arrow.prev { right: 0.75rem; }
-  .slider-arrow.next { left: 0.75rem; }
-
-  .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.9rem;
-  }
-
-  .cat-card {
-    aspect-ratio: 3/4;
-    border-radius: 12px;
-  }
-
-  .cat-overlay {
-    padding: 1rem 0.75rem;
-  }
-
-  .cat-name {
-    font-size: 1.1rem;
-  }
-
-  .cat-sub {
-    font-size: 0.6rem;
-  }
-
-  .cat-desc {
-    font-size: 0.55rem;
-  }
-
-  .divider {
-    gap: 1rem;
-    margin: 2.5rem auto 1.5rem;
-    padding: 0 1rem;
-  }
-  .divider-text {
-    font-size: 0.55rem;
-    letter-spacing: 0.4em;
-  }
-
-  .section-header {
-    margin-bottom: 2rem;
-  }
-  .section-header h2 {
-    font-size: 1.7rem;
-  }
-  .section-header p {
-    font-size: 0.8rem;
-  }
-
-  .whatsapp-float {
-    width: 46px;
-    height: 46px;
-    bottom: 20px;
-    left: 20px;
-    font-size: 1.3rem;
-  }
-
-  .go-top {
-    bottom: 75px;
-    right: 20px;
-    width: 36px;
-    height: 36px;
-  }
-
-  footer > div > div:first-child {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-
-  .logo-img {
-    height: 42px;
-  }
-}
-
-/* الجوال (حتى 480px) */
-@media (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-
-  .nav-bar {
-    padding: 0.7rem 0.75rem;
-  }
-
-  .logo-img {
-    height: 36px;
-  }
-
-  .nav-bar div[style*="display:flex; gap:2rem"] {
-    gap: 0.8rem;
-    font-size: 0.6rem;
-    letter-spacing: 1px;
-  }
-
-  .nav-bar a[href*="wa.me"] {
-    padding: 0.3rem 0.75rem;
-    font-size: 0.6rem;
-  }
-
-  .slider-section {
-    height: 55vh;
-    min-height: 300px;
-  }
-
-  .slide-overlay {
-    padding: 1.25rem 1rem;
-  }
-
-  .slide-title {
-    font-size: clamp(1.4rem, 7vw, 2rem);
-  }
-
-  .slide-sub {
-    font-size: 0.7rem;
-    max-width: 240px;
-  }
-
-  .slide-btn {
-    padding: 0.5rem 1.25rem;
-    font-size: 0.65rem;
-    letter-spacing: 1px;
-  }
-
-  .slider-arrow {
-    width: 32px;
-    height: 32px;
-    font-size: 0.7rem;
-  }
-  .slider-arrow.prev { right: 0.5rem; }
-  .slider-arrow.next { left: 0.5rem; }
-
-  .slider-dots {
-    bottom: 1rem;
-    gap: 6px;
-  }
-  .dot {
-    width: 5px;
-    height: 5px;
-  }
-  .dot.active {
-    width: 22px;
-  }
-
-  .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.7rem;
-  }
-
-  .cat-card {
-    aspect-ratio: 3/4.2;
-    border-radius: 10px;
-  }
-
-  .cat-overlay {
-    padding: 0.8rem 0.6rem;
-  }
-
-  .cat-name {
-    font-size: 1rem;
-  }
-
-  .cat-sub {
-    font-size: 0.55rem;
-  }
-
-  .cat-desc {
-    font-size: 0.5rem;
-  }
-
-  /* إخفاء الوصف عند الـ hover على الجوال لأنه لا يدعم hover */
-  .cat-card:hover .cat-desc {
-    max-height: 0;
-    opacity: 0;
-  }
-
-  .divider {
-    margin: 2rem auto 1rem;
-    gap: 0.7rem;
-    padding: 0 0.75rem;
-  }
-  .divider-text {
-    font-size: 0.5rem;
-    letter-spacing: 0.3em;
-  }
-  .divider-diamond {
-    width: 4px;
-    height: 4px;
-  }
-
-  .section-header h2 {
-    font-size: 1.5rem;
-  }
-  .section-header p {
-    font-size: 0.7rem;
-  }
-
-  .categories-section {
-    padding: 0 0.75rem 3rem;
-  }
-
-  .whatsapp-float {
-    width: 42px;
-    height: 42px;
-    bottom: 15px;
-    left: 15px;
-    font-size: 1.2rem;
-  }
-
-  .go-top {
-    bottom: 65px;
-    right: 15px;
-    width: 32px;
-    height: 32px;
-  }
-
-  .go-top i {
-    font-size: 0.65rem;
-  }
-
-  footer {
-    padding: 2rem 1rem;
-  }
-  footer > div > div:first-child {
-    gap: 0.75rem;
-  }
-}
-
-/* الجوال الصغير جداً (حتى 360px) */
-@media (max-width: 360px) {
-  .slider-section {
-    height: 50vh;
-    min-height: 260px;
-  }
-
-  .slide-overlay {
-    padding: 1rem 0.75rem;
-  }
-
-  .slide-title {
-    font-size: 1.2rem;
-  }
-
-  .slide-sub {
-    font-size: 0.65rem;
-    max-width: 200px;
-  }
-
-  .slide-btn {
-    padding: 0.4rem 1rem;
-    font-size: 0.6rem;
-  }
-
-  .categories-grid {
-    gap: 0.5rem;
-  }
-
-  .cat-name {
-    font-size: 0.9rem;
-  }
-
-  .nav-bar div[style*="display:flex; gap:2rem"] {
-    gap: 0.6rem;
-    font-size: 0.55rem;
-  }
-}
-
-/* دعم Dark Mode (اختياري) */
-@media (prefers-color-scheme: dark) {
-  /* التصميم الأساسي داكن بالفعل، لا تغييرات مطلوبة */
-}
-
-/* دعم Reduced Motion للمستخدمين الذين يفضلون تقليل الحركة */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .slider-track {
-    transition: none !important;
-  }
-}
-
-/* تحسين اللمس للأجهزة التي تعمل باللمس */
-@media (hover: none) and (pointer: coarse) {
-  .cat-card:hover {
-    transform: none;
-    border-color: rgba(196, 160, 106, 0.12);
-    box-shadow: none;
-  }
-
-  .cat-card:hover .cat-img {
-    transform: none;
-  }
-
-  .cat-card:hover .cat-desc {
-    max-height: 0;
-    opacity: 0;
-  }
-
-  /* يمكن إضافة تأثير active بدلاً من hover */
-  .cat-card:active {
-    transform: scale(0.97);
-    transition: transform 0.15s ease;
-  }
-
-  .slide-btn {
-    padding: 0.7rem 2rem; /* زر أكبر لسهولة اللمس */
-  }
-}
+    /* ========== Media Queries (نفس الشيء كامل) ========== */
+    @media (max-width: 1200px) {
+      .categories-grid { gap: 1rem; }
+      .slide-overlay { padding: 2.5rem 3rem; }
+      .slide-title { font-size: clamp(2rem, 5vw, 3.5rem); }
+    }
+
+    @media (max-width: 1024px) {
+      .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .slider-section { height: 70vh; min-height: 400px; }
+      .slide-overlay { padding: 2rem 2.5rem; }
+      .slide-title { font-size: clamp(1.8rem, 4.5vw, 3rem); }
+      .slide-sub { font-size: 0.9rem; max-width: 350px; }
+      .slide-btn { padding: 0.65rem 1.75rem; font-size: 0.75rem; }
+      .nav-bar { padding: 0.9rem 1.5rem; }
+      .divider { margin: 3rem auto 1.5rem; padding: 0 1.5rem; }
+      .section-header h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); }
+      .cat-name { font-size: 1.15rem; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-bar > div { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .nav-bar div[style*="display:flex; gap:2rem"] { gap: 1.25rem; font-size: 0.65rem; letter-spacing: 1.5px; }
+      .slider-section { height: 60vh; min-height: 350px; }
+      .slide-overlay {
+        padding: 1.5rem;
+        background: linear-gradient(to top, rgba(26, 21, 16, 0.92) 0%, rgba(26, 21, 16, 0.35) 50%, rgba(26, 21, 16, 0.10) 100%);
+      }
+      .slide-title { font-size: clamp(1.6rem, 6vw, 2.5rem); margin-bottom: 0.5rem; }
+      .slide-sub { font-size: 0.8rem; max-width: 280px; line-height: 1.6; }
+      .slide-btn { padding: 0.55rem 1.5rem; font-size: 0.7rem; margin-top: 1rem; letter-spacing: 1.5px; }
+      .slider-arrow { width: 38px; height: 38px; font-size: 0.85rem; }
+      .slider-arrow.prev { right: 0.75rem; }
+      .slider-arrow.next { left: 0.75rem; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+      .cat-card { aspect-ratio: 3/4; border-radius: 12px; }
+      .cat-overlay { padding: 1rem 0.75rem; }
+      .cat-name { font-size: 1.1rem; }
+      .cat-sub { font-size: 0.6rem; }
+      .cat-desc { font-size: 0.55rem; }
+      .divider { gap: 1rem; margin: 2.5rem auto 1.5rem; padding: 0 1rem; }
+      .divider-text { font-size: 0.55rem; letter-spacing: 0.4em; }
+      .section-header { margin-bottom: 2rem; }
+      .section-header h2 { font-size: 1.7rem; }
+      .section-header p { font-size: 0.8rem; }
+      .whatsapp-float { width: 46px; height: 46px; bottom: 20px; left: 20px; font-size: 1.3rem; }
+      .go-top { bottom: 75px; right: 20px; width: 36px; height: 36px; }
+      footer > div > div:first-child { flex-direction: column; text-align: center; gap: 1rem; }
+      .logo-img { height: 42px; }
+    }
+
+    @media (max-width: 480px) {
+      body { font-size: 14px; }
+      .nav-bar { padding: 0.7rem 0.75rem; }
+      .logo-img { height: 36px; }
+      .nav-bar div[style*="display:flex; gap:2rem"] { gap: 0.8rem; font-size: 0.6rem; letter-spacing: 1px; }
+      .nav-bar a[href*="wa.me"] { padding: 0.3rem 0.75rem; font-size: 0.6rem; }
+      .slider-section { height: 55vh; min-height: 300px; }
+      .slide-overlay { padding: 1.25rem 1rem; }
+      .slide-title { font-size: clamp(1.4rem, 7vw, 2rem); }
+      .slide-sub { font-size: 0.7rem; max-width: 240px; }
+      .slide-btn { padding: 0.5rem 1.25rem; font-size: 0.65rem; letter-spacing: 1px; }
+      .slider-arrow { width: 32px; height: 32px; font-size: 0.7rem; }
+      .slider-arrow.prev { right: 0.5rem; }
+      .slider-arrow.next { left: 0.5rem; }
+      .slider-dots { bottom: 1rem; gap: 6px; }
+      .dot { width: 5px; height: 5px; }
+      .dot.active { width: 22px; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+      .cat-card { aspect-ratio: 3/4.2; border-radius: 10px; }
+      .cat-overlay { padding: 0.8rem 0.6rem; }
+      .cat-name { font-size: 1rem; }
+      .cat-sub { font-size: 0.55rem; }
+      .cat-desc { font-size: 0.5rem; }
+      .cat-card:hover .cat-desc { max-height: 0; opacity: 0; }
+      .divider { margin: 2rem auto 1rem; gap: 0.7rem; padding: 0 0.75rem; }
+      .divider-text { font-size: 0.5rem; letter-spacing: 0.3em; }
+      .divider-diamond { width: 4px; height: 4px; }
+      .section-header h2 { font-size: 1.5rem; }
+      .section-header p { font-size: 0.7rem; }
+      .categories-section { padding: 0 0.75rem 3rem; }
+      .whatsapp-float { width: 42px; height: 42px; bottom: 15px; left: 15px; font-size: 1.2rem; }
+      .go-top { bottom: 65px; right: 15px; width: 32px; height: 32px; }
+      .go-top i { font-size: 0.65rem; }
+      footer { padding: 2rem 1rem; }
+      footer > div > div:first-child { gap: 0.75rem; }
+    }
+
+    @media (max-width: 360px) {
+      .slider-section { height: 50vh; min-height: 260px; }
+      .slide-overlay { padding: 1rem 0.75rem; }
+      .slide-title { font-size: 1.2rem; }
+      .slide-sub { font-size: 0.65rem; max-width: 200px; }
+      .slide-btn { padding: 0.4rem 1rem; font-size: 0.6rem; }
+      .categories-grid { gap: 0.5rem; }
+      .cat-name { font-size: 0.9rem; }
+      .nav-bar div[style*="display:flex; gap:2rem"] { gap: 0.6rem; font-size: 0.55rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .slider-track { transition: none !important; }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .cat-card:hover { transform: none; border-color: rgba(196, 160, 106, 0.12); box-shadow: none; }
+      .cat-card:hover .cat-img { transform: none; }
+      .cat-card:hover .cat-desc { max-height: 0; opacity: 0; }
+      .cat-card:active { transform: scale(0.97); transition: transform 0.15s ease; }
+      .slide-btn { padding: 0.7rem 2rem; }
+    }
 
     .cat-card {
       position: relative;
@@ -798,35 +476,22 @@
 </head>
 <body>
 
+  <!-- ========== HEADER (يتم تحميله من header.js) ========== -->
+  <div id="header-container"></div>
+
+  <!-- ========== WHATSAPP & GO TOP ========== -->
   <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
     <i class="fab fa-whatsapp"></i>
   </a>
   <div class="go-top" id="goTop"><i class="fas fa-arrow-up text-xs"></i></div>
 
-  <nav class="nav-bar">
-    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
-      <div style="display:flex; align-items:center; gap:0.75rem;">
-        <img src="images/logo.jpg" alt="Almaya Couture" class="logo-img" onerror="this.src='https://placehold.co/60x60/C4A06A/1A1510?text=AC'">
-        <span style="font-size:0.8rem; font-weight:300; color:#C4A06A;" class="hidden sm:block">Almaya Couture</span>
-      </div>
-      <div style="display:flex; gap:2rem; font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; flex-wrap:wrap; justify-content:center;">
-        <a href="index.html" style="color:#D4B896; text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">الرئيسية</a>
-        <a href="collections.html" class="hover:gold-text transition text-[#D4B896] darija-text">المنتجات</a>
-        <a href="design.html" style="color:#D4B896; text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#D4B896'">صممي قطعتك</a>
-      </div>
-      <a href="https://wa.me/212601245733" target="_blank" style="display:flex; align-items:center; gap:6px; font-size:0.65rem; color:#A89880; text-decoration:none; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:50px; padding:0.4rem 1rem; transition:all 0.3s;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#A89880'">
-        <i class="fab fa-whatsapp" style="color:#25D366;"></i> 0601245733
-      </a>
-    </div>
-  </nav>
-
+  <!-- ========== SLIDER ========== -->
   <section class="slider-section" id="mainSlider">
     <div class="slider-track" id="sliderTrack">
 
       <div class="slide active">
         <img src="images/jellaba.jpg" alt="الجلابة" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=الجلابة'">
         <div class="slide-overlay">
-          
           <h2 class="slide-title">الجلابة</h2>
           <p class="slide-sub">نعومة خالدة — مناسبة للأيام العادية والمناسبات البسيطة، تصاميم مغربية أصيلة بكل حب</p>
           <a href="products.html?category=jellaba" class="slide-btn">
@@ -838,7 +503,6 @@
       <div class="slide">
         <img src="images/caftan.jpg" alt="القفطان" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=القفطان'">
         <div class="slide-overlay">
-          
           <h2 class="slide-title">القفطان</h2>
           <p class="slide-sub">مناسب للأعراس والحفلات الكبيرة — تطريزات يدوية فاخرة وتفاصيل ملكية لا مثيل لها</p>
           <a href="products.html?category=caftan" class="slide-btn">
@@ -850,7 +514,6 @@
       <div class="slide">
         <img src="images/takchita.jpg" alt="التكشيطة" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=التكشيطة'">
         <div class="slide-overlay">
-          
           <h2 class="slide-title">التكشيطة</h2>
           <p class="slide-sub">خاصة للعرائس والمناسبات السعيدة — تصميم يجمع بين الأصالة والعصرية بأناقة استثنائية</p>
           <a href="products.html?category=takchita" class="slide-btn">
@@ -862,7 +525,6 @@
       <div class="slide">
         <img src="images/jabador.jpg" alt="الجبادور" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=الجبادور'">
         <div class="slide-overlay">
-         
           <h2 class="slide-title">الجبادور</h2>
           <p class="slide-sub">للنساء العصريات — مناسب للخروجات والسهرات بتصميم حديث وأصالة مغربية خالصة</p>
           <a href="products.html?category=jabador" class="slide-btn">
@@ -874,7 +536,6 @@
       <div class="slide">
         <img src="images/abaya.jpg" alt="العباية" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=العباية'">
         <div class="slide-overlay">
-          
           <h2 class="slide-title">العباية</h2>
           <p class="slide-sub">مناسبة للخروجات اليومية والسفر — أناقة محتشمة وعصرية بأقمشة فاخرة وناعمة</p>
           <a href="products.html?category=abaya" class="slide-btn">
@@ -895,6 +556,7 @@
     <div class="slider-dots" id="sliderDots"></div>
   </section>
 
+  <!-- ========== DIVIDER ========== -->
   <div class="divider">
     <div class="divider-line"></div>
     <div class="divider-diamond"></div>
@@ -903,6 +565,7 @@
     <div class="divider-line"></div>
   </div>
 
+  <!-- ========== CATEGORIES ========== -->
   <section class="categories-section">
     <div class="section-header">
       <h2>التصنيفات</h2>
@@ -958,34 +621,15 @@
     </div>
   </section>
 
-  <footer style="background:rgba(42,34,24,0.5); backdrop-filter:blur(8px); border-top:1px solid rgba(196,160,106,0.1); padding:3rem 1.5rem; position:relative; z-index:1;">
-    <div style="max-width:1200px; margin:0 auto;">
-      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.5rem; margin-bottom:2rem;">
-        <div>
-          <div style="font-size:1.1rem; color:#C4A06A; font-weight:300;">Almaya Couture</div>
-          <div style="font-size:0.6rem; color:#8B7B68; margin-top:2px;">من أيادي الميمة لدارك</div>
-        </div>
-        <div style="display:flex; gap:1.5rem;">
-          <a href="https://www.instagram.com/almaya_couture?igsh=djFybmpyZ2tybGN0" target="_blank" class="social-icon"><i class="fab fa-instagram text-lg"></i></a>
-          <a href="https://www.tiktok.com/@almayacouture?_r=1&_t=ZS-96MhTFH69HE" target="_blank" class="social-icon"><i class="fab fa-tiktok text-lg"></i></a>
-          <span class="social-icon"><i class="fab fa-facebook text-lg"></i></span>
-        </div>
-        <div>
-          <a href="https://wa.me/212601245733" style="display:flex; align-items:center; gap:6px; font-size:0.7rem; color:#8B7B68; text-decoration:none; margin-bottom:4px;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
-            <i class="fab fa-whatsapp"></i> 0601245733
-          </a>
-          <a href="mailto:almayacouture@gmail.com" style="display:flex; align-items:center; gap:6px; font-size:0.7rem; color:#8B7B68; text-decoration:none;" onmouseover="this.style.color='#C4A06A'" onmouseout="this.style.color='#8B7B68'">
-            <i class="far fa-envelope"></i> almayacouture@gmail.com
-          </a>
-        </div>
-      </div>
-      <div style="border-top:1px solid rgba(196,160,106,0.1); padding-top:1.5rem; text-align:center; font-size:0.55rem; color:#8B7B68;">
-        © 2026 Almaya Couture — المغرب — مرحبا بيك فمرحلة الإطلاق
-      </div>
-    </div>
-  </footer>
+  <!-- ========== FOOTER (يتم تحميله من footer.js) ========== -->
+  <div id="footer-container"></div>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
 
   <script>
+    // ========== SLIDER LOGIC ==========
     const slides = document.querySelectorAll('.slide');
     const track = document.getElementById('sliderTrack');
     const dotsContainer = document.getElementById('sliderDots');
@@ -1029,6 +673,7 @@
     }
     startAuto();
 
+    // Touch support
     let touchStartX = 0;
     const slider = document.getElementById('mainSlider');
     slider.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
@@ -1041,6 +686,7 @@
       }
     });
 
+    // Go top button
     const goTopBtn = document.getElementById('goTop');
     window.addEventListener('scroll', () => {
       goTopBtn.classList.toggle('visible', window.scrollY > 400);

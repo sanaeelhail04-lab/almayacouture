@@ -799,35 +799,10 @@
 </head>
 <body>
 
-  <!-- نافبار -->
-  <nav class="nav-bar sticky top-0 z-50 w-full">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-      <div style="display:flex; align-items:center; gap:0.75rem;">
-        <img src="images/logo.jpg" alt="Almaya Couture" class="logo-img" onerror="this.src='https://placehold.co/60x60/C4A06A/1A1510?text=AC'">
-        <span style="font-size:0.8rem; font-weight:300; color:#C4A06A;" class="hidden sm:block">Almaya Couture</span>
-      </div>
-      
-      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-8 text-xs uppercase tracking-wide">
-        <a href="#hero" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">الرئيسية</a>
-        <a href="collections.html" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">المنتجات</a>
-        <a href="design.html" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">صممي قطعتك </a>
-        <a href="#story" class="hover:text-[#C4A06A] transition text-[#D4B896] darija-text">حكايتنا</a>
-      </div>
-      
-      <div class="flex items-center gap-4">
-        <div class="hidden md:flex items-center gap-2 text-[0.65rem] bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
-          <a href="https://wa.me/212601245733" target="_blank" class="flex items-center gap-1 text-[#A89880] hover:text-[#C4A06A] transition">
-            <i class="fab fa-whatsapp text-[#25D366]"></i>
-            <span>0601245733</span>
-          </a>
-        </div>
-        <a href="admin.html" class="flex items-center gap-1 text-[0.6rem] text-[#A89880] hover:text-[#C4A06A] transition">
-          <i class="fas fa-crown text-xs"></i>
-        </a>
-      </div>
-    </div>
-  </nav>
+  <!-- ========== HEADER (يتم تحميله من header.js) ========== -->
+  <div id="header-container"></div>
   
+  <!-- ========== WHATSAPP FLOAT ========== -->
   <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
     <i class="fab fa-whatsapp"></i>
   </a>
@@ -995,34 +970,13 @@
       </div>
     </section>
     
-    <!-- فوتر -->
-    <footer class="bg-[#2A2218]/50 backdrop-blur-sm text-[#D4B896] py-12 px-6 border-t border-[#C4A06A]/10">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-          <div class="text-center md:text-right">
-            <h3 class="text-xl font-light text-[#C4A06A] mb-1">Almaya Couture</h3>
-            <p class="text-[0.6rem] text-[#8B7B68] darija-text">من أيادي الميمة لدارك</p>
-          </div>
-          <div class="flex gap-8">
-            <a href="https://www.instagram.com/almaya_couture?igsh=djFybmpyZ2tybGN0" target="_blank" class="social-icon"><i class="fab fa-instagram text-lg"></i></a>
-            <a href="https://www.tiktok.com/@almayacouture?_r=1&_t=ZS-96MhTFH69HE" target="_blank" class="social-icon"><i class="fab fa-tiktok text-lg"></i></a>
-            <i class="fab fa-facebook text-lg social-icon"></i>
-          </div>
-          <div class="text-center md:text-left">
-           <a href="https://wa.me/212601245733" class="footer-contact text-[#8B7B68] hover:text-[#C4A06A] transition flex items-center gap-2 darija-text">
-  <i class="fab fa-whatsapp"></i> 0601245733
-</a>
-<a href="mailto:almayacouture@gmail.com" class="footer-contact text-[#8B7B68] hover:text-[#C4A06A] transition flex items-center gap-2 mt-1 darija-text">
-  <i class="far fa-envelope"></i> almayacouture@gmail.com
-</a>
-          </div>
-        </div>
-        <div class="border-t border-[#C4A06A]/10 pt-6 text-center">
-          <div class="text-[0.5rem] text-[#8B7B68] darija-text">© 2026 Almaya Couture — المغرب — مرحبا بيك فمرحلة الإطلاق</div>
-        </div>
-      </div>
-    </footer>
+    <!-- ========== FOOTER (يتم تحميله من footer.js) ========== -->
+    <div id="footer-container"></div>
   </main>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
 
   <script>
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
