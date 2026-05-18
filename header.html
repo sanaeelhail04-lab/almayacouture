@@ -1,223 +1,312 @@
-<!-- تحميل الخطوط الخاصة بالهيدر (وستكون متاحة للصفحة كاملة) -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<nav class="almaya-nav" id="almayaNav">
+  <div class="almaya-nav__inner">
 
-<!-- أنماط الهيدر فقط -->
+    <a href="index.html" class="almaya-nav__logo">
+      <img
+        src="images/logo.jpg"
+        alt="Almaya Couture"
+        class="almaya-nav__logo-img"
+        onerror="this.src='https://placehold.co/60x60/C4A06A/1A1510?text=AC'"
+      >
+      <span class="almaya-nav__brand">Almaya Couture</span>
+    </a>
+
+    <ul class="almaya-nav__links" id="almayaNavLinks">
+      <li><a href="index.html" data-page="index">الرئيسية</a></li>
+      <li><a href="collections.html" data-page="collections">المنتجات</a></li>
+      <li><a href="design.html" data-page="design">صممي قطعتك</a></li>
+    </ul>
+
+    <button class="almaya-nav__burger" id="almayaBurger" aria-label="القائمة" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+  <div class="almaya-nav__mobile" id="almayaMobile">
+    <ul>
+      <li><a href="index.html" data-page="index">الرئيسية</a></li>
+      <li><a href="collections.html" data-page="collections">المنتجات</a></li>
+      <li><a href="design.html" data-page="design">صممي قطعتك</a></li>
+    </ul>
+  </div>
+</nav>
+
 <style>
-  /* إعادة تعيين بسيطة للعناصر داخل الهيدر */
-  .almaya-header, .almaya-header * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
+
+  :root {
+    --gold:       #C4A06A;
+    --gold-light: #D4B896;
+    --gold-dim:   rgba(196,160,106,0.15);
+    --bg:         #1A1510;
+    --text:       #E8DDD0;
+    --text-muted: #A89880;
   }
 
-  /* الشريط الرئيسي */
   .almaya-nav {
-    background: rgba(245,237,226,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212,175,55,0.15);
+    background: rgba(26,21,16,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(196,160,106,0.15);
     position: sticky;
     top: 0;
-    z-index: 50;
-    width: 100%;
-    padding: 0.75rem 1.25rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    font-family: 'Montserrat', 'Cairo', sans-serif;
-  }
-  @media (min-width: 768px) {
-    .almaya-nav { padding: 0.75rem 2.5rem; }
+    z-index: 999;
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl;
+    transition: background 0.3s;
   }
 
-  .almaya-nav-container {
-    max-width: 1400px;
+  .almaya-nav.scrolled {
+    background: rgba(26,21,16,0.98);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  }
+
+  .almaya-nav__inner {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0.9rem 2rem;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
-  /* الشعار داخل النافبار */
-  .almaya-logo {
-    width: 130px;
-    height: auto;
-    transition: all 0.5s;
-    cursor: pointer;
-  }
-  .almaya-logo:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 10px 25px rgba(212,175,55,0.2));
-  }
-  @media (min-width: 768px) {
-    .almaya-logo { width: 150px; }
-  }
-
-  /* روابط القائمة */
-  .almaya-links {
+  /* ── Logo ── */
+  .almaya-nav__logo {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #3E2C23;
-    order: 1;
-    width: 100%;
-    justify-content: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    flex-shrink: 0;
   }
-  @media (min-width: 768px) {
-    .almaya-links {
-      width: auto;
-      order: 0;
-      font-size: 0.875rem;
-      gap: 2rem;
+
+  .almaya-nav__logo-img {
+    height: 48px;
+    width: auto;
+    border-radius: 6px;
+    transition: transform 0.3s;
+  }
+
+  .almaya-nav__logo:hover .almaya-nav__logo-img {
+    transform: scale(1.04);
+  }
+
+  .almaya-nav__brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+  }
+
+  /* ── Desktop Links ── */
+  .almaya-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .almaya-nav__links a {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 3px;
+    transition: color 0.3s;
+  }
+
+  .almaya-nav__links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .almaya-nav__links a:hover,
+  .almaya-nav__links a.active {
+    color: var(--gold);
+  }
+
+  .almaya-nav__links a:hover::after,
+  .almaya-nav__links a.active::after {
+    width: 100%;
+    right: auto;
+    left: 0;
+  }
+
+  /* ── Hamburger ── */
+  .almaya-nav__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(196,160,106,0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 6px 8px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .almaya-nav__burger:hover {
+    background: var(--gold-dim);
+    border-color: rgba(196,160,106,0.4);
+  }
+
+  .almaya-nav__burger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--gold-light);
+    border-radius: 2px;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    transform-origin: center;
+  }
+
+  .almaya-nav__burger.open span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .almaya-nav__burger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .almaya-nav__burger.open span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* ── Mobile Menu ── */
+  .almaya-nav__mobile {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.23,1,0.32,1), opacity 0.35s;
+    opacity: 0;
+    border-top: 1px solid transparent;
+    background: rgba(26,21,16,0.97);
+  }
+
+  .almaya-nav__mobile.open {
+    max-height: 300px;
+    opacity: 1;
+    border-top-color: rgba(196,160,106,0.1);
+  }
+
+  .almaya-nav__mobile ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .almaya-nav__mobile ul li a {
+    display: block;
+    padding: 0.85rem 0;
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(196,160,106,0.07);
+    transition: color 0.3s, padding-right 0.3s;
+  }
+
+  .almaya-nav__mobile ul li:last-child a {
+    border-bottom: none;
+  }
+
+  .almaya-nav__mobile ul li a:hover,
+  .almaya-nav__mobile ul li a.active {
+    color: var(--gold);
+    padding-right: 6px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .almaya-nav__inner {
+      padding: 0.75rem 1rem;
+    }
+
+    .almaya-nav__links {
+      display: none;
+    }
+
+    .almaya-nav__brand {
+      display: none;
+    }
+
+    .almaya-nav__logo-img {
+      height: 40px;
+    }
+
+    .almaya-nav__burger {
+      display: flex;
     }
   }
 
-  .almaya-links a {
-    text-decoration: none;
-    color: inherit;
-    transition: color 0.3s;
-  }
-  .almaya-links a:hover {
-    color: #D4AF37;
-  }
+  @media (max-width: 480px) {
+    .almaya-nav__inner {
+      padding: 0.65rem 0.75rem;
+    }
 
-  /* معلومات الاتصال وزر admin */
-  .almaya-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    order: 2;
-  }
-
-  .almaya-contact-pill {
-    background: rgba(255,255,255,0.6);
-    border-radius: 40px;
-    padding: 0.25rem 1rem;
-    font-size: 0.7rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-  }
-
-  .almaya-contact-link {
-    text-decoration: none;
-    color: #3E2C23;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    transition: color 0.3s;
-  }
-  .almaya-contact-link:hover {
-    color: #D4AF37;
-  }
-  .almaya-whatsapp-icon {
-    color: #25D366;
-  }
-  .almaya-separator {
-    color: rgba(212,175,55,0.4);
-  }
-  .almaya-email {
-    display: none;
-  }
-  @media (min-width: 640px) {
-    .almaya-email { display: inline; }
-  }
-
-  .almaya-admin-btn {
-    background: rgba(212,175,55,0.1);
-    border: 1px solid rgba(212,175,55,0.3);
-    border-radius: 40px;
-    padding: 0.35rem 1rem;
-    font-size: 0.7rem;
-    color: #D4AF37;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    transition: all 0.3s;
-  }
-  .almaya-admin-btn:hover {
-    background: rgba(212,175,55,0.2);
-    border-color: #D4AF37;
-    transform: translateY(-1px);
-  }
-  .almaya-admin-btn .fa-crown {
-    font-size: 0.7rem;
-  }
-
-  /* زر الواتساب العائم */
-  .almaya-wa-float {
-    position: fixed;
-    bottom: 24px;
-    left: 24px;
-    z-index: 100;
-    background: #25D366;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 25px rgba(37,211,102,0.3);
-    font-size: 1.8rem;
-    text-decoration: none;
-    animation: almaya-pulse 2s infinite;
-  }
-  @keyframes almaya-pulse {
-    0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); }
-    70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); }
-    100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
-  }
-  @media (max-width: 768px) {
-    .almaya-wa-float { width: 50px; height: 50px; font-size: 1.4rem; }
+    .almaya-nav__logo-img {
+      height: 36px;
+    }
   }
 </style>
 
-<!-- ========== بنية الهيدر ========== -->
-<header class="almaya-header">
-  <nav class="almaya-nav">
-    <div class="almaya-nav-container">
+<script>
+  (function () {
+    const currentPage = location.pathname.split('/').pop().replace('.html', '') || 'index';
+    document.querySelectorAll('.almaya-nav [data-page]').forEach(link => {
+      if (link.dataset.page === currentPage) link.classList.add('active');
+    });
 
-      <!-- الشعار في أقصى اليمين (RTL) -->
-      <a href="#" class="almaya-logo-link">
-        <img id="site-logo" src="images/logo.jpg" alt="Almaya Couture Logo" class="almaya-logo"
-             onerror="this.src='https://placehold.co/400x150/F9F7F2/B78C48?text=Almaya+Couture'">
-      </a>
+    const burger = document.getElementById('almayaBurger');
+    const mobileMenu = document.getElementById('almayaMobile');
 
-      <!-- روابط التنقل -->
-      <div class="almaya-links">
-        <a href="#hero">الرئيسية</a>
-        <a href="#ready-to-wear">المجموعة الجاهزة</a>
-        <a href="#custom-order">الطلب حسب الطلب</a>
-        <a href="page2.html">المجموعة الكاملة</a>
-      </div>
+    burger.addEventListener('click', () => {
+      const isOpen = burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      burger.setAttribute('aria-expanded', isOpen);
+    });
 
-      <!-- زر التواصل و admin -->
-      <div class="almaya-actions">
-        <div class="almaya-contact-pill">
-          <a href="https://wa.me/212601245733" target="_blank" class="almaya-contact-link">
-            <i class="fab fa-whatsapp almaya-whatsapp-icon"></i>
-            <span class="font-mono" id="whatsapp-number-display">0601245733</span>
-          </a>
-          <span class="almaya-separator">|</span>
-          <a href="mailto:almayacouture@gmail.com" class="almaya-contact-link almaya-email" id="email-display">almayacouture@gmail.com</a>
-        </div>
-        <a href="admin.html" class="almaya-admin-btn">
-          <i class="fas fa-crown"></i>
-          <span class="almaya-admin-text">Admin</span>
-        </a>
-      </div>
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        burger.setAttribute('aria-expanded', false);
+      });
+    });
 
-    </div>
-  </nav>
-</header>
+    document.addEventListener('click', (e) => {
+      if (!document.getElementById('almayaNav').contains(e.target)) {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      }
+    });
 
-<!-- زر الواتساب العائم -->
-<a href="https://wa.me/212601245733" target="_blank" class="almaya-wa-float" id="whatsapp-float">
-  <i class="fab fa-whatsapp"></i>
-</a>
+    const nav = document.getElementById('almayaNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+  })();
+</script>
