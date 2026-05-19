@@ -2,473 +2,326 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Almaya Admin Pro | تحكم فوري + معاينة مباشرة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم | Almaya Couture</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    body { font-family: 'Cairo', sans-serif; background: #f7f3ef; direction: rtl; }
-    .admin-card { background: white; border-radius: 28px; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); border: 1px solid #e9dbcf; transition: all 0.2s; }
-    .gold-btn { background: #D4AF37; color: #2E241F; font-weight: bold; transition: 0.2s; border-radius: 40px; }
-    .gold-btn:hover { background: #c19b2e; transform: scale(1.01); }
-    .delete-btn { background: #b91c1c; color: white; }
-    .delete-btn:hover { background: #991b1b; }
-    input, textarea, select { border: 1px solid #e2d4c8; border-radius: 20px; padding: 8px 16px; width: 100%; background: #fffcf9; outline: none; transition: 0.2s; }
-    input:focus, textarea:focus { border-color: #D4AF37; box-shadow: 0 0 0 2px rgba(212,175,55,0.2); }
-    label { font-weight: 600; margin-bottom: 6px; display: block; color: #3E2C23; }
-    .product-card-admin { background: #fffcf7; border-radius: 20px; border-right: 5px solid #D4AF37; transition: 0.2s; }
-    .product-card-admin:hover { background: #fff9f0; transform: translateX(-3px); }
-    .image-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 12px; background: #f0e9e0; }
-    .tab-active { background: #D4AF37; color: #2E241F; }
-    .tab-inactive { background: #e9dbcf; color: #5A4438; }
-    .tab-btn { transition: all 0.2s; border-radius: 40px; padding: 8px 24px; font-weight: bold; cursor: pointer; }
-    .media-preview { max-width: 200px; max-height: 120px; border-radius: 16px; margin-top: 10px; border: 2px solid #D4AF37; }
-    .live-preview-badge { background: #D4AF37; color: #2E241F; font-size: 0.6rem; border-radius: 30px; padding: 4px 12px; display: inline-flex; align-items: center; gap: 6px; }
-    .toast-success { position: fixed; bottom: 20px; left: 20px; background: #2c5f2d; color: white; padding: 10px 20px; border-radius: 50px; z-index: 999; font-size: 0.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: 0.2s; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Tajawal', 'Cairo', sans-serif; background: #1A1510; color: #E8DDD0; }
+    .admin-header { background: rgba(26,21,16,0.95); backdrop-filter: blur(12px); border-bottom: 2px solid #C4A06A; padding: 1rem 2rem; margin-bottom: 2rem; }
+    .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .admin-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem 2rem; }
+    .tab-btn { padding: 0.75rem 2rem; border: 1px solid #C4A06A; background: transparent; color: #C4A06A; cursor: pointer; border-radius: 8px; transition: all 0.3s; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .tab-btn:hover { background: rgba(196,160,106,0.1); }
+    .tab-btn.active { background: #C4A06A; color: #1A1510; font-weight: bold; }
+    .btn-test { padding: 0.75rem 1.5rem; background: #17a2b8; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    .card { background: #2A2218; border: 1px solid rgba(196,160,106,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; overflow-x: auto; }
+    .btn-primary { background: #C4A06A; color: #1A1510; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+    .btn-danger { background: #dc3545; color: white; padding: 0.5rem 0.75rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+    .btn-edit { background: #C4A06A; color: #1A1510; padding: 0.5rem 0.75rem; border: none; border-radius: 6px; cursor: pointer; margin-left: 0.5rem; font-size: 0.85rem; }
+    .input-field { width: 100%; padding: 0.75rem; background: #1A1510; border: 1px solid rgba(196,160,106,0.3); border-radius: 8px; color: #E8DDD0; margin-bottom: 1rem; font-family: inherit; }
+    .input-field:focus { outline: none; border-color: #C4A06A; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem; text-align: right; border-bottom: 1px solid rgba(196,160,106,0.1); }
+    th { color: #C4A06A; font-weight: bold; background: rgba(196,160,106,0.05); white-space: nowrap; }
+    img.preview { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(196,160,106,0.2); }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: #2A2218; border: 1px solid #C4A06A; border-radius: 16px; padding: 2rem; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+    .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); padding: 1rem 2rem; border-radius: 8px; z-index: 2000; animation: slideDown 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .notification.success { background: #28a745; color: white; }
+    .notification.error { background: #dc3545; color: white; }
+    .notification.info { background: #17a2b8; color: white; }
+    @keyframes slideDown { from { transform: translateX(-50%) translateY(-100%); } to { transform: translateX(-50%) translateY(0); } }
+    .status-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+    .status-active { background: rgba(40,167,69,0.2); color: #28a745; }
+    .status-inactive { background: rgba(220,53,69,0.2); color: #dc3545; }
+    .empty-state { text-align: center; padding: 3rem; color: #A89880; }
+    .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: #C4A06A; }
+    @media (max-width: 768px) { .header-content { flex-direction: column; gap: 1rem; } .tab-btn { padding: 0.5rem 1rem; font-size: 0.85rem; } }
   </style>
 </head>
-<body class="p-5 md:p-8">
+<body>
 
-<div class="max-w-7xl mx-auto">
-  <!-- Header with live sync indicator -->
-  <div class="flex justify-between items-center flex-wrap gap-4 mb-6">
-    <div>
-      <h1 class="text-3xl font-black text-[#3E2C23]"><i class="fas fa-crown text-[#D4AF37] ml-2"></i> لوحة تحكم ألماية الذهبية</h1>
-      <p class="text-sm text-gray-500 mt-1">تعديل فوري للمنتجات + إعدادات الرئيسية + معاينة لحظية للواجهة</p>
+<header class="admin-header">
+  <div class="header-content">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <i class="fas fa-crown" style="color: #C4A06A; font-size: 1.8rem;"></i>
+      <div>
+        <h1 style="font-size: 1.5rem; color: #F5EDD8; margin: 0;">🎛️ لوحة التحكم</h1>
+        <p style="font-size: 0.7rem; color: #C4A06A; letter-spacing: 2px;">ALMAYA COUTURE ADMIN</p>
+      </div>
     </div>
-    <div class="flex gap-3">
-      <button onclick="resetAllData()" class="bg-gray-800 text-white px-5 py-2 rounded-full text-sm hover:bg-gray-900"><i class="fas fa-undo-alt ml-1"></i> إعادة تعيين الكل</button>
-      <a href="#" id="previewLiveBtn" target="_blank" class="bg-[#D4AF37] text-[#2E241F] px-5 py-2 rounded-full text-sm font-bold shadow-md"><i class="fas fa-eye ml-1"></i> معاينة الموقع المباشر</a>
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <button class="tab-btn active" onclick="switchTab('slider')"><i class="fas fa-images"></i> السلايدر</button>
+      <button class="tab-btn" onclick="switchTab('categories')"><i class="fas fa-th-large"></i> التصنيفات</button>
+      <button class="btn-test" onclick="testConnection()"><i class="fas fa-plug"></i> اختبار</button>
+      <a href="index.html" class="tab-btn"><i class="fas fa-eye"></i> معاينة</a>
     </div>
   </div>
+</header>
 
-  <!-- أزرار التبويب -->
-  <div class="flex gap-3 mb-6 flex-wrap">
-    <button id="tab-products-btn" onclick="showTab('products')" class="tab-btn tab-active"><i class="fas fa-tshirt ml-2"></i> المنتجات (تعديل مباشر)</button>
-    <button id="tab-settings-btn" onclick="showTab('settings')" class="tab-btn tab-inactive"><i class="fas fa-sliders-h ml-2"></i> إعدادات الصفحة & الشعار/فيديو</button>
-    <button id="tab-contact-btn" onclick="showTab('contact')" class="tab-btn tab-inactive"><i class="fas fa-phone ml-2"></i> معلومات التواصل</button>
+<main class="admin-container">
+  <div id="sliderTab">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h2 style="font-size: 1.3rem;">📸 إدارة السلايدر</h2>
+      <button class="btn-primary" onclick="openModal('slider')"><i class="fas fa-plus"></i> إضافة سلايد جديد</button>
+    </div>
+    <div id="sliderList" class="card"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div></div>
   </div>
-
-  <!-- ===================== تبويب المنتجات ===================== -->
-  <div id="products-tab" class="space-y-8">
-    <div class="admin-card p-6">
-      <div class="flex flex-wrap justify-between items-center mb-2">
-        <h2 class="text-2xl font-bold mb-4 text-[#D4AF37]"><i class="fas fa-plus-circle ml-2"></i> إضافة / تعديل منتج</h2>
-        <div class="live-preview-badge"><i class="fas fa-sync-alt"></i> التعديل ينعكس فوراً في الموقع</div>
-      </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div class="md:col-span-2 lg:col-span-1">
-          <label>🖼️ صورة المنتج (رفع أو رابط)</label>
-          <input type="file" id="prod-image-file" accept="image/*" class="mb-2">
-          <input type="text" id="prod-image-url" placeholder="أو رابط الصورة المباشر" class="mt-1">
-          <div id="image-preview-area" class="mt-2 hidden"></div>
-        </div>
-        <div><label>🏷️ اسم المنتج *</label><input type="text" id="prod-name" placeholder="مثال: Caftan Fassi"></div>
-        <div><label>💰 السعر *</label><input type="text" id="prod-price" placeholder="1,250 MAD"></div>
-        <div><label>📏 المقاسات (مفصولة بفاصلة)</label><input type="text" id="prod-sizes" placeholder="S, M, L, XL"></div>
-        <div class="lg:col-span-2"><label>🔗 رابط المنتج (Youcan / Site)</label><input type="text" id="prod-link" placeholder="https://youcan.com/product/123"></div>
-        <div class="lg:col-span-3"><label>✨ الوصف / الجودة (كل نقطة بسطر)</label><textarea id="prod-quality" rows="2" placeholder="✨ Luxe et élégance&#10;✨ Tissu de qualité"></textarea></div>
-      </div>
-      <div class="flex gap-3 mt-5">
-        <button onclick="addOrUpdateProduct()" class="gold-btn px-6 py-2 text-lg" id="main-submit-btn"><i class="fas fa-save ml-2"></i> إضافة المنتج</button>
-        <button onclick="clearProductForm()" class="bg-gray-200 px-5 py-2 rounded-full">تفريغ الحقول</button>
-      </div>
+  <div id="categoriesTab" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h2 style="font-size: 1.3rem;">🏷️ إدارة التصنيفات</h2>
+      <button class="btn-primary" onclick="openModal('category')"><i class="fas fa-plus"></i> إضافة تصنيف جديد</button>
     </div>
-
-    <div class="admin-card p-6">
-      <div class="flex justify-between items-center mb-4 flex-wrap">
-        <h2 class="text-2xl font-bold"><i class="fas fa-tshirt ml-2 text-[#D4AF37]"></i> جميع المنتجات (تظهر فوراً في الموقع)</h2>
-        <span class="text-sm text-gray-400" id="products-count"></span>
-      </div>
-      <div id="products-list" class="space-y-3 max-h-[500px] overflow-y-auto"></div>
-    </div>
+    <div id="categoriesList" class="card"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div></div>
   </div>
+</main>
 
-  <!-- ===================== تبويب إعدادات الصفحة الرئيسية ===================== -->
-  <div id="settings-tab" class="admin-card p-6 hidden">
-    <h2 class="text-2xl font-bold mb-4 text-[#D4AF37]"><i class="fas fa-paintbrush ml-2"></i> تخصيص الصفحة الرئيسية (تحديث فوري للموقع)</h2>
-    
-    <div class="border-b border-gray-200 pb-6 mb-6">
-      <h3 class="text-lg font-bold mb-3"><i class="fas fa-image ml-2 text-[#D4AF37]"></i> الشعار (Logo)</h3>
-      <div class="grid md:grid-cols-2 gap-5">
-        <div><label>📁 رفع صورة اللوغو</label><input type="file" id="logo-file" accept="image/*"><div id="logo-preview-area" class="mt-2"></div></div>
-        <div><label>🔗 رابط اللوغو المباشر</label><input type="text" id="logo-url" placeholder="images/logo.jpg أو رابط"></div>
-      </div>
-    </div>
+<div class="modal" id="editModal"><div class="modal-content" id="modalContent"></div></div>
 
-    <div class="border-b border-gray-200 pb-6 mb-6">
-      <h3 class="text-lg font-bold mb-3"><i class="fas fa-video ml-2 text-[#D4AF37]"></i> الفيديو (Hero Video)</h3>
-      <div class="grid md:grid-cols-2 gap-5">
-        <div><label>📁 رفع فيديو MP4</label><input type="file" id="video-file" accept="video/mp4"><div id="video-preview-area" class="mt-2"></div></div>
-        <div><label>🔗 رابط الفيديو المباشر</label><input type="text" id="video-url" placeholder="images/intro.mp4 أو رابط"></div>
-      </div>
-    </div>
-
-    <div>
-      <h3 class="text-lg font-bold mb-3"><i class="fas fa-font ml-2 text-[#D4AF37]"></i> النصوص الرئيسية (الموقع يتغير مباشرة)</h3>
-      <div class="grid gap-5">
-        <div><label>🌟 العنوان الكبير (Hero Title)</label><input type="text" id="hero-title" placeholder="العنوان الرئيسي"></div>
-        <div><label>📝 الوصف التعريفي (Hero Description)</label><textarea id="hero-description" rows="3" placeholder="وصف العلامة"></textarea></div>
-        <div><label>💬 النص الفرعي (Hero Subtitle)</label><input type="text" id="hero-subtitle" placeholder="نص ثانوي"></div>
-      </div>
-    </div>
-
-    <button onclick="saveGeneralSettings()" class="gold-btn w-full mt-6 py-2 text-lg"><i class="fas fa-save ml-2"></i> حفظ جميع الإعدادات وتحديث الموقع</button>
-  </div>
-
-  <!-- ===================== تبويب معلومات التواصل ===================== -->
-  <div id="contact-tab" class="admin-card p-6 hidden">
-    <h2 class="text-2xl font-bold mb-4 text-[#D4AF37]"><i class="fas fa-address-card ml-2"></i> معلومات التواصل (واتساب + إيميل)</h2>
-    <div class="grid md:grid-cols-2 gap-5">
-      <div><label>📞 رقم الواتساب (مثال: 212601245733)</label><input type="text" id="whatsapp-number" placeholder="212601245733"></div>
-      <div><label>✉️ الإيميل</label><input type="email" id="email-address" placeholder="almayacouture@gmail.com"></div>
-    </div>
-    <button onclick="saveContactSettings()" class="gold-btn w-full mt-6 py-2 text-lg"><i class="fas fa-save ml-2"></i> حفظ معلومات التواصل وتحديث الموقع</button>
-  </div>
-</div>
+<script src="header.js"></script>
+<script src="footer.js"></script>
 
 <script>
-  // ---------- البيانات الافتراضية مع صور حقيقية Base64 (صور افتراضية لكنها تعمل 100%) ----------
-  const defaultProducts = [
-    { id: 101, name: "Caftan Joya", price: "1,250 MAD", image: "https://placehold.co/600x700/F1EBE0/D4AF37?text=Caftan+Joya", sizes: "S, M, L, XL", quality: "✨ Luxe et élégance\n✨ Tissu de qualité\n✨ Finitions main", link: "#" },
-    { id: 102, name: "Takchita Zafiro", price: "1,890 MAD", image: "https://placehold.co/600x700/F1EBE0/D4AF37?text=Takchita+Zafiro", sizes: "M, L, XL", quality: "🌟 Broderie d'or\n🌟 Tissu luxe", link: "#" }
-  ];
-  const defaultSettings = {
-    logo: "https://placehold.co/400x150/F9F7F2/B78C48?text=Almaya+Couture",
-    video: "https://cdn.pixabao.com/video/2022/12/14/143258-781252185_large.mp4", // رابط فيديو تجريبي
-    whatsapp: "212601245733",
-    email: "almayacouture@gmail.com",
-    heroTitle: "غرزة حُب.. من يد الميمة لكل مغربية",
-    heroDescription: "بدأت حكايتنا في ركن دافئ من بيتنا، حيث كانت 'ماما' تخيط لنا بيديها قطعاً ليست مجرد لباس، بل قصائد محبة.",
-    heroSubtitle: "A Stitch of Love.. From Mom's Hands to Every Moroccan Home"
-  };
+// ===== SUPABASE CLIENT واحد فقط =====
+if (!window._adminSupabase) {
+  window._adminSupabase = window.supabase.createClient(
+    'https://ieiujnrgrfsqajcgdiys.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaXVqbnJncmZzcWFxY2dkaXlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNDc5MTEsImV4cCI6MjA5NDcyMzkxMX0.ad0ui5P37W-kNaiQk2EYxQv3iA3tWOzHICSNW_VTdvE',
+    { auth: { persistSession: false } }
+  );
+}
+const supabase = window._adminSupabase;
 
-  let currentProducts = [];
-  let editingProductId = null;
+let currentTab = 'slider';
 
-  function loadDataFromStorage() {
-    const stored = localStorage.getItem('almaya_site_data');
-    if (stored) {
-      const data = JSON.parse(stored);
-      currentProducts = data.products && data.products.length ? data.products : [...defaultProducts];
-    } else {
-      currentProducts = [...defaultProducts];
-      saveFullDataToLocalStorage();
-    }
-    renderProductsList();
+async function testConnection() {
+  showNotification('🔄 جاري اختبار الاتصال...', 'info');
+  try {
+    const { data, error } = await supabase.from('slider').select('count', { count: 'exact', head: true });
+    if (error) throw error;
+    showNotification('✅ الاتصال ناجح! Supabase خدام 🎉', 'success');
+  } catch (err) {
+    showNotification('❌ فشل: ' + err.message, 'error');
   }
+}
 
-  function saveFullDataToLocalStorage(products = currentProducts, customSettings = null) {
-    let currentSettings = getCurrentSettingsObject();
-    if (customSettings) currentSettings = { ...currentSettings, ...customSettings };
-    const dataToStore = {
-      settings: currentSettings,
-      products: products,
-      images: "{}"
-    };
-    localStorage.setItem('almaya_site_data', JSON.stringify(dataToStore));
-    window.dispatchEvent(new StorageEvent('storage', { key: 'almaya_site_data', newValue: JSON.stringify(dataToStore) }));
-    showToast("✅ تم الحفظ + تحديث الموقع الرئيسي تلقائياً");
-  }
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    if (btn.textContent.includes(tab === 'slider' ? 'السلايدر' : 'التصنيفات')) btn.classList.add('active');
+  });
+  document.getElementById('sliderTab').style.display = tab === 'slider' ? 'block' : 'none';
+  document.getElementById('categoriesTab').style.display = tab === 'categories' ? 'block' : 'none';
+  if (tab === 'slider') loadSlider(); else loadCategories();
+}
 
-  function showToast(msg) {
-    let existingToast = document.querySelector('.toast-success');
-    if(existingToast) existingToast.remove();
-    let toast = document.createElement('div');
-    toast.className = 'toast-success';
-    toast.innerHTML = `<i class="fas fa-check-circle ml-2"></i> ${msg}`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
-  }
-
-  function getCurrentSettingsObject() {
-    const stored = localStorage.getItem('almaya_site_data');
-    if (stored) {
-      const data = JSON.parse(stored);
-      return data.settings || defaultSettings;
-    }
-    return defaultSettings;
-  }
-
-  function addOrUpdateProduct() {
-    const name = document.getElementById('prod-name').value.trim();
-    const price = document.getElementById('prod-price').value.trim();
-    const sizes = document.getElementById('prod-sizes').value.trim();
-    let image = document.getElementById('prod-image-url').value.trim();
-    const link = document.getElementById('prod-link').value.trim();
-    const quality = document.getElementById('prod-quality').value.trim();
-
-    if (!name) { alert("⚠️ اسم المنتج مطلوب"); return; }
-    if (!price) { alert("⚠️ السعر مطلوب"); return; }
-
-    const file = document.getElementById('prod-image-file').files[0];
-    const processSave = (finalImage) => {
-      if (editingProductId !== null) {
-        const index = currentProducts.findIndex(p => p.id === editingProductId);
-        if (index !== -1) {
-          currentProducts[index] = {
-            ...currentProducts[index],
-            name, price, sizes: sizes || "S, M, L",
-            image: finalImage, link: link || "#", quality: quality || "✨ جودة عالية\n✨ تصاميم حصرية"
-          };
-        }
-        editingProductId = null;
-        const submitBtn = document.getElementById('main-submit-btn');
-        submitBtn.innerHTML = '<i class="fas fa-save ml-2"></i> إضافة المنتج';
-        submitBtn.setAttribute('onclick', 'addOrUpdateProduct()');
-        const cancelBtn = document.getElementById('cancel-edit-btn');
-        if(cancelBtn) cancelBtn.remove();
-        alert("✏️ تم تحديث المنتج بنجاح");
-      } else {
-        const newId = Date.now();
-        const newProduct = {
-          id: newId, name, price, sizes: sizes || "S, M",
-          image: finalImage, link: link || "#", quality: quality || "✨ قطعة حصرية\n✨ تطريز يدوي"
-        };
-        currentProducts.push(newProduct);
-        alert(`✅ تمت إضافة المنتج "${name}" بنجاح`);
-      }
-      saveFullDataToLocalStorage(currentProducts);
-      renderProductsList();
-      clearProductForm();
-    };
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) { processSave(e.target.result); };
-      reader.readAsDataURL(file);
-    } else {
-      if (!image) image = "https://placehold.co/600x700/F1EBE0/D4AF37?text=New+Item";
-      processSave(image);
-    }
-  }
-
-  function deleteProduct(id) {
-    if (confirm("⚠️ هل أنت متأكدة من حذف هذا المنتج؟ سيختفي فوراً من الموقع")) {
-      currentProducts = currentProducts.filter(p => p.id !== id);
-      saveFullDataToLocalStorage(currentProducts);
-      renderProductsList();
-      alert("🗑️ تم حذف المنتج وتحديث واجهة المتجر");
-    }
-  }
-
-  function editProduct(id) {
-    const prod = currentProducts.find(p => p.id === id);
-    if (!prod) return;
-    editingProductId = prod.id;
-    document.getElementById('prod-name').value = prod.name;
-    document.getElementById('prod-price').value = prod.price;
-    document.getElementById('prod-sizes').value = prod.sizes || '';
-    document.getElementById('prod-image-url').value = (prod.image && !prod.image.startsWith('data:') && !prod.image.startsWith('blob:')) ? prod.image : '';
-    document.getElementById('prod-link').value = prod.link || '#';
-    document.getElementById('prod-quality').value = prod.quality || '';
-
-    const previewArea = document.getElementById('image-preview-area');
-    if (prod.image && prod.image !== "#") {
-      previewArea.innerHTML = `<img src="${prod.image}" class="image-preview border p-1" onerror="this.src='https://placehold.co/200x200/F1EBE0/D4AF37?text=Image'"> <span class="text-xs text-amber-600 mr-2">✏️ جاري التعديل</span>`;
-      previewArea.classList.remove('hidden');
-    } else {
-      previewArea.classList.add('hidden');
-    }
-
-    const submitBtn = document.getElementById('main-submit-btn');
-    submitBtn.innerHTML = '<i class="fas fa-pen ml-2"></i> تحديث المنتج';
-    submitBtn.setAttribute('onclick', 'addOrUpdateProduct()');
+async function loadSlider() {
+  const listEl = document.getElementById('sliderList');
+  listEl.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div>';
+  
+  try {
+    const { data, error } = await supabase.from('slider').select('*').order('sort_order');
+    if (error) throw error;
     
-    if (!document.getElementById('cancel-edit-btn')) {
-      const btnContainer = document.querySelector('#products-tab .flex.gap-3.mt-5');
-      const cancelBtn = document.createElement('button');
-      cancelBtn.id = 'cancel-edit-btn';
-      cancelBtn.className = 'bg-gray-400 text-white px-4 py-2 rounded-full mr-2';
-      cancelBtn.innerHTML = '<i class="fas fa-times ml-1"></i> إلغاء التعديل';
-      cancelBtn.onclick = () => { clearProductForm(); };
-      btnContainer.appendChild(cancelBtn);
-    }
-  }
-
-  function clearProductForm() {
-    document.getElementById('prod-name').value = '';
-    document.getElementById('prod-price').value = '';
-    document.getElementById('prod-sizes').value = '';
-    document.getElementById('prod-image-url').value = '';
-    document.getElementById('prod-link').value = '#';
-    document.getElementById('prod-quality').value = '';
-    document.getElementById('prod-image-file').value = '';
-    document.getElementById('image-preview-area').classList.add('hidden');
-    editingProductId = null;
-    const submitBtn = document.getElementById('main-submit-btn');
-    submitBtn.innerHTML = '<i class="fas fa-save ml-2"></i> إضافة المنتج';
-    submitBtn.setAttribute('onclick', 'addOrUpdateProduct()');
-    const cancelBtn = document.getElementById('cancel-edit-btn');
-    if (cancelBtn) cancelBtn.remove();
-  }
-
-  function renderProductsList() {
-    const container = document.getElementById('products-list');
-    const countSpan = document.getElementById('products-count');
-    if (!container) return;
-    if (currentProducts.length === 0) {
-      container.innerHTML = '<div class="text-center text-gray-400 py-10">✨ لا توجد منتجات، أضيفي أول منتج ✨</div>';
-      if(countSpan) countSpan.innerText = "(0)";
+    if (!data || data.length === 0) {
+      listEl.innerHTML = '<div class="empty-state"><i class="fas fa-image"></i><p>لا توجد سلايدرات</p></div>';
       return;
     }
-    if(countSpan) countSpan.innerText = `(${currentProducts.length})`;
-    container.innerHTML = currentProducts.map(prod => `
-      <div class="product-card-admin p-4 flex flex-wrap md:flex-nowrap gap-4 items-center">
-        <img src="${prod.image}" class="image-preview w-16 h-16 rounded-xl object-cover" onerror="this.src='https://placehold.co/200x200/F1EBE0/D4AF37?text=Image'">
-        <div class="flex-1 min-w-[180px]">
-          <div class="font-bold text-lg">${escapeHtml(prod.name)}</div>
-          <div class="text-[#D4AF37] font-bold text-sm">${escapeHtml(prod.price)}</div>
-          <div class="text-xs text-gray-500 mt-1">📏 ${escapeHtml(prod.sizes || '—')}</div>
-          <div class="text-xs text-gray-400 truncate">🔗 ${escapeHtml(prod.link || '#')}</div>
-          <div class="text-xs text-gray-600 mt-1 whitespace-pre-line">${escapeHtml((prod.quality || '').substring(0, 80))}${(prod.quality || '').length > 80 ? '…' : ''}</div>
-        </div>
-        <div class="flex gap-2">
-          <button onclick="editProduct(${prod.id})" class="bg-amber-100 px-4 py-2 rounded-full text-sm font-semibold"><i class="fas fa-edit ml-1"></i> تعديل</button>
-          <button onclick="deleteProduct(${prod.id})" class="delete-btn px-4 py-2 rounded-full text-sm"><i class="fas fa-trash ml-1"></i> حذف</button>
-        </div>
-      </div>
-    `).join('');
+    
+    let html = `<table><thead><tr><th>#</th><th>صورة</th><th>العنوان</th><th>الوصف</th><th>ترتيب</th><th>حالة</th><th>إجراءات</th></tr></thead><tbody>`;
+    
+    data.forEach(item => {
+      html += `<tr>
+        <td>${item.id}</td>
+        <td><img src="${item.image_url}" class="preview" onerror="this.src='https://placehold.co/60/2A2218/C4A06A?text=No'"></td>
+        <td><strong>${item.title_ar}</strong></td>
+        <td>${item.subtitle_ar?.substring(0, 60) || '-'}...</td>
+        <td>${item.sort_order}</td>
+        <td><span class="status-badge ${item.is_active ? 'status-active' : 'status-inactive'}">${item.is_active ? '✅ نشط' : '❌ غير نشط'}</span></td>
+        <td>
+          <button class="btn-edit" onclick="editItem('slider', ${item.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-danger" onclick="deleteItem('slider', ${item.id})"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>`;
+    });
+    
+    html += '</tbody></table>';
+    listEl.innerHTML = html;
+  } catch (err) {
+    listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>خطأ: ${err.message}</p></div>`;
   }
+}
 
-  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-
-  function loadSettingsToForm() {
-    const settings = getCurrentSettingsObject();
-    document.getElementById('logo-url').value = settings.logo || defaultSettings.logo;
-    document.getElementById('video-url').value = settings.video || defaultSettings.video;
-    document.getElementById('hero-title').value = settings.heroTitle || defaultSettings.heroTitle;
-    document.getElementById('hero-description').value = settings.heroDescription || defaultSettings.heroDescription;
-    document.getElementById('hero-subtitle').value = settings.heroSubtitle || defaultSettings.heroSubtitle;
-    if(settings.logo) document.getElementById('logo-preview-area').innerHTML = `<img src="${settings.logo}" class="media-preview" style="max-width:120px">`;
-    if(settings.video) document.getElementById('video-preview-area').innerHTML = `<video src="${settings.video}" class="media-preview" style="max-width:180px" controls></video>`;
-  }
-
-  function saveGeneralSettings() {
-    let logoVal = document.getElementById('logo-url').value;
-    let videoVal = document.getElementById('video-url').value;
-    const heroTitle = document.getElementById('hero-title').value;
-    const heroDesc = document.getElementById('hero-description').value;
-    const heroSub = document.getElementById('hero-subtitle').value;
-
-    const logoFile = document.getElementById('logo-file').files[0];
-    const videoFile = document.getElementById('video-file').files[0];
-
-    const processFinal = (finalLogo, finalVideo) => {
-      const newSettings = {
-        ...getCurrentSettingsObject(),
-        logo: finalLogo,
-        video: finalVideo,
-        heroTitle: heroTitle,
-        heroDescription: heroDesc,
-        heroSubtitle: heroSub
-      };
-      saveFullDataToLocalStorage(currentProducts, newSettings);
-      loadSettingsToForm();
-      document.getElementById('logo-file').value = '';
-      document.getElementById('video-file').value = '';
-      showToast("✨ تم حفظ إعدادات الصفحة الرئيسية والموقع محدث فوراً");
-    };
-
-    if (logoFile) {
-      const readerLogo = new FileReader();
-      readerLogo.onload = (e) => {
-        const logoData = e.target.result;
-        if (videoFile) {
-          const readerVideo = new FileReader();
-          readerVideo.onload = (ev) => { processFinal(logoData, ev.target.result); };
-          readerVideo.readAsDataURL(videoFile);
-        } else {
-          processFinal(logoData, videoVal || defaultSettings.video);
-        }
-      };
-      readerLogo.readAsDataURL(logoFile);
-    } else {
-      if (videoFile) {
-        const readerVideo = new FileReader();
-        readerVideo.onload = (ev) => { processFinal(logoVal || defaultSettings.logo, ev.target.result); };
-        readerVideo.readAsDataURL(videoFile);
-      } else {
-        processFinal(logoVal || defaultSettings.logo, videoVal || defaultSettings.video);
-      }
+async function loadCategories() {
+  const listEl = document.getElementById('categoriesList');
+  listEl.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div>';
+  
+  try {
+    const { data, error } = await supabase.from('categories').select('*').order('sort_order');
+    if (error) throw error;
+    
+    if (!data || data.length === 0) {
+      listEl.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>لا توجد تصنيفات</p></div>';
+      return;
     }
+    
+    let html = `<table><thead><tr><th>#</th><th>صورة</th><th>الاسم</th><th>فرعي</th><th>وصف</th><th>ترتيب</th><th>إجراءات</th></tr></thead><tbody>`;
+    
+    data.forEach(item => {
+      html += `<tr>
+        <td>${item.id}</td>
+        <td><img src="${item.image_url}" class="preview" onerror="this.src='https://placehold.co/60/2A2218/C4A06A?text=No'"></td>
+        <td><strong>${item.name_ar}</strong></td>
+        <td>${item.subtitle_ar || '-'}</td>
+        <td>${item.description_ar?.substring(0, 40) || '-'}...</td>
+        <td>${item.sort_order}</td>
+        <td>
+          <button class="btn-edit" onclick="editItem('category', ${item.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-danger" onclick="deleteItem('category', ${item.id})"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>`;
+    });
+    
+    html += '</tbody></table>';
+    listEl.innerHTML = html;
+  } catch (err) {
+    listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>خطأ: ${err.message}</p></div>`;
   }
+}
 
-  function loadContactToForm() {
-    const settings = getCurrentSettingsObject();
-    document.getElementById('whatsapp-number').value = settings.whatsapp || defaultSettings.whatsapp;
-    document.getElementById('email-address').value = settings.email || defaultSettings.email;
-  }
-  function saveContactSettings() {
-    const newWhatsapp = document.getElementById('whatsapp-number').value.trim();
-    const newEmail = document.getElementById('email-address').value.trim();
-    const currentSets = getCurrentSettingsObject();
-    const updated = { ...currentSets, whatsapp: newWhatsapp, email: newEmail };
-    saveFullDataToLocalStorage(currentProducts, updated);
-    showToast("📞 تم حفظ رقم الواتساب والإيميل وتحديث الموقع");
-  }
+function openModal(type, id = null) {
+  const modal = document.getElementById('editModal');
+  const isEdit = id !== null;
+  const title = isEdit ? 'تعديل' : 'إضافة';
+  const label = type === 'slider' ? 'سلايد' : 'تصنيف';
+  
+  let formHTML = type === 'slider' ? `
+    <form onsubmit="saveSlider(event, ${id || 'null'})">
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">العنوان *</label>
+      <input type="text" id="title_ar" class="input-field" required>
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">الوصف</label>
+      <textarea id="subtitle_ar" class="input-field" rows="2"></textarea>
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">رابط الصورة *</label>
+      <input type="text" id="image_url" class="input-field" required>
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">نص الزر</label>
+      <input type="text" id="button_text_ar" class="input-field" value="اشتري الأن">
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">الرابط</label>
+      <input type="text" id="link_url" class="input-field">
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">الترتيب</label>
+      <input type="number" id="sort_order" class="input-field" value="0">
+      <label style="display:flex;align-items:center;gap:0.5rem;margin:1rem 0;"><input type="checkbox" id="is_active" checked> نشط</label>
+      <div style="display:flex;gap:1rem;"><button type="submit" class="btn-primary">💾 حفظ</button><button type="button" class="btn-danger" onclick="closeModal()">إلغاء</button></div>
+    </form>` : `
+    <form onsubmit="saveCategory(event, ${id || 'null'})">
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">اسم التصنيف *</label>
+      <input type="text" id="name_ar" class="input-field" required>
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">العنوان الفرعي</label>
+      <input type="text" id="subtitle_ar" class="input-field">
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">الوصف</label>
+      <textarea id="description_ar" class="input-field" rows="2"></textarea>
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">رابط الصورة</label>
+      <input type="text" id="image_url" class="input-field">
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">الرابط</label>
+      <input type="text" id="link_url" class="input-field">
+      <label style="color:#C4A06A;display:block;margin-bottom:0.25rem;">الترتيب</label>
+      <input type="number" id="sort_order" class="input-field" value="0">
+      <label style="display:flex;align-items:center;gap:0.5rem;margin:1rem 0;"><input type="checkbox" id="is_active" checked> نشط</label>
+      <div style="display:flex;gap:1rem;"><button type="submit" class="btn-primary">💾 حفظ</button><button type="button" class="btn-danger" onclick="closeModal()">إلغاء</button></div>
+    </form>`;
+  
+  document.getElementById('modalContent').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <h3 style="color:#C4A06A;">${title} ${label}</h3>
+      <button onclick="closeModal()" style="background:none;border:none;color:#A89880;cursor:pointer;font-size:1.5rem;">✕</button>
+    </div>${formHTML}`;
+  
+  modal.classList.add('active');
+  if (isEdit) loadItemData(type, id);
+}
 
-  function previewImage() {
-    const file = document.getElementById('prod-image-file').files[0];
-    const urlInput = document.getElementById('prod-image-url');
-    const previewArea = document.getElementById('image-preview-area');
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        previewArea.innerHTML = `<img src="${e.target.result}" class="image-preview border-2 border-[#D4AF37] p-1"> <span class="text-xs text-green-600 mr-2">✓ جاهزة</span>`;
-        previewArea.classList.remove('hidden');
-        urlInput.value = "";
-      };
-      reader.readAsDataURL(file);
-    } else if (urlInput.value.trim()) {
-      previewArea.innerHTML = `<img src="${urlInput.value.trim()}" class="image-preview border p-1" onerror="this.src='https://placehold.co/200x200/F1EBE0/D4AF37?text=Error'"> <span class="text-xs text-blue-600 mr-2">رابط</span>`;
-      previewArea.classList.remove('hidden');
-    } else {
-      previewArea.classList.add('hidden');
+async function loadItemData(type, id) {
+  const table = type === 'slider' ? 'slider' : 'categories';
+  const { data, error } = await supabase.from(table).select('*').eq('id', id).single();
+  if (error) { showNotification('❌ خطأ: ' + error.message, 'error'); return; }
+  Object.keys(data).forEach(key => {
+    const el = document.getElementById(key);
+    if (el) {
+      if (el.type === 'checkbox') el.checked = data[key];
+      else el.value = data[key] || '';
     }
-  }
-  document.getElementById('prod-image-file')?.addEventListener('change', previewImage);
-  document.getElementById('prod-image-url')?.addEventListener('input', previewImage);
-  document.getElementById('logo-file')?.addEventListener('change', () => { const f=document.getElementById('logo-file').files[0]; if(f){ const reader=new FileReader(); reader.onload=e=>document.getElementById('logo-preview-area').innerHTML=`<img src="${e.target.result}" class="media-preview" style="max-width:120px">`; reader.readAsDataURL(f); } });
-  document.getElementById('video-file')?.addEventListener('change', () => { const f=document.getElementById('video-file').files[0]; if(f){ const reader=new FileReader(); reader.onload=e=>document.getElementById('video-preview-area').innerHTML=`<video src="${e.target.result}" class="media-preview" style="max-width:180px" controls></video>`; reader.readAsDataURL(f); } });
-
-  function resetAllData() {
-    if(confirm("⚠️ تحذير نهائي: سيتم حذف جميع المنتجات والإعدادات الحالية واستعادة البيانات الافتراضية. هل تتابعين؟")) {
-      currentProducts = JSON.parse(JSON.stringify(defaultProducts));
-      saveFullDataToLocalStorage(currentProducts, defaultSettings);
-      renderProductsList();
-      clearProductForm();
-      loadSettingsToForm();
-      loadContactToForm();
-      showToast("🔄 تمت إعادة التعيين إلى البيانات الافتراضية للعرض");
-    }
-  }
-
-  function showTab(tab) {
-    document.getElementById('products-tab').classList.add('hidden');
-    document.getElementById('settings-tab').classList.add('hidden');
-    document.getElementById('contact-tab').classList.add('hidden');
-    const btns = { products: 'tab-products-btn', settings: 'tab-settings-btn', contact: 'tab-contact-btn' };
-    for(let t in btns) {
-      const btn = document.getElementById(btns[t]);
-      if(t === tab) { btn.classList.remove('tab-inactive'); btn.classList.add('tab-active'); }
-      else { btn.classList.remove('tab-active'); btn.classList.add('tab-inactive'); }
-    }
-    if(tab === 'products') document.getElementById('products-tab').classList.remove('hidden');
-    else if(tab === 'settings') { document.getElementById('settings-tab').classList.remove('hidden'); loadSettingsToForm(); }
-    else if(tab === 'contact') { document.getElementById('contact-tab').classList.remove('hidden'); loadContactToForm(); }
-  }
-
-  document.getElementById('previewLiveBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    window.open('index.html', '_blank');
   });
+}
 
-  window.onload = () => {
-    loadDataFromStorage();
-    showTab('products');
+async function saveSlider(event, id) {
+  event.preventDefault();
+  const data = {
+    title_ar: document.getElementById('title_ar').value,
+    subtitle_ar: document.getElementById('subtitle_ar').value,
+    image_url: document.getElementById('image_url').value,
+    button_text_ar: document.getElementById('button_text_ar').value || 'اشتري الأن',
+    link_url: document.getElementById('link_url').value,
+    sort_order: parseInt(document.getElementById('sort_order').value) || 0,
+    is_active: document.getElementById('is_active').checked,
+    updated_at: new Date()
   };
+  let result = id ? await supabase.from('slider').update(data).eq('id', id) : await supabase.from('slider').insert([data]);
+  if (result.error) showNotification('❌ خطأ: ' + result.error.message, 'error');
+  else { showNotification('✅ تم الحفظ بنجاح!', 'success'); closeModal(); loadSlider(); }
+}
+
+async function saveCategory(event, id) {
+  event.preventDefault();
+  const data = {
+    name_ar: document.getElementById('name_ar').value,
+    subtitle_ar: document.getElementById('subtitle_ar').value,
+    description_ar: document.getElementById('description_ar').value,
+    image_url: document.getElementById('image_url').value,
+    link_url: document.getElementById('link_url').value,
+    sort_order: parseInt(document.getElementById('sort_order').value) || 0,
+    is_active: document.getElementById('is_active').checked,
+    updated_at: new Date()
+  };
+  let result = id ? await supabase.from('categories').update(data).eq('id', id) : await supabase.from('categories').insert([data]);
+  if (result.error) showNotification('❌ خطأ: ' + result.error.message, 'error');
+  else { showNotification('✅ تم الحفظ بنجاح!', 'success'); closeModal(); loadCategories(); }
+}
+
+function editItem(type, id) { openModal(type, id); }
+
+async function deleteItem(type, id) {
+  const label = type === 'slider' ? 'السلايد' : 'التصنيف';
+  if (!confirm(`⚠️ هل أنت متأكد من حذف هذا ${label}؟`)) return;
+  const table = type === 'slider' ? 'slider' : 'categories';
+  const { error } = await supabase.from(table).delete().eq('id', id);
+  if (error) showNotification('❌ خطأ: ' + error.message, 'error');
+  else { showNotification('🗑️ تم الحذف بنجاح', 'success'); type === 'slider' ? loadSlider() : loadCategories(); }
+}
+
+function closeModal() { document.getElementById('editModal').classList.remove('active'); }
+
+document.getElementById('editModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+function showNotification(message, type) {
+  const existing = document.querySelector('.notification');
+  if (existing) existing.remove();
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  setTimeout(() => notification.remove(), 3000);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadSlider();
+  setTimeout(() => testConnection(), 500);
+});
 </script>
+
 </body>
 </html>

@@ -25,7 +25,7 @@
     .container { 
       max-width: 1400px; 
       margin: 0 auto; 
-      padding: 2rem 2rem 7rem 2rem; 
+      padding: 2rem 2rem 2rem 2rem; 
       position: relative; 
     }
     
@@ -289,7 +289,7 @@
     
     /* Floating Bar */
     .floating-bar { 
-      position: fixed; 
+      position: static; 
       bottom: 0; 
       left: 0; 
       width: 100%; 
@@ -370,14 +370,14 @@
     
     /* ===== MEDIA QUERIES ===== */
     @media (max-width: 1024px) {
-      .container { padding: 1.5rem 1.5rem 6rem 1.5rem; }
+      .container { padding: 1.5rem 1.5rem 2rem 2rem; }
       .luxury-header h1 { font-size: 1.8rem; }
       .block-title { font-size: 1.5rem; }
       .options-grid { gap: 1.2rem; }
     }
     
     @media (max-width: 768px) {
-      .container { padding: 1rem 1rem 5.5rem 1rem; }
+      .container { padding: 1rem 1rem 1rem 1rem; }
       .options-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
       .tab-btn { padding: 0.6rem 1.2rem; font-size: 1rem; }
       .block-title { font-size: 1.3rem; }
@@ -389,7 +389,7 @@
     }
     
     @media (max-width: 480px) {
-      .container { padding: 0.8rem 0.8rem 5rem 0.8rem; }
+      .container { padding: 0.8rem 0.8rem 1rem 0.8rem; }
       .options-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem; }
       .option-card { border-radius: 20px; padding: 0.8rem; }
       .option-img { border-radius: 16px; }
