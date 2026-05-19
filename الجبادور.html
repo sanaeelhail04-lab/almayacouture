@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Almaya Couture | جبادور المعلم - حرفة مغربية أصيلة</title>
   <!-- Google Fonts: Luxury Moroccan Fusion -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Header Auto-Loader -->
+  <script src="header.js"></script>
+  
   <style>
     * {
       margin: 0;
@@ -15,24 +19,11 @@
     }
 
     body {
-      background: #FDF5E6; /* كريمي فاخر */
-      font-family: 'Inter', sans-serif;
-      color: #1E2A1E;
+      background: #1A1510;
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      color: #E8DDD0;
       scroll-behavior: smooth;
-      position: relative;
-    }
-
-    /* خلفية رخام خفيف + ملمس حريري */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(circle at 10% 20%, rgba(0, 103, 71, 0.02) 0%, rgba(184, 134, 11, 0.02) 90%);
-      pointer-events: none;
-      z-index: -2;
+      overflow-x: hidden;
     }
 
     .container {
@@ -42,67 +33,50 @@
       position: relative;
     }
 
-    /* زخرفة ملكية */
+    /* Royal Accent */
     .royal-accent {
       height: 3px;
-      background: linear-gradient(90deg, #006747, #B8860B, #006747);
+      background: linear-gradient(90deg, #C4A06A, #D4B896, #C4A06A);
       width: 120px;
-      margin: 0.5rem 0 1rem 0;
+      margin: 0.5rem auto 1rem auto;
       border-radius: 4px;
     }
 
-    /* Header with Logo */
+    /* Header */
     .luxury-header {
       text-align: center;
       margin-bottom: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .brand-logo {
-      max-width: 180px;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      background: #FFFFFF;
-      padding: 8px 16px;
-    }
-    .brand-logo:hover {
-      transform: scale(1.02);
-    }
+    
     .luxury-header h1 {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 700;
       font-size: 3rem;
-      background: linear-gradient(135deg, #006747 0%, #B8860B 80%);
+      background: linear-gradient(135deg, #C4A06A 0%, #D4B896 80%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       letter-spacing: -0.5px;
     }
+    
     .luxury-header p {
       font-family: 'Amiri', serif;
       font-size: 1rem;
-      color: #5C6E4A;
-      border-top: 1px solid #D4C9B2;
+      color: #A89880;
+      border-top: 1px solid rgba(196, 160, 106, 0.2);
       display: inline-block;
       padding-top: 0.4rem;
     }
 
-    /* tabs أنيقة */
+    /* Tabs */
     .tabs-container {
       display: flex;
       justify-content: center;
       gap: 2rem;
       margin-bottom: 3rem;
-      border-bottom: 1px solid #DBCFAF;
+      border-bottom: 1px solid rgba(196, 160, 106, 0.2);
     }
+    
     .tab-btn {
       background: transparent;
       border: none;
@@ -110,114 +84,137 @@
       font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
       font-size: 1.2rem;
-      color: #7C6E4A;
+      color: #A89880;
       cursor: pointer;
       transition: 0.3s;
       border-bottom: 2px solid transparent;
     }
+    
     .tab-btn.active {
-      color: #B8860B;
-      border-bottom: 2px solid #B8860B;
+      color: #C4A06A;
+      border-bottom: 2px solid #C4A06A;
     }
+    
+    .tab-btn:hover {
+      color: #D4B896;
+    }
+    
     .tab-content {
       display: none;
       animation: fadeSlide 0.4s ease-out;
     }
+    
     .tab-content.active-tab {
       display: block;
     }
+    
     @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(8px);}
-      to { opacity: 1; transform: translateY(0);}
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* sections */
+    /* Sections */
     .config-section {
       margin-bottom: 3.2rem;
-      background: rgba(255, 253, 245, 0.6);
+      background: rgba(42, 34, 24, 0.5);
+      backdrop-filter: blur(8px);
       border-radius: 36px;
       padding: 0.5rem 0 1rem;
+      border: 1px solid rgba(196, 160, 106, 0.1);
     }
+    
     .section-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.8rem;
       font-weight: 600;
-      color: #006747;
-      border-right: 5px solid #B8860B;
+      color: #C4A06A;
+      border-right: 5px solid #C4A06A;
       padding-right: 1rem;
       margin-bottom: 1.8rem;
     }
 
+    /* Options Grid */
     .options-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
       gap: 1.8rem;
     }
+    
     .option-card {
-      background: #FFFFFF;
-      border: 1px solid #E5DCCD;
+      background: rgba(42, 34, 24, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(196, 160, 106, 0.12);
       border-radius: 28px;
       padding: 1rem;
       cursor: pointer;
-      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      box-shadow: 0 5px 12px rgba(0,0,0,0.02);
+      transition: all 0.4s ease;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
     }
+    
     .option-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 20px 28px -12px rgba(0, 103, 71, 0.2);
-      border-color: #B8860B;
+      box-shadow: 0 20px 28px -12px rgba(196, 160, 106, 0.15);
+      border-color: rgba(196, 160, 106, 0.35);
     }
+    
     .option-card.selected {
-      border: 2px solid #B8860B;
-      background: #FFFCF5;
-      box-shadow: 0 10px 22px -10px rgba(184, 134, 11, 0.25);
+      border: 2px solid #C4A06A;
+      background: rgba(196, 160, 106, 0.1);
+      box-shadow: 0 10px 22px -10px rgba(196, 160, 106, 0.25);
     }
+    
     .option-img {
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 22px;
-      background: #F2EADB;
+      background: #2A2218;
       display: block;
       margin-bottom: 0.8rem;
       transition: 0.2s;
     }
+    
     .option-title {
       font-weight: 700;
       font-size: 1rem;
-      color: #2C3A2B;
+      color: #E8DDD0;
       font-family: 'Cormorant Garamond', serif;
     }
+    
     .option-desc {
       font-size: 0.7rem;
-      color: #8A7A5C;
+      color: #A89880;
       margin-top: 0.25rem;
     }
 
-    /* Color Picker Section */
+    /* Color Section */
     .color-section {
       margin: 2rem 0;
-      background: rgba(255, 248, 235, 0.7);
+      background: rgba(42, 34, 24, 0.5);
+      backdrop-filter: blur(8px);
       border-radius: 36px;
       padding: 1rem 1.5rem;
-      border: 1px solid #E5DCCD;
+      border: 1px solid rgba(196, 160, 106, 0.1);
     }
+    
     .color-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.4rem;
       font-weight: 600;
-      color: #B8860B;
+      color: #C4A06A;
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
       gap: 10px;
     }
+    
     .color-palette {
       display: flex;
       flex-wrap: wrap;
       gap: 1.5rem;
       align-items: center;
     }
+    
     .color-option {
       display: flex;
       flex-direction: column;
@@ -226,144 +223,167 @@
       cursor: pointer;
       transition: 0.2s;
     }
+    
     .color-circle {
       width: 55px;
       height: 55px;
       border-radius: 50%;
       border: 2px solid transparent;
       transition: 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
+    
     .color-option.selected .color-circle {
-      border: 3px solid #B8860B;
+      border: 3px solid #C4A06A;
       transform: scale(1.08);
-      box-shadow: 0 0 0 2px #FFF, 0 0 0 4px #B8860B;
+      box-shadow: 0 0 0 2px #1A1510, 0 0 0 4px #C4A06A;
     }
+    
     .color-label {
       font-size: 0.7rem;
       font-weight: 600;
-      color: #5D4E2C;
+      color: #A89880;
     }
 
-    /* لوحة المقاسات المتقدمة */
+    /* Measurements */
     .measure-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1.5rem;
-      background: rgba(255, 248, 235, 0.8);
-      backdrop-filter: blur(3px);
+      background: rgba(42, 34, 24, 0.7);
+      backdrop-filter: blur(8px);
       padding: 2rem;
       border-radius: 40px;
-      border: 1px solid #DCCFAD;
+      border: 1px solid rgba(196, 160, 106, 0.12);
       margin: 2rem 0;
-      box-shadow: 0 12px 22px rgba(0,0,0,0.03);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.3);
     }
+    
     .input-field {
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
     }
+    
     .input-field label {
       font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #B8860B;
+      color: #C4A06A;
+      font-family: 'Tajawal', sans-serif;
     }
+    
     .input-field input {
-      background: #FFFFFF;
-      border: 1px solid #DECFAD;
+      background: rgba(26, 21, 16, 0.6);
+      border: 1px solid rgba(196, 160, 106, 0.2);
       padding: 0.7rem 1rem;
-      border-radius: 48px;
-      font-family: 'Inter', monospace;
+      border-radius: 12px;
+      font-family: 'Tajawal', sans-serif;
       font-size: 0.9rem;
       outline: none;
-      transition: 0.2s;
+      transition: all 0.3s;
+      color: #E8DDD0;
     }
+    
     .input-field input:focus {
-      border-color: #006747;
-      box-shadow: 0 0 0 2px rgba(0, 103, 71, 0.15);
+      border-color: #C4A06A;
+      box-shadow: 0 0 0 3px rgba(196, 160, 106, 0.15);
+    }
+    
+    .input-field input::placeholder {
+      color: rgba(168, 152, 128, 0.5);
     }
 
-    /* كناش المعلم - وثيقة التصميم */
+    /* Design Sheet */
     .design-sheet {
-      background: #FFFEF9;
+      background: rgba(42, 34, 24, 0.7);
+      backdrop-filter: blur(8px);
       border-radius: 40px;
-      border: 1px solid #DCC99E;
+      border: 1px solid rgba(196, 160, 106, 0.15);
       padding: 2rem;
       margin: 2rem 0 1.5rem;
-      box-shadow: 0 16px 28px -12px rgba(0,0,0,0.08);
+      box-shadow: 0 16px 28px -12px rgba(0,0,0,0.3);
       position: relative;
     }
+    
     .design-sheet:before {
       content: "✦ كِنَّاش المعلم ✦";
       position: absolute;
       top: -14px;
       right: 32px;
-      background: #FDF5E6;
+      background: #1A1510;
       padding: 0 16px;
       font-size: 0.7rem;
       letter-spacing: 2px;
-      color: #B8860B;
+      color: #C4A06A;
       font-weight: bold;
       font-family: 'Amiri', serif;
     }
+    
     .sheet-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.5rem;
       font-weight: 700;
-      color: #006747;
+      color: #C4A06A;
       margin-bottom: 1.2rem;
-      border-right: 3px solid #B8860B;
+      border-right: 3px solid #C4A06A;
       padding-right: 1rem;
     }
+    
     .sheet-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 0.8rem;
-      border-bottom: 1px dashed #E6DBC8;
+      border-bottom: 1px dashed rgba(196, 160, 106, 0.15);
       padding: 0.9rem 0;
       font-size: 0.9rem;
     }
+    
     .sheet-label {
       font-weight: 700;
-      color: #5D4E2C;
+      color: #A89880;
     }
+    
     .sheet-value {
-      color: #2D3A2A;
+      color: #E8DDD0;
       font-weight: 500;
     }
 
-    /* تنبيه المعلم (نصيحة الذكاء) */
+    /* Maalem Wisdom */
     .maalem-wisdom {
-      background: #ECF6E8;
-      border-right: 8px solid #B8860B;
+      background: rgba(196, 160, 106, 0.08);
+      border-right: 8px solid #C4A06A;
       padding: 1rem 1.5rem;
       border-radius: 28px;
       margin: 1rem 0 1.8rem;
       font-size: 0.85rem;
-      color: #2B5A2A;
+      color: #D4B896;
       font-weight: 600;
       display: flex;
       align-items: center;
       gap: 12px;
     }
+
+    /* Floating Bar */
     .floating-bar {
-      position: fixed;
+      position: static;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: rgba(253, 245, 230, 0.96);
+      background: rgba(26, 21, 16, 0.96);
       backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(184, 134, 11, 0.3);
+      border-top: 1px solid rgba(196, 160, 106, 0.2);
       padding: 1rem 2rem;
       z-index: 200;
       display: flex;
       justify-content: center;
       gap: 1.5rem;
       flex-wrap: wrap;
+      box-shadow: 0 -8px 28px rgba(0,0,0,0.5);
     }
+    
     .whatsapp-btn {
       background: #25D366;
       border: none;
@@ -375,23 +395,124 @@
       gap: 10px;
       cursor: pointer;
       color: white;
-      transition: 0.2s;
+      transition: all 0.3s;
+      font-family: 'Tajawal', sans-serif;
     }
+    
+    .whatsapp-btn:hover {
+      transform: scale(1.02);
+      background: #20b859;
+    }
+    
     .reset-btn {
       background: transparent;
-      border: 1.5px solid #B8860B;
-      color: #B8860B;
+      border: 1.5px solid #C4A06A;
+      color: #E8DDD0;
       padding: 0.85rem 2rem;
       border-radius: 60px;
       font-weight: 600;
       cursor: pointer;
+      transition: all 0.4s;
+      font-family: 'Tajawal', sans-serif;
+      position: relative;
+      overflow: hidden;
     }
-    @media (max-width: 750px) {
-      .container { padding: 1rem 1rem 6rem; }
-      .options-grid { gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));}
-      .section-title { font-size: 1.4rem; }
+    
+    .reset-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196, 160, 106, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .reset-btn:hover::before {
+      left: 100%;
+    }
+    
+    .reset-btn:hover {
+      background: rgba(196, 160, 106, 0.12);
+      border-color: #D4B896;
+      color: #D4B896;
+      transform: translateY(-2px);
+    }
+    
+    hr {
+      margin: 0.8rem 0;
+      border: none;
+      border-top: 1px solid rgba(196, 160, 106, 0.15);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1A1510; }
+    ::-webkit-scrollbar-thumb { background: rgba(196, 160, 106, 0.3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(196, 160, 106, 0.5); }
+
+    /* ===== MEDIA QUERIES ===== */
+    @media (max-width: 1024px) {
+      .container { padding: 1.5rem 1.5rem 6rem 1.5rem; }
+      .luxury-header h1 { font-size: 2.5rem; }
+      .section-title { font-size: 1.5rem; }
+      .options-grid { gap: 1.2rem; }
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 1rem 1rem 5.5rem 1rem; }
+      .options-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+      .section-title { font-size: 1.3rem; }
+      .luxury-header h1 { font-size: 2rem; }
+      .measure-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 1.5rem; gap: 1rem; }
+      .floating-bar { padding: 1rem 1rem; gap: 1rem; }
+      .whatsapp-btn { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
+      .reset-btn { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
+      .color-circle { width: 45px; height: 45px; }
+    }
+    
+    @media (max-width: 480px) {
+      .container { padding: 0.8rem 0.8rem 5rem 0.8rem; }
+      .options-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem; }
+      .option-card { border-radius: 20px; padding: 0.8rem; }
+      .option-img { border-radius: 16px; }
+      .section-title { font-size: 1.1rem; border-right-width: 3px; }
+      .luxury-header h1 { font-size: 1.6rem; }
+      .luxury-header p { font-size: 0.7rem; }
+      .measure-grid { padding: 1rem; gap: 0.8rem; border-radius: 24px; }
+      .design-sheet { padding: 1.5rem; border-radius: 24px; }
+      .design-sheet:before { font-size: 0.6rem; right: 20px; }
+      .floating-bar { padding: 0.8rem 0.8rem; gap: 0.8rem; }
+      .whatsapp-btn { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
+      .reset-btn { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
       .color-circle { width: 40px; height: 40px; }
-      .brand-logo { max-width: 130px; }
+      .color-palette { gap: 1rem; }
+    }
+    
+    @media (max-width: 360px) {
+      .options-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+      .option-card { border-radius: 16px; padding: 0.6rem; }
+      .option-img { border-radius: 12px; }
+      .option-title { font-size: 0.85rem; }
+      .option-desc { font-size: 0.65rem; }
+      .tab-btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+    }
+    
+    /* Touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .option-card:hover { transform: none; border-color: rgba(196, 160, 106, 0.12); }
+      .option-card:active { transform: scale(0.97); border-color: rgba(196, 160, 106, 0.35); }
+      .reset-btn:hover::before { left: -100%; }
+      .reset-btn:active::before { left: 100%; }
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
@@ -399,21 +520,18 @@
 
 <div class="container">
   <div class="luxury-header">
-    <div class="logo-container">
-      <img src="logo.jpg" alt="Almaya Couture Logo" class="brand-logo" onerror="this.onerror=null; this.src='https://placehold.co/400x200/FDF5E6/B8860B?text=Almaya+Couture'; this.style.background='#FDF5E6';">
-    </div>
-    <h1>Almaya Couture | جبادور المعلم</h1>
+    <h1>تصميم جبادور </h1>
     <div class="royal-accent"></div>
     <p>تمغربيت أصيلة · فصالة مخزنية وحرفة يدوية نادرة</p>
   </div>
 
-  <!-- TABS: الفوقي / السروال والتفاصيل -->
+  <!-- TABS -->
   <div class="tabs-container">
     <button class="tab-btn active" data-tab="top-tab">❁ الفوقي (التوب) التفصيل</button>
     <button class="tab-btn" data-tab="bottom-tab">❀ السروال & الأثواب</button>
   </div>
 
-  <!-- Tab 1: الفوقي والخياطة العالية -->
+  <!-- Tab 1: الفوقي -->
   <div id="top-tab" class="tab-content active-tab">
     <div class="config-section">
       <div class="section-title">① الفوقي · فصالة مخزنية متقنة</div>
@@ -425,7 +543,7 @@
     </div>
   </div>
 
-  <!-- Tab 2: السروال + الأقمشة الفاخرة -->
+  <!-- Tab 2: السروال + الأقمشة -->
   <div id="bottom-tab" class="tab-content">
     <div class="config-section">
       <div class="section-title">③ السروال · قندريسي و Droit</div>
@@ -437,22 +555,20 @@
     </div>
   </div>
 
-  <!-- اختيار اللون الرئيسي للجبادور (تفصيل دقيق) -->
+  <!-- اختيار اللون -->
   <div class="color-section">
     <div class="color-title">
       <i class="fas fa-palette"></i> ⑤ اختيار اللون الرئيسي
     </div>
-    <div class="color-palette" id="colorPaletteContainer">
-      <!-- Colors injected via JS -->
-    </div>
+    <div class="color-palette" id="colorPaletteContainer"></div>
   </div>
 
-  <!-- منطقة نصيحة المعلم (ذكاء الاصطناعي) -->
+  <!-- نصيحة المعلم -->
   <div id="maalemWisdom" class="maalem-wisdom" style="display: none;">
     <i class="fas fa-hamsa"></i> <span id="wisdomText"></span>
   </div>
 
-  <!-- المقاسات المتقدمة للجبادور -->
+  <!-- المقاسات -->
   <div class="measure-grid">
     <div class="input-field"><label>الكتف (سم)</label><input type="number" id="shoulder" placeholder="مثال: 38" step="0.5"></div>
     <div class="input-field"><label>الصدر (سم)</label><input type="number" id="bust" placeholder="مثال: 88" step="0.5"></div>
@@ -464,7 +580,7 @@
     <div class="input-field"><label>عرض فتحة السروال (سم)</label><input type="number" id="pantsOpening" placeholder="فتحة القندريسي" step="0.5"></div>
   </div>
 
-  <!-- كناش الطلب عند المعلم -->
+  <!-- كناش المعلم -->
   <div class="design-sheet">
     <div class="sheet-title">📜 كناش الطلب | Bon de Commande - Maalam</div>
     <div id="summaryContent">
@@ -483,38 +599,40 @@
   <button class="whatsapp-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i> إرسال الكناش للمعلمة (0601245733)</button>
 </div>
 
+<!-- Footer Auto-Loader -->
+<script src="footer.js"></script>
+
 <script>
-  // ------------------------------------ قاعدة بيانات "الحرفة" الجديدة المتطابقة مع ألوان الموقع ----------------------------------
+  // قاعدة بيانات الجبادور
   const topStyles = [
-    { id: "top_makhzeni", title: "فصالة مخزنية بـ الخرطة", desc: "تقليد ملكي أصيل", img: "https://placehold.co/400x400/E9E0CF/B8860B?text=Khorta+Makhzeni", craftAffinity: "traditional" },
-    { id: "top_nus_toq", title: "جبادور بـ نص طوق", desc: "أناقة عصرية بالطوق", img: "https://placehold.co/400x400/F2E3CF/B8860B?text=Nos+Toq", craftAffinity: "modern" },
-    { id: "top_cintree", title: "فصالة عصرية Cintrée", desc: "قصّة ضيقة ومحتضنة", img: "https://placehold.co/400x400/DDD1BB/B8860B?text=Cintree", craftAffinity: "slim" }
+    { id: "top_makhzeni", title: "فصالة مخزنية بـ الخرطة", desc: "تقليد ملكي أصيل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Khorta+Makhzeni", craftAffinity: "traditional" },
+    { id: "top_nus_toq", title: "جبادور بـ نص طوق", desc: "أناقة عصرية بالطوق", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Nos+Toq", craftAffinity: "modern" },
+    { id: "top_cintree", title: "فصالة عصرية Cintrée", desc: "قصّة ضيقة ومحتضنة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Cintree", craftAffinity: "slim" }
   ];
 
   const pantsOptions = [
-    { id: "pants_kandrisi", title: "سروال قندريسي عصري", desc: "فتحة في الأسفل", img: "https://placehold.co/400x400/DDCEB2/B8860B?text=Kandrisi", style: "flow" },
-    { id: "pants_droit_dhbana", title: "سروال Droit بالذبابة", desc: "مخدوم بـ الذبانة في الجناب", img: "https://placehold.co/400x400/E1CFAD/B8860B?text=Droit+Dhabana", style: "tailored" }
+    { id: "pants_kandrisi", title: "سروال قندريسي عصري", desc: "فتحة في الأسفل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Kandrisi", style: "flow" },
+    { id: "pants_droit_dhbana", title: "سروال Droit بالذبابة", desc: "مخدوم بـ الذبانة في الجناب", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Droit+Dhabana", style: "tailored" }
   ];
 
   const luxuryFabrics = [
-    { id: "fab_melifa", title: "المليفة الحريرية", desc: "انسياب فاخر", img: "https://placehold.co/400x400/CFC2A0/B8860B?text=Melifa", weight: "light" },
-    { id: "fab_crepe_dior", title: "كريب ديور", desc: "نعومة راقية", img: "https://placehold.co/400x400/D4C5A8/B8860B?text=Crepe+Dior", weight: "medium" },
-    { id: "fab_lin_parchemin", title: "الكتان (Lin) بالبرشمان", desc: "مخدوم بأصالة", img: "https://placehold.co/400x400/CBB78D/B8860B?text=Lin+Parchemin", weight: "medium", perfectForParchemin: true },
-    { id: "fab_soussi", title: "ثوب السوسدي التقليدي", desc: "لمسة تراثية", img: "https://placehold.co/400x400/BFAA82/B8860B?text=Soussi", weight: "heavy" }
+    { id: "fab_melifa", title: "المليفة الحريرية", desc: "انسياب فاخر", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Melifa", weight: "light" },
+    { id: "fab_crepe_dior", title: "كريب ديور", desc: "نعومة راقية", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Crepe+Dior", weight: "medium" },
+    { id: "fab_lin_parchemin", title: "الكتان (Lin) بالبرشمان", desc: "مخدوم بأصالة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Lin+Parchemin", weight: "medium", perfectForParchemin: true },
+    { id: "fab_soussi", title: "ثوب السوسدي التقليدي", desc: "لمسة تراثية", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Soussi", weight: "heavy" }
   ];
 
   const craftOptionsArr = [
-    { id: "craft_parchemin", title: "خياطة البرشمان اليدوية", desc: "خدمة دقيقة للمعلم", img: "https://placehold.co/400x400/F2E1CC/B8860B?text=Parchemin", requiresLin: true },
-    { id: "craft_aqad_baldia", title: "العقاد البلدية الصغيرة", desc: "مخدومة بالحبة", img: "https://placehold.co/400x400/EAD8BA/B8860B?text=Aqad+Baladia", requiresLin: false },
-    { id: "craft_sfifa_siklia", title: "السفيفة الصقلية", desc: "تطريز رفيع", img: "https://placehold.co/400x400/DECAA9/B8860B?text=Sfifa+Siklia", requiresLin: false },
-    { id: "craft_tarz_maalem", title: "طرز المعلم التقليدي", desc: "تطريز يدوي أصيل", img: "https://placehold.co/400x400/DAC198/B8860B?text=Tarz+Maalem", requiresLin: false }
+    { id: "craft_parchemin", title: "خياطة البرشمان اليدوية", desc: "خدمة دقيقة للمعلم", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Parchemin", requiresLin: true },
+    { id: "craft_aqad_baldia", title: "العقاد البلدية الصغيرة", desc: "مخدومة بالحبة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Aqad+Baladia", requiresLin: false },
+    { id: "craft_sfifa_siklia", title: "السفيفة الصقلية", desc: "تطريز رفيع", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Sfifa+Siklia", requiresLin: false },
+    { id: "craft_tarz_maalem", title: "طرز المعلم التقليدي", desc: "تطريز يدوي أصيل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Tarz+Maalem", requiresLin: false }
   ];
 
-  // لوحة ألوان تتناغم مع لوجو العلامة (ذهب عتيق، أخضر ملكي، لؤلؤي، عنابي فخم)
   const colorOptions = [
-    { name: "ذهبي ملكي", code: "#B8860B", value: "ذهبي ملكي" },
+    { name: "ذهبي ملكي", code: "#C4A06A", value: "ذهبي ملكي" },
     { name: "أخضر زمردي", code: "#006747", value: "أخضر زمردي" },
-    { name: "أبيض لؤلؤي", code: "#FDF5E6", value: "أبيض لؤلؤي" },
+    { name: "أبيض لؤلؤي", code: "#F5F0E8", value: "أبيض لؤلؤي" },
     { name: "عنابي فخم", code: "#722F37", value: "عنابي فخم" },
     { name: "أسود أنيق", code: "#1E1E1E", value: "أسود أنيق" },
     { name: "كحلي مخملي", code: "#191970", value: "كحلي مخملي" }
@@ -528,7 +646,6 @@
     color: null
   };
 
-  // Render Color Palette
   function renderColorPalette() {
     const container = document.getElementById('colorPaletteContainer');
     if (!container) return;
@@ -554,7 +671,7 @@
     if (!container) return;
     container.innerHTML = optionsArray.map(opt => `
       <div class="option-card" data-category="${categoryKey}" data-id="${opt.id}" data-name="${opt.title}" data-craftreq="${opt.requiresLin || false}" data-weight="${opt.weight || ''}">
-        <img class="option-img" src="${opt.img}" alt="${opt.title}" onerror="this.src='https://placehold.co/400x400/F4EADD/B8860B?text=Almaya'">
+        <img class="option-img" src="${opt.img}" alt="${opt.title}" onerror="this.src='https://placehold.co/400x400/2A2218/C4A06A?text=Almaya'">
         <div class="option-title">${opt.title}</div>
         <div class="option-desc">${opt.desc}</div>
       </div>
@@ -653,7 +770,6 @@
     document.getElementById('maalemWisdom').style.display = 'none';
   }
 
-  // WhatsApp message with logo spirit & accurate number 0601245733 (Moroccan format)
   function buildWhatsAppMasterMessage() {
     const topObj = topStyles.find(t => t.id === selections.topStyle);
     const pantsObj = pantsOptions.find(p => p.id === selections.pants);
@@ -691,7 +807,7 @@
   }
 
   function sendWhatsApp() {
-    const phone = "212601245733"; // الرقم المطلوب 0601245733 على الصيغة الدولية
+    const phone = "212601245733";
     window.open(`https://wa.me/${phone}?text=${buildWhatsAppMasterMessage()}`, '_blank');
   }
 

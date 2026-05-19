@@ -5,129 +5,445 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Almaya Couture | الخياطة المعلم الأصيلة - تكشيطة فاخرة</title>
   <!-- Luxurious Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style id="dynamic-styles">
+  
+  <!-- Header Auto-Loader -->
+  <script src="header.js"></script>
+  
+  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #FAF9F6; font-family: 'Inter', sans-serif; color: #1A1A1A; scroll-behavior: smooth; }
-    .container { max-width: 1400px; margin: 0 auto; padding: 2rem 2rem 7rem 2rem; position: relative; }
     
-    /* ===== IDENTITY ALMAYA COUTURE - LOGO AREA ===== */
-    .logo-area {
-      text-align: center;
-      margin-bottom: 1rem;
-      padding: 0.5rem 0;
+    body { 
+      background: #1A1510; 
+      font-family: 'Tajawal', 'Cairo', sans-serif; 
+      color: #E8DDD0; 
+      scroll-behavior: smooth; 
+      overflow-x: hidden; 
     }
-    .logo-wrapper {
-      display: inline-block;
-      position: relative;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    
+    .container { 
+      max-width: 1400px; 
+      margin: 0 auto; 
+      padding: 2rem 2rem 7rem 2rem; 
+      position: relative; 
     }
-    .logo-wrapper:hover {
-      transform: translateY(-3px);
+    
+    /* Gold Elements */
+    .gold-text { color: #C4A06A; }
+    
+    .gold-line { 
+      height: 2px; 
+      background: linear-gradient(90deg, transparent, #C4A06A, #C4A06A, transparent); 
+      width: 100%; 
+      margin: 0.5rem 0 1.5rem; 
     }
-    .brand-logo {
-      max-width: 200px;
-      height: auto;
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.06));
-      transition: all 0.4s ease;
-      background: transparent;
+    
+    .luxury-header { 
+      text-align: center; 
+      margin-bottom: 2rem; 
+      position: relative; 
     }
-    .brand-logo:hover {
-      filter: drop-shadow(0 12px 20px rgba(197, 160, 89, 0.2));
+    
+    .luxury-header h1 { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-weight: 600; 
+      font-size: 2.2rem; 
+      background: linear-gradient(135deg, #C4A06A 30%, #D4B896 70%); 
+      -webkit-background-clip: text; 
+      background-clip: text; 
+      color: transparent; 
+      margin-top: 0.5rem; 
     }
-    /* subtle gold ring around logo on hover */
-    .logo-wrapper::after {
+    
+    .luxury-header p { 
+      font-family: 'Amiri', serif; 
+      font-size: 0.85rem; 
+      color: #A89880; 
+      letter-spacing: 0.5px; 
+      border-top: 1px solid rgba(196, 160, 106, 0.2); 
+      display: inline-block; 
+      padding-top: 0.5rem; 
+    }
+    
+    /* Tabs */
+    .tabs-container { 
+      display: flex; 
+      justify-content: center; 
+      gap: 1.5rem; 
+      border-bottom: 1px solid rgba(196, 160, 106, 0.2); 
+      margin-bottom: 3rem; 
+      flex-wrap: wrap; 
+    }
+    
+    .tab-btn { 
+      background: transparent; 
+      border: none; 
+      padding: 0.9rem 2rem; 
+      font-family: 'Cormorant Garamond', serif; 
+      font-weight: 600; 
+      font-size: 1.2rem; 
+      color: #A89880; 
+      cursor: pointer; 
+      transition: 0.3s ease; 
+      border-bottom: 2px solid transparent; 
+    }
+    
+    .tab-btn.active { 
+      color: #C4A06A; 
+      border-bottom: 2px solid #C4A06A; 
+    }
+    
+    .tab-btn:hover { color: #C4A06A; }
+    
+    .tab-content { 
+      display: none; 
+      animation: fadeUp 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
+    }
+    
+    .tab-content.active-tab { display: block; }
+    
+    @keyframes fadeUp { 
+      from { opacity: 0; transform: translateY(12px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+    
+    /* Config Blocks */
+    .config-block { margin-bottom: 3rem; }
+    
+    .block-title { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: 1.7rem; 
+      font-weight: 600; 
+      color: #C4A06A; 
+      border-right: 4px solid #C4A06A; 
+      padding-right: 1rem; 
+      margin-bottom: 1.8rem; 
+      letter-spacing: 0.3px; 
+    }
+    
+    /* Options Grid */
+    .options-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+      gap: 1.8rem; 
+    }
+    
+    .option-card { 
+      background: rgba(42, 34, 24, 0.8); 
+      backdrop-filter: blur(8px); 
+      border: 1px solid rgba(196, 160, 106, 0.12); 
+      border-radius: 28px; 
+      padding: 1rem; 
+      cursor: pointer; 
+      transition: all 0.4s ease; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+      position: relative; 
+    }
+    
+    .option-card:hover { 
+      transform: translateY(-6px); 
+      box-shadow: 0 20px 30px -12px rgba(196, 160, 106, 0.15); 
+      border-color: rgba(196, 160, 106, 0.35); 
+    }
+    
+    .option-card.selected { 
+      border: 1.5px solid #C4A06A; 
+      background: rgba(196, 160, 106, 0.1); 
+      box-shadow: 0 12px 24px -12px rgba(196, 160, 106, 0.3); 
+    }
+    
+    .option-img { 
+      width: 100%; 
+      aspect-ratio: 1 / 1; 
+      object-fit: cover; 
+      border-radius: 22px; 
+      background: #2A2218; 
+      display: block; 
+      margin-bottom: 0.9rem; 
+      transition: 0.2s; 
+    }
+    
+    .option-title { 
+      font-weight: 600; 
+      font-size: 1rem; 
+      color: #E8DDD0; 
+      font-family: 'Cormorant Garamond', serif; 
+    }
+    
+    .option-desc { 
+      font-size: 0.7rem; 
+      color: #A89880; 
+      margin-top: 0.3rem; 
+      font-weight: 400; 
+    }
+    
+    /* Measurements */
+    .measure-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+      gap: 1.5rem; 
+      background: rgba(42, 34, 24, 0.7); 
+      backdrop-filter: blur(8px); 
+      padding: 2rem; 
+      border-radius: 36px; 
+      border: 1px solid rgba(196, 160, 106, 0.12); 
+      margin: 2rem 0; 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+    }
+    
+    .input-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    
+    .input-field label { 
+      font-size: 0.7rem; 
+      font-weight: 500; 
+      text-transform: uppercase; 
+      letter-spacing: 1.2px; 
+      color: #C4A06A; 
+      font-family: 'Tajawal', sans-serif; 
+    }
+    
+    .input-field input { 
+      background: rgba(26, 21, 16, 0.6); 
+      border: 1px solid rgba(196, 160, 106, 0.2); 
+      padding: 0.75rem 1rem; 
+      border-radius: 12px; 
+      font-family: 'Tajawal', sans-serif; 
+      font-size: 0.9rem; 
+      outline: none; 
+      transition: all 0.3s; 
+      color: #E8DDD0; 
+    }
+    
+    .input-field input:focus { 
+      border-color: #C4A06A; 
+      box-shadow: 0 0 0 3px rgba(196, 160, 106, 0.15); 
+    }
+    
+    .input-field input::placeholder { color: rgba(168, 152, 128, 0.5); }
+    
+    /* Design Sheet */
+    .design-sheet { 
+      background: rgba(42, 34, 24, 0.7); 
+      backdrop-filter: blur(8px); 
+      border-radius: 32px; 
+      border: 1px solid rgba(196, 160, 106, 0.12); 
+      padding: 2rem; 
+      margin: 2rem 0 1.5rem; 
+      box-shadow: 0 12px 24px -12px rgba(0,0,0,0.3); 
+      position: relative; 
+    }
+    
+    .design-sheet:before { 
+      content: "✧ CERTIFICATE OF DESIGN ✧"; 
+      position: absolute; 
+      top: -12px; 
+      right: 32px; 
+      background: #1A1510; 
+      padding: 0 12px; 
+      font-size: 0.7rem; 
+      letter-spacing: 2px; 
+      color: #C4A06A; 
+      font-weight: 600; 
+    }
+    
+    .sheet-title { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: 1.4rem; 
+      font-weight: 600; 
+      color: #C4A06A; 
+      margin-bottom: 1.2rem; 
+      border-right: 2px solid rgba(196, 160, 106, 0.5); 
+      padding-right: 1rem; 
+    }
+    
+    .sheet-row { 
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: space-between; 
+      gap: 1rem; 
+      border-bottom: 1px dashed rgba(196, 160, 106, 0.15); 
+      padding: 0.8rem 0; 
+      font-size: 0.9rem; 
+    }
+    
+    .sheet-label { font-weight: 700; color: #A89880; }
+    .sheet-value { color: #E8DDD0; font-weight: 500; }
+    
+    /* Maalem Tip */
+    .maalem-tip { 
+      background: rgba(196, 160, 106, 0.08); 
+      border-right: 6px solid #C4A06A; 
+      padding: 0.9rem 1.2rem; 
+      border-radius: 20px; 
+      margin: 1rem 0 1.5rem; 
+      font-size: 0.85rem; 
+      color: #D4B896; 
+      font-weight: 500; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+    }
+    
+    .maalem-tip i { font-size: 1.3rem; color: #C4A06A; }
+    
+    /* Floating Bar */
+    .floating-bar { 
+      position: fixed; 
+      bottom: 0; 
+      left: 0; 
+      width: 100%; 
+      background: rgba(26, 21, 16, 0.96); 
+      backdrop-filter: blur(16px); 
+      border-top: 1px solid rgba(196, 160, 106, 0.2); 
+      padding: 1.2rem 2rem; 
+      z-index: 200; 
+      display: flex; 
+      justify-content: center; 
+      gap: 1.5rem; 
+      flex-wrap: wrap; 
+      box-shadow: 0 -8px 28px rgba(0,0,0,0.5); 
+    }
+    
+    .whatsapp-btn { 
+      background: #25D366; 
+      color: white; 
+      border: none; 
+      padding: 0.85rem 2.2rem; 
+      border-radius: 60px; 
+      font-weight: 600; 
+      font-size: 0.9rem; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 10px; 
+      cursor: pointer; 
+      transition: all 0.3s; 
+      font-family: 'Tajawal', sans-serif; 
+    }
+    
+    .whatsapp-btn:hover { 
+      transform: scale(1.02); 
+      background: #20b859; 
+    }
+    
+    .reset-btn { 
+      background: transparent; 
+      border: 1.5px solid #C4A06A; 
+      color: #E8DDD0; 
+      padding: 0.85rem 2rem; 
+      border-radius: 60px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: all 0.4s; 
+      font-family: 'Tajawal', sans-serif; 
+      position: relative; 
+      overflow: hidden; 
+    }
+    
+    .reset-btn::before {
       content: '';
       position: absolute;
-      top: -8px;
-      left: -8px;
-      right: -8px;
-      bottom: -8px;
-      border-radius: 60px;
-      background: linear-gradient(135deg, rgba(197,160,89,0.2), transparent);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-    }
-    .logo-wrapper:hover::after {
-      opacity: 1;
-    }
-    /* slogan under logo */
-    .logo-slogan {
-      font-family: 'Amiri', serif;
-      font-size: 0.75rem;
-      color: #C5A059;
-      letter-spacing: 1.5px;
-      margin-top: 0.6rem;
-      opacity: 0.85;
-      transition: opacity 0.3s ease;
-    }
-    .logo-slogan:hover {
-      opacity: 1;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196, 160, 106, 0.2), transparent);
+      transition: left 0.5s;
     }
     
-    .gold-line { height: 2px; background: linear-gradient(90deg, transparent, #C5A059, #C5A059, transparent); width: 100%; margin: 0.5rem 0 1.5rem; }
-    .luxury-header { text-align: center; margin-bottom: 2rem; position: relative; }
-    .luxury-header h1 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 2.2rem; color: #1A1A1A; letter-spacing: -0.5px; background: linear-gradient(135deg, #C5A059 30%, #8B6B3D 70%); -webkit-background-clip: text; background-clip: text; color: transparent; margin-top: 0.5rem; }
-    .luxury-header p { font-family: 'Amiri', serif; font-size: 0.85rem; color: #6A5C4C; letter-spacing: 0.5px; border-top: 1px solid #E6DED5; display: inline-block; padding-top: 0.5rem; }
+    .reset-btn:hover::before { left: 100%; }
     
-    .tabs-container { display: flex; justify-content: center; gap: 1.5rem; border-bottom: 1px solid #DFD5C8; margin-bottom: 3rem; flex-wrap: wrap; }
-    .tab-btn { background: transparent; border: none; padding: 0.9rem 2rem; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.2rem; color: #7A6B58; cursor: pointer; transition: 0.3s ease; border-bottom: 2px solid transparent; }
-    .tab-btn.active { color: #C5A059; border-bottom: 2px solid #C5A059; }
-    .tab-btn:hover { color: #C5A059; }
-    .tab-content { display: none; animation: fadeUp 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
-    .tab-content.active-tab { display: block; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px);} to { opacity: 1; transform: translateY(0);} }
-    .config-block { margin-bottom: 3rem; }
-    .block-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: #C5A059; border-right: 4px solid #C5A059; padding-right: 1rem; margin-bottom: 1.8rem; letter-spacing: 0.3px; }
-    .options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.8rem; }
-    .option-card { background: #FFFFFF; border: 1px solid #EDE5DB; border-radius: 28px; padding: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.02); position: relative; }
-    .option-card:hover { transform: translateY(-6px); box-shadow: 0 20px 30px -12px rgba(197, 160, 89, 0.2); border-color: #C5A059; }
-    .option-card.selected { border: 1.5px solid #C5A059; background: linear-gradient(145deg, #FFFDF9, #FFF9F0); box-shadow: 0 12px 24px -12px rgba(197, 160, 89, 0.3); }
-    .option-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 22px; background: #F3EFE8; display: block; margin-bottom: 0.9rem; transition: 0.2s; }
-    .option-title { font-weight: 600; font-size: 1rem; color: #2C2418; font-family: 'Cormorant Garamond', serif; }
-    .option-desc { font-size: 0.7rem; color: #8F8069; margin-top: 0.3rem; font-weight: 400; }
-    .measure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; background: #FFFFFFE0; backdrop-filter: blur(4px); padding: 2rem; border-radius: 36px; border: 1px solid #EADFCB; margin: 2rem 0; box-shadow: 0 8px 20px rgba(0,0,0,0.02); }
-    .input-field { display: flex; flex-direction: column; gap: 0.4rem; }
-    .input-field label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.2px; color: #C5A059; font-family: 'Inter', sans-serif; }
-    .input-field input { background: #FAF9F6; border: 1px solid #E2D7CB; padding: 0.75rem 1rem; border-radius: 48px; font-family: 'Inter', monospace; font-size: 0.9rem; outline: none; transition: 0.2s; }
-    .input-field input:focus { border-color: #C5A059; box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15); }
-    .design-sheet { background: #FFFFFF; border-radius: 32px; border: 1px solid #E5D9CE; padding: 2rem; margin: 2rem 0 1.5rem; box-shadow: 0 12px 24px -12px rgba(0,0,0,0.05); position: relative; backdrop-filter: blur(0px); }
-    .design-sheet:before { content: "✧ CERTIFICATE OF DESIGN ✧"; position: absolute; top: -12px; right: 32px; background: #FAF9F6; padding: 0 12px; font-size: 0.7rem; letter-spacing: 2px; color: #C5A059; font-weight: 600; }
-    .sheet-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: #C5A059; margin-bottom: 1.2rem; border-right: 2px solid #DCCAA8; padding-right: 1rem; }
-    .sheet-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; border-bottom: 1px dashed #EADDCB; padding: 0.8rem 0; font-size: 0.9rem; }
-    .sheet-label { font-weight: 700; color: #5C4E3A; }
-    .sheet-value { color: #2B241C; font-weight: 500; }
-    .maalem-tip { background: #F9F3E7; border-right: 6px solid #C5A059; padding: 0.9rem 1.2rem; border-radius: 20px; margin: 1rem 0 1.5rem; font-size: 0.85rem; color: #7A6233; font-weight: 500; display: flex; align-items: center; gap: 10px; }
-    .maalem-tip i { font-size: 1.3rem; color: #C5A059; }
-    .floating-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(250, 249, 246, 0.96); backdrop-filter: blur(16px); border-top: 1px solid rgba(197, 160, 89, 0.3); padding: 1.2rem 2rem; z-index: 200; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; box-shadow: 0 -8px 28px rgba(0,0,0,0.04); }
-    .whatsapp-btn { background: #25D366; color: white; border: none; padding: 0.85rem 2.2rem; border-radius: 60px; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.2s; font-family: 'Inter', sans-serif; }
-    .whatsapp-btn:hover { transform: scale(1.02); background: #20b859; }
-    .reset-btn { background: transparent; border: 1.5px solid #C5A059; color: #C5A059; padding: 0.85rem 2rem; border-radius: 60px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-    .reset-btn:hover { background: #F5EDE3; border-color: #B38F4A; }
-    hr { margin: 0.8rem 0; border: none; border-top: 1px solid #E8DFD3; }
-    .admin-link { position: fixed; bottom: 15px; left: 15px; z-index: 100; background: rgba(212,175,55,0.9); color: #2E241F; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: all 0.3s; opacity: 0.7; }
-    .admin-link:hover { opacity: 1; transform: scale(1.1); }
-    @media (max-width: 750px) { .container { padding: 1rem 1rem 6rem 1rem; } .options-grid { gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));} .tab-btn { padding: 0.6rem 1.2rem; font-size: 1rem; } .block-title { font-size: 1.3rem; } .luxury-header h1 { font-size: 1.5rem; } .brand-logo { max-width: 140px; } }
+    .reset-btn:hover { 
+      background: rgba(196, 160, 106, 0.12); 
+      border-color: #D4B896; 
+      color: #D4B896; 
+      transform: translateY(-2px); 
+    }
+    
+    hr { margin: 0.8rem 0; border: none; border-top: 1px solid rgba(196, 160, 106, 0.15); }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1A1510; }
+    ::-webkit-scrollbar-thumb { background: rgba(196, 160, 106, 0.3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(196, 160, 106, 0.5); }
+    
+    /* ===== MEDIA QUERIES ===== */
+    @media (max-width: 1024px) {
+      .container { padding: 1.5rem 1.5rem 6rem 1.5rem; }
+      .luxury-header h1 { font-size: 1.8rem; }
+      .block-title { font-size: 1.5rem; }
+      .options-grid { gap: 1.2rem; }
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 1rem 1rem 5.5rem 1rem; }
+      .options-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+      .tab-btn { padding: 0.6rem 1.2rem; font-size: 1rem; }
+      .block-title { font-size: 1.3rem; }
+      .luxury-header h1 { font-size: 1.5rem; }
+      .measure-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 1.5rem; gap: 1rem; }
+      .floating-bar { padding: 1rem 1rem; gap: 1rem; }
+      .whatsapp-btn { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
+      .reset-btn { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
+    }
+    
+    @media (max-width: 480px) {
+      .container { padding: 0.8rem 0.8rem 5rem 0.8rem; }
+      .options-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem; }
+      .option-card { border-radius: 20px; padding: 0.8rem; }
+      .option-img { border-radius: 16px; }
+      .tab-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+      .block-title { font-size: 1.1rem; border-right-width: 3px; }
+      .luxury-header h1 { font-size: 1.3rem; }
+      .luxury-header p { font-size: 0.7rem; }
+      .measure-grid { padding: 1rem; gap: 0.8rem; border-radius: 24px; }
+      .design-sheet { padding: 1.5rem; border-radius: 24px; }
+      .design-sheet:before { font-size: 0.6rem; right: 20px; }
+      .floating-bar { padding: 0.8rem 0.8rem; gap: 0.8rem; }
+      .whatsapp-btn { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
+      .reset-btn { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
+    }
+    
+    @media (max-width: 360px) {
+      .options-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+      .option-card { border-radius: 16px; padding: 0.6rem; }
+      .option-img { border-radius: 12px; }
+      .option-title { font-size: 0.85rem; }
+      .option-desc { font-size: 0.65rem; }
+      .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+      .block-title { font-size: 1rem; }
+      .luxury-header h1 { font-size: 1.15rem; }
+    }
+    
+    /* Touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .option-card:hover { transform: none; border-color: rgba(196, 160, 106, 0.12); }
+      .option-card:active { transform: scale(0.97); border-color: rgba(196, 160, 106, 0.35); }
+      .reset-btn:hover::before { left: -100%; }
+      .reset-btn:active::before { left: 100%; }
+      .reset-btn:active { background: rgba(196, 160, 106, 0.12); transform: translateY(-2px); }
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- ===== IDENTITY ALMAYA COUTURE - LOGO SECTION with smooth effect ===== -->
-  <div class="logo-area">
-    <div class="logo-wrapper">
-      <img id="site-logo" class="brand-logo" src="images/logo.jpg" alt="Almaya Couture Logo" onerror="this.src='https://placehold.co/400x150/F9F7F2/B78C48?text=Almaya+Couture'">
-    </div>
-    <div class="logo-slogan" id="logo-slogan">خياطة المعلم · حرفة مغربية أصيلة</div>
-  </div>
   
   <div class="gold-line"></div>
   
   <div class="luxury-header">
     <h1 id="main-title">Almaya Couture</h1>
-    <p id="main-subtitle">خياطة المعلم المغربية الأصيلة · تكشيطة راقية بلمسات يدوية فريدة</p>
+    <p id="main-subtitle">تصميم تكشيطة</p>
   </div>
 
   <div class="tabs-container">
@@ -146,7 +462,7 @@
     <div class="config-block"><div class="block-title">⑤ خياطة الأكمام و"البرشمان"</div><div class="options-grid" id="sleeve-options"></div></div>
   </div>
 
-  <div style="margin-top: 2rem; border-top: 1px solid #EFE5DA; padding-top: 2rem;">
+  <div style="margin-top: 2rem; border-top: 1px solid rgba(196, 160, 106, 0.2); padding-top: 2rem;">
     <div class="block-title">⑥ السفيفة · العقاد · المضمة المخزنية</div>
     <div class="options-grid" id="sfifa-options" style="margin-bottom: 2rem;"></div>
     <div class="options-grid" id="mdomma-options"></div>
@@ -182,15 +498,16 @@
   <button class="whatsapp-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i> أرسل طلب التكشيطة للمعلمة</button>
 </div>
 
-<a href="admin-takchita.html" class="admin-link" title="إدارة الصفحة"><i class="fas fa-crown"></i></a>
+<!-- Footer Auto-Loader -->
+<script src="footer.js"></script>
 
 <script>
+  // Garde le même JavaScript que l'original
   let selections = { underFabric: null, underCut: null, topFabric: null, embroidery: null, sleeve: null, sfifa: null, mdomma: null };
   let dataStore = { underFabrics: [], underCuts: [], topFabrics: [], embroidery: [], sleeves: [], sfifa: [], mdomma: [] };
   let textsStore = { logo: "", mainTitle: "", mainSubtitle: "", logoText: "", whatsapp: "" };
   let colorsStore = {};
 
-  // تطبيق الألوان
   function applyStyles() {
     if (colorsStore.bgColor) document.body.style.background = colorsStore.bgColor;
     if (colorsStore.titleColor) {
@@ -202,7 +519,6 @@
         .sheet-title { color: ${colorsStore.titleColor} !important; }
         .input-field label { color: ${colorsStore.titleColor} !important; }
         .maalem-tip i { color: ${colorsStore.titleColor} !important; }
-        .logo-slogan { color: ${colorsStore.titleColor} !important; }
       `;
       document.head.appendChild(style);
     }
@@ -210,7 +526,7 @@
       const style = document.createElement('style');
       style.textContent = `
         .option-card.selected { border-color: ${colorsStore.borderColor} !important; }
-        .reset-btn { border-color: ${colorsStore.borderColor} !important; color: ${colorsStore.borderColor} !important; }
+        .reset-btn { border-color: ${colorsStore.borderColor} !important; }
         .maalem-tip { border-right-color: ${colorsStore.borderColor} !important; }
       `;
       document.head.appendChild(style);
@@ -231,13 +547,6 @@
       colorsStore = data.colors || {};
       applyStyles();
     }
-    // تحميل اللوغو من localStorage
-    if (textsStore.logo && textsStore.logo !== "") {
-      document.getElementById('site-logo').src = textsStore.logo;
-    }
-    if (textsStore.logoText) {
-      document.getElementById('logo-slogan').innerText = textsStore.logoText;
-    }
     document.getElementById('main-title').innerText = textsStore.mainTitle || "Almaya Couture";
     document.getElementById('main-subtitle').innerText = textsStore.mainSubtitle || "خياطة المعلم المغربية الأصيلة · تكشيطة راقية بلمسات يدوية فريدة";
     renderAllOptions();
@@ -249,7 +558,7 @@
     if (!container || !items) return;
     container.innerHTML = items.map(opt => `
       <div class="option-card" data-category="${categoryKey}" data-id="${opt.id}" data-weight="${opt.weight || ''}">
-        <img class="option-img" src="${opt.image}" alt="${opt.title}" onerror="this.src='https://placehold.co/400x400/F0E5D8/C5A059?text=Almaya'">
+        <img class="option-img" src="${opt.image}" alt="${opt.title}" onerror="this.src='https://placehold.co/400x400/2A2218/C4A06A?text=Almaya'">
         <div class="option-title">${opt.title}</div>
         <div class="option-desc">${opt.desc || ''}</div>
       </div>
