@@ -2,1031 +2,812 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>المنتجات | Almaya Couture</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منتجاتنا | Almaya Couture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="config.js"></script>
+  
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-
-    :root{
-      --gold:#C4A06A;
-      --gold-light:#D4B896;
-      --gold-dim:rgba(196,160,106,0.15);
-      --bg:#1A1510;
-      --bg2:#221C14;
-      --bg3:#2A2218;
-      --text:#E8DDD0;
-      --text-muted:#A89880;
-      --text-dim:#8B7B68;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
-      background:var(--bg);
-      font-family:'Tajawal','Cairo',sans-serif;
-      color:var(--text);
-      overflow-x:hidden;
-      scroll-behavior:smooth;
+    body {
+      background: #1A1510;
+      font-family: 'Tajawal', sans-serif;
+      color: #E8DDD0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    ::-webkit-scrollbar{width:4px;}
-    ::-webkit-scrollbar-track{background:var(--bg2);}
-    ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
-
-    body::before{
-      content:'';
-      position:fixed;
-      inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3Cpath fill='%23D4B896' d='M50,25 L75,50 L50,75 L25,50 Z'/%3E%3C/svg%3E");
-      background-repeat:repeat;
-      background-size:45px;
-      pointer-events:none;
-      z-index:0;
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #2A2218;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C4A06A;
+      border-radius: 10px;
     }
 
-    .nav-bar{
-      background:rgba(26,21,16,0.92);
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(196,160,106,0.15);
-      padding:1rem 2rem;
-      position:sticky;
-      top:0;
-      z-index:50;
-    }
-    .logo-img{height:50px;width:auto;transition:all 0.3s;}
-    .logo-img:hover{transform:scale(1.02);filter:drop-shadow(0 0 12px rgba(196,160,106,0.3));}
-
-    .hero{
-      position:relative;
-      z-index:1;
-      padding:2rem 1rem 2rem;
-      text-align:center;
-      overflow:hidden;
-    }
-    .hero::after{
-      content:'';
-      position:absolute;
-      bottom:0;left:50%;
-      transform:translateX(-50%);
-      width:200px;height:1px;
-      background:linear-gradient(90deg,transparent,var(--gold),transparent);
-    }
-    .hero-title{
-      font-size:clamp(2rem,4vw,3rem);
-      font-weight:900;
-      color:#F5EDD8;
-      line-height:1;
-      margin-bottom:1rem;
-      background:linear-gradient(135deg,#F5EDD8 0%,#C4A06A 50%,#F5EDD8 100%);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
+    #header-container {
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .products-section{
-      position:relative;
-      z-index:1;
-      padding:1.5rem 1.5rem 6rem;
-    }
-    .products-grid{
-      max-width:1200px;
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-      gap:1.5rem;
+    .main-content {
+      flex: 1;
     }
 
-    .prod-card{
-      background:var(--bg3);
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid rgba(196,160,106,0.1);
-      transition:transform 0.4s cubic-bezier(0.23,1,0.32,1),border-color 0.3s,box-shadow 0.4s;
-      cursor:pointer;
-      position:relative;
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #1A1510 0%, #2A2218 100%);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(196,160,106,0.2);
     }
-    .prod-card:hover{
-      transform:translateY(-8px);
-      border-color:rgba(196,160,106,0.35);
-      box-shadow:0 25px 50px -12px rgba(0,0,0,0.6);
+    .hero-section h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: #F5EDD8;
+      margin-bottom: 1rem;
     }
-
-    .prod-img-wrap{
-      position:relative;
-      aspect-ratio:3/4;
-      overflow:hidden;
-      background:var(--bg2);
-    }
-    .prod-img{
-      width:100%;height:100%;
-      object-fit:cover;
-      display:block;
-      transition:transform 0.6s ease;
-    }
-    .prod-card:hover .prod-img{transform:scale(1.07);}
-
-    .prod-colors-preview{
-      position:absolute;
-      bottom:12px;
-      left:12px;
-      display:flex;
-      gap:5px;
-    }
-    .color-dot{
-      width:14px;height:14px;
-      border-radius:50%;
-      border:1.5px solid rgba(255,255,255,0.5);
-      font-size:0;
-      cursor:default;
+    .hero-section p {
+      color: #A89880;
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .prod-quick{
-      position:absolute;
-      inset:0;
-      background:rgba(26,21,16,0.45);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      opacity:0;
-      transition:opacity 0.3s;
+    /* Filters */
+    .filters-section {
+      background: #2A2218;
+      padding: 1.5rem;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+      border-bottom: 1px solid rgba(196,160,106,0.1);
     }
-    .prod-card:hover .prod-quick{opacity:1;}
-    .quick-btn{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:0.65rem 1.5rem;
-      background:rgba(196,160,106,0.95);
-      color:#1A1510;
-      border:none;
-      border-radius:50px;
-      font-size:0.75rem;
-      font-weight:700;
-      font-family:'Tajawal',sans-serif;
-      cursor:pointer;
-      transition:all 0.3s;
-      letter-spacing:0.5px;
+    .filters-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
     }
-    .quick-btn:hover{background:#D4B896;transform:scale(1.03);}
-
-    .prod-info{padding:1.1rem 1rem 1.25rem;}
-    .prod-name{
-      font-size:1rem;
-      font-weight:700;
-      color:#F5EDD8;
-      line-height:1.3;
-      margin-bottom:0.35rem;
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
     }
-    .prod-desc{
-      font-size:0.7rem;
-      color:var(--text-dim);
-      line-height:1.6;
-      margin-bottom:0.75rem;
-      display:-webkit-box;
-      -webkit-line-clamp:2;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
+    .search-box i {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #C4A06A;
     }
-    .prod-footer{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:0.5rem;
+    .search-box input {
+      width: 100%;
+      padding: 0.75rem 2.5rem 0.75rem 1rem;
+      background: #1A1510;
+      border: 1px solid rgba(196,160,106,0.2);
+      border-radius: 12px;
+      color: #E8DDD0;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all 0.3s;
     }
-    .prod-price{
-      font-size:1.1rem;
-      font-weight:800;
-      color:var(--gold);
-      direction:ltr;
+    .search-box input:focus {
+      outline: none;
+      border-color: #C4A06A;
+      box-shadow: 0 0 0 2px rgba(196,160,106,0.1);
     }
-    .prod-price span{font-size:0.65rem;font-weight:400;color:var(--text-dim);margin-right:2px;}
-    .prod-sizes{
-      font-size:0.65rem;
-      color:var(--text-dim);
-      text-align:left;
+    .filter-group {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
-
-    .empty-state{
-      grid-column:1/-1;
-      text-align:center;
-      padding:5rem 1rem;
-      color:var(--text-dim);
+    .filter-select {
+      padding: 0.75rem 1rem;
+      background: #1A1510;
+      border: 1px solid rgba(196,160,106,0.2);
+      border-radius: 12px;
+      color: #E8DDD0;
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
     }
-    .empty-state i{font-size:3rem;margin-bottom:1rem;display:block;}
-
-    .modal-overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(10,8,5,0.85);
-      backdrop-filter:blur(8px);
-      z-index:200;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:1rem;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.35s;
+    .filter-select:hover, .filter-select:focus {
+      border-color: #C4A06A;
+      outline: none;
     }
-    .modal-overlay.open{opacity:1;pointer-events:all;}
-
-    .modal{
-      background:var(--bg2);
-      border:1px solid rgba(196,160,106,0.2);
-      border-radius:24px;
-      max-width:700px;
-      width:100%;
-      max-height:90vh;
-      overflow-y:auto;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      transform:translateY(30px) scale(0.97);
-      transition:transform 0.4s cubic-bezier(0.23,1,0.32,1);
-    }
-    .modal-overlay.open .modal{transform:translateY(0) scale(1);}
-
-    .modal-img-side{
-      aspect-ratio:3/4;
-      position:relative;
-      overflow:hidden;
-      border-radius:24px 0 0 24px;
-      background:var(--bg3);
-    }
-    .modal-main-img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.3s;}
-
-    .modal-thumbs{
-      position:absolute;
-      bottom:12px;left:50%;
-      transform:translateX(-50%);
-      display:flex;gap:8px;
-    }
-    .thumb{
-      width:44px;height:44px;
-      border-radius:8px;
-      overflow:hidden;
-      border:2px solid transparent;
-      cursor:pointer;
-      transition:border-color 0.3s;
-    }
-    .thumb.active{border-color:var(--gold);}
-    .thumb img{width:100%;height:100%;object-fit:cover;}
-
-    .modal-info-side{
-      padding:2rem 1.5rem;
-      display:flex;
-      flex-direction:column;
-      gap:1.25rem;
-    }
-    .modal-close{
-      position:absolute;
-      top:1rem;left:1rem;
-      width:34px;height:34px;
-      border-radius:50%;
-      background:rgba(26,21,16,0.7);
-      border:1px solid rgba(196,160,106,0.2);
-      color:var(--text-muted);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      font-size:0.8rem;
-      transition:all 0.3s;
-      z-index:5;
-    }
-    .modal-close:hover{color:var(--gold);border-color:var(--gold);}
-
-    .modal-name{font-size:1.5rem;font-weight:800;color:#F5EDD8;line-height:1.2;}
-    .modal-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.8;}
-    .modal-price{font-size:2rem;font-weight:900;color:var(--gold);}
-    .modal-price small{font-size:0.75rem;font-weight:400;color:var(--text-dim);}
-
-    .section-label{font-size:0.6rem;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.5rem;}
-
-    .color-chips{display:flex;flex-wrap:wrap;gap:0.5rem;}
-    .color-chip{
-      padding:0.3rem 0.85rem;
-      border-radius:50px;
-      border:1px solid rgba(196,160,106,0.2);
-      font-size:0.7rem;
-      color:var(--text-muted);
-      cursor:pointer;
-      transition:all 0.3s;
-    }
-    .color-chip:hover,.color-chip.selected{
-      border-color:var(--gold);
-      color:var(--gold);
-      background:var(--gold-dim);
+    .products-count {
+      color: #C4A06A;
+      font-size: 0.85rem;
+      font-weight: 500;
     }
 
-    .wa-btn{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      width:100%;
-      padding:0.9rem;
-      background:linear-gradient(135deg,#25D366,#128C7E);
-      border:none;
-      border-radius:14px;
-      color:#fff;
-      font-size:0.85rem;
-      font-weight:700;
-      font-family:'Tajawal',sans-serif;
-      cursor:pointer;
-      transition:all 0.3s;
-      margin-top:auto;
-      letter-spacing:0.5px;
+    /* Products Grid */
+    .products-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
     }
-    .wa-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(37,211,102,0.3);}
-
-    .whatsapp-float{
-      position:fixed;bottom:30px;left:30px;z-index:100;
-      background:#25D366;color:#fff;
-      width:52px;height:52px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      transition:all 0.3s;font-size:1.5rem;text-decoration:none;
-    }
-    .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 8px 25px rgba(37,211,102,0.4);}
-
-    .breadcrumb{
-      position:relative;z-index:1;
-      padding:1.25rem 2rem 0;
-      max-width:1200px;margin:0 auto;
-      display:flex;align-items:center;gap:0.5rem;
-      font-size:0.65rem;letter-spacing:1px;color:var(--text-dim);
-    }
-    .breadcrumb a{color:var(--text-dim);text-decoration:none;transition:color 0.3s;}
-    .breadcrumb a:hover{color:var(--gold);}
-    .breadcrumb i{font-size:0.5rem;}
-
-    .count-tag{
-      position:relative;z-index:1;
-      max-width:1200px;margin:0.5rem auto 0;
-      padding:0 1.5rem;
-      font-size:0.65rem;color:var(--text-dim);letter-spacing:1px;
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
     }
 
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-    .prod-card{animation:fadeUp 0.5s ease both;}
+    /* Product Card */
+    .product-card {
+      background: #2A2218;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(196,160,106,0.1);
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(196,160,106,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .product-image {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: #1A1510;
+    }
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+    .product-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #C4A06A;
+      color: #1A1510;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      z-index: 2;
+    }
+    .product-badge.featured {
+      background: #C4A06A;
+    }
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .product-card:hover .product-overlay {
+      opacity: 1;
+    }
+    .quick-view {
+      background: #C4A06A;
+      color: #1A1510;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    .quick-view:hover {
+      background: #D4B896;
+      transform: scale(1.05);
+    }
+    .product-info {
+      padding: 1.2rem;
+    }
+    .product-category {
+      color: #C4A06A;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .product-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #F5EDD8;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .product-price {
+      color: #C4A06A;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .product-description {
+      font-size: 0.8rem;
+      color: #A89880;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
-    /* ==============================================
-       MEDIA QUERIES - تصميم متجاوب لجميع الأجهزة
-       ============================================== */
-
-    @media (max-width: 1200px) {
-      .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.25rem;
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .product-modal {
+      background: #2A2218;
+      border-radius: 20px;
+      max-width: 900px;
+      width: 95%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
+    }
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
       }
-      .modal {
-        max-width: 650px;
-      }
-      .hero-title {
-        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      to {
+        opacity: 1;
+        transform: scale(1);
       }
     }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #E8DDD0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close:hover {
+      background: rgba(255,71,87,0.8);
+      transform: rotate(90deg);
+    }
+    .modal-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+    .modal-gallery {
+      position: relative;
+    }
+    .modal-main-image {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .modal-thumbnails {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    .modal-thumb {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    .modal-thumb.active {
+      border-color: #C4A06A;
+    }
+    .modal-thumb:hover {
+      transform: scale(1.05);
+    }
+    .modal-details h2 {
+      color: #F5EDD8;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .modal-category {
+      color: #C4A06A;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    .modal-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #C4A06A;
+      margin-bottom: 1rem;
+    }
+    .modal-description {
+      color: #A89880;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .modal-video {
+      margin-top: 1rem;
+    }
+    .modal-video video {
+      width: 100%;
+      border-radius: 12px;
+    }
+    .contact-btn {
+      background: #C4A06A;
+      color: #1A1510;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .contact-btn:hover {
+      background: #D4B896;
+      transform: translateY(-2px);
+    }
 
-    @media (max-width: 1024px) {
-      .nav-bar {
-        padding: 0.9rem 1.5rem;
-      }
-      .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 1rem;
-      }
-      .products-section {
-        padding: 1rem 1rem 4rem;
-      }
-      .prod-info {
-        padding: 0.9rem 0.8rem 1rem;
-      }
-      .prod-name {
-        font-size: 0.9rem;
-      }
-      .prod-price {
-        font-size: 1rem;
-      }
-      .modal {
-        max-width: 600px;
-      }
-      .modal-info-side {
-        padding: 1.5rem 1.25rem;
-        gap: 1rem;
-      }
-      .modal-name {
-        font-size: 1.3rem;
-      }
-      .modal-price {
-        font-size: 1.6rem;
-      }
-      .hero {
-        padding: 1.5rem 1rem 1.5rem;
-      }
+    /* Loader */
+    .loader-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(196,160,106,0.3);
+      border-radius: 50%;
+      border-top-color: #C4A06A;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .empty-state i {
+      font-size: 4rem;
+      color: #C4A06A;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    .empty-state p {
+      color: #A89880;
+      font-size: 1rem;
+    }
+
+    /* Footer */
+    #footer-container {
+      margin-top: auto;
     }
 
     @media (max-width: 768px) {
-      .nav-bar {
-        padding: 0.8rem 1rem;
-      }
-      .logo-img {
-        height: 40px;
-      }
-      .nav-bar > div {
+      .filters-container {
         flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
+        align-items: stretch;
       }
-      .nav-bar div[style*="display:flex; gap:2rem"] {
-        gap: 1.25rem;
-        font-size: 0.65rem;
-        letter-spacing: 1.5px;
-      }
-      .breadcrumb {
-        padding: 1rem 1rem 0;
-        font-size: 0.6rem;
-      }
-      .hero {
-        padding: 1.5rem 1rem;
-      }
-      .hero-title {
-        font-size: clamp(1.6rem, 5vw, 2rem);
+      .filter-group {
+        justify-content: center;
       }
       .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.9rem;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
       }
-      .products-section {
-        padding: 0.8rem 0.8rem 3rem;
-      }
-      .count-tag {
-        padding: 0 0.8rem;
-        font-size: 0.6rem;
-      }
-      .prod-card {
-        border-radius: 16px;
-      }
-      .prod-info {
-        padding: 0.8rem 0.7rem 0.9rem;
-      }
-      .prod-name {
-        font-size: 0.85rem;
-      }
-      .prod-desc {
-        font-size: 0.65rem;
-      }
-      .prod-price {
-        font-size: 0.95rem;
-      }
-      .prod-sizes {
-        font-size: 0.6rem;
-      }
-      .color-dot {
-        width: 11px;
-        height: 11px;
-      }
-      .quick-btn {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.7rem;
-      }
-      .whatsapp-float {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-        bottom: 20px;
-        left: 20px;
-      }
-      .modal {
+      .modal-content {
         grid-template-columns: 1fr;
-        max-width: 500px;
-      }
-      .modal-img-side {
-        border-radius: 24px 24px 0 0;
-        aspect-ratio: 4/3;
-      }
-      .modal-info-side {
-        padding: 1.25rem;
-        gap: 0.9rem;
-      }
-      .modal-name {
-        font-size: 1.2rem;
-      }
-      .modal-desc {
-        font-size: 0.75rem;
-      }
-      .modal-price {
-        font-size: 1.4rem;
-      }
-      .wa-btn {
-        padding: 0.75rem;
-        font-size: 0.8rem;
-      }
-      .thumb {
-        width: 38px;
-        height: 38px;
-      }
-      footer {
-        padding: 2.5rem 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .nav-bar {
-        padding: 0.6rem 0.75rem;
-      }
-      .logo-img {
-        height: 35px;
-      }
-      .nav-bar div[style*="display:flex; gap:2rem"] {
-        gap: 0.8rem;
-        font-size: 0.6rem;
-        letter-spacing: 1px;
-      }
-      .nav-bar a[href*="wa.me"] {
-        padding: 0.3rem 0.75rem;
-        font-size: 0.6rem;
-      }
-      .breadcrumb {
-        padding: 0.8rem 0.75rem 0;
-        font-size: 0.55rem;
-        gap: 0.3rem;
-      }
-      .hero {
-        padding: 1.25rem 0.75rem;
-      }
-      .hero-title {
-        font-size: clamp(1.4rem, 6vw, 1.8rem);
-        margin-bottom: 0.5rem;
-      }
-      .hero::after {
-        width: 120px;
-      }
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.7rem;
-      }
-      .products-section {
-        padding: 0.5rem 0.5rem 2.5rem;
-      }
-      .count-tag {
-        padding: 0 0.5rem;
-        font-size: 0.55rem;
-      }
-      .prod-card {
-        border-radius: 14px;
-      }
-      .prod-img-wrap {
-        aspect-ratio: 3/4.5;
-      }
-      .prod-info {
-        padding: 0.7rem 0.6rem 0.8rem;
-      }
-      .prod-name {
-        font-size: 0.8rem;
-      }
-      .prod-desc {
-        font-size: 0.6rem;
-        -webkit-line-clamp: 2;
-        margin-bottom: 0.5rem;
-      }
-      .prod-price {
-        font-size: 0.85rem;
-      }
-      .prod-price span {
-        font-size: 0.6rem;
-      }
-      .prod-sizes {
-        font-size: 0.55rem;
-      }
-      .prod-footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.3rem;
-      }
-      .color-dot {
-        width: 10px;
-        height: 10px;
-        border-width: 1px;
-      }
-      .prod-colors-preview {
-        bottom: 8px;
-        left: 8px;
-        gap: 3px;
-      }
-      .quick-btn {
-        padding: 0.45rem 1rem;
-        font-size: 0.65rem;
-        gap: 5px;
-      }
-      .whatsapp-float {
-        width: 42px;
-        height: 42px;
-        font-size: 1.15rem;
-        bottom: 15px;
-        left: 15px;
-      }
-      .modal {
-        max-width: 95%;
-        border-radius: 18px;
-      }
-      .modal-img-side {
-        border-radius: 18px 18px 0 0;
-        aspect-ratio: 16/10;
-      }
-      .modal-info-side {
+        gap: 1rem;
         padding: 1rem;
-        gap: 0.75rem;
       }
-      .modal-close {
-        top: 0.75rem;
-        left: 0.75rem;
-        width: 30px;
-        height: 30px;
-        font-size: 0.7rem;
-      }
-      .modal-name {
-        font-size: 1.1rem;
-      }
-      .modal-desc {
-        font-size: 0.7rem;
-        line-height: 1.6;
-      }
-      .modal-price {
-        font-size: 1.25rem;
-      }
-      .modal-price small {
-        font-size: 0.65rem;
-      }
-      .section-label {
-        font-size: 0.55rem;
-        letter-spacing: 1.5px;
-      }
-      .color-chip {
-        padding: 0.25rem 0.7rem;
-        font-size: 0.65rem;
-      }
-      .wa-btn {
-        padding: 0.7rem;
-        font-size: 0.75rem;
-        border-radius: 12px;
-        gap: 8px;
-      }
-      .thumb {
-        width: 34px;
-        height: 34px;
-        border-radius: 6px;
-      }
-      .modal-thumbs {
-        bottom: 8px;
-        gap: 6px;
-      }
-      footer {
-        padding: 2rem 0.75rem;
-      }
-      footer h3 {
-        font-size: 0.95rem;
-      }
-      footer .gap-8 {
-        gap: 1.25rem;
-      }
-      footer a[href*="wa.me"],
-      footer a[href*="mailto"] {
-        font-size: 0.6rem;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .nav-bar div[style*="display:flex; gap:2rem"] {
-        gap: 0.5rem;
-        font-size: 0.55rem;
-      }
-      .hero-title {
-        font-size: 1.2rem;
-      }
-      .products-grid {
-        gap: 0.5rem;
-      }
-      .prod-card {
-        border-radius: 12px;
-      }
-      .prod-info {
-        padding: 0.6rem 0.5rem 0.7rem;
-      }
-      .prod-name {
-        font-size: 0.75rem;
-      }
-      .prod-desc {
-        font-size: 0.55rem;
-      }
-      .prod-price {
-        font-size: 0.8rem;
-      }
-      .prod-sizes {
-        font-size: 0.5rem;
-      }
-      .quick-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.6rem;
-      }
-      .whatsapp-float {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-        bottom: 10px;
-        left: 10px;
-      }
-      .modal {
-        max-width: 98%;
-        border-radius: 14px;
-      }
-      .modal-name {
-        font-size: 1rem;
-      }
-      .modal-price {
-        font-size: 1.1rem;
-      }
-      .wa-btn {
-        padding: 0.6rem;
-        font-size: 0.7rem;
-      }
-    }
-
-    @media (hover: none) and (pointer: coarse) {
-      .prod-card:hover {
-        transform: none;
-        border-color: rgba(196,160,106,0.1);
-        box-shadow: none;
-      }
-      .prod-card:hover .prod-img {
-        transform: none;
-      }
-      .prod-card:hover .prod-quick {
-        opacity: 0;
-      }
-      .prod-card:active {
-        transform: scale(0.97);
-        transition: transform 0.15s ease;
-      }
-      .color-chip:hover {
-        border-color: rgba(196,160,106,0.2);
-        color: var(--text-muted);
-        background: transparent;
-      }
-      .color-chip:active {
-        border-color: var(--gold);
-        color: var(--gold);
-        background: var(--gold-dim);
-      }
-      .wa-btn:hover {
-        transform: none;
-        box-shadow: none;
-      }
-      .wa-btn:active {
-        transform: scale(0.98);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+      .product-modal {
+        max-height: 85vh;
       }
     }
   </style>
-  <script src="header.js"></script>
-  <script src="footer.js"></script>
 </head>
 <body>
 
-  <!-- ========== HEADER LOADED DYNAMICALLY ========== -->
-  <div id="global-header"></div>
+  <div id="header-container"></div>
 
-  <div class="breadcrumb">
-    <a href="index.html">الرئيسية</a>
-    <i class="fas fa-chevron-left"></i>
-    <a href="collections.html">التصنيفات</a>
-    <i class="fas fa-chevron-left"></i>
-    <span style="color:var(--gold);" id="categoryBreadcrumb">المنتجات</span>
-  </div>
+  <div class="main-content">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h1><i class="fas fa-tshirt"></i> تشكيلتنا</h1>
+      <p>اكتشفوا أحدث تصاميم الجلابيات المغربية الأصيلة والعصرية</p>
+    </div>
 
-  <div class="hero">
-    <h1 class="hero-title" id="categoryTitle">المنتجات</h1>
-  </div>
-
-  <div class="count-tag" id="countTag"></div>
-
-  <section class="products-section">
-    <div class="products-grid" id="productsGrid"></div>
-  </section>
-
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modalBox" style="position:relative;">
-      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-
-      <div class="modal-img-side">
-        <img src="" alt="" class="modal-main-img" id="modalMainImg">
-        <div class="modal-thumbs" id="modalThumbs"></div>
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="filters-container">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="ابحث عن منتج..." onkeyup="filterProducts()">
+        </div>
+        <div class="filter-group">
+          <select id="categoryFilter" class="filter-select" onchange="filterProducts()">
+            <option value="">كل الفئات</option>
+          </select>
+          <select id="sortFilter" class="filter-select" onchange="filterProducts()">
+            <option value="default">الترتيب الافتراضي</option>
+            <option value="price_asc">السعر: من الأقل للأعلى</option>
+            <option value="price_desc">السعر: من الأعلى للأقل</option>
+            <option value="name_asc">الاسم: أ-ي</option>
+            <option value="name_desc">الاسم: ي-أ</option>
+          </select>
+          <button class="filter-select" onclick="resetFilters()" style="background:#C4A06A;color:#1A1510;">
+            <i class="fas fa-redo"></i> إعادة ضبط
+          </button>
+        </div>
+        <div class="products-count" id="productsCount">0 منتج</div>
       </div>
+    </div>
 
-      <div class="modal-info-side">
-        <div>
-          <div class="modal-name" id="modalName"></div>
+    <!-- Products Grid -->
+    <div class="products-container">
+      <div class="products-grid" id="productsGrid">
+        <div class="loader-container">
+          <div class="loader"></div>
         </div>
-        <div class="modal-desc" id="modalDesc"></div>
-        <div class="modal-price" id="modalPrice"></div>
-        <div>
-          <div class="section-label">الألوان المتاحة</div>
-          <div class="color-chips" id="modalColors"></div>
-        </div>
-        <div>
-          <div class="section-label">المقاسات المتاحة</div>
-          <div class="color-chips" id="modalSizes"></div>
-        </div>
-        <button class="wa-btn" id="waBtn">
-          <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i>
-          اطلبي عبر واتساب
-        </button>
       </div>
     </div>
   </div>
 
-  <!-- ========== FOOTER LOADED DYNAMICALLY ========== -->
-  <div id="global-footer"></div>
+  <!-- Product Modal -->
+  <div class="modal-overlay" id="productModal">
+    <div class="product-modal">
+      <button class="modal-close" onclick="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-content" id="modalContent">
+        <!-- سيتم تعبئته ديناميكياً -->
+      </div>
+    </div>
+  </div>
 
-  <script src="products.js"></script>
+  <div id="footer-container"></div>
+
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
 
   <script>
-    const WA_NUMBER = "212601245733";
+    let allProducts = [];
+    let categories = [];
 
-    const CATEGORY_MAP = {
-      "jellaba": "الجلابة",
-      "caftan": "القفطان",
-      "takchita": "التكشيطة",
-      "jabador": "الجبادور",
-      "abaya": "العباية"
-    };
-
-    const COLOR_MAP = {
-      "ذهبي":"#C4A06A","بيج":"#D5C5A5","أبيض":"#F5EDD8","أزرق سماوي":"#6BAED6",
-      "رمادي":"#B0B0B0","رمادي فاتح":"#CCC","أحمر خمري":"#8B3A3A",
-      "أخضر زيتي":"#6B7C3A","كحلي":"#2C3E6B","أسود":"#333",
-      "وردي":"#E8A0B0","مرجاني":"#E8785A","أحمر ملكي":"#9B1C1C",
-      "أزرق بتروالي":"#1A4A6B","ذهبي ملكي":"#B8860B","وردي فاتح":"#F4B8C8",
-      "عاجي":"#F5EDD8","ذهبي فاتح":"#E8D48A","أبيض عاجي":"#F5F0E8"
-    };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const CATEGORY = urlParams.get('category') || 'jellaba';
-    const CAT_LABEL = CATEGORY_MAP[CATEGORY] || 'المنتجات';
-
-    document.getElementById('categoryTitle').textContent = CAT_LABEL;
-    document.getElementById('categoryBreadcrumb').textContent = CAT_LABEL;
-
-    let products = [];
-    let activeProduct = null;
-    let selectedColor = null;
-    let selectedSize = null;
-
-    function colorDots(colors){
-      return colors.slice(0,4).map(c=>{
-        const hex = COLOR_MAP[c] || "#888";
-        return `<div class="color-dot" style="background:${hex};" title="${c}"></div>`;
-      }).join("");
+    // Supabase Request
+    async function supabaseRequest(endpoint, opts = {}) {
+      const url = `${CONFIG.SUPABASE_URL}${endpoint}`;
+      const fetchOpts = {
+        method: opts.method || 'GET',
+        headers: {
+          'apikey': CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      
+      if (opts.body) {
+        fetchOpts.body = JSON.stringify(opts.body);
+      }
+      
+      const res = await fetch(url, fetchOpts);
+      
+      if (res.status === 204) return null;
+      
+      const text = await res.text();
+      
+      if (!text) {
+        if (res.ok) return null;
+        throw new Error(`خطأ ${res.status}`);
+      }
+      
+      try {
+        const data = JSON.parse(text);
+        if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
+        return data;
+      } catch(e) {
+        if (!res.ok) throw new Error(`خطأ ${res.status}`);
+        return text;
+      }
     }
 
-    function renderGrid(){
-      const grid = document.getElementById("productsGrid");
-      const count = document.getElementById("countTag");
+    // Load Categories
+    async function loadCategories() {
+      try {
+        const cats = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
+        if (cats && cats.length) {
+          categories = cats.map(c => c.category_name);
+          const categorySelect = document.getElementById('categoryFilter');
+          cats.forEach(cat => {
+            categorySelect.innerHTML += `<option value="${escapeHtml(cat.category_name)}">${escapeHtml(cat.category_name)}</option>`;
+          });
+        }
+      } catch(e) {
+        console.error('Error loading categories:', e);
+      }
+    }
 
-      count.textContent = `${products.length} تصميم`;
+    // Load Products
+    async function loadProducts() {
+      try {
+        const products = await supabaseRequest('/rest/v1/products?select=*&is_active=eq.true&order=display_order');
+        allProducts = products || [];
+        filterProducts();
+      } catch(e) {
+        console.error('Error loading products:', e);
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>حدث خطأ في تحميل المنتجات</p>
+          </div>
+        `;
+      }
+    }
 
-      if(products.length===0){
-        grid.innerHTML=`<div class="empty-state"><i class="fas fa-box-open" style="color:var(--text-dim)"></i><p>لا توجد منتجات في هذا التصنيف حالياً</p></div>`;
+    // Escape HTML
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    // Filter Products
+    function filterProducts() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const category = document.getElementById('categoryFilter').value;
+      const sortBy = document.getElementById('sortFilter').value;
+      
+      let filtered = [...allProducts];
+      
+      // Filter by search
+      if (searchTerm) {
+        filtered = filtered.filter(p => 
+          p.product_name.toLowerCase().includes(searchTerm) ||
+          (p.product_description && p.product_description.toLowerCase().includes(searchTerm))
+        );
+      }
+      
+      // Filter by category
+      if (category) {
+        filtered = filtered.filter(p => p.category_name === category);
+      }
+      
+      // Sort
+      switch(sortBy) {
+        case 'price_asc':
+          filtered.sort((a, b) => {
+            const priceA = extractPrice(a.price_range);
+            const priceB = extractPrice(b.price_range);
+            return priceA - priceB;
+          });
+          break;
+        case 'price_desc':
+          filtered.sort((a, b) => {
+            const priceA = extractPrice(a.price_range);
+            const priceB = extractPrice(b.price_range);
+            return priceB - priceA;
+          });
+          break;
+        case 'name_asc':
+          filtered.sort((a, b) => a.product_name.localeCompare(b.product_name, 'ar'));
+          break;
+        case 'name_desc':
+          filtered.sort((a, b) => b.product_name.localeCompare(a.product_name, 'ar'));
+          break;
+        default:
+          filtered.sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
+      }
+      
+      // Update count
+      document.getElementById('productsCount').textContent = `${filtered.length} منتج`;
+      
+      // Render products
+      renderProducts(filtered);
+    }
+    
+    // Extract price from range string
+    function extractPrice(priceRange) {
+      if (!priceRange) return 0;
+      const match = priceRange.match(/(\d+)/);
+      return match ? parseInt(match[0]) : 0;
+    }
+    
+    // Render Products
+    function renderProducts(products) {
+      const grid = document.getElementById('productsGrid');
+      
+      if (!products.length) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <i class="fas fa-box-open"></i>
+            <p>لا توجد منتجات متاحة حالياً</p>
+          </div>
+        `;
         return;
       }
-
-      grid.innerHTML = products.map((p,i)=>`
-        <div class="prod-card" style="animation-delay:${i*0.07}s" onclick="openModal('${p.id}')">
-          <div class="prod-img-wrap">
-            <img src="${p.images[0]}" alt="${p.name}" class="prod-img"
-              onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=${encodeURIComponent(p.name)}'">
-            <div class="prod-colors-preview">${colorDots(p.colors)}</div>
-            <div class="prod-quick">
-              <button class="quick-btn" onclick="event.stopPropagation();openWA('${p.id}')">
-                <i class="fab fa-whatsapp"></i> اطلبي الآن
-              </button>
+      
+      grid.innerHTML = products.map(product => `
+        <div class="product-card" onclick="openModal(${product.id})">
+          <div class="product-image">
+            <img src="${product.product_image_url || 'https://placehold.co/400x500/2A2218/C4A06A'}" 
+                 alt="${escapeHtml(product.product_name)}"
+                 onerror="this.src='https://placehold.co/400x500/2A2218/C4A06A'">
+            ${product.is_featured ? '<div class="product-badge featured"><i class="fas fa-star"></i> مميز</div>' : ''}
+            <div class="product-overlay">
+              <button class="quick-view"><i class="fas fa-eye"></i> عرض التفاصيل</button>
             </div>
           </div>
-          <div class="prod-info">
-            <div class="prod-name">${p.name}</div>
-            <div class="prod-desc">${p.description}</div>
-            <div class="prod-footer">
-              <div class="prod-price">${p.price.toLocaleString('ar-MA')}<span> درهم</span></div>
-              <div class="prod-sizes">المقاس: ${p.sizes ? p.sizes.join('، ') : 'موحد'}</div>
-            </div>
+          <div class="product-info">
+            <div class="product-category">${escapeHtml(product.category_name)}</div>
+            <div class="product-title">${escapeHtml(product.product_name)}</div>
+            <div class="product-price">${escapeHtml(product.price_range) || 'اتصل بنا للسعر'}</div>
+            ${product.product_description ? `<div class="product-description">${escapeHtml(product.product_description.substring(0, 100))}${product.product_description.length > 100 ? '...' : ''}</div>` : ''}
           </div>
         </div>
-      `).join("");
+      `).join('');
     }
-
-    function openModal(id){
-      const p = products.find(x=>x.id===id);
-      if(!p) return;
-      activeProduct = p;
-      selectedColor = p.colors[0]||null;
-      selectedSize = p.sizes ? p.sizes[0] : null;
-
-      document.getElementById("modalName").textContent = p.name;
-      document.getElementById("modalDesc").textContent = p.description;
-      document.getElementById("modalPrice").innerHTML = `${p.price.toLocaleString('ar-MA')} <small>درهم</small>`;
-
-      const mainImg = document.getElementById("modalMainImg");
-      mainImg.src = p.images[0];
-      mainImg.onerror = ()=>{ mainImg.src=`https://placehold.co/400x600/2A2218/C4A06A?text=${encodeURIComponent(p.name)}`; };
-
-      const thumbsCont = document.getElementById("modalThumbs");
-      if(p.images.length>1){
-        thumbsCont.innerHTML = p.images.map((img,i)=>`
-          <div class="thumb ${i===0?'active':''}" onclick="switchImg(this,'${img}')">
-            <img src="${img}" onerror="this.src='https://placehold.co/60x80/2A2218/C4A06A?text='">
-          </div>`).join("");
-      } else {
-        thumbsCont.innerHTML="";
-      }
-
-      document.getElementById("modalColors").innerHTML = p.colors.map((c,i)=>`
-        <div class="color-chip ${i===0?'selected':''}" onclick="selectColor(this,'${c}')">${c}</div>
-      `).join("");
-
-      const sizesContainer = document.getElementById("modalSizes");
-      if (p.sizes && p.sizes.length > 0) {
-        sizesContainer.innerHTML = p.sizes.map((s,i)=>`
-          <div class="color-chip ${i===0?'selected':''}" onclick="selectSize(this,'${s}')">${s}</div>
-        `).join("");
-      } else {
-        sizesContainer.innerHTML = '<span style="font-size:0.7rem;color:var(--text-dim);">مقاس موحد</span>';
-      }
-
-      document.getElementById("modalOverlay").classList.add("open");
-      document.body.style.overflow="hidden";
-    }
-
-    function switchImg(el, src){
-      document.querySelectorAll(".thumb").forEach(t=>t.classList.remove("active"));
-      el.classList.add("active");
-      document.getElementById("modalMainImg").src = src;
-    }
-
-    function selectColor(el, color){
-      document.querySelectorAll("#modalColors .color-chip").forEach(c=>c.classList.remove("selected"));
-      el.classList.add("selected");
-      selectedColor = color;
-    }
-
-    function selectSize(el, size){
-      document.querySelectorAll("#modalSizes .color-chip").forEach(s=>s.classList.remove("selected"));
-      el.classList.add("selected");
-      selectedSize = size;
-    }
-
-    function openWA(id){
-      const p = products.find(x=>x.id===id)||activeProduct;
-      if(!p) return;
-      const color = selectedColor || p.colors[0] || "";
-      const size = selectedSize || (p.sizes && p.sizes[0]) || "";
-      const msg = `السلام عليكم 🌸\nأنا مهتمة بـ *${p.name}* من تصنيف ${CAT_LABEL}\n💛 اللون: ${color}\n📏 المقاس: ${size}\n💰 السعر: ${p.price} درهم\nواش متوفر؟`;
-      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
-    }
-
-    document.getElementById("waBtn").addEventListener("click",()=>{ if(activeProduct) openWA(activeProduct.id); });
-
-    document.getElementById("modalClose").addEventListener("click",closeModal);
-    document.getElementById("modalOverlay").addEventListener("click",e=>{
-      if(e.target===document.getElementById("modalOverlay")) closeModal();
+    
+    // Open Modal
+    window.openModal = async function(productId) {
+      const product = allProducts.find(p => p.id === productId);
+      if (!product) return;
+      
+      const allImages = [product.product_image_url, ...(product.additional_images || [])].filter(img => img);
+      const modalContent = document.getElementById('modalContent');
+      
+      modalContent.innerHTML = `
+        <div class="modal-gallery">
+          <img id="modalMainImage" src="${allImages[0] || 'https://placehold.co/600x600/2A2218/C4A06A'}" 
+               alt="${escapeHtml(product.product_name)}"
+               class="modal-main-image"
+               onclick="openImageInNewTab('${allImages[0]}')">
+          ${allImages.length > 1 ? `
+            <div class="modal-thumbnails" id="modalThumbnails">
+              ${allImages.map((img, idx) => `
+                <img src="${img}" class="modal-thumb ${idx === 0 ? 'active' : ''}" 
+                     onclick="changeMainImage('${img}', this)">
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+        <div class="modal-details">
+          <h2>${escapeHtml(product.product_name)}</h2>
+          <div class="modal-category"><i class="fas fa-tag"></i> ${escapeHtml(product.category_name)}</div>
+          ${product.price_range ? `<div class="modal-price">${escapeHtml(product.price_range)}</div>` : ''}
+          ${product.product_description ? `<div class="modal-description">${escapeHtml(product.product_description)}</div>` : ''}
+          ${product.product_video_url ? `
+            <div class="modal-video">
+              <video controls src="${product.product_video_url}"></video>
+            </div>
+          ` : ''}
+          <button class="contact-btn" onclick="contactUs()">
+            <i class="fab fa-whatsapp"></i> تواصل معنا للشراء
+          </button>
+        </div>
+      `;
+      
+      document.getElementById('productModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+    
+    // Change main image in modal
+    window.changeMainImage = function(imgUrl, element) {
+      const mainImg = document.getElementById('modalMainImage');
+      if (mainImg) mainImg.src = imgUrl;
+      
+      document.querySelectorAll('.modal-thumb').forEach(thumb => thumb.classList.remove('active'));
+      element.classList.add('active');
+    };
+    
+    // Open image in new tab
+    window.openImageInNewTab = function(imgUrl) {
+      if (imgUrl) window.open(imgUrl, '_blank');
+    };
+    
+    // Close modal
+    window.closeModal = function() {
+      document.getElementById('productModal').classList.remove('active');
+      document.body.style.overflow = '';
+    };
+    
+    // Contact us
+    window.contactUs = function() {
+      const whatsappNumber = CONFIG.WHATSAPP_NUMBER || '212600000000';
+      const message = encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن منتجاتكم');
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    };
+    
+    // Reset filters
+    window.resetFilters = function() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('sortFilter').value = 'default';
+      filterProducts();
+    };
+    
+    // Filter on input
+    window.filterProducts = filterProducts;
+    
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
     });
-
-    function closeModal(){
-      document.getElementById("modalOverlay").classList.remove("open");
-      document.body.style.overflow="";
-      activeProduct=null;
-    }
-
-    document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-
-    if(typeof ALMAYA_PRODUCTS!=="undefined"){
-      products = ALMAYA_PRODUCTS[CATEGORY]||[];
-      renderGrid();
-    } else {
-      document.getElementById("productsGrid").innerHTML=`
-        <div class="empty-state">
-          <i class="fas fa-exclamation-circle"></i>
-          <p>يرجى التأكد من وجود ملف products.js في نفس المجلد</p>
-        </div>`;
-    }
+    
+    // Close modal on overlay click
+    document.getElementById('productModal').addEventListener('click', (e) => {
+      if (e.target.id === 'productModal') closeModal();
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadCategories();
+      await loadProducts();
+    });
   </script>
 </body>
 </html>

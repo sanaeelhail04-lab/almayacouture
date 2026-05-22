@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المنتجات | Almaya Couture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="config.js"></script>
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1A1510;
+      font-family: 'Tajawal', sans-serif;
+      color: #E8DDD0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #2A2218; }
+    ::-webkit-scrollbar-thumb { background: #C4A06A; border-radius: 10px; }
+
+    #header-container { position: sticky; top: 0; z-index: 50; }
+    .main-content { flex: 1; }
+
+    .admin-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .admin-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .admin-header h1 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      color: #F5EDD8;
+      margin-bottom: 0.5rem;
+    }
+    .admin-header p { color: #A89880; font-size: 0.9rem; }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(196,160,106,0.15);
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: #A89880;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    .tab-btn.active { color: #C4A06A; border-bottom-color: #C4A06A; }
+    .tab-btn:hover { color: #C4A06A; }
+    .tab-content { display: none; animation: fadeIn 0.3s ease; }
+    .tab-content.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-card {
+      background: #2A2218;
+      border: 1px solid rgba(196,160,106,0.15);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .form-grid .full-width { grid-column: 1 / -1; }
+
+    .form-group { margin-bottom: 0; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: #C4A06A;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      background: #1A1510;
+      border: 1px solid rgba(196,160,106,0.2);
+      border-radius: 12px;
+      color: #E8DDD0;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #C4A06A;
+      box-shadow: 0 0 0 2px rgba(196,160,106,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: #2A2218; color: #E8DDD0; }
+    .form-group small { display: block; font-size: 0.7rem; color: #8B7B68; margin-top: 0.2rem; }
+
+    /* ===== IMAGES UPLOAD ===== */
+    .images-upload-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .image-upload-card {
+      width: 120px;
+      height: 160px;
+      background: #1A1510;
+      border: 2px dashed rgba(196,160,106,0.3);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .image-upload-card:hover { 
+      border-color: #C4A06A; 
+      background: rgba(196,160,106,0.05);
+      transform: scale(1.02);
+    }
+    .image-upload-card.has-image { 
+      border: 2px solid #25D366; 
+    }
+    .image-upload-card.uploading { 
+      border-color: #C4A06A; 
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .image-upload-card .icon-add { 
+      font-size: 1.8rem; 
+      color: #C4A06A; 
+      margin-bottom: 0.3rem; 
+    }
+    .image-upload-card .label-text { 
+      color: #A89880; 
+      font-size: 0.65rem; 
+      text-align: center; 
+      padding: 0 0.3rem; 
+      line-height: 1.3;
+    }
+    .image-upload-card .badge-number {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      background: rgba(0,0,0,0.7);
+      color: #8B7B68;
+      font-size: 0.6rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    .image-upload-card .badge-main {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      background: #C4A06A;
+      color: #1A1510;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      z-index: 3;
+    }
+    .image-upload-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .image-upload-card .btn-delete {
+      position: absolute;
+      top: 0.3rem;
+      left: 0.3rem;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255,71,87,0.95);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      opacity: 0;
+      transition: all 0.2s;
+    }
+    .image-upload-card.has-image:hover .btn-delete { opacity: 1; }
+    .btn-delete:hover { transform: scale(1.1); background: #ff4757; }
+    
+    .image-upload-card .upload-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(196,160,106,0.2);
+      z-index: 2;
+    }
+    .image-upload-card .upload-progress .bar {
+      height: 100%;
+      background: #C4A06A;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    .image-upload-card input[type="file"] { display: none; }
+
+    /* ===== VIDEO UPLOAD ===== */
+    .video-upload-card {
+      background: #1A1510;
+      border: 2px dashed rgba(196,160,106,0.3);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .video-upload-card:hover { 
+      border-color: #C4A06A; 
+      background: rgba(196,160,106,0.05); 
+    }
+    .video-upload-card.has-video { 
+      border-color: #25D366; 
+    }
+    .video-upload-card .icon-video { 
+      font-size: 2.2rem; 
+      color: #C4A06A; 
+      margin-bottom: 0.5rem; 
+      display: block; 
+    }
+    .video-upload-card .text-video { color: #A89880; font-size: 0.85rem; }
+    .video-upload-card video { 
+      width: 100%; 
+      max-height: 250px; 
+      border-radius: 10px; 
+      margin-top: 0.75rem; 
+    }
+    .video-upload-card .btn-delete-video {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: rgba(255,71,87,0.15);
+      color: #FF4757;
+      border: 1px solid rgba(255,71,87,0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    .video-upload-card .btn-delete-video:hover { background: rgba(255,71,87,0.25); }
+    .video-upload-card input[type="file"] { display: none; }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0;
+    }
+    .checkbox-group input[type="checkbox"] { 
+      width: 20px; height: 20px; 
+      accent-color: #C4A06A; 
+      cursor: pointer; 
+    }
+    .checkbox-group label { color: #E8DDD0; cursor: pointer; font-size: 0.9rem; }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      background: #C4A06A;
+      color: #1A1510;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn:hover { 
+      background: #D4B896; 
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(196,160,106,0.3);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-outline { 
+      background: transparent; 
+      border: 1.5px solid #C4A06A; 
+      color: #C4A06A; 
+    }
+    .btn-outline:hover { 
+      background: rgba(196,160,106,0.1); 
+      transform: translateY(-2px);
+    }
+    .btn-danger { background: #FF4757; color: white; }
+    .btn-danger:hover { background: #FF6B7A; }
+    .btn-sm { padding: 0.45rem 0.9rem; font-size: 0.75rem; }
+    .btn-xs { padding: 0.3rem 0.6rem; font-size: 0.65rem; border-radius: 6px; }
+    .btn-group { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
+    .message {
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .message.success { background: rgba(37,211,102,0.15); color: #25D366; border: 1px solid rgba(37,211,102,0.3); }
+    .message.error { background: rgba(255,71,87,0.15); color: #FF4757; border: 1px solid rgba(255,71,87,0.3); }
+    .message.info { background: rgba(196,160,106,0.15); color: #C4A06A; border: 1px solid rgba(196,160,106,0.3); }
+
+    .products-table-container { 
+      overflow-x: auto; 
+      border-radius: 16px; 
+      border: 1px solid rgba(196,160,106,0.1); 
+    }
+    .products-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      background: #2A2218; 
+      min-width: 700px; 
+    }
+    .products-table th {
+      background: #1A1510;
+      color: #C4A06A;
+      padding: 0.85rem;
+      font-size: 0.75rem;
+      text-align: right;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .products-table td { 
+      padding: 0.7rem 0.85rem; 
+      border-top: 1px solid rgba(196,160,106,0.06); 
+      font-size: 0.8rem; 
+    }
+    .products-table tr:hover td { background: rgba(196,160,106,0.02); }
+    .product-thumb { 
+      width: 50px; 
+      height: 65px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+      border: 1px solid rgba(196,160,106,0.15); 
+    }
+    .status-badge { 
+      padding: 0.25rem 0.7rem; 
+      border-radius: 20px; 
+      font-size: 0.65rem; 
+      font-weight: 700; 
+      display: inline-block; 
+    }
+    .status-active { background: rgba(37,211,102,0.2); color: #25D366; }
+    .status-inactive { background: rgba(255,71,87,0.2); color: #FF4757; }
+    .actions-cell { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #2A2218;
+      border: 1px solid rgba(196,160,106,0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 95%;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+    .modal h3 { color: #F5EDD8; margin-bottom: 0.75rem; }
+    .modal .btn-group { justify-content: center; margin-top: 1.5rem; }
+
+    .loader {
+      width: 35px; height: 35px;
+      border: 3px solid rgba(196,160,106,0.3);
+      border-radius: 50%;
+      border-top-color: #C4A06A;
+      animation: spin 1s ease-in-out infinite;
+      margin: 2rem auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty-state { text-align: center; padding: 3rem 1rem; color: #A89880; }
+    .empty-state i { font-size: 3rem; color: #C4A06A; margin-bottom: 1rem; display: block; }
+
+    #footer-container { margin-top: auto; }
+
+    @media (max-width: 768px) {
+      .admin-container { padding: 1rem 0.75rem; }
+      .form-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .form-card { padding: 1.25rem; }
+      .image-upload-card { width: 100px; height: 140px; }
+      .tab-btn { padding: 0.6rem 1rem; font-size: 0.8rem; }
+      .btn { padding: 0.65rem 1.25rem; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+      .image-upload-card { width: 85px; height: 120px; }
+      .image-upload-card .icon-add { font-size: 1.3rem; }
+      .image-upload-card .label-text { font-size: 0.55rem; }
+      .btn-group { flex-direction: column; }
+      .btn-group .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <div class="main-content">
+    <div class="admin-container">
+      <div class="admin-header">
+        <h1><i class="fas fa-cog"></i> إدارة المنتجات</h1>
+        <p>أضف منتج مع صور وفيديو - رفع مباشر من جهازك</p>
+      </div>
+
+      <div class="message" id="message"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('add')"><i class="fas fa-plus-circle"></i> إضافة منتج</button>
+        <button class="tab-btn" onclick="switchTab('list')"><i class="fas fa-list"></i> قائمة المنتجات</button>
+      </div>
+
+      <!-- إضافة منتج -->
+      <div class="tab-content active" id="tab-add">
+        <div class="form-card">
+          <form id="productForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label><i class="fas fa-tag"></i> الفئة *</label>
+                <select id="categoryName" required><option value="">اختر الفئة...</option></select>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-tshirt"></i> اسم المنتج *</label>
+                <input type="text" id="productName" placeholder="جلابة مغربية فاخرة" required>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-money-bill"></i> السعر</label>
+                <input type="text" id="priceRange" placeholder="600-900 درهم">
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-sort"></i> ترتيب العرض</label>
+                <input type="number" id="displayOrder" value="0" min="0">
+              </div>
+              <div class="form-group full-width">
+                <label><i class="fas fa-align-left"></i> وصف المنتج</label>
+                <textarea id="productDescription" rows="3" placeholder="وصف المنتج..."></textarea>
+              </div>
+
+              <!-- الصور -->
+              <div class="form-group full-width">
+                <label><i class="fas fa-images"></i> صور المنتج (10 صور) <small style="color:#8B7B68;">الصورة الأولى = الرئيسية *</small></label>
+                <div class="images-upload-container" id="imagesGrid"></div>
+              </div>
+
+              <!-- الفيديو -->
+              <div class="form-group full-width">
+                <label><i class="fas fa-video"></i> فيديو المنتج (اختياري)</label>
+                <div class="video-upload-card" id="videoCard" onclick="document.getElementById('videoInput').click()">
+                  <i class="fas fa-cloud-upload-alt icon-video"></i>
+                  <p class="text-video">اضغط لاختيار فيديو من جهازك</p>
+                  <small style="display:block;color:#8B7B68;margin-top:0.25rem;">MP4 - الحد الأقصى 50MB</small>
+                  <div id="videoPreview"></div>
+                  <input type="file" id="videoInput" accept="video/*" onchange="handleVideo(event)" style="display:none">
+                </div>
+              </div>
+
+              <div class="checkbox-group full-width">
+                <input type="checkbox" id="isFeatured">
+                <label for="isFeatured"><i class="fas fa-star"></i> منتج مميز</label>
+              </div>
+              <div class="checkbox-group full-width">
+                <input type="checkbox" id="isActive" checked>
+                <label for="isActive"><i class="fas fa-eye"></i> نشط (ظاهر للزوار)</label>
+              </div>
+            </div>
+
+            <div class="btn-group">
+              <button type="submit" class="btn" id="submitBtn"><i class="fas fa-plus-circle"></i> إضافة المنتج</button>
+              <button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-redo"></i> إعادة تعيين</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- قائمة المنتجات -->
+      <div class="tab-content" id="tab-list">
+        <div class="form-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+            <h3 style="color:#F5EDD8;font-size:1.1rem;"><i class="fas fa-boxes"></i> جميع المنتجات</h3>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+              <select id="filterCategory" onchange="loadProducts()" style="padding:0.5rem 0.9rem;background:#1A1510;border:1px solid rgba(196,160,106,0.2);border-radius:10px;color:#E8DDD0;font-family:inherit;font-size:0.8rem;"><option value="">كل الفئات</option></select>
+              <button class="btn btn-sm btn-outline" onclick="loadProducts()"><i class="fas fa-sync"></i> تحديث</button>
+            </div>
+          </div>
+          <div class="products-table-container">
+            <table class="products-table">
+              <thead><tr><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+              <tbody id="productsTableBody"><tr><td colspan="6"><div class="loader"></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <!-- Modal حذف -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <h3><i class="fas fa-exclamation-triangle" style="color:#FF4757;"></i> تأكيد الحذف</h3>
+      <p style="color:#A89880;margin-bottom:0.5rem;">سيتم حذف المنتج والملفات من Cloudinary نهائياً</p>
+      <p style="color:#F5EDD8;font-weight:700;" id="deleteProductName"></p>
+      <div class="btn-group">
+        <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash"></i> حذف</button>
+        <button class="btn btn-outline" onclick="closeDeleteModal()"><i class="fas fa-times"></i> إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+
+  <script>
+    // التحقق من وجود CONFIG
+    if (typeof CONFIG === 'undefined') {
+      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG غير موجود! الرجاء التأكد من ملف config.js</div>';
+      throw new Error('CONFIG missing');
+    }
+
+    const CLOUD_NAME = CONFIG.CLOUDINARY_CLOUD_NAME;
+    const UPLOAD_PRESET = CONFIG.CLOUDINARY_UPLOAD_PRESET;
+    const SUPABASE_URL = CONFIG.SUPABASE_URL;
+    const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
+    const CLOUDINARY_API_KEY = CONFIG.CLOUDINARY_API_KEY;
+    const CLOUDINARY_API_SECRET = CONFIG.CLOUDINARY_API_SECRET;
+    const MAX_IMAGES = 10;
+
+    let uploadedImages = [];
+    let uploadedVideoData = null;
+    let deleteProductId = null;
+
+    // بناء شبكة الصور
+    function buildImagesGrid() {
+      const grid = document.getElementById('imagesGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      for (let i = 0; i < MAX_IMAGES; i++) {
+        const card = document.createElement('div');
+        card.className = 'image-upload-card';
+        card.id = `imageCard${i}`;
+        card.innerHTML = `
+          <span class="badge-number">${i + 1}</span>
+          <i class="fas fa-plus-circle icon-add"></i>
+          <span class="label-text">${i === 0 ? 'الرئيسية *' : 'اختياري'}</span>
+          <input type="file" id="imageInput${i}" accept="image/*" onchange="handleImage(event, ${i})" style="display:none">
+        `;
+        card.addEventListener('click', (e) => {
+          if (!e.target.closest('.btn-delete')) {
+            document.getElementById(`imageInput${i}`).click();
+          }
+        });
+        grid.appendChild(card);
+      }
+    }
+
+    // توقيع Cloudinary للحذف
+    async function cloudinarySignature(publicId) {
+      const ts = Math.floor(Date.now() / 1000);
+      const str = `public_id=${publicId}&timestamp=${ts}${CLOUDINARY_API_SECRET}`;
+      const msgBuffer = new TextEncoder().encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return { sig: hashHex, ts };
+    }
+
+    // حذف من Cloudinary
+    async function deleteFromCloudinary(publicId, type) {
+      if (!publicId) return false;
+      try {
+        const { sig, ts } = await cloudinarySignature(publicId);
+        const fd = new FormData();
+        fd.append('public_id', publicId);
+        fd.append('signature', sig);
+        fd.append('api_key', CLOUDINARY_API_KEY);
+        fd.append('timestamp', ts);
+        
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/destroy`, { 
+          method: 'POST', 
+          body: fd 
+        });
+        const data = await response.json();
+        console.log('Cloudinary delete result:', data);
+        return data.result === 'ok';
+      } catch(e) { 
+        console.error('Cloudinary delete error:', e);
+        return false; 
+      }
+    }
+
+    // رفع لـ Cloudinary
+    function uploadToCloudinary(file, type) {
+      return new Promise((resolve, reject) => {
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', UPLOAD_PRESET);
+        fd.append('folder', 'almaya-products');
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/upload`);
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try { 
+              const data = JSON.parse(xhr.responseText);
+              resolve(data); 
+            } catch(e) { 
+              reject(new Error('استجابة غير صالحة من الخادم')); 
+            }
+          } else {
+            console.error('Upload failed:', xhr.status, xhr.responseText);
+            reject(new Error(`فشل الرفع: ${xhr.status}`));
+          }
+        };
+        xhr.onerror = () => reject(new Error('خطأ في الاتصال بالخادم'));
+        xhr.send(fd);
+      });
+    }
+
+    // معالجة الصور
+    window.handleImage = async function(event, index) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      if (file.size > 10 * 1024 * 1024) {
+        showMessage('❌ حجم الصورة كبير جداً (الحد الأقصى: 10MB)', 'error');
+        event.target.value = '';
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        showMessage('❌ الرجاء اختيار ملف صورة صالح', 'error');
+        event.target.value = '';
+        return;
+      }
+
+      const card = document.getElementById(`imageCard${index}`);
+      if (!card) return;
+      
+      card.classList.add('uploading');
+      
+      // معاينة محلية
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        card.innerHTML = `
+          <img src="${e.target.result}" alt="صورة ${index + 1}">
+          ${index === 0 ? '<span class="badge-main">رئيسية</span>' : `<span class="badge-number">${index + 1}</span>`}
+          <button class="btn-delete" onclick="event.stopPropagation();removeImage(${index})"><i class="fas fa-times"></i></button>
+          <div class="upload-progress"><div class="bar" id="p${index}"></div></div>
+          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">
+        `;
+        card.classList.add('has-image');
+      };
+      reader.readAsDataURL(file);
+
+      try {
+        const bar = document.getElementById(`p${index}`);
+        if (bar) bar.style.width = '80%';
+        
+        const data = await uploadToCloudinary(file, 'image');
+        
+        // حذف القديم إذا وجد
+        if (uploadedImages[index] && uploadedImages[index].public_id) {
+          await deleteFromCloudinary(uploadedImages[index].public_id, 'image');
+        }
+        
+        uploadedImages[index] = { url: data.secure_url, public_id: data.public_id };
+        
+        if (bar) { 
+          bar.style.width = '100%'; 
+          setTimeout(() => {
+            if (bar.parentElement) bar.parentElement.style.display = 'none';
+          }, 500); 
+        }
+        
+        card.classList.remove('uploading');
+        showMessage(`✅ تم رفع الصورة ${index + 1} بنجاح`, 'success');
+      } catch(e) {
+        console.error('Upload error:', e);
+        showMessage('❌ فشل رفع الصورة: ' + e.message, 'error');
+        removeImage(index);
+        card.classList.remove('uploading');
+      }
+    };
+
+    window.removeImage = async function(index) {
+      if (uploadedImages[index] && uploadedImages[index].public_id) {
+        await deleteFromCloudinary(uploadedImages[index].public_id, 'image');
+      }
+      uploadedImages[index] = null;
+      
+      const card = document.getElementById(`imageCard${index}`);
+      if (!card) return;
+      
+      card.classList.remove('has-image', 'uploading');
+      card.innerHTML = `
+        <span class="badge-number">${index + 1}</span>
+        <i class="fas fa-plus-circle icon-add"></i>
+        <span class="label-text">${index === 0 ? 'الرئيسية *' : 'اختياري'}</span>
+        <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">
+      `;
+    };
+
+    // معالجة الفيديو
+    window.handleVideo = async function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      if (file.size > 50 * 1024 * 1024) {
+        showMessage('❌ حجم الفيديو كبير جداً (الحد الأقصى: 50MB)', 'error');
+        event.target.value = '';
+        return;
+      }
+
+      if (!file.type.startsWith('video/')) {
+        showMessage('❌ الرجاء اختيار ملف فيديو صالح (MP4)', 'error');
+        event.target.value = '';
+        return;
+      }
+
+      const card = document.getElementById('videoCard');
+      const preview = document.getElementById('videoPreview');
+      
+      const videoURL = URL.createObjectURL(file);
+      preview.innerHTML = `
+        <video controls src="${videoURL}" style="width:100%;max-height:250px;border-radius:10px;margin-top:0.75rem;"></video>
+        <button class="btn-delete-video" onclick="event.stopPropagation();removeVideo()"><i class="fas fa-trash"></i> حذف الفيديو</button>
+      `;
+      card.classList.add('has-video');
+
+      try {
+        showMessage('⏳ جاري رفع الفيديو...', 'info');
+        if (uploadedVideoData && uploadedVideoData.public_id) {
+          await deleteFromCloudinary(uploadedVideoData.public_id, 'video');
+        }
+        const data = await uploadToCloudinary(file, 'video');
+        uploadedVideoData = { url: data.secure_url, public_id: data.public_id };
+        showMessage('✅ تم رفع الفيديو بنجاح', 'success');
+      } catch(e) {
+        console.error('Video upload error:', e);
+        showMessage('❌ فشل رفع الفيديو: ' + e.message, 'error');
+        preview.innerHTML = '';
+        card.classList.remove('has-video');
+        uploadedVideoData = null;
+      }
+    };
+
+    window.removeVideo = async function() {
+      if (uploadedVideoData && uploadedVideoData.public_id) {
+        await deleteFromCloudinary(uploadedVideoData.public_id, 'video');
+      }
+      uploadedVideoData = null;
+      const preview = document.getElementById('videoPreview');
+      if (preview) preview.innerHTML = '';
+      const card = document.getElementById('videoCard');
+      if (card) card.classList.remove('has-video');
+    };
+
+    // Supabase API
+    async function supabaseRequest(endpoint, opts = {}) {
+      const url = `${SUPABASE_URL}${endpoint}`;
+      const fetchOpts = {
+        method: opts.method || 'GET',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      
+      if (opts.body) {
+        fetchOpts.body = JSON.stringify(opts.body);
+      }
+
+      console.log(`Supabase ${opts.method || 'GET'}:`, endpoint);
+      
+      const res = await fetch(url, fetchOpts);
+      
+      if (res.status === 204) return null;
+      
+      const text = await res.text();
+      
+      if (!text) {
+        if (res.ok) return null;
+        throw new Error(`خطأ ${res.status}: استجابة فارغة`);
+      }
+
+      try {
+        const data = JSON.parse(text);
+        if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
+        return data;
+      } catch(e) {
+        if (!res.ok) throw new Error(`خطأ ${res.status}: ${text.substring(0, 100)}`);
+        return text;
+      }
+    }
+
+    async function loadCategories() {
+      try {
+        const cats = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
+        const categorySelect = document.getElementById('categoryName');
+        const filterSelect = document.getElementById('filterCategory');
+        
+        if (categorySelect) {
+          categorySelect.innerHTML = '<option value="">اختر الفئة...</option>';
+          if (cats && cats.length) {
+            cats.forEach(cat => {
+              categorySelect.innerHTML += `<option value="${escapeHtml(cat.category_name)}">${escapeHtml(cat.category_name)}</option>`;
+            });
+          }
+        }
+        
+        if (filterSelect) {
+          filterSelect.innerHTML = '<option value="">كل الفئات</option>';
+          if (cats && cats.length) {
+            cats.forEach(cat => {
+              filterSelect.innerHTML += `<option value="${escapeHtml(cat.category_name)}">${escapeHtml(cat.category_name)}</option>`;
+            });
+          }
+        }
+      } catch(e) { 
+        console.error('Load categories error:', e);
+        showMessage('❌ فشل تحميل الفئات', 'error');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    async function loadProducts() {
+      const tbody = document.getElementById('productsTableBody');
+      if (!tbody) return;
+      
+      tbody.innerHTML = '<tr><td colspan="6"><div class="loader"></div></td></tr>';
+      
+      try {
+        const cat = document.getElementById('filterCategory').value;
+        let endpoint = '/rest/v1/products?select=*&order=display_order';
+        if (cat) endpoint += `&category_name=eq.${encodeURIComponent(cat)}`;
+        
+        const prods = await supabaseRequest(endpoint);
+        
+        if (!prods || prods.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-box-open"></i><p>لا توجد منتجات</p></div></td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = prods.map(p => `
+          <tr>
+            <td><img src="${p.product_image_url || (p.additional_images && p.additional_images[0]) || 'https://placehold.co/50x65/2A2218/C4A06A'}" class="product-thumb" onerror="this.src='https://placehold.co/50x65/2A2218/C4A06A'"></td>
+            <td><strong style="color:#F5EDD8;">${escapeHtml(p.product_name)}</strong></td>
+            <td>${escapeHtml(p.category_name)}</td>
+            <td style="color:#C4A06A;">${escapeHtml(p.price_range) || '-'}</td>
+            <td><span class="status-badge ${p.is_active ? 'status-active' : 'status-inactive'}">${p.is_active ? 'نشط' : 'مخفي'}</span></td>
+            <td>
+              <div class="actions-cell">
+                <button class="btn btn-xs btn-outline" onclick="toggleProduct(${p.id}, ${!p.is_active})" title="${p.is_active ? 'إخفاء' : 'إظهار'}">
+                  <i class="fas fa-${p.is_active ? 'eye-slash' : 'eye'}"></i>
+                </button>
+                <button class="btn btn-xs btn-danger" onclick="openDeleteModal(${p.id}, '${escapeHtml(p.product_name).replace(/'/g, "\\'")}', ${JSON.stringify(p.additional_images || [])}, '${p.product_video_url || ''}')" title="حذف">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      } catch(e) {
+        console.error('Load products error:', e);
+        tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>حدث خطأ في تحميل المنتجات</p></div></td></tr>';
+      }
+    }
+
+    async function addProduct(e) {
+      e.preventDefault();
+      
+      if (!uploadedImages[0]) { 
+        showMessage('❌ الصورة الرئيسية مطلوبة', 'error'); 
+        return; 
+      }
+      if (!document.getElementById('categoryName').value) { 
+        showMessage('❌ الرجاء اختيار الفئة', 'error'); 
+        return; 
+      }
+      if (!document.getElementById('productName').value.trim()) { 
+        showMessage('❌ الرجاء إدخال اسم المنتج', 'error'); 
+        return; 
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإضافة...';
+
+      const imgs = uploadedImages.filter(u => u && u.url).map(u => u.url);
+      
+      const productData = {
+        category_name: document.getElementById('categoryName').value,
+        product_name: document.getElementById('productName').value.trim(),
+        product_description: document.getElementById('productDescription').value.trim() || null,
+        product_image_url: imgs[0] || null,
+        additional_images: imgs.length > 1 ? imgs.slice(1) : [],
+        product_video_url: uploadedVideoData?.url || null,
+        price_range: document.getElementById('priceRange').value.trim() || null,
+        display_order: parseInt(document.getElementById('displayOrder').value) || 0,
+        is_featured: document.getElementById('isFeatured').checked,
+        is_active: document.getElementById('isActive').checked
+      };
+
+      console.log('Adding product:', productData);
+
+      try {
+        await supabaseRequest('/rest/v1/products', { 
+          method: 'POST', 
+          body: productData 
+        });
+        showMessage('✅ تمت إضافة المنتج بنجاح!', 'success');
+        resetForm();
+        loadProducts();
+        switchTab('list');
+      } catch(e) {
+        console.error('Add product error:', e);
+        showMessage('❌ فشل إضافة المنتج: ' + e.message, 'error');
+      }
+      
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-plus-circle"></i> إضافة المنتج';
+    }
+
+    function resetForm() {
+      const form = document.getElementById('productForm');
+      if (form) form.reset();
+      const isActiveCheck = document.getElementById('isActive');
+      if (isActiveCheck) isActiveCheck.checked = true;
+      
+      // حذف الصور المرفوعة
+      for (let i = 0; i < MAX_IMAGES; i++) {
+        if (uploadedImages[i]) {
+          removeImage(i);
+        }
+      }
+      uploadedImages = [];
+      
+      // حذف الفيديو
+      if (uploadedVideoData) {
+        removeVideo();
+      }
+      uploadedVideoData = null;
+      
+      buildImagesGrid();
+    }
+
+    function showMessage(text, type) {
+      const msgDiv = document.getElementById('message');
+      if (!msgDiv) return;
+      msgDiv.textContent = text;
+      msgDiv.className = `message ${type}`;
+      msgDiv.style.display = 'block';
+      
+      if (window.messageTimeout) clearTimeout(window.messageTimeout);
+      window.messageTimeout = setTimeout(() => {
+        if (msgDiv) msgDiv.style.display = 'none';
+      }, 4000);
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.textContent.includes(tab === 'add' ? 'إضافة' : 'قائمة'));
+      if (activeBtn) activeBtn.classList.add('active');
+      
+      const activeContent = document.getElementById(`tab-${tab}`);
+      if (activeContent) activeContent.classList.add('active');
+      
+      if (tab === 'list') {
+        loadProducts();
+      }
+    }
+
+    function extractPublicId(url) {
+      if (!url) return null;
+      const match = url.match(/\/almaya-products\/(.+?)\.\w+$/);
+      return match ? `almaya-products/${match[1]}` : null;
+    }
+
+    // حذف منتج
+    window.openDeleteModal = function(id, name, additionalImages, videoUrl) {
+      deleteProductId = id;
+      const nameSpan = document.getElementById('deleteProductName');
+      if (nameSpan) nameSpan.textContent = name;
+      window._deleteData = { additionalImages: additionalImages || [], videoUrl: videoUrl || null };
+      const modal = document.getElementById('deleteModal');
+      if (modal) modal.classList.add('active');
+    };
+
+    window.closeDeleteModal = function() {
+      deleteProductId = null;
+      window._deleteData = null;
+      const modal = document.getElementById('deleteModal');
+      if (modal) modal.classList.remove('active');
+    };
+
+    window.confirmDelete = async function() {
+      if (!deleteProductId) {
+        console.error('No product ID to delete');
+        return;
+      }
+
+      const btn = document.getElementById('confirmDeleteBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحذف...';
+      }
+
+      try {
+        console.log('Deleting product:', deleteProductId);
+        
+        // حذف من Supabase
+        await supabaseRequest(`/rest/v1/products?id=eq.${deleteProductId}`, { method: 'DELETE' });
+        
+        // حذف الصور من Cloudinary
+        const { additionalImages, videoUrl } = window._deleteData || {};
+        if (additionalImages && additionalImages.length) {
+          for (const url of additionalImages) {
+            const publicId = extractPublicId(url);
+            if (publicId) {
+              console.log('Deleting image:', publicId);
+              await deleteFromCloudinary(publicId, 'image');
+            }
+          }
+        }
+        
+        // حذف الفيديو
+        if (videoUrl) {
+          const publicId = extractPublicId(videoUrl);
+          if (publicId) {
+            console.log('Deleting video:', publicId);
+            await deleteFromCloudinary(publicId, 'video');
+          }
+        }
+        
+        showMessage('🗑️ تم حذف المنتج وجميع الملفات بنجاح', 'success');
+        closeDeleteModal();
+        loadProducts();
+      } catch(e) {
+        console.error('Delete error:', e);
+        showMessage('❌ فشل حذف المنتج: ' + e.message, 'error');
+      }
+      
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-trash"></i> حذف';
+      }
+    };
+
+    window.toggleProduct = async function(id, newStatus) {
+      try {
+        await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { 
+          method: 'PATCH', 
+          body: { is_active: newStatus } 
+        });
+        showMessage(newStatus ? '👁️ المنتج ظاهر للزوار' : '🙈 تم إخفاء المنتج', 'success');
+        loadProducts();
+      } catch(e) {
+        console.error('Toggle error:', e);
+        showMessage('❌ فشل تحديث حالة المنتج', 'error');
+      }
+    };
+
+    // تصدير الدوال للنطاق العام
+    window.switchTab = switchTab;
+    window.loadProducts = loadProducts;
+    window.removeVideo = removeVideo;
+    window.openDeleteModal = openDeleteModal;
+    window.closeDeleteModal = closeDeleteModal;
+    window.confirmDelete = confirmDelete;
+    window.toggleProduct = toggleProduct;
+    window.resetForm = resetForm;
+    window.handleImage = handleImage;
+    window.removeImage = removeImage;
+    window.handleVideo = handleVideo;
+
+    // تهيئة
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM loaded, initializing admin products...');
+      buildImagesGrid();
+      loadCategories();
+      
+      const form = document.getElementById('productForm');
+      if (form) form.addEventListener('submit', addProduct);
+      
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      if (confirmBtn) confirmBtn.addEventListener('click', confirmDelete);
+      
+      const modal = document.getElementById('deleteModal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target.id === 'deleteModal') closeDeleteModal();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
