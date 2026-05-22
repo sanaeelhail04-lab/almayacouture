@@ -4,11 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Almaya Couture | اختاري تصاميمك</title>
+  
+  <!-- الخطوط و Tailwind -->
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- استدعاء الإعدادات -->
+  <script src="config.js"></script>
+  
   <style>
-    /* ========== CSS Kamel (nfs l'CSS li 3ndek) ========== */
+    /* ========== CSS كامل كما هو ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -227,7 +233,6 @@
       gap: 1.25rem;
     }
 
-    /* Loading spinner */
     .loader {
       display: inline-block;
       width: 50px;
@@ -237,9 +242,8 @@
       border-top-color: #C4A06A;
       animation: spin 1s ease-in-out infinite;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
     .loading-container {
       display: flex;
       justify-content: center;
@@ -247,7 +251,14 @@
       min-height: 300px;
     }
 
-    /* ========== Media Queries (nfs les media queries dialek) ========== */
+    .error-message {
+      text-align: center;
+      color: #C4A06A;
+      padding: 2rem;
+      grid-column: 1 / -1;
+    }
+
+    /* Media Queries */
     @media (max-width: 1200px) {
       .categories-grid { gap: 1rem; }
       .slide-overlay { padding: 2.5rem 3rem; }
@@ -418,12 +429,14 @@
   <div id="header-container"></div>
 
   <!-- WHATSAPP & GO TOP -->
-  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" aria-label="واتساب">
     <i class="fab fa-whatsapp"></i>
   </a>
-  <div class="go-top" id="goTop"><i class="fas fa-arrow-up text-xs"></i></div>
+  <div class="go-top" id="goTop" role="button" aria-label="العودة للأعلى">
+    <i class="fas fa-arrow-up text-xs"></i>
+  </div>
 
-  <!-- SLIDER SECTION (Dynamic from Supabase) -->
+  <!-- SLIDER SECTION -->
   <section class="slider-section" id="mainSlider">
     <div class="slider-track" id="sliderTrack"></div>
     <button class="slider-arrow prev" id="prevBtn" aria-label="السابق">
@@ -444,213 +457,353 @@
     <div class="divider-line"></div>
   </div>
 
-  <!-- CATEGORIES SECTION (Dynamic from Supabase) -->
+  <!-- CATEGORIES SECTION -->
   <section class="categories-section">
     <div class="section-header">
       <h2>التصنيفات</h2>
     </div>
     <div class="categories-grid" id="categoriesGrid">
-      <div class="loading-container"><div class="loader"></div></div>
+      <div class="loading-container">
+        <div class="loader"></div>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <div id="footer-container"></div>
 
+  <!-- Scripts -->
   <script src="header.js"></script>
   <script src="footer.js"></script>
 
   <script>
-    // Supabase Configuration
-    const SUPABASE_URL = 'https://ieiujnrgrfsqajcgdiys.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaXVqbnJncmZzcWFqY2dkaXlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNDc5MTEsImV4cCI6MjA5NDcyMzkxMX0.ad0ui5P37W-kNaiQk2EYxQv3iA3tWOzHICSNW_VTdvE';
+    // ========== التطبيق الرئيسي (باستعمال CONFIG) ==========
+    (function() {
+      'use strict';
 
-    let slidesData = [];
-    let currentSlide = 0;
-    let autoTimer;
-    let track, dotsContainer, prevBtn, nextBtn;
-
-    // Fetch slides from Supabase
-    async function fetchSlides() {
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/slide_overlay?select=*&is_active=eq.true&order=display_order`, {
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-          }
-        });
-        slidesData = await response.json();
-        renderSlides();
-      } catch (error) {
-        console.error('Error fetching slides:', error);
-        showFallbackSlides();
-      }
-    }
-
-    function renderSlides() {
-      track = document.getElementById('sliderTrack');
-      dotsContainer = document.getElementById('sliderDots');
-      prevBtn = document.getElementById('prevBtn');
-      nextBtn = document.getElementById('nextBtn');
-      
-      if (!slidesData.length) {
-        showFallbackSlides();
+      // التأكد من أن CONFIG موجود
+      if (typeof CONFIG === 'undefined') {
+        console.error('CONFIG غير موجود! تأكد من تحميل config.js');
         return;
       }
 
-      // Build slides HTML
-      track.innerHTML = slidesData.map((slide, index) => `
-        <div class="slide ${index === 0 ? 'active' : ''}">
-          <img src="${slide.image_url || 'https://placehold.co/1400x900/2A2218/C4A06A?text=Image'}" alt="${slide.title}" class="slide-img" onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=Image'">
-          <div class="slide-overlay">
-            <h2 class="slide-title">${slide.title || ''}</h2>
-            <p class="slide-sub">${slide.description || ''}</p>
-            ${slide.link_url ? `<a href="${slide.link_url}" class="slide-btn"><i class="fas fa-heart"></i>اشتري الأن</a>` : ''}
-          </div>
-        </div>
-      `).join('');
-
-      // Build dots
-      dotsContainer.innerHTML = slidesData.map((_, i) => 
-        `<div class="dot ${i === 0 ? 'active' : ''}"></div>`
-      ).join('');
-
-      // Add click events to dots
-      document.querySelectorAll('.dot').forEach((dot, i) => {
-        dot.addEventListener('click', () => goToSlide(i));
-      });
-
-      // Add slide active class management
-      const slides = document.querySelectorAll('.slide');
-      
-      window.goToSlide = function(idx) {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (idx + slides.length) % slides.length;
-        slides[currentSlide].classList.add('active');
-        track.style.transform = `translateX(${currentSlide * 100}%)`;
-        updateDots();
-      };
-
-      function updateDots() {
-        document.querySelectorAll('.dot').forEach((d, i) => {
-          d.classList.toggle('active', i === currentSlide);
-        });
-      }
-
-      // Arrow events
-      prevBtn.addEventListener('click', () => {
-        clearInterval(autoTimer);
-        goToSlide(currentSlide - 1);
-        startAuto();
-      });
-      nextBtn.addEventListener('click', () => {
-        clearInterval(autoTimer);
-        goToSlide(currentSlide + 1);
-        startAuto();
-      });
-
-      function startAuto() {
-        autoTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
-      }
-      startAuto();
-
-      // Touch support
-      let touchStartX = 0;
-      const slider = document.getElementById('mainSlider');
-      slider.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-      slider.addEventListener('touchend', e => {
-        const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 50) {
-          clearInterval(autoTimer);
-          goToSlide(diff > 0 ? currentSlide + 1 : currentSlide - 1);
-          startAuto();
+      // ========== Service Layer ==========
+      class APIService {
+        constructor() {
+          this.baseURL = CONFIG.SUPABASE_URL;
+          this.anonKey = CONFIG.SUPABASE_ANON_KEY;
+          this.cache = new Map();
+          this.cacheTimeout = 5 * 60 * 1000; // 5 دقائق
         }
-      });
-    }
 
-    function showFallbackSlides() {
-      // Fallback slides if no data in Supabase
-      track.innerHTML = `
-        <div class="slide active">
-          <img src="https://placehold.co/1400x900/2A2218/C4A06A?text=Jellaba" class="slide-img">
-          <div class="slide-overlay">
-            <h2 class="slide-title">الجلابة</h2>
-            <p class="slide-sub">نعومة خالدة — تصاميم مغربية أصيلة</p>
-            <a href="products.html?category=jellaba" class="slide-btn"><i class="fas fa-heart"></i>اشتري الأن</a>
-          </div>
-        </div>
-      `;
-    }
-
-    // Fetch categories from Supabase
-    async function fetchCategories() {
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/cat_overlay?select=*&is_active=eq.true&order=display_order`, {
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        async fetchFromSupabase(endpoint, options = {}) {
+          const cacheKey = `${endpoint}-${JSON.stringify(options)}`;
+          
+          // التحقق من الكاش
+          if (this.cache.has(cacheKey)) {
+            const cached = this.cache.get(cacheKey);
+            if (Date.now() - cached.timestamp < this.cacheTimeout) {
+              return cached.data;
+            }
           }
-        });
-        const categories = await response.json();
-        renderCategories(categories);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-        showFallbackCategories();
+
+          try {
+            const url = new URL(`${this.baseURL}${endpoint}`);
+            
+            if (options.params) {
+              Object.entries(options.params).forEach(([key, value]) => {
+                url.searchParams.append(key, value);
+              });
+            }
+
+            const response = await fetch(url.toString(), {
+              headers: {
+                'apikey': this.anonKey,
+                'Authorization': `Bearer ${this.anonKey}`,
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error(`خطأ في الطلب: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            // تخزين في الكاش
+            this.cache.set(cacheKey, {
+              data,
+              timestamp: Date.now()
+            });
+
+            return data;
+          } catch (error) {
+            console.error('خطأ في API:', error);
+            throw error;
+          }
+        }
+
+        async getSlides() {
+          return this.fetchFromSupabase('/rest/v1/slide_overlay', {
+            params: {
+              select: '*',
+              is_active: 'eq.true',
+              order: 'display_order'
+            }
+          });
+        }
+
+        async getCategories() {
+          return this.fetchFromSupabase('/rest/v1/cat_overlay', {
+            params: {
+              select: '*',
+              is_active: 'eq.true',
+              order: 'display_order'
+            }
+          });
+        }
       }
-    }
 
-    function renderCategories(categories) {
-      const grid = document.getElementById('categoriesGrid');
-      
-      if (!categories.length) {
-        showFallbackCategories();
-        return;
+      // ========== Slider Manager ==========
+      class SliderManager {
+        constructor() {
+          this.track = document.getElementById('sliderTrack');
+          this.dotsContainer = document.getElementById('sliderDots');
+          this.prevBtn = document.getElementById('prevBtn');
+          this.nextBtn = document.getElementById('nextBtn');
+          this.slidesData = [];
+          this.currentSlide = 0;
+          this.autoTimer = null;
+          
+          this.setupControls();
+          this.setupTouchEvents();
+        }
+
+        setupControls() {
+          this.prevBtn.addEventListener('click', () => this.navigate(-1));
+          this.nextBtn.addEventListener('click', () => this.navigate(1));
+        }
+
+        navigate(direction) {
+          clearInterval(this.autoTimer);
+          this.goToSlide(this.currentSlide + direction);
+          this.startAutoSlide();
+        }
+
+        render(slides) {
+          if (!slides?.length) {
+            this.showFallback();
+            return;
+          }
+
+          this.slidesData = slides;
+          
+          // بناء السلايدات
+          this.track.innerHTML = slides.map((slide, index) => `
+            <div class="slide ${index === 0 ? 'active' : ''}">
+              <img src="${slide.image_url}" 
+                   alt="${slide.title || 'صورة'}" 
+                   class="slide-img" 
+                   loading="lazy"
+                   onerror="this.src='https://placehold.co/1400x900/2A2218/C4A06A?text=صورة'">
+              <div class="slide-overlay">
+                <h2 class="slide-title">${slide.title || ''}</h2>
+                <p class="slide-sub">${slide.description || ''}</p>
+                ${slide.link_url ? `<a href="${slide.link_url}" class="slide-btn"><i class="fas fa-heart"></i>اكتشفي المزيد</a>` : ''}
+              </div>
+            </div>
+          `).join('');
+
+          // بناء النقاط
+          this.dotsContainer.innerHTML = slides.map((_, i) => 
+            `<div class="dot ${i === 0 ? 'active' : ''}" role="button" aria-label="الذهاب إلى السلايد ${i + 1}"></div>`
+          ).join('');
+
+          // إضافة أحداث النقاط
+          document.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.addEventListener('click', () => this.goToSlide(i));
+          });
+
+          this.startAutoSlide();
+        }
+
+        goToSlide(index) {
+          const slides = document.querySelectorAll('.slide');
+          if (!slides.length) return;
+
+          slides[this.currentSlide]?.classList.remove('active');
+          this.currentSlide = (index + slides.length) % slides.length;
+          slides[this.currentSlide]?.classList.add('active');
+          
+          this.track.style.transform = `translateX(${this.currentSlide * 100}%)`;
+          
+          // تحديث النقاط
+          document.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === this.currentSlide);
+          });
+        }
+
+        startAutoSlide() {
+          this.autoTimer = setInterval(() => this.goToSlide(this.currentSlide + 1), 5000);
+        }
+
+        setupTouchEvents() {
+          let touchStartX = 0;
+          const slider = document.getElementById('mainSlider');
+          
+          slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+          }, { passive: true });
+          
+          slider.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+              this.navigate(diff > 0 ? 1 : -1);
+            }
+          });
+        }
+
+        showFallback() {
+          this.track.innerHTML = `
+            <div class="slide active">
+              <img src="https://placehold.co/1400x900/2A2218/C4A06A?text=Almaya" class="slide-img" alt="Almaya Couture">
+              <div class="slide-overlay">
+                <h2 class="slide-title">ألماية للخياطة</h2>
+                <p class="slide-sub">تصاميم مغربية أصيلة بلمسة عصرية</p>
+                <a href="products.html" class="slide-btn"><i class="fas fa-heart"></i>اكتشفي المجموعة</a>
+              </div>
+            </div>
+          `;
+        }
       }
 
-      grid.innerHTML = categories.map((cat, index) => `
-        <div class="cat-card fade-up" style="animation-delay: ${index * 0.1}s" onclick="location.href='products.html?category=${cat.category_name.toLowerCase().replace(/\s/g, '')}'">
-          <img src="${cat.overlay_image_url || 'https://placehold.co/400x600/2A2218/C4A06A?text=' + cat.category_name}" alt="${cat.category_name}" class="cat-img" onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=' + encodeURIComponent('${cat.category_name}')">
-          <div class="cat-overlay">
-            <div class="cat-name">${cat.category_name || ''}</div>
-            <div class="cat-sub">${cat.overlay_title || ''}</div>
-            <div class="cat-desc">${cat.overlay_description || ''}</div>
-          </div>
-        </div>
-      `).join('');
-    }
+      // ========== Categories Manager ==========
+      class CategoriesManager {
+        constructor() {
+          this.grid = document.getElementById('categoriesGrid');
+        }
 
-    function showFallbackCategories() {
-      const grid = document.getElementById('categoriesGrid');
-      grid.innerHTML = `
-        <div class="cat-card fade-up delay-1" onclick="location.href='products.html?category=jellaba'">
-          <img src="https://placehold.co/400x600/2A2218/C4A06A?text=الجلابة" class="cat-img">
-          <div class="cat-overlay">
-            <div class="cat-name">الجلابة</div>
-            <div class="cat-sub">نعومة خالدة</div>
-            <div class="cat-desc">للأيام العادية والمناسبات</div>
-          </div>
-        </div>
-        <div class="cat-card fade-up delay-2" onclick="location.href='products.html?category=caftan'">
-          <img src="https://placehold.co/400x600/2A2218/C4A06A?text=القفطان" class="cat-img">
-          <div class="cat-overlay">
-            <div class="cat-name">القفطان</div>
-            <div class="cat-sub">فخامة ملكية</div>
-            <div class="cat-desc">للأعراس والحفلات</div>
-          </div>
-        </div>
-      `;
-    }
+        render(categories) {
+          if (!categories?.length) {
+            this.showFallback();
+            return;
+          }
 
-    // Go top button
-    const goTopBtn = document.getElementById('goTop');
-    window.addEventListener('scroll', () => {
-      goTopBtn.classList.toggle('visible', window.scrollY > 400);
-    });
-    goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+          this.grid.innerHTML = categories.map((cat, index) => {
+            const slug = this.createSlug(cat.category_name);
+            
+            return `
+              <div class="cat-card fade-up" 
+                   style="animation-delay: ${index * 0.1}s"
+                   onclick="location.href='products.html?category=${slug}'"
+                   role="button"
+                   tabindex="0"
+                   aria-label="${cat.category_name}">
+                <img src="${cat.overlay_image_url}" 
+                     alt="${cat.category_name}" 
+                     class="cat-img" 
+                     loading="lazy"
+                     onerror="this.src='https://placehold.co/400x600/2A2218/C4A06A?text=${encodeURIComponent(cat.category_name)}'">
+                <div class="cat-overlay">
+                  <div class="cat-name">${cat.category_name}</div>
+                  <div class="cat-sub">${cat.overlay_title || ''}</div>
+                  <div class="cat-desc">${cat.overlay_description || ''}</div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
 
-    // Initialize
-    fetchSlides();
-    fetchCategories();
+        createSlug(name) {
+          return name
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\u0600-\u06FF\w\-]/g, '')
+            .replace(/\-\-+/g, '-')
+            .trim();
+        }
+
+        showFallback() {
+          this.grid.innerHTML = `
+            <div class="cat-card fade-up" onclick="location.href='products.html?category=jellaba'">
+              <img src="https://placehold.co/400x600/2A2218/C4A06A?text=الجلابة" class="cat-img" alt="الجلابة">
+              <div class="cat-overlay">
+                <div class="cat-name">الجلابة</div>
+                <div class="cat-sub">نعومة خالدة</div>
+                <div class="cat-desc">للأيام العادية والمناسبات</div>
+              </div>
+            </div>
+            <div class="cat-card fade-up" onclick="location.href='products.html?category=caftan'">
+              <img src="https://placehold.co/400x600/2A2218/C4A06A?text=القفطان" class="cat-img" alt="القفطان">
+              <div class="cat-overlay">
+                <div class="cat-name">القفطان</div>
+                <div class="cat-sub">فخامة ملكية</div>
+                <div class="cat-desc">للأعراس والحفلات</div>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      // ========== تهيئة التطبيق ==========
+      class App {
+        constructor() {
+          this.api = new APIService();
+          this.slider = new SliderManager();
+          this.categories = new CategoriesManager();
+          
+          this.init();
+        }
+
+        async init() {
+          await Promise.all([
+            this.loadSlides(),
+            this.loadCategories()
+          ]);
+          
+          this.setupGoTopButton();
+        }
+
+        async loadSlides() {
+          try {
+            const slides = await this.api.getSlides();
+            this.slider.render(slides);
+          } catch (error) {
+            console.error('فشل تحميل السلايدات:', error);
+            this.slider.showFallback();
+          }
+        }
+
+        async loadCategories() {
+          try {
+            const categories = await this.api.getCategories();
+            this.categories.render(categories);
+          } catch (error) {
+            console.error('فشل تحميل الفئات:', error);
+            this.categories.showFallback();
+          }
+        }
+
+        setupGoTopButton() {
+          const goTopBtn = document.getElementById('goTop');
+          if (!goTopBtn) return;
+          
+          window.addEventListener('scroll', () => {
+            goTopBtn.classList.toggle('visible', window.scrollY > 400);
+          });
+          
+          goTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      }
+
+      // بدء التطبيق
+      document.addEventListener('DOMContentLoaded', () => {
+        new App();
+      });
+
+    })();
   </script>
 </body>
 </html>
