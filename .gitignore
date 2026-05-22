@@ -1,7 +1,7 @@
 # .gitignore
 
 # ========== ملفات سرية ==========
-config.js
+
 .env
 .env.local
 .env.production
