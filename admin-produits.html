@@ -9,191 +9,386 @@
   <script src="config.js"></script>
   
   <style>
+    :root {
+      --bg-primary: #0F0B08;
+      --bg-secondary: #1A1510;
+      --bg-card: #231D15;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --gold-dark: #A07840;
+      --text-primary: #F5EDD8;
+      --text-secondary: #A89880;
+      --text-muted: #6B5F52;
+      --border: rgba(196,160,106,0.15);
+      --border-hover: rgba(196,160,106,0.4);
+      --success: #25D366;
+      --danger: #FF4757;
+      --warning: #FFA502;
+      --radius-sm: 10px;
+      --radius: 16px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.3);
+      --shadow-gold: 0 0 20px rgba(196,160,106,0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #1A1510;
+      background: var(--bg-primary);
       font-family: 'Tajawal', sans-serif;
-      color: #E8DDD0;
+      color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      line-height: 1.6;
     }
 
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #2A2218; }
-    ::-webkit-scrollbar-thumb { background: #C4A06A; border-radius: 10px; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
 
     #header-container { position: sticky; top: 0; z-index: 50; }
     .main-content { flex: 1; }
 
     .admin-container {
-      max-width: 1200px;
+      max-width: 1300px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
     }
 
+    /* ===== HEADER ===== */
     .admin-header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .admin-header::after {
+      content: '';
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 10px;
+    }
+    .admin-header .icon-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(196,160,106,0.15), rgba(196,160,106,0.05));
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: var(--gold);
     }
     .admin-header h1 {
-      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
       font-weight: 800;
-      color: #F5EDD8;
-      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.5px;
     }
-    .admin-header p { color: #A89880; font-size: 0.9rem; }
+    .admin-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
 
+    /* ===== TABS ===== */
     .tabs {
       display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid rgba(196,160,106,0.15);
+      gap: 0.35rem;
+      margin-bottom: 2.5rem;
+      background: var(--bg-secondary);
+      padding: 0.4rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
       flex-wrap: wrap;
     }
     .tab-btn {
-      padding: 0.8rem 1.5rem;
+      flex: 1;
+      min-width: 120px;
+      padding: 0.85rem 1.8rem;
       background: transparent;
       border: none;
-      color: #A89880;
+      color: var(--text-secondary);
       font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.3s;
+      border-radius: var(--radius);
+      transition: var(--transition);
       font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      white-space: nowrap;
     }
-    .tab-btn.active { color: #C4A06A; border-bottom-color: #C4A06A; }
-    .tab-btn:hover { color: #C4A06A; }
-    .tab-content { display: none; animation: fadeIn 0.3s ease; }
+    .tab-btn i { font-size: 1rem; transition: var(--transition); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(196,160,106,0.2), rgba(196,160,106,0.05));
+      color: var(--gold);
+      box-shadow: 0 2px 10px rgba(196,160,106,0.15);
+    }
+    .tab-btn.active i { color: var(--gold); }
+    .tab-btn:hover:not(.active) {
+      color: var(--text-primary);
+      background: rgba(196,160,106,0.05);
+    }
+    .tab-content { display: none; animation: fadeSlideIn 0.4s ease; }
     .tab-content.active { display: block; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ===== FORM CARD ===== */
     .form-card {
-      background: #2A2218;
-      border: 1px solid rgba(196,160,106,0.15);
-      border-radius: 20px;
-      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
       margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title i { color: var(--gold); }
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
+      gap: 1.5rem;
     }
     .form-grid .full-width { grid-column: 1 / -1; }
 
-    .form-group { margin-bottom: 0; }
+    .form-group {
+      margin-bottom: 0;
+    }
     .form-group label {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
       font-size: 0.85rem;
-      color: #C4A06A;
-      margin-bottom: 0.4rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
       font-weight: 600;
+    }
+    .form-group label i { color: var(--gold); font-size: 0.8rem; width: 16px; text-align: center; }
+    .form-group label .required-star { color: var(--danger); margin-right: 2px; }
+    
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-wrapper .input-icon {
+      position: absolute;
+      right: 1rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      pointer-events: none;
+      transition: var(--transition);
     }
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 0.75rem 0.9rem;
-      background: #1A1510;
-      border: 1px solid rgba(196,160,106,0.2);
-      border-radius: 12px;
-      color: #E8DDD0;
+      padding: 0.85rem 1rem;
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
       font-family: inherit;
       font-size: 0.9rem;
-      transition: all 0.3s;
+      transition: var(--transition);
     }
     .form-group input:focus,
     .form-group textarea:focus,
     .form-group select:focus {
       outline: none;
-      border-color: #C4A06A;
-      box-shadow: 0 0 0 2px rgba(196,160,106,0.1);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(196,160,106,0.08);
+      background: var(--bg-primary);
     }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-group select { cursor: pointer; }
-    .form-group select option { background: #2A2218; color: #E8DDD0; }
-    .form-group small { display: block; font-size: 0.7rem; color: #8B7B68; margin-top: 0.2rem; }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-muted); opacity: 0.7; }
+    .form-group textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C4A06A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 1rem center; padding-left: 2.5rem; }
+    .form-group select option { background: var(--bg-secondary); color: var(--text-primary); }
 
-    /* ===== IMAGES UPLOAD ===== */
-    .images-upload-container {
-      display: flex;
-      flex-wrap: wrap;
+    /* ===== IMAGES UPLOAD ZONE ===== */
+    .images-section {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      border: 1px dashed var(--border);
+      transition: var(--transition);
+    }
+    .images-section:hover { border-color: var(--border-hover); }
+
+    .main-upload-zone {
+      background: linear-gradient(135deg, rgba(196,160,106,0.03), rgba(196,160,106,0.01));
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .main-upload-zone::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, var(--gold), transparent, var(--gold));
+      border-radius: var(--radius-lg);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .main-upload-zone:hover {
+      border-color: var(--gold);
+      background: rgba(196,160,106,0.03);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+    }
+    .main-upload-zone:hover::before { opacity: 0.15; }
+    .main-upload-zone.has-files {
+      border-style: solid;
+      border-color: var(--gold);
+      background: rgba(196,160,106,0.02);
+    }
+    .main-upload-zone .upload-icon {
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      display: block;
+      transition: var(--transition);
+    }
+    .main-upload-zone:hover .upload-icon { transform: scale(1.1); }
+    .main-upload-zone .upload-title {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+    .main-upload-zone .upload-subtitle {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* Images Grid */
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 1rem;
     }
 
-    .image-upload-card {
-      width: 120px;
-      height: 160px;
-      background: #1A1510;
-      border: 2px dashed rgba(196,160,106,0.3);
-      border-radius: 14px;
+    .image-card {
+      aspect-ratio: 3/4;
+      background: var(--bg-primary);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
       cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      transition: var(--transition);
       position: relative;
       overflow: hidden;
-      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.4rem;
     }
-    .image-upload-card:hover { 
-      border-color: #C4A06A; 
-      background: rgba(196,160,106,0.05);
-      transform: scale(1.02);
+    .image-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-gold);
     }
-    .image-upload-card.has-image { 
-      border: 2px solid #25D366; 
+    .image-card.has-image {
+      border-style: solid;
+      border-color: var(--success);
+      background: transparent;
     }
-    .image-upload-card.uploading { 
-      border-color: #C4A06A; 
+    .image-card.is-main {
+      border-color: var(--gold) !important;
+      border-width: 2.5px;
+      box-shadow: 0 0 15px rgba(196,160,106,0.2);
+    }
+    .image-card.uploading {
       opacity: 0.7;
       pointer-events: none;
+      border-color: var(--gold);
     }
-    .image-upload-card .icon-add { 
-      font-size: 1.8rem; 
-      color: #C4A06A; 
-      margin-bottom: 0.3rem; 
-    }
-    .image-upload-card .label-text { 
-      color: #A89880; 
-      font-size: 0.65rem; 
-      text-align: center; 
-      padding: 0 0.3rem; 
-      line-height: 1.3;
-    }
-    .image-upload-card .badge-number {
+    .image-card .card-number {
       position: absolute;
-      top: 0.4rem;
-      right: 0.4rem;
-      background: rgba(0,0,0,0.7);
-      color: #8B7B68;
-      font-size: 0.6rem;
-      padding: 0.1rem 0.35rem;
-      border-radius: 4px;
-      z-index: 2;
-    }
-    .image-upload-card .badge-main {
-      position: absolute;
-      top: 0.4rem;
-      right: 0.4rem;
-      background: #C4A06A;
-      color: #1A1510;
-      font-size: 0.55rem;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(0,0,0,0.8);
+      color: var(--text-muted);
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
       z-index: 3;
+      backdrop-filter: blur(4px);
     }
-    .image-upload-card img {
+    .image-card .main-badge {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #1A1510;
+      font-size: 0.6rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      box-shadow: 0 2px 8px rgba(196,160,106,0.3);
+    }
+    .image-card .placeholder-icon {
+      font-size: 2rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .image-card:hover .placeholder-icon { color: var(--gold); }
+    .image-card .placeholder-text {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 0 0.5rem;
+      line-height: 1.4;
+    }
+    .image-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -201,211 +396,328 @@
       inset: 0;
       z-index: 1;
     }
-    .image-upload-card .btn-delete {
+    .image-card .card-actions {
       position: absolute;
-      top: 0.3rem;
-      left: 0.3rem;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: rgba(255,71,87,0.95);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 0.7rem;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 3;
+      gap: 0.5rem;
       opacity: 0;
-      transition: all 0.2s;
+      transition: var(--transition);
     }
-    .image-upload-card.has-image:hover .btn-delete { opacity: 1; }
-    .btn-delete:hover { transform: scale(1.1); background: #ff4757; }
+    .image-card.has-image:hover .card-actions { opacity: 1; }
+    .card-actions .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      color: white;
+    }
+    .action-btn.btn-delete-img { background: var(--danger); }
+    .action-btn.btn-delete-img:hover { background: #ff6b7a; transform: scale(1.15); }
+    .action-btn.btn-set-main { background: var(--gold); color: #1A1510; }
+    .action-btn.btn-set-main:hover { background: var(--gold-light); transform: scale(1.15); }
     
-    .image-upload-card .upload-progress {
+    .image-card .upload-progress {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 3px;
+      height: 4px;
       background: rgba(196,160,106,0.2);
-      z-index: 2;
+      z-index: 3;
     }
-    .image-upload-card .upload-progress .bar {
+    .image-card .upload-progress .bar {
       height: 100%;
-      background: #C4A06A;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
       width: 0%;
       transition: width 0.3s;
+      border-radius: 0 0 0 4px;
     }
-    .image-upload-card input[type="file"] { display: none; }
+    .image-card input[type="file"] { display: none; }
 
     /* ===== VIDEO UPLOAD ===== */
     .video-upload-card {
-      background: #1A1510;
-      border: 2px dashed rgba(196,160,106,0.3);
-      border-radius: 14px;
-      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: var(--transition);
+      position: relative;
     }
-    .video-upload-card:hover { 
-      border-color: #C4A06A; 
-      background: rgba(196,160,106,0.05); 
+    .video-upload-card:hover {
+      border-color: var(--gold);
+      background: rgba(196,160,106,0.02);
+      box-shadow: var(--shadow-gold);
     }
-    .video-upload-card.has-video { 
-      border-color: #25D366; 
+    .video-upload-card.has-video {
+      border-style: solid;
+      border-color: var(--success);
     }
-    .video-upload-card .icon-video { 
-      font-size: 2.2rem; 
-      color: #C4A06A; 
-      margin-bottom: 0.5rem; 
-      display: block; 
+    .video-upload-card .video-icon {
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      display: block;
     }
-    .video-upload-card .text-video { color: #A89880; font-size: 0.85rem; }
-    .video-upload-card video { 
-      width: 100%; 
-      max-height: 250px; 
-      border-radius: 10px; 
-      margin-top: 0.75rem; 
+    .video-upload-card .video-text { color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
+    .video-upload-card .video-hint { color: var(--text-muted); font-size: 0.75rem; margin-top: 0.3rem; }
+    .video-upload-card video {
+      width: 100%;
+      max-height: 250px;
+      border-radius: var(--radius);
+      margin-top: 1rem;
     }
     .video-upload-card .btn-delete-video {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      margin-top: 0.5rem;
-      padding: 0.4rem 0.8rem;
-      background: rgba(255,71,87,0.15);
-      color: #FF4757;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255,71,87,0.1);
+      color: var(--danger);
       border: 1px solid rgba(255,71,87,0.3);
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       font-family: inherit;
       font-size: 0.75rem;
-      transition: all 0.2s;
+      font-weight: 600;
+      transition: var(--transition);
     }
-    .video-upload-card .btn-delete-video:hover { background: rgba(255,71,87,0.25); }
+    .video-upload-card .btn-delete-video:hover { background: rgba(255,71,87,0.2); }
     .video-upload-card input[type="file"] { display: none; }
 
+    /* ===== CHECKBOX ===== */
     .checkbox-group {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.5rem 0;
+      gap: 0.7rem;
+      padding: 0.6rem 0;
     }
-    .checkbox-group input[type="checkbox"] { 
-      width: 20px; height: 20px; 
-      accent-color: #C4A06A; 
-      cursor: pointer; 
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--gold);
+      cursor: pointer;
+      flex-shrink: 0;
     }
-    .checkbox-group label { color: #E8DDD0; cursor: pointer; font-size: 0.9rem; }
+    .checkbox-group label {
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .checkbox-group label i { color: var(--gold); font-size: 0.85rem; }
 
+    /* ===== BUTTONS ===== */
     .btn {
-      padding: 0.8rem 2rem;
-      background: #C4A06A;
+      padding: 0.85rem 2rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       color: #1A1510;
       border: none;
-      border-radius: 12px;
-      font-size: 0.95rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: var(--transition);
       font-family: inherit;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(196,160,106,0.25);
+      letter-spacing: 0.3px;
     }
-    .btn:hover { 
-      background: #D4B896; 
+    .btn:hover {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(196,160,106,0.3);
+      box-shadow: 0 6px 20px rgba(196,160,106,0.35);
     }
     .btn:active { transform: translateY(0); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-outline { 
-      background: transparent; 
-      border: 1.5px solid #C4A06A; 
-      color: #C4A06A; 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
-    .btn-outline:hover { 
-      background: rgba(196,160,106,0.1); 
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: rgba(196,160,106,0.08);
       transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+      color: var(--gold-light);
     }
-    .btn-danger { background: #FF4757; color: white; }
-    .btn-danger:hover { background: #FF6B7A; }
-    .btn-sm { padding: 0.45rem 0.9rem; font-size: 0.75rem; }
-    .btn-xs { padding: 0.3rem 0.6rem; font-size: 0.65rem; border-radius: 6px; }
-    .btn-group { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-danger {
+      background: linear-gradient(135deg, #FF4757, #e84118);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255,71,87,0.3);
+    }
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #ff6b7a, #FF4757);
+      box-shadow: 0 6px 20px rgba(255,71,87,0.4);
+    }
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; border-radius: var(--radius-sm); }
+    .btn-xs { padding: 0.35rem 0.7rem; font-size: 0.7rem; border-radius: 8px; }
+    .btn-group { display: flex; gap: 0.75rem; margin-top: 2rem; flex-wrap: wrap; }
+    .btn-group .btn { flex: 1; min-width: 140px; }
 
+    /* ===== MESSAGE ===== */
     .message {
-      padding: 0.75rem 1rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
       text-align: center;
       font-weight: 600;
       font-size: 0.85rem;
       display: none;
       animation: slideDown 0.3s ease;
+      backdrop-filter: blur(10px);
     }
     @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
+      from { opacity: 0; transform: translateY(-15px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .message.success { background: rgba(37,211,102,0.15); color: #25D366; border: 1px solid rgba(37,211,102,0.3); }
-    .message.error { background: rgba(255,71,87,0.15); color: #FF4757; border: 1px solid rgba(255,71,87,0.3); }
-    .message.info { background: rgba(196,160,106,0.15); color: #C4A06A; border: 1px solid rgba(196,160,106,0.3); }
+    .message.success { background: rgba(37,211,102,0.1); color: var(--success); border: 1px solid rgba(37,211,102,0.3); }
+    .message.error { background: rgba(255,71,87,0.1); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
+    .message.info { background: rgba(196,160,106,0.1); color: var(--gold); border: 1px solid rgba(196,160,106,0.3); }
 
-    .products-table-container { 
-      overflow-x: auto; 
-      border-radius: 16px; 
-      border: 1px solid rgba(196,160,106,0.1); 
+    /* ===== PRODUCTS TABLE ===== */
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
-    .products-table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      background: #2A2218; 
-      min-width: 700px; 
+    .table-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .table-header h3 i { color: var(--gold); }
+    .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .filter-group select {
+      padding: 0.6rem 1rem;
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    
+    .products-table-container {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+    .products-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      min-width: 750px;
     }
     .products-table th {
-      background: #1A1510;
-      color: #C4A06A;
-      padding: 0.85rem;
+      background: var(--bg-secondary);
+      color: var(--gold);
+      padding: 1rem 0.9rem;
       font-size: 0.75rem;
       text-align: right;
       font-weight: 700;
       white-space: nowrap;
+      letter-spacing: 0.3px;
+      border-bottom: 2px solid var(--border);
     }
-    .products-table td { 
-      padding: 0.7rem 0.85rem; 
-      border-top: 1px solid rgba(196,160,106,0.06); 
-      font-size: 0.8rem; 
+    .products-table td {
+      padding: 0.85rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      vertical-align: middle;
     }
+    .products-table tr:last-child td { border-bottom: none; }
     .products-table tr:hover td { background: rgba(196,160,106,0.02); }
-    .product-thumb { 
-      width: 50px; 
-      height: 65px; 
-      object-fit: cover; 
-      border-radius: 8px; 
-      border: 1px solid rgba(196,160,106,0.15); 
+    .product-thumb {
+      width: 55px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      transition: var(--transition);
     }
-    .status-badge { 
-      padding: 0.25rem 0.7rem; 
-      border-radius: 20px; 
-      font-size: 0.65rem; 
-      font-weight: 700; 
-      display: inline-block; 
+    .product-thumb:hover { border-color: var(--gold); transform: scale(1.05); }
+    .product-name-cell { font-weight: 700; color: var(--text-primary) !important; }
+    .price-cell { color: var(--gold) !important; font-weight: 600; }
+    .status-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
     }
-    .status-active { background: rgba(37,211,102,0.2); color: #25D366; }
-    .status-inactive { background: rgba(255,71,87,0.2); color: #FF4757; }
-    .actions-cell { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+    .status-active { background: rgba(37,211,102,0.15); color: var(--success); }
+    .status-inactive { background: rgba(255,71,87,0.15); color: var(--danger); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+    .status-dot.active { background: var(--success); box-shadow: 0 0 6px var(--success); }
+    .status-dot.inactive { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+    
+    .actions-cell { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .action-icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+    .action-icon-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(196,160,106,0.1);
+    }
+    .action-icon-btn.danger:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+      background: rgba(255,71,87,0.1);
+    }
 
+    /* ===== MODAL ===== */
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       z-index: 200;
       display: flex;
       align-items: center;
@@ -416,48 +728,88 @@
     }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
     .modal {
-      background: #2A2218;
-      border: 1px solid rgba(196,160,106,0.2);
-      border-radius: 20px;
-      padding: 2rem;
-      max-width: 500px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      max-width: 480px;
       width: 95%;
       text-align: center;
-      animation: fadeIn 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
-    .modal h3 { color: #F5EDD8; margin-bottom: 0.75rem; }
+    .modal .modal-icon {
+      font-size: 3rem;
+      color: var(--danger);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .modal h3 { color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.2rem; }
+    .modal p { color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .modal .product-name-highlight {
+      color: var(--text-primary);
+      font-weight: 700;
+      background: rgba(255,71,87,0.1);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
     .modal .btn-group { justify-content: center; margin-top: 1.5rem; }
 
+    /* ===== LOADER ===== */
     .loader {
-      width: 35px; height: 35px;
-      border: 3px solid rgba(196,160,106,0.3);
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
       border-radius: 50%;
-      border-top-color: #C4A06A;
-      animation: spin 1s ease-in-out infinite;
+      border-top-color: var(--gold);
+      animation: spin 0.8s ease-in-out infinite;
       margin: 2rem auto;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .empty-state { text-align: center; padding: 3rem 1rem; color: #A89880; }
-    .empty-state i { font-size: 3rem; color: #C4A06A; margin-bottom: 1rem; display: block; }
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    .empty-state i {
+      font-size: 4rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: block;
+      opacity: 0.4;
+    }
+    .empty-state p { color: var(--text-muted); font-size: 0.9rem; }
 
     #footer-container { margin-top: auto; }
 
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+      .admin-container { padding: 1.5rem 1rem; }
+      .form-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .form-card { padding: 1.5rem; }
+      .images-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    }
+
     @media (max-width: 768px) {
-      .admin-container { padding: 1rem 0.75rem; }
-      .form-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .form-card { padding: 1.25rem; }
-      .image-upload-card { width: 100px; height: 140px; }
-      .tab-btn { padding: 0.6rem 1rem; font-size: 0.8rem; }
-      .btn { padding: 0.65rem 1.25rem; font-size: 0.85rem; }
+      .tabs { flex-direction: column; }
+      .tab-btn { min-width: 100%; }
+      .images-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+      .main-upload-zone { padding: 1.5rem; }
+      .main-upload-zone .upload-icon { font-size: 2rem; }
+      .btn-group { flex-direction: column; }
+      .btn-group .btn { width: 100%; min-width: auto; }
+      .table-header { flex-direction: column; align-items: stretch; }
     }
 
     @media (max-width: 480px) {
-      .image-upload-card { width: 85px; height: 120px; }
-      .image-upload-card .icon-add { font-size: 1.3rem; }
-      .image-upload-card .label-text { font-size: 0.55rem; }
-      .btn-group { flex-direction: column; }
-      .btn-group .btn { width: 100%; }
+      .images-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+      .image-card .placeholder-icon { font-size: 1.3rem; }
+      .image-card .placeholder-text { font-size: 0.55rem; }
+      .form-group input,
+      .form-group textarea,
+      .form-group select { font-size: 0.85rem; padding: 0.7rem 0.8rem; }
     }
   </style>
 </head>
@@ -467,94 +819,158 @@
 
   <div class="main-content">
     <div class="admin-container">
+      <!-- Header -->
       <div class="admin-header">
-        <h1><i class="fas fa-cog"></i> إدارة المنتجات</h1>
-        <p>أضف منتج مع صور وفيديو - رفع مباشر من جهازك</p>
+        <div class="icon-circle">
+          <i class="fas fa-cog"></i>
+        </div>
+        <h1>إدارة المنتجات</h1>
+        <p>أضف منتجاتك مع صور وفيديو بكل سهولة</p>
       </div>
 
+      <!-- Message -->
       <div class="message" id="message"></div>
 
+      <!-- Tabs -->
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('add')"><i class="fas fa-plus-circle"></i> إضافة منتج</button>
-        <button class="tab-btn" onclick="switchTab('list')"><i class="fas fa-list"></i> قائمة المنتجات</button>
+        <button class="tab-btn active" onclick="switchTab('add')">
+          <i class="fas fa-plus-circle"></i> إضافة منتج جديد
+        </button>
+        <button class="tab-btn" onclick="switchTab('list')">
+          <i class="fas fa-list-ul"></i> قائمة المنتجات
+        </button>
       </div>
 
-      <!-- إضافة منتج -->
+      <!-- ===== TAB: إضافة منتج ===== -->
       <div class="tab-content active" id="tab-add">
         <div class="form-card">
           <form id="productForm">
+            
+            <!-- معلومات أساسية -->
+            <div class="section-title">
+              <i class="fas fa-info-circle"></i> معلومات المنتج الأساسية
+            </div>
             <div class="form-grid">
               <div class="form-group">
-                <label><i class="fas fa-tag"></i> الفئة *</label>
-                <select id="categoryName" required><option value="">اختر الفئة...</option></select>
+                <label><i class="fas fa-tag"></i> الفئة <span class="required-star">*</span></label>
+                <select id="categoryName" required>
+                  <option value="">اختر الفئة...</option>
+                </select>
               </div>
               <div class="form-group">
-                <label><i class="fas fa-tshirt"></i> اسم المنتج *</label>
-                <input type="text" id="productName" placeholder="جلابة مغربية فاخرة" required>
+                <label><i class="fas fa-tshirt"></i> اسم المنتج <span class="required-star">*</span></label>
+                <input type="text" id="productName" placeholder="مثال: جلابة مغربية فاخرة" required>
               </div>
               <div class="form-group">
-                <label><i class="fas fa-money-bill"></i> السعر</label>
-                <input type="text" id="priceRange" placeholder="600-900 درهم">
+                <label><i class="fas fa-money-bill-wave"></i> السعر</label>
+                <input type="text" id="priceRange" placeholder="مثال: 600-900 درهم">
               </div>
               <div class="form-group">
-                <label><i class="fas fa-sort"></i> ترتيب العرض</label>
-                <input type="number" id="displayOrder" value="0" min="0">
+                <label><i class="fas fa-sort-numeric-down"></i> ترتيب العرض</label>
+                <input type="number" id="displayOrder" value="0" min="0" placeholder="0">
               </div>
               <div class="form-group full-width">
                 <label><i class="fas fa-align-left"></i> وصف المنتج</label>
-                <textarea id="productDescription" rows="3" placeholder="وصف المنتج..."></textarea>
-              </div>
-
-              <!-- الصور -->
-              <div class="form-group full-width">
-                <label><i class="fas fa-images"></i> صور المنتج (10 صور) <small style="color:#8B7B68;">الصورة الأولى = الرئيسية *</small></label>
-                <div class="images-upload-container" id="imagesGrid"></div>
-              </div>
-
-              <!-- الفيديو -->
-              <div class="form-group full-width">
-                <label><i class="fas fa-video"></i> فيديو المنتج (اختياري)</label>
-                <div class="video-upload-card" id="videoCard" onclick="document.getElementById('videoInput').click()">
-                  <i class="fas fa-cloud-upload-alt icon-video"></i>
-                  <p class="text-video">اضغط لاختيار فيديو من جهازك</p>
-                  <small style="display:block;color:#8B7B68;margin-top:0.25rem;">MP4 - الحد الأقصى 50MB</small>
-                  <div id="videoPreview"></div>
-                  <input type="file" id="videoInput" accept="video/*" onchange="handleVideo(event)" style="display:none">
-                </div>
-              </div>
-
-              <div class="checkbox-group full-width">
-                <input type="checkbox" id="isFeatured">
-                <label for="isFeatured"><i class="fas fa-star"></i> منتج مميز</label>
-              </div>
-              <div class="checkbox-group full-width">
-                <input type="checkbox" id="isActive" checked>
-                <label for="isActive"><i class="fas fa-eye"></i> نشط (ظاهر للزوار)</label>
+                <textarea id="productDescription" rows="3" placeholder="اكتب وصفاً جذاباً للمنتج..."></textarea>
               </div>
             </div>
 
+            <hr class="section-divider">
+
+            <!-- الصور -->
+            <div class="section-title">
+              <i class="fas fa-images"></i> صور المنتج
+            </div>
+            <div class="form-group full-width" style="margin-bottom:0;">
+              <label style="margin-bottom:0.75rem;">
+                <span class="required-star">*</span> الصورة الرئيسية مطلوبة - يمكنك رفع حتى 10 صور
+              </label>
+              
+              <!-- Zone principale -->
+              <div class="main-upload-zone" id="mainUploadZone" onclick="document.getElementById('bulkImageInput').click()">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <p class="upload-title">اسحب وأفلت الصور هنا</p>
+                <p class="upload-subtitle">أو اضغط للاختيار - PNG, JPG, WEBP (حد أقصى 10MB للصورة)</p>
+                <input type="file" id="bulkImageInput" accept="image/*" multiple onchange="handleBulkImages(event)" style="display:none">
+              </div>
+
+              <!-- شبكة الصور -->
+              <div class="images-grid" id="imagesGrid"></div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- الفيديو -->
+            <div class="section-title">
+              <i class="fas fa-video"></i> فيديو المنتج <small style="color:var(--text-muted);font-weight:400;">(اختياري)</small>
+            </div>
+            <div class="form-group full-width" style="margin-bottom:0;">
+              <div class="video-upload-card" id="videoCard" onclick="document.getElementById('videoInput').click()">
+                <i class="fas fa-play-circle video-icon"></i>
+                <p class="video-text">أضف فيديو للمنتج</p>
+                <p class="video-hint">اضغط هنا لاختيار فيديو - MP4 (حد أقصى 50MB)</p>
+                <div id="videoPreview"></div>
+                <input type="file" id="videoInput" accept="video/*" onchange="handleVideo(event)" style="display:none">
+              </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- خيارات -->
+            <div class="section-title">
+              <i class="fas fa-sliders-h"></i> خيارات العرض
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="isFeatured">
+              <label for="isFeatured"><i class="fas fa-star"></i> منتج مميز (يظهر في الصفحة الرئيسية)</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="isActive" checked>
+              <label for="isActive"><i class="fas fa-eye"></i> نشط (ظاهر للزوار)</label>
+            </div>
+
+            <!-- أزرار -->
             <div class="btn-group">
-              <button type="submit" class="btn" id="submitBtn"><i class="fas fa-plus-circle"></i> إضافة المنتج</button>
-              <button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-redo"></i> إعادة تعيين</button>
+              <button type="submit" class="btn" id="submitBtn">
+                <i class="fas fa-plus-circle"></i> إضافة المنتج
+              </button>
+              <button type="button" class="btn btn-outline" onclick="resetForm()">
+                <i class="fas fa-redo"></i> إعادة تعيين النموذج
+              </button>
             </div>
           </form>
         </div>
       </div>
 
-      <!-- قائمة المنتجات -->
+      <!-- ===== TAB: قائمة المنتجات ===== -->
       <div class="tab-content" id="tab-list">
         <div class="form-card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
-            <h3 style="color:#F5EDD8;font-size:1.1rem;"><i class="fas fa-boxes"></i> جميع المنتجات</h3>
-            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-              <select id="filterCategory" onchange="loadProducts()" style="padding:0.5rem 0.9rem;background:#1A1510;border:1px solid rgba(196,160,106,0.2);border-radius:10px;color:#E8DDD0;font-family:inherit;font-size:0.8rem;"><option value="">كل الفئات</option></select>
-              <button class="btn btn-sm btn-outline" onclick="loadProducts()"><i class="fas fa-sync"></i> تحديث</button>
+          <div class="table-header">
+            <h3><i class="fas fa-boxes"></i> جميع المنتجات</h3>
+            <div class="filter-group">
+              <select id="filterCategory" onchange="loadProducts()">
+                <option value="">كل الفئات</option>
+              </select>
+              <button class="btn btn-sm btn-outline" onclick="loadProducts()">
+                <i class="fas fa-sync-alt"></i> تحديث
+              </button>
             </div>
           </div>
           <div class="products-table-container">
             <table class="products-table">
-              <thead><tr><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></tr></thead>
-              <tbody id="productsTableBody"><tr><td colspan="6"><div class="loader"></div></td></tr></tbody>
+              <thead>
+                <tr>
+                  <th>صورة</th>
+                  <th>المنتج</th>
+                  <th>الفئة</th>
+                  <th>السعر</th>
+                  <th>الحالة</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="productsTableBody">
+                <tr><td colspan="6"><div class="loader"></div></td></tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -567,12 +983,18 @@
   <!-- Modal حذف -->
   <div class="modal-overlay" id="deleteModal">
     <div class="modal">
-      <h3><i class="fas fa-exclamation-triangle" style="color:#FF4757;"></i> تأكيد الحذف</h3>
-      <p style="color:#A89880;margin-bottom:0.5rem;">سيتم حذف المنتج والملفات من Cloudinary نهائياً</p>
-      <p style="color:#F5EDD8;font-weight:700;" id="deleteProductName"></p>
+      <i class="fas fa-exclamation-triangle modal-icon"></i>
+      <h3>تأكيد حذف المنتج</h3>
+      <p>سيتم حذف المنتج وجميع الملفات المرتبطة به من السحابة نهائياً</p>
+      <div class="product-name-highlight" id="deleteProductName"></div>
+      <p style="font-size:0.8rem;color:var(--danger);margin-top:0.5rem;">لا يمكن التراجع عن هذا الإجراء</p>
       <div class="btn-group">
-        <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash"></i> حذف</button>
-        <button class="btn btn-outline" onclick="closeDeleteModal()"><i class="fas fa-times"></i> إلغاء</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn">
+          <i class="fas fa-trash-alt"></i> نعم، احذف
+        </button>
+        <button class="btn btn-outline" onclick="closeDeleteModal()">
+          <i class="fas fa-times"></i> إلغاء
+        </button>
       </div>
     </div>
   </div>
@@ -581,9 +1003,9 @@
   <script src="footer.js"></script>
 
   <script>
-    // التحقق من وجود CONFIG
+    // ==================== CONFIGURATION ====================
     if (typeof CONFIG === 'undefined') {
-      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG غير موجود! الرجاء التأكد من ملف config.js</div>';
+      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:3rem;font-size:1.2rem;">❌ خطأ: ملف config.js غير موجود! الرجاء التأكد من إضافة الملف.</div>';
       throw new Error('CONFIG missing');
     }
 
@@ -595,35 +1017,63 @@
     const CLOUDINARY_API_SECRET = CONFIG.CLOUDINARY_API_SECRET;
     const MAX_IMAGES = 10;
 
-    let uploadedImages = [];
+    let uploadedImages = new Array(MAX_IMAGES).fill(null);
     let uploadedVideoData = null;
     let deleteProductId = null;
 
-    // بناء شبكة الصور
+    // ==================== BUILD IMAGES GRID ====================
     function buildImagesGrid() {
       const grid = document.getElementById('imagesGrid');
       if (!grid) return;
       grid.innerHTML = '';
+
       for (let i = 0; i < MAX_IMAGES; i++) {
         const card = document.createElement('div');
-        card.className = 'image-upload-card';
+        card.className = 'image-card';
         card.id = `imageCard${i}`;
-        card.innerHTML = `
-          <span class="badge-number">${i + 1}</span>
-          <i class="fas fa-plus-circle icon-add"></i>
-          <span class="label-text">${i === 0 ? 'الرئيسية *' : 'اختياري'}</span>
-          <input type="file" id="imageInput${i}" accept="image/*" onchange="handleImage(event, ${i})" style="display:none">
-        `;
+        card.setAttribute('data-index', i);
+        
+        updateImageCardHTML(card, i, false);
+        
         card.addEventListener('click', (e) => {
-          if (!e.target.closest('.btn-delete')) {
+          if (!e.target.closest('.card-actions')) {
             document.getElementById(`imageInput${i}`).click();
           }
         });
+
         grid.appendChild(card);
       }
     }
 
-    // توقيع Cloudinary للحذف
+    function updateImageCardHTML(card, index, hasImage, imageUrl = null) {
+      const isMain = index === 0;
+      card.className = 'image-card';
+      
+      if (hasImage) {
+        card.classList.add('has-image');
+        if (isMain) card.classList.add('is-main');
+        
+        card.innerHTML = `
+          <img src="${imageUrl}" alt="صورة ${index + 1}">
+          ${isMain ? '<span class="main-badge"><i class="fas fa-crown"></i> الرئيسية</span>' : `<span class="card-number">#${index + 1}</span>`}
+          <div class="card-actions">
+            ${!isMain ? `<button class="action-btn btn-set-main" onclick="event.stopPropagation();setAsMain(${index})" title="تعيين كصورة رئيسية"><i class="fas fa-crown"></i></button>` : ''}
+            <button class="action-btn btn-delete-img" onclick="event.stopPropagation();removeImage(${index})" title="حذف الصورة"><i class="fas fa-trash-alt"></i></button>
+          </div>
+          <div class="upload-progress"><div class="bar" id="progressBar${index}"></div></div>
+          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">
+        `;
+      } else {
+        card.innerHTML = `
+          ${isMain ? '<span class="main-badge" style="opacity:0.7;"><i class="fas fa-crown"></i> مطلوبة</span>' : `<span class="card-number">#${index + 1}</span>`}
+          <i class="fas fa-image placeholder-icon"></i>
+          <span class="placeholder-text">${isMain ? 'الصورة الرئيسية *' : 'أضف صورة'}</span>
+          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">
+        `;
+      }
+    }
+
+    // ==================== CLOUDINARY SIGNATURE ====================
     async function cloudinarySignature(publicId) {
       const ts = Math.floor(Date.now() / 1000);
       const str = `public_id=${publicId}&timestamp=${ts}${CLOUDINARY_API_SECRET}`;
@@ -634,7 +1084,6 @@
       return { sig: hashHex, ts };
     }
 
-    // حذف من Cloudinary
     async function deleteFromCloudinary(publicId, type) {
       if (!publicId) return false;
       try {
@@ -645,12 +1094,8 @@
         fd.append('api_key', CLOUDINARY_API_KEY);
         fd.append('timestamp', ts);
         
-        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/destroy`, { 
-          method: 'POST', 
-          body: fd 
-        });
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/destroy`, { method: 'POST', body: fd });
         const data = await response.json();
-        console.log('Cloudinary delete result:', data);
         return data.result === 'ok';
       } catch(e) { 
         console.error('Cloudinary delete error:', e);
@@ -658,7 +1103,6 @@
       }
     }
 
-    // رفع لـ Cloudinary
     function uploadToCloudinary(file, type) {
       return new Promise((resolve, reject) => {
         const fd = new FormData();
@@ -670,23 +1114,18 @@
         xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/upload`);
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
-            try { 
-              const data = JSON.parse(xhr.responseText);
-              resolve(data); 
-            } catch(e) { 
-              reject(new Error('استجابة غير صالحة من الخادم')); 
-            }
+            try { resolve(JSON.parse(xhr.responseText)); } 
+            catch(e) { reject(new Error('استجابة غير صالحة')); }
           } else {
-            console.error('Upload failed:', xhr.status, xhr.responseText);
             reject(new Error(`فشل الرفع: ${xhr.status}`));
           }
         };
-        xhr.onerror = () => reject(new Error('خطأ في الاتصال بالخادم'));
+        xhr.onerror = () => reject(new Error('خطأ في الاتصال'));
         xhr.send(fd);
       });
     }
 
-    // معالجة الصور
+    // ==================== HANDLE IMAGES ====================
     window.handleImage = async function(event, index) {
       const file = event.target.files[0];
       if (!file) return;
@@ -696,7 +1135,6 @@
         event.target.value = '';
         return;
       }
-
       if (!file.type.startsWith('image/')) {
         showMessage('❌ الرجاء اختيار ملف صورة صالح', 'error');
         event.target.value = '';
@@ -708,41 +1146,34 @@
       
       card.classList.add('uploading');
       
-      // معاينة محلية
+      // Local preview
       const reader = new FileReader();
       reader.onload = (e) => {
-        card.innerHTML = `
-          <img src="${e.target.result}" alt="صورة ${index + 1}">
-          ${index === 0 ? '<span class="badge-main">رئيسية</span>' : `<span class="badge-number">${index + 1}</span>`}
-          <button class="btn-delete" onclick="event.stopPropagation();removeImage(${index})"><i class="fas fa-times"></i></button>
-          <div class="upload-progress"><div class="bar" id="p${index}"></div></div>
-          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">
-        `;
-        card.classList.add('has-image');
+        updateImageCardHTML(card, index, true, e.target.result);
+        card.classList.add('uploading');
       };
       reader.readAsDataURL(file);
 
       try {
-        const bar = document.getElementById(`p${index}`);
-        if (bar) bar.style.width = '80%';
+        const bar = document.getElementById(`progressBar${index}`);
+        if (bar) bar.style.width = '70%';
         
         const data = await uploadToCloudinary(file, 'image');
         
-        // حذف القديم إذا وجد
+        // Delete old if exists
         if (uploadedImages[index] && uploadedImages[index].public_id) {
           await deleteFromCloudinary(uploadedImages[index].public_id, 'image');
         }
         
         uploadedImages[index] = { url: data.secure_url, public_id: data.public_id };
         
-        if (bar) { 
-          bar.style.width = '100%'; 
-          setTimeout(() => {
-            if (bar.parentElement) bar.parentElement.style.display = 'none';
-          }, 500); 
-        }
+        if (bar) { bar.style.width = '100%'; }
         
         card.classList.remove('uploading');
+        updateImageCardHTML(card, index, true, data.secure_url);
+        if (index === 0) card.classList.add('is-main');
+        
+        updateMainUploadZone();
         showMessage(`✅ تم رفع الصورة ${index + 1} بنجاح`, 'success');
       } catch(e) {
         console.error('Upload error:', e);
@@ -752,6 +1183,73 @@
       }
     };
 
+    window.handleBulkImages = async function(event) {
+      const files = Array.from(event.target.files);
+      if (!files.length) return;
+      
+      for (let i = 0; i < MAX_IMAGES; i++) {
+        if (!uploadedImages[i] && files.length > 0) {
+          const file = files.shift();
+          const input = document.getElementById(`imageInput${i}`);
+          if (input) {
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            input.files = dt.files;
+            await handleImage({ target: input }, i);
+          }
+        }
+      }
+      
+      // Upload remaining to empty slots
+      for (const file of files) {
+        for (let i = 0; i < MAX_IMAGES; i++) {
+          if (!uploadedImages[i]) {
+            const input = document.getElementById(`imageInput${i}`);
+            if (input) {
+              const dt = new DataTransfer();
+              dt.items.add(file);
+              input.files = dt.files;
+              await handleImage({ target: input }, i);
+            }
+            break;
+          }
+        }
+      }
+    };
+
+    window.setAsMain = async function(index) {
+      if (index === 0) return;
+      
+      const mainData = uploadedImages[0];
+      const targetData = uploadedImages[index];
+      
+      // Swap
+      uploadedImages[0] = targetData;
+      uploadedImages[index] = mainData;
+      
+      // Rebuild grid
+      rebuildGridFromData();
+      showMessage('✅ تم تعيين الصورة كرئيسية', 'success');
+    };
+
+    function rebuildGridFromData() {
+      const grid = document.getElementById('imagesGrid');
+      if (!grid) return;
+      
+      const cards = grid.querySelectorAll('.image-card');
+      cards.forEach((card, i) => {
+        const data = uploadedImages[i];
+        if (data && data.url) {
+          updateImageCardHTML(card, i, true, data.url);
+          if (i === 0) card.classList.add('is-main');
+        } else {
+          updateImageCardHTML(card, i, false);
+        }
+      });
+      
+      updateMainUploadZone();
+    }
+
     window.removeImage = async function(index) {
       if (uploadedImages[index] && uploadedImages[index].public_id) {
         await deleteFromCloudinary(uploadedImages[index].public_id, 'image');
@@ -759,18 +1257,36 @@
       uploadedImages[index] = null;
       
       const card = document.getElementById(`imageCard${index}`);
-      if (!card) return;
+      if (card) {
+        card.classList.remove('has-image', 'is-main', 'uploading');
+        updateImageCardHTML(card, index, false);
+      }
       
-      card.classList.remove('has-image', 'uploading');
-      card.innerHTML = `
-        <span class="badge-number">${index + 1}</span>
-        <i class="fas fa-plus-circle icon-add"></i>
-        <span class="label-text">${index === 0 ? 'الرئيسية *' : 'اختياري'}</span>
-        <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">
-      `;
+      updateMainUploadZone();
     };
 
-    // معالجة الفيديو
+    function updateMainUploadZone() {
+      const zone = document.getElementById('mainUploadZone');
+      if (!zone) return;
+      
+      const hasImages = uploadedImages.some(img => img && img.url);
+      if (hasImages) {
+        zone.classList.add('has-files');
+        const count = uploadedImages.filter(img => img && img.url).length;
+        zone.querySelector('.upload-title').textContent = `تم رفع ${count} من ${MAX_IMAGES} صور`;
+        zone.querySelector('.upload-subtitle').textContent = 'اضغط لإضافة المزيد من الصور';
+        zone.querySelector('.upload-icon').className = 'fas fa-check-circle upload-icon';
+        zone.querySelector('.upload-icon').style.color = 'var(--success)';
+      } else {
+        zone.classList.remove('has-files');
+        zone.querySelector('.upload-title').textContent = 'اسحب وأفلت الصور هنا';
+        zone.querySelector('.upload-subtitle').textContent = 'أو اضغط للاختيار - PNG, JPG, WEBP (حد أقصى 10MB للصورة)';
+        zone.querySelector('.upload-icon').className = 'fas fa-cloud-upload-alt upload-icon';
+        zone.querySelector('.upload-icon').style.color = 'var(--gold)';
+      }
+    }
+
+    // ==================== HANDLE VIDEO ====================
     window.handleVideo = async function(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -780,7 +1296,6 @@
         event.target.value = '';
         return;
       }
-
       if (!file.type.startsWith('video/')) {
         showMessage('❌ الرجاء اختيار ملف فيديو صالح (MP4)', 'error');
         event.target.value = '';
@@ -792,8 +1307,8 @@
       
       const videoURL = URL.createObjectURL(file);
       preview.innerHTML = `
-        <video controls src="${videoURL}" style="width:100%;max-height:250px;border-radius:10px;margin-top:0.75rem;"></video>
-        <button class="btn-delete-video" onclick="event.stopPropagation();removeVideo()"><i class="fas fa-trash"></i> حذف الفيديو</button>
+        <video controls src="${videoURL}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video>
+        <button class="btn-delete-video" onclick="event.stopPropagation();removeVideo()"><i class="fas fa-trash-alt"></i> حذف الفيديو</button>
       `;
       card.classList.add('has-video');
 
@@ -825,7 +1340,7 @@
       if (card) card.classList.remove('has-video');
     };
 
-    // Supabase API
+    // ==================== SUPABASE API ====================
     async function supabaseRequest(endpoint, opts = {}) {
       const url = `${SUPABASE_URL}${endpoint}`;
       const fetchOpts = {
@@ -837,23 +1352,14 @@
         }
       };
       
-      if (opts.body) {
-        fetchOpts.body = JSON.stringify(opts.body);
-      }
-
-      console.log(`Supabase ${opts.method || 'GET'}:`, endpoint);
+      if (opts.body) fetchOpts.body = JSON.stringify(opts.body);
       
       const res = await fetch(url, fetchOpts);
-      
       if (res.status === 204) return null;
       
       const text = await res.text();
+      if (!text) return res.ok ? null : Promise.reject(new Error(`خطأ ${res.status}`));
       
-      if (!text) {
-        if (res.ok) return null;
-        throw new Error(`خطأ ${res.status}: استجابة فارغة`);
-      }
-
       try {
         const data = JSON.parse(text);
         if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
@@ -864,6 +1370,7 @@
       }
     }
 
+    // ==================== LOAD DATA ====================
     async function loadCategories() {
       try {
         const cats = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
@@ -895,12 +1402,7 @@
 
     function escapeHtml(str) {
       if (!str) return '';
-      return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-      });
+      return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m] || m);
     }
 
     async function loadProducts() {
@@ -910,31 +1412,41 @@
       tbody.innerHTML = '<tr><td colspan="6"><div class="loader"></div></td></tr>';
       
       try {
-        const cat = document.getElementById('filterCategory').value;
+        const cat = document.getElementById('filterCategory')?.value || '';
         let endpoint = '/rest/v1/products?select=*&order=display_order';
         if (cat) endpoint += `&category_name=eq.${encodeURIComponent(cat)}`;
         
         const prods = await supabaseRequest(endpoint);
         
         if (!prods || prods.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-box-open"></i><p>لا توجد منتجات</p></div></td></tr>';
+          tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-box-open"></i><p>لا توجد منتجات بعد</p></div></td></tr>`;
           return;
         }
 
         tbody.innerHTML = prods.map(p => `
           <tr>
-            <td><img src="${p.product_image_url || (p.additional_images && p.additional_images[0]) || 'https://placehold.co/50x65/2A2218/C4A06A'}" class="product-thumb" onerror="this.src='https://placehold.co/50x65/2A2218/C4A06A'"></td>
-            <td><strong style="color:#F5EDD8;">${escapeHtml(p.product_name)}</strong></td>
+            <td>
+              <img src="${p.product_image_url || (p.additional_images && p.additional_images[0]) || 'https://placehold.co/55x70/231D15/C4A06A?text=No+Img'}" 
+                   class="product-thumb" 
+                   onerror="this.src='https://placehold.co/55x70/231D15/C4A06A?text=...'"
+                   alt="${escapeHtml(p.product_name)}">
+            </td>
+            <td class="product-name-cell">${escapeHtml(p.product_name)}</td>
             <td>${escapeHtml(p.category_name)}</td>
-            <td style="color:#C4A06A;">${escapeHtml(p.price_range) || '-'}</td>
-            <td><span class="status-badge ${p.is_active ? 'status-active' : 'status-inactive'}">${p.is_active ? 'نشط' : 'مخفي'}</span></td>
+            <td class="price-cell">${escapeHtml(p.price_range) || '-'}</td>
+            <td>
+              <span class="status-badge ${p.is_active ? 'status-active' : 'status-inactive'}">
+                <span class="status-dot ${p.is_active ? 'active' : 'inactive'}"></span>
+                ${p.is_active ? 'نشط' : 'مخفي'}
+              </span>
+            </td>
             <td>
               <div class="actions-cell">
-                <button class="btn btn-xs btn-outline" onclick="toggleProduct(${p.id}, ${!p.is_active})" title="${p.is_active ? 'إخفاء' : 'إظهار'}">
+                <button class="action-icon-btn" onclick="toggleProduct(${p.id}, ${!p.is_active})" title="${p.is_active ? 'إخفاء المنتج' : 'إظهار المنتج'}">
                   <i class="fas fa-${p.is_active ? 'eye-slash' : 'eye'}"></i>
                 </button>
-                <button class="btn btn-xs btn-danger" onclick="openDeleteModal(${p.id}, '${escapeHtml(p.product_name).replace(/'/g, "\\'")}', ${JSON.stringify(p.additional_images || [])}, '${p.product_video_url || ''}')" title="حذف">
-                  <i class="fas fa-trash"></i>
+                <button class="action-icon-btn danger" onclick="openDeleteModal(${p.id}, '${escapeHtml(p.product_name).replace(/'/g, "\\'")}', ${JSON.stringify(p.additional_images || [])}, '${p.product_video_url || ''}')" title="حذف المنتج">
+                  <i class="fas fa-trash-alt"></i>
                 </button>
               </div>
             </td>
@@ -942,25 +1454,17 @@
         `).join('');
       } catch(e) {
         console.error('Load products error:', e);
-        tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>حدث خطأ في تحميل المنتجات</p></div></td></tr>';
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>حدث خطأ في تحميل المنتجات</p></div></td></tr>`;
       }
     }
 
+    // ==================== ADD PRODUCT ====================
     async function addProduct(e) {
       e.preventDefault();
       
-      if (!uploadedImages[0]) { 
-        showMessage('❌ الصورة الرئيسية مطلوبة', 'error'); 
-        return; 
-      }
-      if (!document.getElementById('categoryName').value) { 
-        showMessage('❌ الرجاء اختيار الفئة', 'error'); 
-        return; 
-      }
-      if (!document.getElementById('productName').value.trim()) { 
-        showMessage('❌ الرجاء إدخال اسم المنتج', 'error'); 
-        return; 
-      }
+      if (!uploadedImages[0]) { showMessage('❌ الصورة الرئيسية مطلوبة', 'error'); return; }
+      if (!document.getElementById('categoryName').value) { showMessage('❌ الرجاء اختيار الفئة', 'error'); return; }
+      if (!document.getElementById('productName').value.trim()) { showMessage('❌ الرجاء إدخال اسم المنتج', 'error'); return; }
 
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
@@ -981,14 +1485,9 @@
         is_active: document.getElementById('isActive').checked
       };
 
-      console.log('Adding product:', productData);
-
       try {
-        await supabaseRequest('/rest/v1/products', { 
-          method: 'POST', 
-          body: productData 
-        });
-        showMessage('✅ تمت إضافة المنتج بنجاح!', 'success');
+        await supabaseRequest('/rest/v1/products', { method: 'POST', body: productData });
+        showMessage('🎉 تمت إضافة المنتج بنجاح!', 'success');
         resetForm();
         loadProducts();
         switchTab('list');
@@ -1007,21 +1506,17 @@
       const isActiveCheck = document.getElementById('isActive');
       if (isActiveCheck) isActiveCheck.checked = true;
       
-      // حذف الصور المرفوعة
+      // Remove all uploaded images
       for (let i = 0; i < MAX_IMAGES; i++) {
-        if (uploadedImages[i]) {
-          removeImage(i);
-        }
+        if (uploadedImages[i]) removeImage(i);
       }
-      uploadedImages = [];
+      uploadedImages = new Array(MAX_IMAGES).fill(null);
       
-      // حذف الفيديو
-      if (uploadedVideoData) {
-        removeVideo();
-      }
+      if (uploadedVideoData) removeVideo();
       uploadedVideoData = null;
       
       buildImagesGrid();
+      updateMainUploadZone();
     }
 
     function showMessage(text, type) {
@@ -1034,22 +1529,22 @@
       if (window.messageTimeout) clearTimeout(window.messageTimeout);
       window.messageTimeout = setTimeout(() => {
         if (msgDiv) msgDiv.style.display = 'none';
-      }, 4000);
+      }, 5000);
     }
 
     function switchTab(tab) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
       
-      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.textContent.includes(tab === 'add' ? 'إضافة' : 'قائمة'));
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => 
+        btn.textContent.includes(tab === 'add' ? 'إضافة' : 'قائمة')
+      );
       if (activeBtn) activeBtn.classList.add('active');
       
       const activeContent = document.getElementById(`tab-${tab}`);
       if (activeContent) activeContent.classList.add('active');
       
-      if (tab === 'list') {
-        loadProducts();
-      }
+      if (tab === 'list') loadProducts();
     }
 
     function extractPublicId(url) {
@@ -1058,7 +1553,7 @@
       return match ? `almaya-products/${match[1]}` : null;
     }
 
-    // حذف منتج
+    // ==================== DELETE PRODUCT ====================
     window.openDeleteModal = function(id, name, additionalImages, videoUrl) {
       deleteProductId = id;
       const nameSpan = document.getElementById('deleteProductName');
@@ -1076,10 +1571,7 @@
     };
 
     window.confirmDelete = async function() {
-      if (!deleteProductId) {
-        console.error('No product ID to delete');
-        return;
-      }
+      if (!deleteProductId) return;
 
       const btn = document.getElementById('confirmDeleteBtn');
       if (btn) {
@@ -1088,30 +1580,19 @@
       }
 
       try {
-        console.log('Deleting product:', deleteProductId);
-        
-        // حذف من Supabase
         await supabaseRequest(`/rest/v1/products?id=eq.${deleteProductId}`, { method: 'DELETE' });
         
-        // حذف الصور من Cloudinary
         const { additionalImages, videoUrl } = window._deleteData || {};
         if (additionalImages && additionalImages.length) {
           for (const url of additionalImages) {
             const publicId = extractPublicId(url);
-            if (publicId) {
-              console.log('Deleting image:', publicId);
-              await deleteFromCloudinary(publicId, 'image');
-            }
+            if (publicId) await deleteFromCloudinary(publicId, 'image');
           }
         }
         
-        // حذف الفيديو
         if (videoUrl) {
           const publicId = extractPublicId(videoUrl);
-          if (publicId) {
-            console.log('Deleting video:', publicId);
-            await deleteFromCloudinary(publicId, 'video');
-          }
+          if (publicId) await deleteFromCloudinary(publicId, 'video');
         }
         
         showMessage('🗑️ تم حذف المنتج وجميع الملفات بنجاح', 'success');
@@ -1124,16 +1605,13 @@
       
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-trash"></i> حذف';
+        btn.innerHTML = '<i class="fas fa-trash-alt"></i> نعم، احذف';
       }
     };
 
     window.toggleProduct = async function(id, newStatus) {
       try {
-        await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { 
-          method: 'PATCH', 
-          body: { is_active: newStatus } 
-        });
+        await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method: 'PATCH', body: { is_active: newStatus } });
         showMessage(newStatus ? '👁️ المنتج ظاهر للزوار' : '🙈 تم إخفاء المنتج', 'success');
         loadProducts();
       } catch(e) {
@@ -1142,7 +1620,7 @@
       }
     };
 
-    // تصدير الدوال للنطاق العام
+    // ==================== EXPORT TO GLOBAL SCOPE ====================
     window.switchTab = switchTab;
     window.loadProducts = loadProducts;
     window.removeVideo = removeVideo;
@@ -1152,13 +1630,16 @@
     window.toggleProduct = toggleProduct;
     window.resetForm = resetForm;
     window.handleImage = handleImage;
+    window.handleBulkImages = handleBulkImages;
     window.removeImage = removeImage;
+    window.setAsMain = setAsMain;
     window.handleVideo = handleVideo;
 
-    // تهيئة
+    // ==================== INITIALIZATION ====================
     document.addEventListener('DOMContentLoaded', () => {
-      console.log('DOM loaded, initializing admin products...');
+      console.log('🚀 Admin Products initialized');
       buildImagesGrid();
+      updateMainUploadZone();
       loadCategories();
       
       const form = document.getElementById('productForm');

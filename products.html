@@ -473,8 +473,8 @@
   <div class="main-content">
     <!-- Hero Section -->
     <div class="hero-section">
-      <h1><i class="fas fa-tshirt"></i> تشكيلتنا</h1>
-      <p>اكتشفوا أحدث تصاميم الجلابيات المغربية الأصيلة والعصرية</p>
+      <h1 id="heroTitle"><i class="fas fa-tshirt"></i> جميع المنتجات</h1>
+      <p>اكتشفي مجموعتنا المميزة من التصاميم المغربية الأصيلة</p>
     </div>
 
     <!-- Filters Section -->
@@ -495,7 +495,7 @@
             <option value="name_asc">الاسم: أ-ي</option>
             <option value="name_desc">الاسم: ي-أ</option>
           </select>
-          <button class="filter-select" onclick="resetFilters()" style="background:#C4A06A;color:#1A1510;">
+          <button class="filter-select" onclick="resetFilters()" style="background:#C4A06A;color:#1A1510;border:none;">
             <i class="fas fa-redo"></i> إعادة ضبط
           </button>
         </div>
@@ -531,10 +531,16 @@
   <script src="footer.js"></script>
 
   <script>
+    // ==================== CONFIGURATION ====================
+    if (typeof CONFIG === 'undefined') {
+      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:3rem;font-size:1.2rem;">❌ خطأ: ملف config.js غير موجود!</div>';
+      throw new Error('CONFIG missing');
+    }
+
     let allProducts = [];
     let categories = [];
 
-    // Supabase Request
+    // ==================== SUPABASE API ====================
     async function supabaseRequest(endpoint, opts = {}) {
       const url = `${CONFIG.SUPABASE_URL}${endpoint}`;
       const fetchOpts = {
@@ -546,20 +552,13 @@
         }
       };
       
-      if (opts.body) {
-        fetchOpts.body = JSON.stringify(opts.body);
-      }
+      if (opts.body) fetchOpts.body = JSON.stringify(opts.body);
       
       const res = await fetch(url, fetchOpts);
-      
       if (res.status === 204) return null;
       
       const text = await res.text();
-      
-      if (!text) {
-        if (res.ok) return null;
-        throw new Error(`خطأ ${res.status}`);
-      }
+      if (!text) return res.ok ? null : Promise.reject(new Error(`خطأ ${res.status}`));
       
       try {
         const data = JSON.parse(text);
@@ -571,7 +570,7 @@
       }
     }
 
-    // Load Categories
+    // ==================== LOAD CATEGORIES ====================
     async function loadCategories() {
       try {
         const cats = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
@@ -587,25 +586,77 @@
       }
     }
 
-    // Load Products
+    // ==================== LOAD PRODUCTS ====================
     async function loadProducts() {
       try {
         const products = await supabaseRequest('/rest/v1/products?select=*&is_active=eq.true&order=display_order');
         allProducts = products || [];
+        
+        // ✅ التحقق من وجود تصنيف في الرابط
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryFromUrl = urlParams.get('category');
+        
+        if (categoryFromUrl) {
+          // تحويل الـ slug إلى اسم الفئة
+          const categoryName = reverseSlug(categoryFromUrl);
+          
+          // تعيين الفلتر تلقائياً
+          const categoryFilter = document.getElementById('categoryFilter');
+          if (categoryFilter) {
+            categoryFilter.value = categoryName;
+          }
+          
+          // تحديث عنوان الصفحة
+          const heroTitle = document.getElementById('heroTitle');
+          if (heroTitle) {
+            heroTitle.innerHTML = `<i class="fas fa-tshirt"></i> ${escapeHtml(categoryName)}`;
+          }
+        }
+        
         filterProducts();
       } catch(e) {
         console.error('Error loading products:', e);
         const grid = document.getElementById('productsGrid');
-        grid.innerHTML = `
-          <div class="empty-state" style="grid-column:1/-1;">
-            <i class="fas fa-exclamation-circle"></i>
-            <p>حدث خطأ في تحميل المنتجات</p>
-          </div>
-        `;
+        if (grid) {
+          grid.innerHTML = `
+            <div class="empty-state" style="grid-column:1/-1;">
+              <i class="fas fa-exclamation-circle"></i>
+              <p>حدث خطأ في تحميل المنتجات</p>
+            </div>
+          `;
+        }
       }
     }
 
-    // Escape HTML
+    // ==================== SLUG FUNCTIONS ====================
+    function createSlug(name) {
+      if (!name) return '';
+      return name
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\u0600-\u06FF\w\-]/g, '')
+        .replace(/\-\-+/g, '-')
+        .trim();
+    }
+
+    function reverseSlug(slug) {
+      if (!slug) return '';
+      
+      // البحث عن الفئة المطابقة
+      const found = categories.find(cat => {
+        const catSlug = createSlug(cat);
+        return catSlug === slug;
+      });
+      
+      if (found) return found;
+      
+      // إذا لم يتم العثور، محاولة تحويل slug إلى اسم مقروء
+      return slug
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    // ==================== ESCAPE HTML ====================
     function escapeHtml(str) {
       if (!str) return '';
       return str.replace(/[&<>]/g, function(m) {
@@ -616,28 +667,28 @@
       });
     }
 
-    // Filter Products
+    // ==================== FILTER PRODUCTS ====================
     function filterProducts() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const category = document.getElementById('categoryFilter').value;
-      const sortBy = document.getElementById('sortFilter').value;
+      const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+      const category = document.getElementById('categoryFilter')?.value || '';
+      const sortBy = document.getElementById('sortFilter')?.value || 'default';
       
       let filtered = [...allProducts];
       
-      // Filter by search
+      // فلترة بالبحث
       if (searchTerm) {
         filtered = filtered.filter(p => 
-          p.product_name.toLowerCase().includes(searchTerm) ||
+          (p.product_name && p.product_name.toLowerCase().includes(searchTerm)) ||
           (p.product_description && p.product_description.toLowerCase().includes(searchTerm))
         );
       }
       
-      // Filter by category
+      // ✅ فلترة بالفئة
       if (category) {
         filtered = filtered.filter(p => p.category_name === category);
       }
       
-      // Sort
+      // ترتيب
       switch(sortBy) {
         case 'price_asc':
           filtered.sort((a, b) => {
@@ -654,34 +705,38 @@
           });
           break;
         case 'name_asc':
-          filtered.sort((a, b) => a.product_name.localeCompare(b.product_name, 'ar'));
+          filtered.sort((a, b) => (a.product_name || '').localeCompare(b.product_name || '', 'ar'));
           break;
         case 'name_desc':
-          filtered.sort((a, b) => b.product_name.localeCompare(a.product_name, 'ar'));
+          filtered.sort((a, b) => (b.product_name || '').localeCompare(a.product_name || '', 'ar'));
           break;
         default:
           filtered.sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
       }
       
-      // Update count
-      document.getElementById('productsCount').textContent = `${filtered.length} منتج`;
+      // تحديث العدد
+      const countElement = document.getElementById('productsCount');
+      if (countElement) {
+        countElement.textContent = `${filtered.length} منتج`;
+      }
       
-      // Render products
+      // عرض المنتجات
       renderProducts(filtered);
     }
     
-    // Extract price from range string
+    // استخراج السعر من النص
     function extractPrice(priceRange) {
       if (!priceRange) return 0;
       const match = priceRange.match(/(\d+)/);
       return match ? parseInt(match[0]) : 0;
     }
     
-    // Render Products
+    // ==================== RENDER PRODUCTS ====================
     function renderProducts(products) {
       const grid = document.getElementById('productsGrid');
+      if (!grid) return;
       
-      if (!products.length) {
+      if (!products || !products.length) {
         grid.innerHTML = `
           <div class="empty-state" style="grid-column:1/-1;">
             <i class="fas fa-box-open"></i>
@@ -692,10 +747,11 @@
       }
       
       grid.innerHTML = products.map(product => `
-        <div class="product-card" onclick="openModal(${product.id})">
+        <div class="product-card" onclick="openModal(${product.id})" role="button" tabindex="0">
           <div class="product-image">
             <img src="${product.product_image_url || 'https://placehold.co/400x500/2A2218/C4A06A'}" 
                  alt="${escapeHtml(product.product_name)}"
+                 loading="lazy"
                  onerror="this.src='https://placehold.co/400x500/2A2218/C4A06A'">
             ${product.is_featured ? '<div class="product-badge featured"><i class="fas fa-star"></i> مميز</div>' : ''}
             <div class="product-overlay">
@@ -712,25 +768,35 @@
       `).join('');
     }
     
-    // Open Modal
-    window.openModal = async function(productId) {
+    // ==================== MODAL FUNCTIONS ====================
+    window.openModal = function(productId) {
       const product = allProducts.find(p => p.id === productId);
       if (!product) return;
       
-      const allImages = [product.product_image_url, ...(product.additional_images || [])].filter(img => img);
+      const allImages = [
+        product.product_image_url,
+        ...(product.additional_images || [])
+      ].filter(img => img && img.trim());
+      
       const modalContent = document.getElementById('modalContent');
+      if (!modalContent) return;
+      
+      const mainImage = allImages[0] || 'https://placehold.co/600x600/2A2218/C4A06A';
       
       modalContent.innerHTML = `
         <div class="modal-gallery">
-          <img id="modalMainImage" src="${allImages[0] || 'https://placehold.co/600x600/2A2218/C4A06A'}" 
+          <img id="modalMainImage" 
+               src="${mainImage}" 
                alt="${escapeHtml(product.product_name)}"
                class="modal-main-image"
-               onclick="openImageInNewTab('${allImages[0]}')">
+               onclick="openImageInNewTab(this.src)">
           ${allImages.length > 1 ? `
-            <div class="modal-thumbnails" id="modalThumbnails">
+            <div class="modal-thumbnails">
               ${allImages.map((img, idx) => `
-                <img src="${img}" class="modal-thumb ${idx === 0 ? 'active' : ''}" 
-                     onclick="changeMainImage('${img}', this)">
+                <img src="${img}" 
+                     class="modal-thumb ${idx === 0 ? 'active' : ''}" 
+                     onclick="changeMainImage('${img.replace(/'/g, "\\'")}', this)"
+                     alt="صورة ${idx + 1}">
               `).join('')}
             </div>
           ` : ''}
@@ -742,7 +808,7 @@
           ${product.product_description ? `<div class="modal-description">${escapeHtml(product.product_description)}</div>` : ''}
           ${product.product_video_url ? `
             <div class="modal-video">
-              <video controls src="${product.product_video_url}"></video>
+              <video controls src="${product.product_video_url}" style="width:100%;border-radius:12px;"></video>
             </div>
           ` : ''}
           <button class="contact-btn" onclick="contactUs()">
@@ -751,61 +817,83 @@
         </div>
       `;
       
-      document.getElementById('productModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
+      const modal = document.getElementById('productModal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
     };
     
-    // Change main image in modal
+    // تغيير الصورة الرئيسية في المودال
     window.changeMainImage = function(imgUrl, element) {
       const mainImg = document.getElementById('modalMainImage');
-      if (mainImg) mainImg.src = imgUrl;
+      if (mainImg) {
+        mainImg.src = imgUrl;
+        mainImg.onclick = () => openImageInNewTab(imgUrl);
+      }
       
       document.querySelectorAll('.modal-thumb').forEach(thumb => thumb.classList.remove('active'));
-      element.classList.add('active');
+      if (element) element.classList.add('active');
     };
     
-    // Open image in new tab
+    // فتح الصورة في نافذة جديدة
     window.openImageInNewTab = function(imgUrl) {
-      if (imgUrl) window.open(imgUrl, '_blank');
+      if (imgUrl && imgUrl.startsWith('http')) {
+        window.open(imgUrl, '_blank');
+      }
     };
     
-    // Close modal
+    // إغلاق المودال
     window.closeModal = function() {
-      document.getElementById('productModal').classList.remove('active');
-      document.body.style.overflow = '';
+      const modal = document.getElementById('productModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
     };
     
-    // Contact us
+    // التواصل عبر واتساب
     window.contactUs = function() {
-      const whatsappNumber = CONFIG.WHATSAPP_NUMBER || '212600000000';
+      const whatsappNumber = CONFIG.WHATSAPP_NUMBER || '212601245733';
       const message = encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن منتجاتكم');
       window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
     };
     
-    // Reset filters
+    // إعادة ضبط الفلاتر
     window.resetFilters = function() {
-      document.getElementById('searchInput').value = '';
-      document.getElementById('categoryFilter').value = '';
-      document.getElementById('sortFilter').value = 'default';
+      const searchInput = document.getElementById('searchInput');
+      const categoryFilter = document.getElementById('categoryFilter');
+      const sortFilter = document.getElementById('sortFilter');
+      
+      if (searchInput) searchInput.value = '';
+      if (categoryFilter) categoryFilter.value = '';
+      if (sortFilter) sortFilter.value = 'default';
+      
       filterProducts();
     };
     
-    // Filter on input
+    // تصدير الدوال للـ global scope
     window.filterProducts = filterProducts;
     
-    // Close modal on escape key
+    // ==================== EVENT LISTENERS ====================
+    // إغلاق المودال بزر Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
     
-    // Close modal on overlay click
-    document.getElementById('productModal').addEventListener('click', (e) => {
+    // إغلاق المودال بالضغط على الخلفية
+    document.addEventListener('click', (e) => {
       if (e.target.id === 'productModal') closeModal();
     });
     
-    // Initialize
+    // ==================== INITIALIZATION ====================
     document.addEventListener('DOMContentLoaded', async () => {
+      console.log('🚀 Products page initialized');
+      
+      // تحميل الفئات أولاً
       await loadCategories();
+      
+      // تحميل المنتجات (والتحقق من URL)
       await loadProducts();
     });
   </script>

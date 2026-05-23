@@ -9,12 +9,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="config.js"></script>
+  
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       background: #1A1510;
@@ -24,9 +22,7 @@
       overflow-x: hidden;
     }
     
-    .gold-text {
-      color: #C4A06A;
-    }
+    .gold-text { color: #C4A06A; }
     
     .gold-btn {
       background: transparent;
@@ -50,9 +46,7 @@
       background: linear-gradient(90deg, transparent, rgba(196, 160, 106, 0.2), transparent);
       transition: left 0.5s;
     }
-    .gold-btn:hover::before {
-      left: 100%;
-    }
+    .gold-btn:hover::before { left: 100%; }
     .gold-btn:hover {
       transform: translateY(-2px);
       border-color: #D4B896;
@@ -79,11 +73,7 @@
       padding: 1rem 2rem;
     }
     
-    .logo-img {
-      height: 50px;
-      width: auto;
-      transition: all 0.3s;
-    }
+    .logo-img { height: 50px; width: auto; transition: all 0.3s; }
     
     .video-container {
       height: 100%;
@@ -97,10 +87,7 @@
     .video-container::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.3) 100%);
       pointer-events: none;
     }
@@ -110,9 +97,7 @@
       50% { transform: translateY(-10px); }
       100% { transform: translateY(0px); }
     }
-    .float-effect {
-      animation: float 4s ease-in-out infinite;
-    }
+    .float-effect { animation: float 4s ease-in-out infinite; }
     
     .step-card {
       background: rgba(42, 34, 24, 0.8);
@@ -142,11 +127,9 @@
       color: #E8DDD0;
       width: 100%;
       transition: all 0.3s;
+      font-family: inherit;
     }
-    .review-input:focus {
-      outline: none;
-      border-color: #C4A06A;
-    }
+    .review-input:focus { outline: none; border-color: #C4A06A; }
     
     .whatsapp-float {
       position: fixed;
@@ -165,19 +148,14 @@
       font-size: 1.5rem;
       text-decoration: none;
     }
-    .whatsapp-float:hover {
-      transform: scale(1.08);
-    }
+    .whatsapp-float:hover { transform: scale(1.08); }
     
     .social-icon {
       transition: all 0.3s;
       cursor: pointer;
       color: #A89880;
     }
-    .social-icon:hover {
-      color: #C4A06A;
-      transform: translateY(-3px);
-    }
+    .social-icon:hover { color: #C4A06A; transform: translateY(-3px); }
     
     .section-title {
       position: relative;
@@ -195,621 +173,191 @@
       background: #C4A06A;
     }
     
-    .darija-text {
-      font-family: 'Tajawal', 'Cairo', sans-serif;
-    }
-    
-    /* Slider styles */
-    .slider-wrapper {
-      max-width: 900px;
+    .darija-text { font-family: 'Tajawal', 'Cairo', sans-serif; }
+
+    /* ===== PRODUCTS GRID ===== */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
       margin: 0 auto;
     }
-    .slider-container {
-      width: 100%;
+    .product-card {
+      background: #2A2218;
+      border-radius: 16px;
       overflow: hidden;
-      border-radius: 24px;
-      border: 1px solid rgba(196, 160, 106, 0.25);
+      transition: all 0.4s ease;
       cursor: pointer;
-      transition: all 0.4s;
       position: relative;
+      border: 1px solid rgba(196,160,106,0.1);
     }
-    .slider-container:hover {
-      border-color: rgba(196, 160, 106, 0.6);
-      box-shadow: 0 20px 40px rgba(196, 160, 106, 0.1);
+    .product-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(196,160,106,0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
-    .slider-track {
-      display: flex;
-      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .slider-slide {
-      min-width: 100%;
+    .product-image-wrapper {
       position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: #1A1510;
     }
-    .slider-slide img {
+    .product-image-wrapper img {
       width: 100%;
-      height: 450px;
+      height: 100%;
       object-fit: cover;
-      display: block;
+      transition: transform 0.6s ease;
     }
-    .slider-overlay {
+    .product-card:hover .product-image-wrapper img { transform: scale(1.08); }
+    .product-badge {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(26, 21, 16, 0.95));
-      padding: 2.5rem 2rem 2rem;
-      text-align: center;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(135deg, #C4A06A, #A07840);
+      color: #1A1510;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      box-shadow: 0 4px 12px rgba(196,160,106,0.3);
     }
-    .slider-overlay h3 {
+    .product-info-card {
+      padding: 1.2rem;
+    }
+    .product-category-tag {
       color: #C4A06A;
-      font-size: 1.6rem;
-      margin-bottom: 0.3rem;
-      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
     }
-    .slider-overlay .subtitle {
+    .product-title-card {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #F5EDD8;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .product-price-card {
+      color: #C4A06A;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .product-desc-card {
+      font-size: 0.8rem;
       color: #A89880;
-      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
-    .slider-dots {
+    .featured-loader {
       display: flex;
       justify-content: center;
-      gap: 0.6rem;
-      margin-top: 1.2rem;
+      align-items: center;
+      min-height: 300px;
     }
-    .slider-dot {
-      width: 10px;
-      height: 10px;
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(196,160,106,0.3);
       border-radius: 50%;
-      background: rgba(196, 160, 106, 0.25);
-      cursor: pointer;
-      transition: all 0.3s;
+      border-top-color: #C4A06A;
+      animation: spin 0.8s ease-in-out infinite;
     }
-    .slider-dot.active {
-      background: #C4A06A;
-      width: 28px;
-      border-radius: 12px;
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .review-message {
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      display: none;
     }
-    .footer-contact {
-      font-size: 0.7rem;
-    }
+    .review-message.success { background: rgba(37,211,102,0.1); color: #25D366; border: 1px solid rgba(37,211,102,0.3); }
+    .review-message.error { background: rgba(255,71,87,0.1); color: #FF4757; border: 1px solid rgba(255,71,87,0.3); }
     
-    /* ==============================================
-       MEDIA QUERIES - تصميم متجاوب لجميع الأجهزة
-       ============================================== */
-
-    /* الشاشات المتوسطة (حتى 1200px) - لابتوب صغير */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 1200px) {
-      .video-container {
-        min-height: 420px;
-      }
-      
-      .slider-slide img {
-        height: 400px;
-      }
-      
-      .slider-overlay {
-        padding: 2rem 1.5rem 1.5rem;
-      }
-      
-      .slider-overlay h3 {
-        font-size: 1.4rem;
-      }
-      
-      section h1 {
-        font-size: 3.5rem;
-      }
+      .video-container { min-height: 420px; }
     }
 
-    /* التابلت (حتى 1024px) */
     @media (max-width: 1024px) {
-      .nav-bar {
-        padding: 0.9rem 1.5rem;
-      }
-      
-      .video-container {
-        min-height: 380px;
-      }
-      
-      .video-container video {
-        min-height: 350px !important;
-      }
-      
-      .slider-slide img {
-        height: 350px;
-      }
-      
-      .slider-overlay h3 {
-        font-size: 1.3rem;
-      }
-      
-      .slider-overlay .subtitle {
-        font-size: 0.8rem;
-      }
-      
-      section h1 {
-        font-size: 3rem;
-      }
-      
-      .section-title {
-        font-size: 1.8rem;
-      }
-      
-      .step-card {
-        padding: 1.5rem;
-      }
-      
-      .gold-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.8rem;
-      }
-      
-      .outline-gold {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.8rem;
-      }
+      .nav-bar { padding: 0.9rem 1.5rem; }
+      .video-container { min-height: 380px; }
+      .section-title { font-size: 1.8rem; }
+      .step-card { padding: 1.5rem; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
     }
 
-    /* التابلت الصغير والجوال الأفقي (حتى 768px) */
     @media (max-width: 768px) {
-      .hero-split {
-        flex-direction: column-reverse;
-      }
-      
-      .logo-img {
-        height: 40px;
-      }
-      
-      .whatsapp-float {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-        bottom: 20px;
-        left: 20px;
-      }
-      
-      .video-container {
-        min-height: 320px;
-        border-radius: 20px;
-      }
-      
-      .video-container video {
-        min-height: 300px !important;
-      }
-      
-      .nav-bar {
-        padding: 0.8rem 1rem;
-      }
-      
-      .nav-bar .gap-6 {
-        gap: 1rem;
-        font-size: 0.65rem;
-      }
-      
-      section {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-      
-      section h1 {
-        font-size: 2.5rem;
-        line-height: 1.2;
-      }
-      
-      section p {
-        font-size: 0.85rem;
-      }
-      
-      .section-title {
-        font-size: 1.6rem;
-      }
-      
-      .slider-slide img {
-        height: 280px;
-      }
-      
-      .slider-overlay {
-        padding: 1.5rem 1rem 1.2rem;
-      }
-      
-      .slider-overlay h3 {
-        font-size: 1.15rem;
-      }
-      
-      .slider-overlay .subtitle {
-        font-size: 0.75rem;
-      }
-      
-      .slider-dots {
-        gap: 0.5rem;
-        margin-top: 1rem;
-      }
-      
-      .slider-dot {
-        width: 8px;
-        height: 8px;
-      }
-      
-      .slider-dot.active {
-        width: 22px;
-      }
-      
-      .step-card {
-        padding: 1.25rem;
-      }
-      
-      .step-card h3 {
-        font-size: 1rem;
-      }
-      
-      .step-card p {
-        font-size: 0.75rem;
-      }
-      
-      .gold-btn {
-        padding: 0.55rem 1.25rem;
-        font-size: 0.75rem;
-        letter-spacing: 1.5px;
-      }
-      
-      .outline-gold {
-        padding: 0.55rem 1.25rem;
-        font-size: 0.75rem;
-        letter-spacing: 1.5px;
-      }
-      
-      .review-form-card {
-        padding: 1.5rem;
-      }
-      
-      .review-input {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.8rem;
-      }
-      
-      footer {
-        padding: 2.5rem 1rem;
-      }
-      
-      footer h3 {
-        font-size: 1rem;
-      }
-      
-      footer .gap-8 {
-        gap: 1.5rem;
-      }
+      .logo-img { height: 40px; }
+      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
+      .video-container { min-height: 320px; border-radius: 20px; }
+      .nav-bar { padding: 0.8rem 1rem; }
+      .section-title { font-size: 1.6rem; }
+      .step-card { padding: 1.25rem; }
+      .review-form-card { padding: 1.5rem; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
     }
 
-    /* الجوال (حتى 480px) */
     @media (max-width: 480px) {
-      .nav-bar {
-        padding: 0.6rem 0.75rem;
-      }
-      
-      .logo-img {
-        height: 35px;
-      }
-      
-      .nav-bar .gap-6 {
-        gap: 0.7rem;
-        font-size: 0.6rem;
-        letter-spacing: 0.5px;
-      }
-      
-      .nav-bar .hidden.md\\:flex {
-        display: none !important;
-      }
-      
-      .whatsapp-float {
-        width: 42px;
-        height: 42px;
-        font-size: 1.15rem;
-        bottom: 15px;
-        left: 15px;
-      }
-      
-      .video-container {
-        min-height: 260px;
-        border-radius: 16px;
-      }
-      
-      .video-container video {
-        min-height: 250px !important;
-      }
-      
-      section {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-      }
-      
-      section h1 {
-        font-size: 2rem;
-      }
-      
-      section p {
-        font-size: 0.8rem;
-      }
-      
-      section span {
-        font-size: 0.65rem;
-        letter-spacing: 0.3em;
-      }
-      
-      .section-title {
-        font-size: 1.4rem;
-      }
-      
-      .section-title::after {
-        width: 35px;
-        bottom: -8px;
-      }
-      
-      .slider-container {
-        border-radius: 16px;
-      }
-      
-      .slider-slide img {
-        height: 220px;
-      }
-      
-      .slider-overlay {
-        padding: 1.2rem 0.8rem 1rem;
-      }
-      
-      .slider-overlay h3 {
-        font-size: 1rem;
-      }
-      
-      .slider-overlay .subtitle {
-        font-size: 0.65rem;
-      }
-      
-      .slider-dots {
-        gap: 0.4rem;
-        margin-top: 0.8rem;
-      }
-      
-      .slider-dot {
-        width: 7px;
-        height: 7px;
-      }
-      
-      .slider-dot.active {
-        width: 18px;
-      }
-      
-      .step-card {
-        padding: 1rem;
-        border-radius: 14px;
-      }
-      
-      .step-card .w-14 {
-        width: 3rem;
-        height: 3rem;
-      }
-      
-      .step-card h3 {
-        font-size: 0.9rem;
-      }
-      
-      .step-card p {
-        font-size: 0.7rem;
-      }
-      
-      .gold-btn {
-        padding: 0.45rem 1rem;
-        font-size: 0.7rem;
-        letter-spacing: 1px;
-      }
-      
-      .outline-gold {
-        padding: 0.45rem 1rem;
-        font-size: 0.7rem;
-        letter-spacing: 1px;
-      }
-      
-      .review-form-card {
-        padding: 1.25rem;
-        border-radius: 14px;
-      }
-      
-      .review-input {
-        padding: 0.5rem 0.7rem;
-        font-size: 0.75rem;
-        border-radius: 10px;
-      }
-      
-      .rating-star {
-        font-size: 1.2rem !important;
-      }
-      
-      footer {
-        padding: 2rem 0.75rem;
-      }
-      
-      footer h3 {
-        font-size: 0.95rem;
-      }
-      
-      footer .gap-8 {
-        gap: 1.25rem;
-      }
-      
-      .footer-contact {
-        font-size: 0.6rem;
-      }
-      
-      footer a[href*="wa.me"],
-      footer a[href*="mailto"] {
-        font-size: 0.6rem;
-      }
-      
-      .flex-wrap.gap-12 {
-        gap: 2rem;
-      }
+      .nav-bar { padding: 0.6rem 0.75rem; }
+      .logo-img { height: 35px; }
+      .whatsapp-float { width: 42px; height: 42px; font-size: 1.15rem; bottom: 15px; left: 15px; }
+      .video-container { min-height: 260px; border-radius: 16px; }
+      .section-title { font-size: 1.4rem; }
+      .step-card { padding: 1rem; border-radius: 14px; }
+      .review-form-card { padding: 1.25rem; border-radius: 14px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .product-info-card { padding: 0.9rem; }
+      .product-title-card { font-size: 0.9rem; }
+      .product-price-card { font-size: 0.85rem; }
     }
 
-    /* الجوال الصغير جداً (حتى 360px) */
     @media (max-width: 360px) {
-      .nav-bar .gap-6 {
-        gap: 0.5rem;
-        font-size: 0.55rem;
-      }
-      
-      .video-container {
-        min-height: 220px;
-      }
-      
-      .video-container video {
-        min-height: 200px !important;
-      }
-      
-      section h1 {
-        font-size: 1.7rem;
-      }
-      
-      section p {
-        font-size: 0.7rem;
-      }
-      
-      .section-title {
-        font-size: 1.25rem;
-      }
-      
-      .slider-slide img {
-        height: 180px;
-      }
-      
-      .slider-overlay h3 {
-        font-size: 0.9rem;
-      }
-      
-      .slider-overlay .subtitle {
-        font-size: 0.6rem;
-      }
-      
-      .step-card {
-        padding: 0.8rem;
-      }
-      
-      .step-card .w-14 {
-        width: 2.5rem;
-        height: 2.5rem;
-      }
-      
-      .step-card span {
-        font-size: 0.9rem;
-      }
-      
-      .gold-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.65rem;
-        letter-spacing: 0.5px;
-      }
-      
-      .outline-gold {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.65rem;
-        letter-spacing: 0.5px;
-      }
-      
-      .whatsapp-float {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-        bottom: 10px;
-        left: 10px;
-      }
-      
-      .review-form-card {
-        padding: 1rem;
-      }
-      
-      .review-input {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.7rem;
-      }
-      
-      .rating-star {
-        font-size: 1.1rem !important;
-      }
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .product-badge { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
     }
 
-    /* دعم اللمس - إلغاء تأثيرات hover */
     @media (hover: none) and (pointer: coarse) {
-      .step-card:hover {
-        transform: none;
-        border-color: rgba(196, 160, 106, 0.12);
-      }
-      
-      .step-card:active {
-        transform: scale(0.97);
-        border-color: rgba(196, 160, 106, 0.35);
-      }
-      
-      .slider-container:hover {
-        border-color: rgba(196, 160, 106, 0.25);
-        box-shadow: none;
-      }
-      
-      .slider-container:active {
-        border-color: rgba(196, 160, 106, 0.6);
-      }
-      
-      .gold-btn:hover::before {
-        left: -100%;
-      }
-      
-      .gold-btn:active::before {
-        left: 100%;
-      }
-      
-      .gold-btn:active {
-        transform: translateY(-2px);
-        border-color: #D4B896;
-      }
-      
-      .outline-gold:hover {
-        background: rgba(196, 160, 106, 0.05);
-        transform: none;
-        border-color: rgba(196, 160, 106, 0.5);
-      }
-      
-      .outline-gold:active {
-        background: rgba(196, 160, 106, 0.12);
-        transform: translateY(-2px);
-        border-color: #C4A06A;
-      }
+      .step-card:hover { transform: none; border-color: rgba(196, 160, 106, 0.12); }
+      .step-card:active { transform: scale(0.97); border-color: rgba(196, 160, 106, 0.35); }
+      .product-card:hover { transform: none; }
+      .product-card:active { transform: scale(0.97); border-color: rgba(196,160,106,0.3); }
     }
 
-    /* تقليل الحركة للمستخدمين الحساسين */
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
-      
-      .float-effect {
-        animation: none;
-      }
+      .float-effect { animation: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ========== HEADER (يتم تحميله من header.js) ========== -->
+  <!-- ========== HEADER ========== -->
   <div id="header-container"></div>
   
   <!-- ========== WHATSAPP FLOAT ========== -->
-  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" aria-label="واتساب">
     <i class="fab fa-whatsapp"></i>
   </a>
   
   <main>
-    <!-- Hero Section -->
+    <!-- ========== HERO SECTION ========== -->
     <section id="hero" class="w-full py-12 md:py-24 px-6 md:px-12 lg:px-20">
       <div class="flex flex-wrap md:flex-nowrap gap-12 md:gap-16 items-center max-w-7xl mx-auto">
         <div class="w-full md:w-1/2 order-first md:order-last" data-aos="fade-up">
@@ -836,7 +384,7 @@
       </div>
     </section>
 
-    <!-- قسم حكاية الميمة -->
+    <!-- ========== حكاية الميمة ========== -->
     <section id="story" class="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
       <div class="max-w-6xl mx-auto flex flex-wrap md:flex-nowrap gap-12 items-center">
         <div class="w-full md:w-1/2" data-aos="fade-up">
@@ -858,7 +406,7 @@
       </div>
     </section>
 
-    <!-- قسم صممي قطعتك ديالك -->
+    <!-- ========== صممي قطعتك ديالك ========== -->
     <section id="custom-order" class="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
       <div class="max-w-6xl mx-auto text-center">
         <h2 class="text-3xl md:text-5xl font-bold mb-4 darija-text">صممي قطعتك ديالك</h2>
@@ -895,66 +443,39 @@
       </div>
     </section>
 
-    <!-- منتجاتنا - Slider + زر زيارة المتجر -->
-    <section id="ready-to-wear" class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
+    <!-- ========== منتجاتنا - المنتجات المميزة ========== -->
+    <section id="ready-to-wear" class="w-full px-6 md:px-12 lg:px-20 py-16 md:py-24">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-10">
-          <h2 class="section-title font-bold inline-block darija-text">منتجاتنا</h2>
+        <div class="text-center mb-12">
+          <span class="text-xs tracking-[0.3em] text-[#C4A06A] darija-text">✦ منتجاتنا ✦</span>
+          <h2 class="section-title font-bold inline-block darija-text mt-2">منتجاتنا</h2>
           <p class="text-[#8B7B68] text-sm mt-4 darija-text">اكتشفي مجموعة الإطلاق الحصرية</p>
         </div>
-        
-        <!-- Slider بدون أسعار -->
-        <div class="slider-wrapper" data-aos="fade-up">
-          <div class="slider-container" onclick="window.location.href='collections.html'" style="cursor: pointer;">
-            <div class="slider-track" id="sliderTrack">
-              <div class="slider-slide">
-                <img src="produit1.jpg" alt="جبادور ألمايا" onerror="this.src='https://placehold.co/800x450/2A2218/C4A06A?text=جبادور+ألمايا'">
-                <div class="slider-overlay">
-                  <h3 class="darija-text">✨ جبادور ألمايا ✨</h3>
-                  <p class="subtitle darija-text">فخامة الموبرا والستان - خدمة المعلم</p>
-                </div>
-              </div>
-              <div class="slider-slide">
-                <img src="produit2.jpg" alt="جلابة الأصالة" onerror="this.src='https://placehold.co/800x450/2A2218/C4A06A?text=جلابة+الأصالة'">
-                <div class="slider-overlay">
-                  <h3 class="darija-text">✨ جلابة الأصالة ✨</h3>
-                  <p class="subtitle darija-text">طرز رباطي متقن - أناقة خالدة</p>
-                </div>
-              </div>
-              <div class="slider-slide">
-                <img src="produit3.jpg" alt="قفطان الأميرة" onerror="this.src='https://placehold.co/800x450/2A2218/C4A06A?text=قفطان+الأميرة'">
-                <div class="slider-overlay">
-                  <h3 class="darija-text">✨ قفطان الأميرة ✨</h3>
-                  <p class="subtitle darija-text">بروكار فاخر - ذهب خالص</p>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Slider Dots -->
-            <div class="slider-dots" id="sliderDots">
-              <div class="slider-dot active" data-index="0"></div>
-              <div class="slider-dot" data-index="1"></div>
-              <div class="slider-dot" data-index="2"></div>
-            </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+          <div class="featured-loader" style="grid-column: 1 / -1;">
+            <div class="loader-spinner"></div>
           </div>
         </div>
-        
-        <!-- زر قم بزيارة متجرنا -->
-        <div class="text-center mt-10" data-aos="fade-up" data-aos-delay="100">
-          <a href="collections.html" class="gold-btn inline-flex items-center gap-2 px-10 py-3.5 rounded-full text-sm uppercase tracking-wider darija-text">
-            <i class="fas fa-store"></i> قم بزيارة متجرنا
+
+        <!-- زر المتجر -->
+        <div class="text-center mt-12" data-aos="fade-up">
+          <a href="products.html" class="gold-btn inline-flex items-center gap-2 px-10 py-3.5 rounded-full text-sm uppercase tracking-wider darija-text">
+            <i class="fas fa-store"></i> شوفي جميع المنتجات
           </a>
         </div>
       </div>
     </section>
 
-    <!-- قسم إضافة رأي -->
+    <!-- ========== شاركينا رأيك ========== -->
     <section class="w-full px-6 md:px-12 lg:px-20 py-16">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-2xl md:text-3xl font-light mb-3 darija-text">✨شاركينا رأيك✨</h2>
+        <h2 class="text-2xl md:text-3xl font-light mb-3 darija-text">✨ شاركينا رأيك ✨</h2>
         <p class="text-[#8B7B68] text-sm mb-8 darija-text">كوني أول وحدة تشارك تجربتها مع الميمة</p>
         
         <div class="review-form-card">
+          <!-- نجوم التقييم -->
           <div class="flex justify-center gap-2 mb-6" id="ratingStars">
             <i class="far fa-star rating-star text-[#C4A06A]" data-rating="1" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
             <i class="far fa-star rating-star text-[#C4A06A]" data-rating="2" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
@@ -962,16 +483,31 @@
             <i class="far fa-star rating-star text-[#C4A06A]" data-rating="4" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
             <i class="far fa-star rating-star text-[#C4A06A]" data-rating="5" style="cursor: pointer; font-size: 1.5rem; transition: all 0.2s;"></i>
           </div>
+          
+          <!-- حقول الإدخال -->
           <input type="text" id="reviewerName" placeholder="سميتك" class="review-input darija-text mb-3 text-right">
           <textarea id="reviewText" rows="3" placeholder="شاركينا رأيك فهاد التجربة..." class="review-input darija-text mb-4 text-right"></textarea>
-          <button id="submitReview" class="gold-btn px-8 py-2 rounded-full text-sm uppercase tracking-wider darija-text">شاركي رأيك</button>
+          
+          <!-- زر الإرسال -->
+          <button id="submitReview" class="gold-btn px-8 py-2 rounded-full text-sm uppercase tracking-wider darija-text">
+            شاركي رأيك
+          </button>
+          
+          <!-- رسالة الحالة -->
+          <div id="reviewMessage" class="review-message mt-3"></div>
         </div>
         
-        <div id="reviewsList" class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        <!-- قائمة الآراء -->
+        <div id="reviewsList" class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="col-span-2 text-center text-[#8B7B68] py-8 darija-text">
+            <i class="far fa-comment-dots text-3xl mb-3 block opacity-40"></i>
+            جاري تحميل الآراء...
+          </div>
+        </div>
       </div>
     </section>
     
-    <!-- ========== FOOTER (يتم تحميله من footer.js) ========== -->
+    <!-- ========== FOOTER ========== -->
     <div id="footer-container"></div>
   </main>
 
@@ -980,150 +516,351 @@
   <script src="footer.js"></script>
 
   <script>
-    AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
-    
-    // Slider functionality
-    let currentSlide = 0;
-    const totalSlides = 3;
-    const sliderTrack = document.getElementById('sliderTrack');
-    const sliderDots = document.querySelectorAll('.slider-dot');
-    
-    function goToSlide(index) {
-      currentSlide = index;
-      sliderTrack.style.transform = `translateX(${currentSlide * 100}%)`;
-      
-      sliderDots.forEach((dot, i) => {
-        if (i === currentSlide) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
+    // ==================== CONFIG CHECK ====================
+    if (typeof CONFIG === 'undefined') {
+      console.warn('⚠️ CONFIG غير موجود. سيتم استعمال البيانات الثابتة.');
     }
-    
-    // Auto-advance slider every 4 seconds
-    setInterval(() => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      goToSlide(currentSlide);
-    }, 4000);
-    
-    // Dot click events
-    sliderDots.forEach(dot => {
-      dot.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent triggering the slider container click
-        const index = parseInt(dot.getAttribute('data-index'));
-        goToSlide(index);
-      });
-    });
-    
-    // آراء الزبائن
-    let reviews = JSON.parse(localStorage.getItem('almaya_reviews') || '[]');
-    
-    function renderReviews() {
-      const container = document.getElementById('reviewsList');
-      if(!container) return;
-      if(reviews.length === 0) {
-        container.innerHTML = '<div class="col-span-2 text-center text-[#8B7B68] py-8 darija-text">لا توجد آراء بعد. كوني أول وحدة تشارك رأيها!</div>';
-        return;
+
+    // ==================== AOS INIT ====================
+    AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
+
+    // ==================== SUPABASE API ====================
+    async function supabaseRequest(endpoint, opts = {}) {
+      const url = `${CONFIG.SUPABASE_URL}${endpoint}`;
+      const fetchOpts = {
+        method: opts.method || 'GET',
+        headers: {
+          'apikey': CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      
+      if (opts.body) fetchOpts.body = JSON.stringify(opts.body);
+      
+      const res = await fetch(url, fetchOpts);
+      if (res.status === 204) return null;
+      
+      const text = await res.text();
+      if (!text) return res.ok ? null : Promise.reject(new Error(`خطأ ${res.status}`));
+      
+      try {
+        const data = JSON.parse(text);
+        if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
+        return data;
+      } catch(e) {
+        if (!res.ok) throw new Error(`خطأ ${res.status}`);
+        return text;
       }
-      container.innerHTML = reviews.map(rev => `
-        <div class="review-form-card">
-          <div class="flex justify-center mb-2">
-            ${Array(rev.rating).fill('<i class="fas fa-star text-[#C4A06A] text-sm"></i>').join('')}
-            ${Array(5 - rev.rating).fill('<i class="far fa-star text-[#C4A06A] text-sm"></i>').join('')}
+    }
+
+    // ==================== LOAD FEATURED PRODUCTS ====================
+    async function loadFeaturedProducts() {
+      const grid = document.getElementById('productsGrid');
+      if (!grid) return;
+
+      try {
+        if (typeof CONFIG !== 'undefined' && CONFIG.SUPABASE_URL) {
+          const url = `${CONFIG.SUPABASE_URL}/rest/v1/products?select=*&is_active=eq.true&is_featured=eq.true&order=display_order`;
+          
+          const response = await fetch(url, {
+            headers: {
+              'apikey': CONFIG.SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (!response.ok) throw new Error('Failed to fetch');
+
+          const products = await response.json();
+
+          if (products && products.length > 0) {
+            renderProducts(products);
+            return;
+          }
+        }
+        
+        showFallbackProducts();
+        
+      } catch (error) {
+        console.error('Error loading featured products:', error);
+        showFallbackProducts();
+      }
+    }
+
+    function renderProducts(products) {
+      const grid = document.getElementById('productsGrid');
+      if (!grid) return;
+
+      const productsHTML = products.map(product => {
+        const imageUrl = product.product_image_url || 
+                        (product.additional_images && product.additional_images[0]) || 
+                        'https://placehold.co/400x500/2A2218/C4A06A?text=Almaya';
+        
+        return `
+          <div class="product-card" data-aos="fade-up" onclick="window.location.href='products.html?category=${encodeURIComponent(createSlug(product.category_name))}'">
+            <div class="product-image-wrapper">
+              <img src="${imageUrl}" 
+                   alt="${escapeHtml(product.product_name)}" 
+                   loading="lazy"
+                   onerror="this.src='https://placehold.co/400x500/2A2218/C4A06A?text=Almaya'">
+              <div class="product-badge">
+                <i class="fas fa-star"></i> مميز
+              </div>
+            </div>
+            <div class="product-info-card">
+              <div class="product-category-tag">${escapeHtml(product.category_name)}</div>
+              <div class="product-title-card">${escapeHtml(product.product_name)}</div>
+              <div class="product-price-card">${escapeHtml(product.price_range) || 'اتصل بنا للسعر'}</div>
+              ${product.product_description ? 
+                `<div class="product-desc-card">${escapeHtml(product.product_description.substring(0, 100))}${product.product_description.length > 100 ? '...' : ''}</div>` 
+                : ''}
+            </div>
           </div>
-          <p class="text-center text-xs text-[#C4A06A] mb-2">${rev.name}</p>
-          <p class="text-sm text-[#B8A890] text-center darija-text">"${rev.text}"</p>
-          <p class="text-center text-[0.5rem] text-[#8B7B68] mt-3">${rev.date}</p>
+        `;
+      }).join('');
+
+      grid.innerHTML = productsHTML;
+    }
+
+    function showFallbackProducts() {
+      const grid = document.getElementById('productsGrid');
+      if (!grid) return;
+
+      const fallback = [
+        { category_name: 'الجلابة', product_name: 'جلابة الأصالة', price_range: '600-900 درهم', product_description: 'طرز رباطي متقن - أناقة خالدة', image: 'https://placehold.co/400x500/2A2218/C4A06A?text=جلابة+الأصالة' },
+        { category_name: 'القفطان', product_name: 'قفطان الأميرة', price_range: '1200-1800 درهم', product_description: 'بروكار فاخر - ذهب خالص', image: 'https://placehold.co/400x500/2A2218/C4A06A?text=قفطان+الأميرة' },
+        { category_name: 'الجبادور', product_name: 'جبادور ألمايا', price_range: '800-1200 درهم', product_description: 'فخامة الموبرا والستان - خدمة المعلم', image: 'https://placehold.co/400x500/2A2218/C4A06A?text=جبادور+ألمايا' },
+        { category_name: 'التكشيطة', product_name: 'تكشيطة الفخامة', price_range: '1500-2200 درهم', product_description: 'تطريز يدوي فاخر - للمناسبات الكبيرة', image: 'https://placehold.co/400x500/2A2218/C4A06A?text=تكشيطة+الفخامة' }
+      ];
+
+      grid.innerHTML = fallback.map(product => `
+        <div class="product-card" data-aos="fade-up" onclick="window.location.href='products.html?category=${encodeURIComponent(createSlug(product.category_name))}'">
+          <div class="product-image-wrapper">
+            <img src="${product.image}" alt="${escapeHtml(product.product_name)}" loading="lazy" onerror="this.src='https://placehold.co/400x500/2A2218/C4A06A?text=Almaya'">
+            <div class="product-badge"><i class="fas fa-star"></i> مميز</div>
+          </div>
+          <div class="product-info-card">
+            <div class="product-category-tag">${escapeHtml(product.category_name)}</div>
+            <div class="product-title-card">${escapeHtml(product.product_name)}</div>
+            <div class="product-price-card">${escapeHtml(product.price_range)}</div>
+            ${product.product_description ? `<div class="product-desc-card">${escapeHtml(product.product_description)}</div>` : ''}
+          </div>
         </div>
       `).join('');
     }
-    
-    let selectedRating = 0;
-    const stars = document.querySelectorAll('.rating-star');
-    stars.forEach(star => {
-      star.addEventListener('mouseenter', function() {
-        const rating = parseInt(this.getAttribute('data-rating'));
-        stars.forEach((s, idx) => {
-          if(idx < rating) {
-            s.classList.remove('far');
-            s.classList.add('fas');
-          } else {
-            s.classList.remove('fas');
-            s.classList.add('far');
+
+    // ==================== REVIEWS SYSTEM ====================
+    let currentRating = 0;
+
+    async function loadReviews() {
+      const container = document.getElementById('reviewsList');
+      if (!container) return;
+
+      try {
+        if (typeof CONFIG !== 'undefined' && CONFIG.SUPABASE_URL) {
+          const reviews = await supabaseRequest('/rest/v1/reviews?select=*&is_approved=eq.true&order=created_at.desc');
+          
+          if (reviews && reviews.length > 0) {
+            renderReviews(reviews);
+            return;
           }
-        });
-      });
-      star.addEventListener('mouseleave', function() {
-        stars.forEach((s, idx) => {
-          if(idx < selectedRating) {
-            s.classList.remove('far');
-            s.classList.add('fas');
-          } else {
-            s.classList.remove('fas');
-            s.classList.add('far');
-          }
-        });
-      });
-      star.addEventListener('click', function() {
-        selectedRating = parseInt(this.getAttribute('data-rating'));
-        stars.forEach((s, idx) => {
-          if(idx < selectedRating) {
-            s.classList.remove('far');
-            s.classList.add('fas');
-          } else {
-            s.classList.remove('fas');
-            s.classList.add('far');
-          }
-        });
-      });
-    });
-    
-    document.getElementById('submitReview')?.addEventListener('click', () => {
+        }
+        
+        // Fallback to localStorage
+        const localReviews = JSON.parse(localStorage.getItem('almaya_reviews') || '[]');
+        if (localReviews.length > 0) {
+          renderReviews(localReviews);
+        } else {
+          container.innerHTML = `
+            <div class="col-span-2 text-center text-[#8B7B68] py-8 darija-text">
+              <i class="far fa-comment-dots text-3xl mb-3 block opacity-40"></i>
+              لا توجد آراء بعد. كوني أول وحدة تشارك رأيها!
+            </div>
+          `;
+        }
+        
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+        const localReviews = JSON.parse(localStorage.getItem('almaya_reviews') || '[]');
+        if (localReviews.length > 0) {
+          renderReviews(localReviews);
+        } else {
+          container.innerHTML = `
+            <div class="col-span-2 text-center text-[#8B7B68] py-8 darija-text">
+              لا توجد آراء بعد
+            </div>
+          `;
+        }
+      }
+    }
+
+    function renderReviews(reviews) {
+      const container = document.getElementById('reviewsList');
+      if (!container) return;
+
+      container.innerHTML = reviews.map((rev, index) => {
+        const dateStr = rev.created_at 
+          ? new Date(rev.created_at).toLocaleDateString('ar-MA', { year: 'numeric', month: 'long', day: 'numeric' })
+          : (rev.date || '');
+        
+        return `
+          <div class="review-form-card" data-aos="fade-up" data-aos-delay="${index * 100}">
+            <div class="flex justify-center mb-2">
+              ${Array(rev.rating).fill('<i class="fas fa-star text-[#C4A06A] text-sm"></i>').join('')}
+              ${Array(5 - rev.rating).fill('<i class="far fa-star text-[#C4A06A] text-sm"></i>').join('')}
+            </div>
+            <p class="text-center text-xs text-[#C4A06A] mb-2 font-semibold">${escapeHtml(rev.name)}</p>
+            <p class="text-sm text-[#B8A890] text-center darija-text">"${escapeHtml(rev.text)}"</p>
+            <p class="text-center text-[0.5rem] text-[#8B7B68] mt-3">${dateStr}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function submitReview() {
       const name = document.getElementById('reviewerName')?.value.trim();
       const text = document.getElementById('reviewText')?.value.trim();
-      if(!name || !text || selectedRating === 0) {
-        alert('الرجاء إدخال اسمك ورأيك واختيار تقييم');
+      const messageDiv = document.getElementById('reviewMessage');
+      
+      if (!name || !text || currentRating === 0) {
+        showReviewMessage('⚠️ الرجاء إدخال اسمك ورأيك واختيار تقييم', 'error');
         return;
       }
-      reviews.push({
+      
+      const submitBtn = document.getElementById('submitReview');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i> جاري الإرسال...';
+      }
+      
+      const reviewData = {
         name: name,
         text: text,
-        rating: selectedRating,
-        date: new Date().toLocaleDateString('ar-MA')
-      });
-      localStorage.setItem('almaya_reviews', JSON.stringify(reviews));
-      document.getElementById('reviewerName').value = '';
-      document.getElementById('reviewText').value = '';
-      selectedRating = 0;
-      stars.forEach(s => {
-        s.classList.remove('fas');
-        s.classList.add('far');
-      });
-      renderReviews();
-      alert('شكراً بزاف على رأيك! ❤️');
-    });
+        rating: currentRating,
+        is_approved: true
+      };
+      
+      try {
+        if (typeof CONFIG !== 'undefined' && CONFIG.SUPABASE_URL) {
+          await supabaseRequest('/rest/v1/reviews', {
+            method: 'POST',
+            body: reviewData
+          });
+        } else {
+          const localReviews = JSON.parse(localStorage.getItem('almaya_reviews') || '[]');
+          localReviews.push({
+            ...reviewData,
+            date: new Date().toLocaleDateString('ar-MA', { year: 'numeric', month: 'long', day: 'numeric' })
+          });
+          localStorage.setItem('almaya_reviews', JSON.stringify(localReviews));
+        }
+        
+        document.getElementById('reviewerName').value = '';
+        document.getElementById('reviewText').value = '';
+        currentRating = 0;
+        
+        document.querySelectorAll('.rating-star').forEach(s => {
+          s.classList.remove('fas');
+          s.classList.add('far');
+        });
+        
+        showReviewMessage('✨ شكراً بزاف على رأيك! تمت إضافته بنجاح', 'success');
+        
+        setTimeout(() => loadReviews(), 800);
+        
+      } catch (error) {
+        console.error('Error submitting review:', error);
+        showReviewMessage('❌ حدث خطأ في إرسال الرأي. المرجو المحاولة مرة أخرى.', 'error');
+      }
+      
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'شاركي رأيك';
+      }
+    }
+
+    function showReviewMessage(text, type) {
+      const msgDiv = document.getElementById('reviewMessage');
+      if (!msgDiv) return;
+      
+      msgDiv.textContent = text;
+      msgDiv.className = `review-message ${type}`;
+      msgDiv.style.display = 'block';
+      
+      if (window._reviewMsgTimeout) clearTimeout(window._reviewMsgTimeout);
+      window._reviewMsgTimeout = setTimeout(() => {
+        msgDiv.style.display = 'none';
+      }, 5000);
+    }
+
+    // ==================== HELPERS ====================
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m] || m);
+    }
+
+    function createSlug(name) {
+      if (!name) return '';
+      return name.toLowerCase().replace(/\s+/g, '-').replace(/[^\u0600-\u06FF\w\-]/g, '').replace(/\-\-+/g, '-').trim();
+    }
     
     function scrollToShop() {
-      document.getElementById('ready-to-wear').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('ready-to-wear')?.scrollIntoView({ behavior: 'smooth' });
     }
     function scrollToCustom() {
-      document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('custom-order')?.scrollIntoView({ behavior: 'smooth' });
     }
     
     window.scrollToShop = scrollToShop;
     window.scrollToCustom = scrollToCustom;
     
+    // ==================== INIT ====================
     document.addEventListener('DOMContentLoaded', () => {
-      renderReviews();
+      // تحميل المنتجات المميزة
+      loadFeaturedProducts();
+      
+      // تحميل الآراء
+      loadReviews();
+      
+      // أحداث النجوم
+      const stars = document.querySelectorAll('.rating-star');
+      stars.forEach(star => {
+        star.addEventListener('mouseenter', function() {
+          const rating = parseInt(this.getAttribute('data-rating'));
+          stars.forEach((s, idx) => {
+            s.classList.toggle('fas', idx < rating);
+            s.classList.toggle('far', idx >= rating);
+          });
+        });
+        star.addEventListener('mouseleave', function() {
+          stars.forEach((s, idx) => {
+            s.classList.toggle('fas', idx < currentRating);
+            s.classList.toggle('far', idx >= currentRating);
+          });
+        });
+        star.addEventListener('click', function() {
+          currentRating = parseInt(this.getAttribute('data-rating'));
+          stars.forEach((s, idx) => {
+            s.classList.toggle('fas', idx < currentRating);
+            s.classList.toggle('far', idx >= currentRating);
+          });
+        });
+      });
+      
+      // زر إرسال الرأي
+      document.getElementById('submitReview')?.addEventListener('click', submitReview);
+      
+      // تشغيل الفيديوهات
       const videos = document.querySelectorAll('video');
       videos.forEach(v => v.play().catch(e => console.log('Auto-play prevented')));
     });
     
+    // تحديث الآراء من localStorage إذا تغيرت
     window.addEventListener('storage', (e) => {
-      if(e.key === 'almaya_reviews') {
-        reviews = JSON.parse(e.newValue || '[]');
-        renderReviews();
+      if (e.key === 'almaya_reviews') {
+        loadReviews();
       }
     });
   </script>
