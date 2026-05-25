@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Almaya Couture | اختاري تصاميمك - الإطلاق الرسمي</title>
+  <link rel="icon" href="images/logo.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -16,19 +17,54 @@
       box-sizing: border-box;
     }
     
+    /* ========== DARK THEME (Défaut) ========== */
+    :root {
+      --bg: #1A1510;
+      --bg2: #2A2218;
+      --text: #E8DDD0;
+      --text2: #B8A890;
+      --text3: #A89880;
+      --text4: #8B7B68;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --border: rgba(196,160,106,0.15);
+      --border2: rgba(196,160,106,0.2);
+      --card: rgba(42,34,24,0.85);
+      --card-hover: rgba(42,34,24,0.95);
+      --card-border-hover: rgba(196,160,106,0.35);
+    }
+    
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg: #FDFCF8;
+      --bg2: #F5F0E8;
+      --text: #2A2218;
+      --text2: #5A4E3C;
+      --text3: #6B5F52;
+      --text4: #8B7B68;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --border: rgba(160,120,64,0.12);
+      --border2: rgba(160,120,64,0.2);
+      --card: rgba(245,240,232,0.85);
+      --card-hover: rgba(245,240,232,0.95);
+      --card-border-hover: rgba(160,120,64,0.35);
+    }
+    
     body {
-      background: #1A1510;
+      background: var(--bg);
       font-family: 'Tajawal', 'Cairo', sans-serif;
-      color: #E8DDD0;
+      color: var(--text);
       scroll-behavior: smooth;
       overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
     
     /* كيرسر مخصص ذهبي */
     .custom-cursor {
       width: 28px;
       height: 28px;
-      border: 2px solid #C4A06A;
+      border: 2px solid var(--gold);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
@@ -40,7 +76,7 @@
       width: 48px;
       height: 48px;
       background: rgba(196, 160, 106, 0.15);
-      border-color: #D4B896;
+      border-color: var(--gold-light);
     }
     
     /* تخصيص السكرول */
@@ -48,16 +84,14 @@
       width: 4px;
     }
     ::-webkit-scrollbar-track {
-      background: #2A2218;
+      background: var(--bg2);
     }
     ::-webkit-scrollbar-thumb {
-      background: #C4A06A;
+      background: var(--gold);
       border-radius: 10px;
     }
     
-    .gold-text {
-      color: #C4A06A;
-    }
+    .gold-text { color: var(--gold); }
     
     /* زليج مغربي */
     .zelij-pattern {
@@ -79,9 +113,9 @@
     
     /* نافبار */
     .nav-bar {
-      background: rgba(26, 21, 16, 0.92);
+      background: var(--bg);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(196, 160, 106, 0.15);
+      border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
     }
     
@@ -98,8 +132,8 @@
     /* زر ذهبي */
     .gold-btn {
       background: transparent;
-      border: 1.5px solid #C4A06A;
-      color: inherit;
+      border: 1.5px solid var(--gold);
+      color: var(--text);
       letter-spacing: 2px;
       font-weight: 500;
       position: relative;
@@ -126,28 +160,28 @@
     }
     .gold-btn:hover {
       transform: translateY(-2px);
-      border-color: #D4B896;
+      border-color: var(--gold-light);
     }
     
     /* بطاقات الخيارات */
     .option-card {
       transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-      background: rgba(42, 34, 24, 0.85);
+      background: var(--card);
       backdrop-filter: blur(12px);
       border-radius: 20px;
       overflow: hidden;
       cursor: pointer;
-      border: 1px solid rgba(196, 160, 106, 0.15);
+      border: 1px solid var(--border);
     }
     .option-card:hover {
       transform: translateY(-10px);
-      background: rgba(42, 34, 24, 0.95);
-      border-color: rgba(196, 160, 106, 0.35);
+      background: var(--card-hover);
+      border-color: var(--card-border-hover);
       box-shadow: 0 25px 40px -15px rgba(0,0,0,0.5);
     }
     
     .img-placeholder {
-      background: #2A2218;
+      background: var(--bg2);
       width: 100%;
       aspect-ratio: 1 / 1.15;
       position: relative;
@@ -185,16 +219,6 @@
       transform: scale(1.08);
     }
     
-    .social-icon {
-      transition: all 0.3s;
-      cursor: pointer;
-      color: #A89880;
-    }
-    .social-icon:hover {
-      color: #C4A06A;
-      transform: translateY(-3px);
-    }
-    
     .go-top {
       position: fixed;
       bottom: 100px;
@@ -211,8 +235,8 @@
       opacity: 0;
       transition: all 0.3s;
       z-index: 99;
-      border: 1px solid rgba(196, 160, 106, 0.3);
-      color: #C4A06A;
+      border: 1px solid var(--border2);
+      color: var(--gold);
     }
     .go-top.visible {
       opacity: 1;
@@ -226,353 +250,117 @@
       font-family: 'Tajawal', 'Cairo', sans-serif;
     }
 
+    /* ========== THEME TOGGLE BUTTON ========== */
+    .theme-toggle-btn {
+      position: fixed;
+      bottom: 155px;
+      right: 28px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 2px solid var(--border2);
+      color: var(--gold);
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      animation: themePulse 2s ease-in-out infinite;
+    }
+    .theme-toggle-btn:hover {
+      transform: scale(1.1) rotate(15deg);
+      border-color: var(--gold);
+    }
+    .theme-toggle-btn:active { transform: scale(0.95); }
+    
+    body.white-theme .theme-toggle-btn {
+      background: #FFFFFF;
+      border-color: rgba(160, 120, 64, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    
+    @keyframes themePulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
+      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
+    }
+
     /* ==============================================
-       MEDIA QUERIES - تصميم متجاوب لجميع الأجهزة
+       MEDIA QUERIES
        ============================================== */
 
-    /* الشاشات المتوسطة (حتى 1200px) - لابتوب صغير و تابلت أفقي */
     @media (max-width: 1200px) {
-      .img-placeholder {
-        aspect-ratio: 1 / 1.2;
-      }
-      
-      .option-card .p-5 {
-        padding: 1rem;
-      }
+      .img-placeholder { aspect-ratio: 1 / 1.2; }
+      .option-card .p-5 { padding: 1rem; }
     }
 
-    /* التابلت (حتى 1024px) */
     @media (max-width: 1024px) {
-      .grid {
-        gap: 1rem;
-      }
-      
-      .option-card h3 {
-        font-size: 1.25rem;
-      }
-      
-      .option-card .p-5 {
-        padding: 0.9rem;
-      }
-      
-      .gold-btn {
-        font-size: 0.75rem;
-        padding: 0.6rem 1rem;
-        letter-spacing: 1.5px;
-      }
-      
-      section:first-of-type {
-        padding-top: 3rem;
-        padding-bottom: 2rem;
-      }
-      
-      section:first-of-type h1 {
-        font-size: 2.5rem;
-      }
+      .grid { gap: 1rem; }
+      .option-card h3 { font-size: 1.25rem; }
+      .gold-btn { font-size: 0.75rem; padding: 0.6rem 1rem; letter-spacing: 1.5px; }
+      section:first-of-type { padding-top: 3rem; padding-bottom: 2rem; }
+      section:first-of-type h1 { font-size: 2.5rem; }
     }
 
-    /* التابلت الصغير والجوال الأفقي (حتى 768px) */
     @media (max-width: 768px) {
-      .custom-cursor {
-        display: none; /* إخفاء الكيرسر على أجهزة اللمس */
-      }
-      
-      .nav-bar {
-        padding: 0.8rem 1rem;
-      }
-      
-      .logo-img {
-        height: 40px;
-      }
-      
-      .nav-bar .flex-wrap.items-center.justify-between {
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-      
-      .nav-bar .gap-6 {
-        gap: 1rem;
-        font-size: 0.65rem;
-      }
-      
-      section:first-of-type {
-        padding: 2.5rem 1rem;
-      }
-      
-      section:first-of-type h1 {
-        font-size: 2rem;
-      }
-      
-      section:first-of-type p {
-        font-size: 0.85rem;
-      }
-      
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.9rem;
-      }
-      
-      .option-card {
-        border-radius: 16px;
-      }
-      
-      .option-card h3 {
-        font-size: 1.15rem;
-      }
-      
-      .option-card .p-5 {
-        padding: 0.8rem;
-      }
-      
-      .option-card .text-xs {
-        font-size: 0.6rem;
-      }
-      
-      .gold-btn {
-        font-size: 0.7rem;
-        padding: 0.5rem 0.8rem;
-        margin-top: 0.75rem;
-      }
-      
-      .img-placeholder {
-        aspect-ratio: 1 / 1.25;
-      }
-      
-      .whatsapp-float {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-        bottom: 20px;
-        left: 20px;
-      }
-      
-      .go-top {
-        bottom: 80px;
-        right: 20px;
-      }
-      
-      footer {
-        padding: 2.5rem 1rem;
-      }
-      
-      footer .flex-col {
-        text-align: center;
-      }
-    }
-
-    /* الجوال (حتى 480px) */
-    @media (max-width: 480px) {
-      .nav-bar {
-        padding: 0.6rem 0.75rem;
-      }
-      
-      .logo-img {
-        height: 35px;
-      }
-      
-      .nav-bar .gap-6 {
-        gap: 0.7rem;
-        font-size: 0.6rem;
-        letter-spacing: 0.5px;
-      }
-      
-      .nav-bar .hidden.md\\:flex {
-        display: none !important;
-      }
-      
-      section:first-of-type {
-        padding: 2rem 0.75rem;
-      }
-      
-      section:first-of-type h1 {
-        font-size: 1.6rem;
-      }
-      
-      section:first-of-type p {
-        font-size: 0.75rem;
-      }
-      
-      section:first-of-type span {
-        font-size: 0.6rem;
-        letter-spacing: 0.3em;
-      }
-      
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.7rem;
-      }
-      
-      .option-card {
-        border-radius: 14px;
-      }
-      
-      .option-card h3 {
-        font-size: 1rem;
-      }
-      
-      .option-card .p-5 {
-        padding: 0.7rem;
-      }
-      
-      .option-card .text-xs.mt-1 {
-        font-size: 0.55rem;
-      }
-      
-      .option-card .text-xs.mt-3 {
-        font-size: 0.5rem;
-        line-height: 1.5;
-      }
-      
-      .gold-btn {
-        font-size: 0.65rem;
-        padding: 0.45rem 0.7rem;
-        letter-spacing: 1px;
-        margin-top: 0.6rem;
-      }
-      
-      .img-placeholder {
-        aspect-ratio: 1 / 1.3;
-      }
-      
-      .whatsapp-float {
-        width: 42px;
-        height: 42px;
-        font-size: 1.15rem;
-        bottom: 15px;
-        left: 15px;
-      }
-      
-      .go-top {
-        width: 35px;
-        height: 35px;
-        bottom: 65px;
-        right: 15px;
-      }
-      
-      footer h3 {
-        font-size: 1rem;
-      }
-      
-      footer .gap-8 {
-        gap: 1.25rem;
-      }
-      
-      .footer-link {
-        font-size: 0.7rem;
-      }
+      .custom-cursor { display: none; }
+      .nav-bar { padding: 0.8rem 1rem; }
+      .logo-img { height: 40px; }
+      section:first-of-type { padding: 2.5rem 1rem; }
+      section:first-of-type h1 { font-size: 2rem; }
+      section:first-of-type p { font-size: 0.85rem; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+      .option-card { border-radius: 16px; }
+      .option-card h3 { font-size: 1.15rem; }
+      .gold-btn { font-size: 0.7rem; padding: 0.5rem 0.8rem; margin-top: 0.75rem; }
+      .img-placeholder { aspect-ratio: 1 / 1.25; }
+      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
+      .go-top { bottom: 80px; right: 20px; }
+      .theme-toggle-btn { bottom: 130px; right: 22px; width: 40px; height: 40px; font-size: 1rem; }
     }
 
     @media (max-width: 480px) {
-      .footer-link {
-        font-size: 0.6rem;
-      }
+      .nav-bar { padding: 0.6rem 0.75rem; }
+      .logo-img { height: 35px; }
+      section:first-of-type { padding: 2rem 0.75rem; }
+      section:first-of-type h1 { font-size: 1.6rem; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+      .option-card { border-radius: 14px; }
+      .option-card h3 { font-size: 1rem; }
+      .gold-btn { font-size: 0.65rem; padding: 0.45rem 0.7rem; letter-spacing: 1px; margin-top: 0.6rem; }
+      .img-placeholder { aspect-ratio: 1 / 1.3; }
+      .whatsapp-float { width: 42px; height: 42px; font-size: 1.15rem; bottom: 15px; left: 15px; }
+      .go-top { width: 35px; height: 35px; bottom: 65px; right: 15px; }
+      .theme-toggle-btn { bottom: 110px; right: 18px; width: 36px; height: 36px; font-size: 0.9rem; }
     }
 
-    /* الجوال الصغير جداً (حتى 360px) */
     @media (max-width: 360px) {
-      .nav-bar .gap-6 {
-        gap: 0.5rem;
-        font-size: 0.55rem;
-      }
-      
-      section:first-of-type h1 {
-        font-size: 1.4rem;
-      }
-      
-      .grid {
-        gap: 0.5rem;
-      }
-      
-      .option-card {
-        border-radius: 12px;
-      }
-      
-      .option-card h3 {
-        font-size: 0.9rem;
-      }
-      
-      .option-card .p-5 {
-        padding: 0.5rem;
-      }
-      
-      .option-card .text-xs.mt-3 {
-        font-size: 0.45rem;
-      }
-      
-      .gold-btn {
-        font-size: 0.6rem;
-        padding: 0.4rem 0.6rem;
-        letter-spacing: 0.5px;
-      }
-      
-      .whatsapp-float {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-        bottom: 10px;
-        left: 10px;
-      }
-      
-      .go-top {
-        width: 32px;
-        height: 32px;
-        bottom: 55px;
-        right: 10px;
-      }
+      section:first-of-type h1 { font-size: 1.4rem; }
+      .grid { gap: 0.5rem; }
+      .option-card { border-radius: 12px; }
+      .option-card h3 { font-size: 0.9rem; }
+      .gold-btn { font-size: 0.6rem; padding: 0.4rem 0.6rem; }
+      .whatsapp-float { width: 38px; height: 38px; font-size: 1rem; bottom: 10px; left: 10px; }
     }
 
-    /* دعم اللمس - إلغاء تأثيرات hover */
     @media (hover: none) and (pointer: coarse) {
-      .custom-cursor {
-        display: none;
-      }
-      
-      .option-card:hover {
-        transform: none;
-        background: rgba(42, 34, 24, 0.85);
-        border-color: rgba(196, 160, 106, 0.15);
-        box-shadow: none;
-      }
-      
-      .option-card:hover .img-placeholder img {
-        transform: none;
-      }
-      
-      .option-card:active {
-        transform: scale(0.97);
-        transition: transform 0.15s ease;
-        background: rgba(42, 34, 24, 0.95);
-        border-color: rgba(196, 160, 106, 0.35);
-      }
-      
-      .gold-btn:hover::before {
-        left: -100%;
-      }
-      
-      .gold-btn:active::before {
-        left: 100%;
-      }
-      
-      .gold-btn:active {
-        transform: translateY(-2px);
-        border-color: #D4B896;
-      }
+      .custom-cursor { display: none; }
+      .option-card:hover { transform: none; background: var(--card); border-color: var(--border); box-shadow: none; }
+      .option-card:active { transform: scale(0.97); background: var(--card-hover); border-color: var(--card-border-hover); }
     }
 
-    /* تقليل الحركة للمستخدمين الحساسين */
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
-      
-      .custom-cursor {
-        display: none;
-      }
+      .custom-cursor { display: none; }
     }
   </style>
 </head>
@@ -581,7 +369,7 @@
   <!-- كيرسر مخصص -->
   <div class="custom-cursor" id="customCursor"></div>
 
-  <!-- ========== HEADER (يتم تحميله من header.js) ========== -->
+  <!-- ========== HEADER ========== -->
   <div id="header-container"></div>
   
   <!-- ========== WHATSAPP & GO TOP ========== -->
@@ -597,19 +385,19 @@
       <div class="max-w-7xl mx-auto text-center">
         <span class="text-xs tracking-[0.5em] uppercase gold-text font-light">✦ اختاري قطعتك ✦</span>
         <h1 class="text-4xl md:text-6xl font-bold mt-4 mb-4 darija-text">شنو بغيتي نصممو ليك؟</h1>
-        <p class="text-[#B8A890] text-base max-w-2xl mx-auto darija-text">ختاري من بين هاد التصاميم، والميمة غادي تصمم ليك قطعة أحلامك بكل حب ودقة</p>
-        <div class="w-12 h-px bg-[#C4A06A] mx-auto mt-6"></div>
+        <p class="text-base max-w-2xl mx-auto darija-text" style="color:var(--text2);">ختاري من بين هاد التصاميم، والميمة غادي تصمم ليك قطعة أحلامك بكل حب ودقة</p>
+        <div class="w-12 h-px mx-auto mt-6" style="background:var(--gold);"></div>
       </div>
     </section>
 
-    <!-- خيارات التصميم - مع ميزة أنفو (AOS) متطورة -->
+    <!-- خيارات التصميم -->
     <section class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
       <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8" id="options-container"></div>
       </div>
     </section>
     
-    <!-- ========== FOOTER (يتم تحميله من footer.js) ========== -->
+    <!-- ========== FOOTER ========== -->
     <div id="footer-container"></div>
   </main>
 
@@ -618,7 +406,60 @@
   <script src="footer.js"></script>
 
   <script>
-    // تهيئة AOS مع إعدادات متطورة مثل الكود الأصلي
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.setAttribute('aria-label', 'تغيير السمة');
+        btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) {
+            document.body.classList.remove('white-theme');
+            localStorage.setItem('almaya-theme', 'dark');
+          } else {
+            document.body.classList.add('white-theme');
+            localStorage.setItem('almaya-theme', 'white');
+          }
+          updateButtonIcon();
+        });
+        
+        document.body.appendChild(btn);
+        updateButtonIcon();
+      }
+
+      function updateButtonIcon() {
+        const btn = document.querySelector('.theme-toggle-btn');
+        if (!btn) return;
+        if (document.body.classList.contains('white-theme')) {
+          btn.innerHTML = '<i class="fas fa-sun"></i>';
+          btn.setAttribute('title', 'الوضع الداكن');
+        } else {
+          btn.innerHTML = '<i class="fas fa-moon"></i>';
+          btn.setAttribute('title', 'الوضع الفاتح');
+        }
+      }
+
+      function applySavedTheme() {
+        const saved = localStorage.getItem('almaya-theme');
+        if (saved === 'white') {
+          document.body.classList.add('white-theme');
+        } else if (saved === 'dark') {
+          document.body.classList.remove('white-theme');
+        }
+      }
+
+      applySavedTheme();
+      createToggleButton();
+      console.log('🎨 Theme toggle ready');
+    })();
+
+    // تهيئة AOS
     AOS.init({ 
       duration: 800, 
       once: true, 
@@ -644,51 +485,15 @@
     });
     goTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
-    // خيارات التصميم مع وصف تفصيلي والرابط الخاص بكل صفحة
+    // خيارات التصميم
     const designOptions = [
-      { 
-        id: 1, 
-        name: "الجلابة", 
-        subtitle: "نعومة خالدة", 
-        image: "jellaba.jpg", 
-        link: "الجلابة.html",
-        description: "مناسبة للأيام العادية والمناسبات البسيطة | نعومة وراحة فائقة | تصاميم مغربية أصيلة"
-      },
-      { 
-        id: 2, 
-        name: "القفطان", 
-        subtitle: "فخامة ملكية", 
-        image: "caftan.jpg", 
-        link: "القفطان.html",
-        description: "مناسب للأعراس والحفلات الكبيرة | فخامة وتفاصيل ملكية | تطريزات يدوية فاخرة"
-      },
-      { 
-        id: 3, 
-        name: "التكشيطة", 
-        subtitle: "أناقة العرائس", 
-        image: "takchita.jpg", 
-        link: "التكشيطة.html",
-        description: "خاصة للعرائس والمناسبات السعيدة | أناقة استثنائية | تصميم يجمع بين الأصالة والعصرية"
-      },
-      { 
-        id: 4, 
-        name: "الجبادور", 
-        subtitle: "أناقة عصرية", 
-        image: "jabador.jpg", 
-        link: "الجبادور.html",
-        description: "للنساء العصريات | مناسب للخروجات والسهرات | تصميم حديث بأصالة مغربية"
-      },
-      { 
-        id: 5, 
-        name: "العباية", 
-        subtitle: "عصرية ووقورة", 
-        image: "abaya.jpg", 
-        link: "العباية.html",
-        description: "مناسبة للخروجات اليومية والسفر | أناقة محتشمة وعصرية | أقمشة فاخرة وناعمة"
-      }
+      { id: 1, name: "الجلابة", subtitle: "نعومة خالدة", image: "jellaba.jpg", link: "الجلابة.html", description: "مناسبة للأيام العادية والمناسبات البسيطة | نعومة وراحة فائقة | تصاميم مغربية أصيلة" },
+      { id: 2, name: "القفطان", subtitle: "فخامة ملكية", image: "caftan.jpg", link: "القفطان.html", description: "مناسب للأعراس والحفلات الكبيرة | فخامة وتفاصيل ملكية | تطريزات يدوية فاخرة" },
+      { id: 3, name: "التكشيطة", subtitle: "أناقة العرائس", image: "takchita.jpg", link: "التكشيطة.html", description: "خاصة للعرائس والمناسبات السعيدة | أناقة استثنائية | تصميم يجمع بين الأصالة والعصرية" },
+      { id: 4, name: "الجبادور", subtitle: "أناقة عصرية", image: "jabador.jpg", link: "الجبادور.html", description: "للنساء العصريات | مناسب للخروجات والسهرات | تصميم حديث بأصالة مغربية" },
+      { id: 5, name: "العباية", subtitle: "عصرية ووقورة", image: "abaya.jpg", link: "العباية.html", description: "مناسبة للخروجات اليومية والسفر | أناقة محتشمة وعصرية | أقمشة فاخرة وناعمة" }
     ];
     
-    // دالة للتنقل إلى الصفحة المطلوبة
     function goToPage(link) {
       window.location.href = link;
     }
@@ -697,18 +502,16 @@
       const container = document.getElementById('options-container');
       if(!container) return;
       
-      // استخدام نفس ميزة أنفو من الكود الأصلي (fade-up مع تأخير متدرج)
       container.innerHTML = designOptions.map((item, idx) => `
         <div class="option-card group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="${idx * 100}">
           <div class="img-placeholder">
             <img src="images/${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/500x550/2A2218/C4A06A?text=${item.name}'">
-            
           </div>
           <div class="p-5">
             <div class="text-center">
               <h3 class="font-medium text-2xl darija-text gold-text">${item.name}</h3>
-              <p class="text-xs text-[#A89880] mt-1 darija-text">${item.subtitle}</p>
-              <p class="text-xs text-[#A89880] mt-3 leading-relaxed darija-text">${item.description}</p>
+              <p class="text-xs mt-1 darija-text" style="color:var(--text3);">${item.subtitle}</p>
+              <p class="text-xs mt-3 leading-relaxed darija-text" style="color:var(--text3);">${item.description}</p>
             </div>
             <button class="mt-5 w-full gold-btn text-sm py-2.5 rounded-full uppercase tracking-wider darija-text" onclick="goToPage('${item.link}')">
               <i class="fas fa-heart"></i> صممي
@@ -717,7 +520,6 @@
         </div>
       `).join('');
       
-      // تحديث AOS بعد إضافة العناصر الجديدة
       AOS.refresh();
     }
     
@@ -732,13 +534,12 @@
               <div class="option-card group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="${idx * 100}">
                 <div class="img-placeholder">
                   <img src="images/${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/500x550/2A2218/C4A06A?text=${item.name}'">
-                  
                 </div>
                 <div class="p-5">
                   <div class="text-center">
                     <h3 class="font-medium text-2xl darija-text gold-text">${item.name}</h3>
-                    <p class="text-xs text-[#A89880] mt-1 darija-text">${item.subtitle}</p>
-                    <p class="text-xs text-[#A89880] mt-3 leading-relaxed darija-text">${item.description}</p>
+                    <p class="text-xs mt-1 darija-text" style="color:var(--text3);">${item.subtitle}</p>
+                    <p class="text-xs mt-3 leading-relaxed darija-text" style="color:var(--text3);">${item.description}</p>
                   </div>
                   <button class="mt-5 w-full gold-btn text-sm py-2.5 rounded-full uppercase tracking-wider darija-text" onclick="goToPage('${item.link}')">
                     <i class="fas fa-heart"></i> صممي
@@ -751,19 +552,11 @@
         } else {
           renderOptions();
         }
-        if(data.settings) {
-          if(data.settings.logo) document.getElementById('site-logo').src = data.settings.logo;
-          if(data.settings.whatsapp) {
-            document.getElementById('whatsapp-float').href = `https://wa.me/${data.settings.whatsapp}`;
-            document.getElementById('whatsapp-number-display').innerText = data.settings.whatsapp;
-          }
-        }
       } else {
         renderOptions();
       }
     }
     
-    // إتاحة الدالة للاستخدام العالمي
     window.goToPage = goToPage;
     
     document.addEventListener('DOMContentLoaded', loadAllData);

@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إدارة الآراء | Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="config.js"></script>
   
   <style>
+    /* ========== DARK THEME (Défaut) ========== */
     :root {
       --bg-primary: #0F0B08;
       --bg-secondary: #1A1510;
@@ -27,6 +29,22 @@
       --radius-lg: 20px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg-primary: #F5F0E8;
+      --bg-secondary: #FDFCF8;
+      --bg-card: #FFFFFF;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --text-primary: #2A2218;
+      --text-secondary: #6B5F52;
+      --text-muted: #8B7B68;
+      --border: rgba(160,120,64,0.12);
+      --success: #25D366;
+      --danger: #E74C3C;
+      --warning: #E67E00;
+    }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -38,6 +56,7 @@
       display: flex;
       flex-direction: column;
       line-height: 1.6;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
 
     ::-webkit-scrollbar { width: 5px; }
@@ -49,7 +68,6 @@
 
     .admin-container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem; }
 
-    /* Header */
     .admin-header { text-align: center; margin-bottom: 2.5rem; }
     .admin-header .icon-circle {
       display: inline-flex; align-items: center; justify-content: center;
@@ -61,7 +79,6 @@
     .admin-header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: var(--text-primary); margin-bottom: 0.4rem; }
     .admin-header p { color: var(--text-muted); font-size: 0.9rem; }
 
-    /* Stats */
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 2rem; }
     .stat-card {
       background: var(--bg-card); border: 1px solid var(--border);
@@ -70,11 +87,9 @@
     }
     .stat-card:hover { border-color: rgba(196,160,106,0.3); transform: translateY(-2px); }
     .stat-card.active { border-color: var(--gold); box-shadow: 0 0 20px rgba(196,160,106,0.2); }
-    .stat-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
     .stat-number { font-size: 2rem; font-weight: 800; }
     .stat-label { font-size: 0.75rem; color: var(--text-muted); }
 
-    /* Message */
     .message {
       padding: 0.85rem 1.25rem; border-radius: var(--radius-sm);
       margin-bottom: 1.25rem; text-align: center; font-weight: 600;
@@ -85,7 +100,6 @@
     .message.error { background: rgba(255,71,87,0.1); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
     .message.info { background: rgba(196,160,106,0.1); color: var(--gold); border: 1px solid rgba(196,160,106,0.3); }
 
-    /* Filter Tabs */
     .filter-bar {
       display: flex; gap: 0.35rem; margin-bottom: 1.5rem;
       background: var(--bg-secondary); padding: 0.35rem;
@@ -99,69 +113,33 @@
     }
     .filter-tab.active { background: rgba(196,160,106,0.15); color: var(--gold); }
     .filter-tab:hover:not(.active) { color: var(--text-primary); }
-    .count-badge { background: rgba(196,160,106,0.2); padding: 0.15rem 0.5rem; border-radius: 10px; font-size: 0.7rem; }
 
-    .toolbar-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
     .btn {
       padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.75rem; font-weight: 700;
       cursor: pointer; transition: var(--transition); font-family: inherit; border: none;
       display: inline-flex; align-items: center; gap: 0.35rem;
     }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
     .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* Reviews List */
     .reviews-list { display: flex; flex-direction: column; gap: 1rem; }
     .review-card {
       background: var(--bg-card); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.5rem; transition: var(--transition);
     }
-    .review-card:hover { border-color: rgba(196,160,106,0.25); }
     .review-card.status-pending { border-right: 3px solid var(--warning); }
     .review-card.status-approved { border-right: 3px solid var(--success); }
     .review-card.status-rejected { opacity: 0.65; border-right: 3px solid var(--danger); }
-
-    .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.75rem; }
-    .review-author { display: flex; align-items: center; gap: 0.75rem; }
-    .author-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), #A07840);
-      display: flex; align-items: center; justify-content: center;
-      color: #1A1510; font-weight: 800; font-size: 0.9rem;
-    }
-    .author-name { font-weight: 700; color: var(--text-primary); }
-    .review-date { font-size: 0.7rem; color: var(--text-muted); }
-
-    .review-stars { display: flex; gap: 0.15rem; margin-bottom: 0.75rem; }
-    .review-stars i.filled { color: var(--gold); font-size: 0.85rem; }
-    .review-stars i.empty { color: rgba(196,160,106,0.2); font-size: 0.85rem; }
-
     .review-text {
       color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;
       margin-bottom: 1rem; padding: 0.75rem;
-      background: rgba(26,21,16,0.5); border-radius: var(--radius-sm);
+      background: rgba(26,21,16,0.15); border-radius: var(--radius-sm);
     }
-
-    .review-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .btn-approve { background: rgba(37,211,102,0.15); color: var(--success); border: 1px solid rgba(37,211,102,0.3); }
-    .btn-approve:hover { background: rgba(37,211,102,0.25); }
     .btn-reject { background: rgba(255,71,87,0.08); color: var(--danger); border: 1px solid rgba(255,71,87,0.2); }
-    .btn-reject:hover { background: rgba(255,71,87,0.15); }
     .btn-pend { background: rgba(255,165,2,0.08); color: var(--warning); border: 1px solid rgba(255,165,2,0.2); }
-    .btn-pend:hover { background: rgba(255,165,2,0.15); }
     .btn-delete { background: rgba(255,71,87,0.05); color: var(--danger); border: 1px solid rgba(255,71,87,0.1); }
-    .btn-delete:hover { background: rgba(255,71,87,0.12); }
 
-    .status-badge {
-      padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.7rem;
-      font-weight: 700; display: inline-flex; align-items: center; gap: 0.3rem;
-    }
-    .badge-approved { background: rgba(37,211,102,0.12); color: var(--success); }
-    .badge-pending { background: rgba(255,165,2,0.12); color: var(--warning); }
-    .badge-rejected { background: rgba(255,71,87,0.08); color: var(--danger); }
-
-    /* Modal */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.85);
       backdrop-filter: blur(10px); z-index: 200;
@@ -174,13 +152,6 @@
       border-radius: var(--radius-lg); padding: 2rem;
       max-width: 420px; width: 95%; text-align: center;
     }
-    .modal h3 { color: var(--text-primary); margin-bottom: 0.75rem; }
-    .modal p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem; }
-    .modal .review-preview {
-      background: rgba(26,21,16,0.5); padding: 0.5rem;
-      border-radius: 8px; font-size: 0.8rem; margin-bottom: 1.5rem; color: var(--text-muted);
-    }
-    .modal .btn-group { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
     .loader {
       width: 40px; height: 40px; border: 3px solid rgba(196,160,106,0.3);
@@ -189,23 +160,25 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .empty-state { text-align: center; padding: 4rem 1rem; color: var(--text-muted); }
-    .empty-state i { font-size: 4rem; opacity: 0.3; display: block; margin-bottom: 1rem; }
+    /* ========== THEME TOGGLE ========== */
+    .theme-toggle-btn {
+      position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px;
+      border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border);
+      color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      animation: themePulse 2s ease-in-out infinite;
+    }
+    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
+    body.white-theme .theme-toggle-btn { background: #FFFFFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    @keyframes themePulse { 0%,100%{ box-shadow:0 4px 15px rgba(196,160,106,0.15); } 50%{ box-shadow:0 4px 25px rgba(196,160,106,0.3); } }
 
     #footer-container { margin-top: auto; }
 
     @media (max-width: 768px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .admin-container { padding: 1.25rem 0.75rem; }
-      .filter-bar { overflow-x: auto; }
-      .review-header { flex-direction: column; }
-      .review-actions { flex-direction: column; }
-      .review-actions .btn { width: 100%; justify-content: center; }
-    }
-    @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .stat-card { padding: 1rem; }
-      .stat-number { font-size: 1.5rem; }
+      .theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; }
     }
   </style>
 </head>
@@ -216,66 +189,58 @@
   <div class="main-content">
     <div class="admin-container">
       
-      <!-- Header -->
       <div class="admin-header">
         <div class="icon-circle"><i class="fas fa-star"></i></div>
         <h1>إدارة آراء الزبائن</h1>
         <p>مراجعة، قبول، رفض أو حذف الآراء</p>
       </div>
 
-      <!-- Message -->
       <div class="message" id="message"></div>
 
-      <!-- Stats -->
       <div class="stats-grid">
         <div class="stat-card active" data-filter="all" onclick="setFilter('all')">
-          <div class="stat-icon" style="color:#C4A06A;"><i class="fas fa-comments"></i></div>
+          <div class="stat-icon" style="color:var(--gold);font-size:1.3rem;margin-bottom:0.5rem;"><i class="fas fa-comments"></i></div>
           <div class="stat-number" id="totalCount">0</div>
           <div class="stat-label">كل الآراء</div>
         </div>
         <div class="stat-card" data-filter="approved" onclick="setFilter('approved')">
-          <div class="stat-icon" style="color:#25D366;"><i class="fas fa-check-circle"></i></div>
+          <div class="stat-icon" style="color:var(--success);font-size:1.3rem;margin-bottom:0.5rem;"><i class="fas fa-check-circle"></i></div>
           <div class="stat-number" id="approvedCount">0</div>
           <div class="stat-label">مقبولة</div>
         </div>
         <div class="stat-card" data-filter="pending" onclick="setFilter('pending')">
-          <div class="stat-icon" style="color:#FFA502;"><i class="fas fa-clock"></i></div>
+          <div class="stat-icon" style="color:var(--warning);font-size:1.3rem;margin-bottom:0.5rem;"><i class="fas fa-clock"></i></div>
           <div class="stat-number" id="pendingCount">0</div>
           <div class="stat-label">قيد الانتظار</div>
         </div>
         <div class="stat-card" data-filter="rejected" onclick="setFilter('rejected')">
-          <div class="stat-icon" style="color:#FF4757;"><i class="fas fa-times-circle"></i></div>
+          <div class="stat-icon" style="color:var(--danger);font-size:1.3rem;margin-bottom:0.5rem;"><i class="fas fa-times-circle"></i></div>
           <div class="stat-number" id="rejectedCount">0</div>
           <div class="stat-label">مرفوضة</div>
         </div>
       </div>
 
-      <!-- Filter Tabs -->
       <div class="filter-bar">
-        <button class="filter-tab active" data-filter="all"><i class="fas fa-list"></i> الكل <span class="count-badge" id="badgeAll">0</span></button>
-        <button class="filter-tab" data-filter="approved"><i class="fas fa-check"></i> مقبولة <span class="count-badge" id="badgeApproved">0</span></button>
-        <button class="filter-tab" data-filter="pending"><i class="fas fa-clock"></i> قيد الانتظار <span class="count-badge" id="badgePending">0</span></button>
-        <button class="filter-tab" data-filter="rejected"><i class="fas fa-times"></i> مرفوضة <span class="count-badge" id="badgeRejected">0</span></button>
+        <button class="filter-tab active" data-filter="all"><i class="fas fa-list"></i> الكل <span class="count-badge" id="badgeAll" style="background:rgba(196,160,106,0.2);padding:0.15rem 0.5rem;border-radius:10px;font-size:0.7rem;">0</span></button>
+        <button class="filter-tab" data-filter="approved"><i class="fas fa-check"></i> مقبولة <span class="count-badge" id="badgeApproved" style="background:rgba(196,160,106,0.2);padding:0.15rem 0.5rem;border-radius:10px;font-size:0.7rem;">0</span></button>
+        <button class="filter-tab" data-filter="pending"><i class="fas fa-clock"></i> قيد الانتظار <span class="count-badge" id="badgePending" style="background:rgba(196,160,106,0.2);padding:0.15rem 0.5rem;border-radius:10px;font-size:0.7rem;">0</span></button>
+        <button class="filter-tab" data-filter="rejected"><i class="fas fa-times"></i> مرفوضة <span class="count-badge" id="badgeRejected" style="background:rgba(196,160,106,0.2);padding:0.15rem 0.5rem;border-radius:10px;font-size:0.7rem;">0</span></button>
       </div>
       
-      <div class="toolbar-actions">
+      <div class="toolbar-actions" style="display:flex;gap:0.5rem;margin-bottom:1rem;">
         <button class="btn btn-outline" onclick="loadAllReviews()"><i class="fas fa-sync-alt"></i> تحديث</button>
       </div>
 
-      <!-- Reviews List -->
-      <div class="reviews-list" id="reviewsList">
-        <div class="loader"></div>
-      </div>
+      <div class="reviews-list" id="reviewsList"><div class="loader"></div></div>
     </div>
   </div>
 
-  <!-- Delete Modal -->
   <div class="modal-overlay" id="deleteModal">
     <div class="modal">
-      <h3><i class="fas fa-exclamation-triangle" style="color:#FF4757;"></i> تأكيد الحذف</h3>
-      <p>سيتم حذف هذا الرأي نهائياً. لا يمكن التراجع عن هذا الإجراء.</p>
-      <div class="review-preview" id="deleteReviewPreview"></div>
-      <div class="btn-group">
+      <h3><i class="fas fa-exclamation-triangle" style="color:var(--danger);"></i> تأكيد الحذف</h3>
+      <p style="color:var(--text-secondary);">سيتم حذف هذا الرأي نهائياً.</p>
+      <div class="review-preview" id="deleteReviewPreview" style="background:rgba(26,21,16,0.1);padding:0.5rem;border-radius:8px;font-size:0.8rem;margin-bottom:1.5rem;color:var(--text-muted);"></div>
+      <div class="btn-group" style="display:flex;gap:0.75rem;justify-content:center;">
         <button class="btn btn-delete" id="confirmDeleteBtn" style="background:rgba(255,71,87,0.2);"><i class="fas fa-trash-alt"></i> نعم، احذف</button>
         <button class="btn btn-outline" onclick="closeDeleteModal()"><i class="fas fa-times"></i> إلغاء</button>
       </div>
@@ -288,79 +253,61 @@
   <script src="footer.js"></script>
 
   <script>
-    // ==================== CONFIG ====================
-    if (typeof CONFIG === 'undefined') {
-      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:3rem;">❌ config.js غير موجود!</div>';
-      throw new Error('CONFIG missing');
-    }
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
+          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
+          updateIcon();
+        });
+        document.body.appendChild(btn);
+        updateIcon();
+      }
+      function updateIcon() { const btn = document.querySelector('.theme-toggle-btn'); if (btn) btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
+      function applySaved() { const s = localStorage.getItem('almaya-theme'); if (s === 'white') document.body.classList.add('white-theme'); }
+      applySaved(); createToggleButton();
+    })();
 
-    const SUPABASE_URL = CONFIG.SUPABASE_URL;
-    const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
+    if (typeof CONFIG === 'undefined') throw new Error('CONFIG missing');
+    const SUPABASE_URL = CONFIG.SUPABASE_URL, SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
+    let allReviews = [], currentFilter = 'all', deleteTargetId = null;
 
-    let allReviews = [];
-    let currentFilter = 'all';
-    let deleteTargetId = null;
-
-    // ==================== SUPABASE API ====================
     async function supabaseRequest(endpoint, opts = {}) {
-      const url = `${SUPABASE_URL}${endpoint}`;
-      const headers = {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json'
-      };
-      if (opts.method === 'DELETE') headers['Prefer'] = 'return=minimal';
-      
-      const res = await fetch(url, {
+      const res = await fetch(`${SUPABASE_URL}${endpoint}`, {
         method: opts.method || 'GET',
-        headers,
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
         body: opts.body ? JSON.stringify(opts.body) : undefined
       });
-      
       if (res.status === 204 || res.status === 404) return null;
-      
-      const text = await res.text();
-      if (!text) return null;
-      
-      try {
-        const data = JSON.parse(text);
-        if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
-        return data;
-      } catch(e) {
-        if (!res.ok) throw new Error(`خطأ ${res.status}: ${text.substring(0, 100)}`);
-        return text;
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || `Erreur ${res.status}`);
+      return data;
     }
 
-    // ==================== LOAD ====================
+    function escapeHtml(s) { return s ? s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]) : ''; }
+
     async function loadAllReviews() {
-      const list = document.getElementById('reviewsList');
-      if (!list) return;
-      list.innerHTML = '<div class="loader"></div>';
-      
+      document.getElementById('reviewsList').innerHTML = '<div class="loader"></div>';
       try {
-        const reviews = await supabaseRequest('/rest/v1/reviews?select=*&order=created_at.desc');
-        allReviews = reviews || [];
+        allReviews = (await supabaseRequest('/rest/v1/reviews?select=*&order=created_at.desc')) || [];
         updateStats();
         renderFilteredReviews();
-      } catch(e) {
-        console.error(e);
-        showMessage('❌ فشل تحميل الآراء. تأكد من وجود جدول reviews في Supabase.', 'error');
-        list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>خطأ في التحميل</p></div>';
-      }
+      } catch(e) { showMessage('❌ فشل تحميل الآراء', 'error'); }
     }
 
     function updateStats() {
-      const t = allReviews.length;
-      const a = allReviews.filter(r => r.is_approved === true).length;
-      const p = allReviews.filter(r => r.is_approved === false).length;
-      const rj = allReviews.filter(r => r.is_approved === null).length;
-      
+      const t = allReviews.length, a = allReviews.filter(r => r.is_approved === true).length;
+      const p = allReviews.filter(r => r.is_approved === false).length, rj = allReviews.filter(r => r.is_approved === null).length;
       document.getElementById('totalCount').textContent = t;
       document.getElementById('approvedCount').textContent = a;
       document.getElementById('pendingCount').textContent = p;
       document.getElementById('rejectedCount').textContent = rj;
-      
       document.getElementById('badgeAll').textContent = t;
       document.getElementById('badgeApproved').textContent = a;
       document.getElementById('badgePending').textContent = p;
@@ -368,163 +315,63 @@
     }
 
     function renderFilteredReviews() {
+      let f = [...allReviews];
+      if (currentFilter === 'approved') f = f.filter(r => r.is_approved === true);
+      else if (currentFilter === 'pending') f = f.filter(r => r.is_approved === false);
+      else if (currentFilter === 'rejected') f = f.filter(r => r.is_approved === null);
+      
       const list = document.getElementById('reviewsList');
-      if (!list) return;
+      if (!f.length) { list.innerHTML = `<div class="empty-state" style="text-align:center;padding:4rem;color:var(--text-muted);"><i class="fas fa-inbox" style="font-size:3rem;opacity:0.3;"></i><p>لا توجد آراء</p></div>`; return; }
       
-      let filtered = [...allReviews];
-      switch(currentFilter) {
-        case 'approved': filtered = filtered.filter(r => r.is_approved === true); break;
-        case 'pending': filtered = filtered.filter(r => r.is_approved === false); break;
-        case 'rejected': filtered = filtered.filter(r => r.is_approved === null); break;
-      }
-      
-      if (!filtered.length) {
-        const labels = { approved:'مقبولة', pending:'قيد الانتظار', rejected:'مرفوضة' };
-        list.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد آراء ${labels[currentFilter]||''}</p></div>`;
-        return;
-      }
-      
-      list.innerHTML = filtered.map(review => {
-        let statusClass = 'status-pending';
-        let statusBadge = '<span class="status-badge badge-pending"><i class="fas fa-clock"></i> قيد الانتظار</span>';
-        
-        if (review.is_approved === true) {
-          statusClass = 'status-approved';
-          statusBadge = '<span class="status-badge badge-approved"><i class="fas fa-check-circle"></i> مقبول</span>';
-        } else if (review.is_approved === null) {
-          statusClass = 'status-rejected';
-          statusBadge = '<span class="status-badge badge-rejected"><i class="fas fa-times-circle"></i> مرفوض</span>';
-        }
-        
-        const dateStr = review.created_at ? new Date(review.created_at).toLocaleDateString('ar-MA',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
-        const initials = (review.name||'?').charAt(0).toUpperCase();
-        const starsHTML = Array(5).fill(0).map((_,i) => `<i class="fas fa-star ${i<review.rating?'filled':'empty'}"></i>`).join('');
-        
+      list.innerHTML = f.map(r => {
+        const cls = r.is_approved === true ? 'status-approved' : (r.is_approved === null ? 'status-rejected' : 'status-pending');
+        const badge = r.is_approved === true ? '<span style="color:var(--success);"><i class="fas fa-check-circle"></i> مقبول</span>' : (r.is_approved === null ? '<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> مرفوض</span>' : '<span style="color:var(--warning);"><i class="fas fa-clock"></i> قيد الانتظار</span>');
+        const stars = Array(5).fill(0).map((_,i) => `<i class="fas fa-star" style="color:${i<r.rating?'var(--gold)':'rgba(196,160,106,0.2)'};font-size:0.85rem;"></i>`).join('');
         const actions = [];
-        if (review.is_approved !== true) actions.push(`<button class="btn btn-approve" onclick="approveReview(${review.id})"><i class="fas fa-check"></i> قبول</button>`);
-        if (review.is_approved !== null) actions.push(`<button class="btn btn-reject" onclick="rejectReview(${review.id})"><i class="fas fa-times"></i> رفض</button>`);
-        if (review.is_approved === true || review.is_approved === null) actions.push(`<button class="btn btn-pend" onclick="pendReview(${review.id})"><i class="fas fa-clock"></i> تعليق</button>`);
-        actions.push(`<button class="btn btn-delete" onclick="openDeleteModal(${review.id},'${escapeHtml(review.name).replace(/'/g,"\\'")}','${escapeHtml(review.text).substring(0,80).replace(/'/g,"\\'")}')"><i class="fas fa-trash-alt"></i> حذف</button>`);
-        
-        return `
-          <div class="review-card ${statusClass}">
-            <div class="review-header">
-              <div class="review-author">
-                <div class="author-avatar">${initials}</div>
-                <div><div class="author-name">${escapeHtml(review.name)}</div><div class="review-date">${dateStr}</div></div>
-              </div>
-              ${statusBadge}
-            </div>
-            <div class="review-stars">${starsHTML}</div>
-            <div class="review-text">${escapeHtml(review.text)}</div>
-            <div class="review-actions">${actions.join('')}</div>
-          </div>`;
+        if (r.is_approved !== true) actions.push(`<button class="btn btn-approve" onclick="updateReview(${r.id},true)"><i class="fas fa-check"></i> قبول</button>`);
+        if (r.is_approved !== null) actions.push(`<button class="btn btn-reject" onclick="updateReview(${r.id},null)"><i class="fas fa-times"></i> رفض</button>`);
+        if (r.is_approved === true || r.is_approved === null) actions.push(`<button class="btn btn-pend" onclick="updateReview(${r.id},false)"><i class="fas fa-clock"></i> تعليق</button>`);
+        actions.push(`<button class="btn btn-delete" onclick="openDeleteModal(${r.id},'${escapeHtml(r.name).replace(/'/g,"\\'")}')"><i class="fas fa-trash-alt"></i> حذف</button>`);
+        return `<div class="review-card ${cls}"><div style="display:flex;justify-content:space-between;margin-bottom:0.75rem;"><div><strong style="color:var(--text-primary);">${escapeHtml(r.name)}</strong><div style="font-size:0.7rem;color:var(--text-muted);">${r.created_at?new Date(r.created_at).toLocaleDateString('ar-MA'):''}</div></div>${badge}</div><div style="margin-bottom:0.75rem;">${stars}</div><div class="review-text">${escapeHtml(r.text)}</div><div style="display:flex;gap:0.5rem;flex-wrap:wrap;">${actions.join('')}</div></div>`;
       }).join('');
     }
 
-    // ==================== ACTIONS ====================
-    async function approveReview(id) {
-      try {
-        await supabaseRequest(`/rest/v1/reviews?id=eq.${id}`,{method:'PATCH',body:{is_approved:true}});
-        showMessage('✅ تم قبول الرأي بنجاح','success');
-        await loadAllReviews();
-      } catch(e) { console.error(e); showMessage('❌ فشل قبول الرأي','error'); }
-    }
-
-    async function rejectReview(id) {
-      try {
-        await supabaseRequest(`/rest/v1/reviews?id=eq.${id}`,{method:'PATCH',body:{is_approved:null}});
-        showMessage('🚫 تم رفض الرأي','info');
-        await loadAllReviews();
-      } catch(e) { console.error(e); showMessage('❌ فشل رفض الرأي','error'); }
-    }
-
-    async function pendReview(id) {
-      try {
-        await supabaseRequest(`/rest/v1/reviews?id=eq.${id}`,{method:'PATCH',body:{is_approved:false}});
-        showMessage('⏳ تم تعليق الرأي للمراجعة','info');
-        await loadAllReviews();
-      } catch(e) { console.error(e); showMessage('❌ فشل تعليق الرأي','error'); }
-    }
-
-    // ==================== DELETE ====================
-    function openDeleteModal(id, name, preview) {
-      deleteTargetId = id;
-      document.getElementById('deleteReviewPreview').textContent = `"${preview}..." - ${name}`;
-      document.getElementById('deleteModal').classList.add('active');
-    }
-
-    function closeDeleteModal() {
-      deleteTargetId = null;
-      document.getElementById('deleteModal').classList.remove('active');
-    }
-
-    async function confirmDelete() {
-      if (!deleteTargetId) return;
-      const btn = document.getElementById('confirmDeleteBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحذف...';
-      
-      try {
-        await supabaseRequest(`/rest/v1/reviews?id=eq.${deleteTargetId}`,{method:'DELETE'});
-        showMessage('🗑️ تم حذف الرأي بنجاح','success');
-        closeDeleteModal();
-        await loadAllReviews();
-      } catch(e) { console.error(e); showMessage('❌ فشل حذف الرأي','error'); }
-      
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-trash-alt"></i> نعم، احذف';
-    }
-
-    // ==================== FILTER ====================
-    function setFilter(filter) {
-      currentFilter = filter;
-      document.querySelectorAll('.filter-tab').forEach(t=>t.classList.toggle('active',t.dataset.filter===filter));
-      document.querySelectorAll('.stat-card').forEach(c=>c.classList.toggle('active',c.dataset.filter===filter));
-      renderFilteredReviews();
-    }
-
-    // ==================== HELPERS ====================
-    function escapeHtml(s) { if(!s)return''; return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
-    
-    function showMessage(text,type) {
-      const msg = document.getElementById('message');
-      if(!msg) return;
-      msg.textContent = text;
-      msg.className = `message ${type}`;
-      msg.style.display = 'block';
-      clearTimeout(window._mt);
-      window._mt = setTimeout(()=>{msg.style.display='none';},4500);
-    }
-
-    // ==================== EXPORT ====================
-    window.approveReview = approveReview;
-    window.rejectReview = rejectReview;
-    window.pendReview = pendReview;
-    window.openDeleteModal = openDeleteModal;
-    window.closeDeleteModal = closeDeleteModal;
-    window.confirmDelete = confirmDelete;
-    window.setFilter = setFilter;
-    window.loadAllReviews = loadAllReviews;
-
-    // ==================== INIT ====================
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('🚀 Admin Reviews - Ready');
+    window.updateReview = async function(id, status) {
+      await supabaseRequest(`/rest/v1/reviews?id=eq.${id}`, { method:'PATCH', body:{ is_approved: status } });
       loadAllReviews();
-      
-      document.querySelectorAll('.filter-tab').forEach(tab => {
-        tab.addEventListener('click', () => setFilter(tab.dataset.filter));
-      });
-      
-      document.getElementById('confirmDeleteBtn')?.addEventListener('click', confirmDelete);
-      document.getElementById('deleteModal')?.addEventListener('click', e => {
-        if(e.target.id==='deleteModal') closeDeleteModal();
-      });
-      
-      document.addEventListener('keydown', e => {
-        if(e.key==='Escape') closeDeleteModal();
-      });
-    });
+    };
+
+    window.openDeleteModal = function(id, name) {
+      deleteTargetId = id;
+      document.getElementById('deleteReviewPreview').textContent = `حذف رأي: ${name}`;
+      document.getElementById('deleteModal').classList.add('active');
+    };
+    window.closeDeleteModal = function() { deleteTargetId = null; document.getElementById('deleteModal').classList.remove('active'); };
+    window.confirmDelete = async function() {
+      if (!deleteTargetId) return;
+      await supabaseRequest(`/rest/v1/reviews?id=eq.${deleteTargetId}`, { method:'DELETE' });
+      closeDeleteModal();
+      loadAllReviews();
+    };
+
+    window.setFilter = function(f) {
+      currentFilter = f;
+      document.querySelectorAll('.filter-tab,.stat-card').forEach(el => el.classList.toggle('active', el.dataset.filter === f));
+      renderFilteredReviews();
+    };
+
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      if (!msg) return;
+      msg.textContent = text; msg.className = `message ${type}`; msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 4000);
+    }
+
+    window.loadAllReviews = loadAllReviews;
+    document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+    document.getElementById('deleteModal').addEventListener('click', e => { if (e.target.id === 'deleteModal') closeDeleteModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDeleteModal(); });
+    loadAllReviews();
   </script>
 </body>
 </html>

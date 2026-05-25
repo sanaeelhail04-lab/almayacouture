@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول | Almaya Couture</title>
-    
+    <link rel="icon" href="images/logo.jpg">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     
     <style>
+        /* ========== DARK THEME (Défaut) ========== */
         :root {
             --gold: #C4A06A;
             --gold-light: #D4B896;
@@ -18,6 +19,20 @@
             --text-muted: #A89880;
             --error: #C45A4A;
             --border: rgba(196,160,106,0.2);
+            --input-bg: rgba(255,255,255,0.03);
+        }
+        
+        /* ========== WHITE THEME ========== */
+        body.white-theme {
+            --gold: #A07840;
+            --gold-light: #C4A06A;
+            --bg: #FDFCF8;
+            --bg-light: #FFFFFF;
+            --text: #2A2218;
+            --text-muted: #6B5F52;
+            --error: #C45A4A;
+            --border: rgba(160,120,64,0.2);
+            --input-bg: rgba(0,0,0,0.02);
         }
 
         * {
@@ -33,6 +48,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         .login-container {
@@ -54,17 +70,12 @@
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.6s ease;
+            transition: background 0.5s ease, border-color 0.5s ease;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-card::before {
@@ -93,7 +104,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid rgba(196,160,106,0.3);
+            border: 2px solid var(--border);
         }
 
         .login-icon svg {
@@ -151,7 +162,7 @@
         .form-input {
             width: 100%;
             padding: 0.85rem 2.8rem 0.85rem 1rem;
-            background: rgba(255,255,255,0.03);
+            background: var(--input-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: var(--text);
@@ -200,7 +211,7 @@
             width: 100%;
             padding: 0.9rem;
             background: var(--gold);
-            color: var(--bg);
+            color: #1A1510;
             border: none;
             border-radius: 8px;
             font-family: 'Tajawal', sans-serif;
@@ -249,14 +260,64 @@
             color: #90D48F;
         }
 
+        /* ========== THEME TOGGLE BUTTON ========== */
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            border: 2px solid var(--border);
+            color: var(--gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            animation: themePulse 2s ease-in-out infinite;
+        }
+        .theme-toggle-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            border-color: var(--gold);
+            box-shadow: 0 6px 25px rgba(196,160,106,0.2);
+        }
+        .theme-toggle-btn:active { transform: scale(0.95); }
+        
+        body.white-theme .theme-toggle-btn {
+            background: #FFFFFF;
+            border-color: rgba(160, 120, 64, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        body.white-theme .theme-toggle-btn:hover {
+            border-color: #A07840;
+            box-shadow: 0 6px 25px rgba(160, 120, 64, 0.2);
+        }
+        
+        @keyframes themePulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
+            50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
+        }
+
         @media (max-width: 480px) {
             .login-card {
                 padding: 2rem 1.5rem;
                 border-radius: 12px;
             }
-
             .login-title {
                 font-size: 1.7rem;
+            }
+            .theme-toggle-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -353,7 +414,59 @@
     <script src="header.js"></script>
     
     <script>
-        // ========== GESTION LOGIN SIMPLE ==========
+        // ========== THEME TOGGLE ==========
+        (function() {
+            function createToggleButton() {
+                if (document.querySelector('.theme-toggle-btn')) return;
+                
+                const btn = document.createElement('button');
+                btn.className = 'theme-toggle-btn';
+                btn.setAttribute('aria-label', 'تغيير السمة');
+                btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
+                btn.innerHTML = '<i class="fas fa-moon"></i>';
+                
+                btn.addEventListener('click', function() {
+                    const isWhite = document.body.classList.contains('white-theme');
+                    if (isWhite) {
+                        document.body.classList.remove('white-theme');
+                        localStorage.setItem('almaya-theme', 'dark');
+                    } else {
+                        document.body.classList.add('white-theme');
+                        localStorage.setItem('almaya-theme', 'white');
+                    }
+                    updateButtonIcon();
+                });
+                
+                document.body.appendChild(btn);
+                updateButtonIcon();
+            }
+
+            function updateButtonIcon() {
+                const btn = document.querySelector('.theme-toggle-btn');
+                if (!btn) return;
+                if (document.body.classList.contains('white-theme')) {
+                    btn.innerHTML = '<i class="fas fa-sun"></i>';
+                    btn.setAttribute('title', 'الوضع الداكن');
+                } else {
+                    btn.innerHTML = '<i class="fas fa-moon"></i>';
+                    btn.setAttribute('title', 'الوضع الفاتح');
+                }
+            }
+
+            function applySavedTheme() {
+                const saved = localStorage.getItem('almaya-theme');
+                if (saved === 'white') {
+                    document.body.classList.add('white-theme');
+                } else if (saved === 'dark') {
+                    document.body.classList.remove('white-theme');
+                }
+            }
+
+            applySavedTheme();
+            createToggleButton();
+        })();
+
+        // ========== GESTION LOGIN ==========
         document.addEventListener('DOMContentLoaded', function() {
             
             const loginForm = document.getElementById('loginForm');
@@ -385,30 +498,24 @@
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Cacher l'erreur
                 errorAlert.style.display = 'none';
 
-                // Récupérer les valeurs
                 const email = document.getElementById('email').value.trim();
                 const password = passwordInput.value;
 
-                // Vérifier les identifiants
                 if (email === 'almayacouture@gmail.com' && password === '123456') {
-                    // ✅ SUCCÈS - Redirection vers admin.html
                     window.location.href = 'admin.html';
                 } else {
-                    // ❌ ERREUR - Afficher message
                     errorMessage.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
                     errorAlert.style.display = 'block';
                     
-                    // Secouer le formulaire
                     loginForm.style.animation = 'none';
                     loginForm.offsetHeight;
                     loginForm.style.animation = 'shake 0.5s ease';
                 }
             });
 
-            // Animation shake pour erreur
+            // Animation shake
             const shakeStyle = document.createElement('style');
             shakeStyle.textContent = `
                 @keyframes shake {

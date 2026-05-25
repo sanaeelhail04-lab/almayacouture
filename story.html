@@ -10,28 +10,65 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ========== DARK THEME (Défaut) ========== */
+    :root {
+      --bg: #1A1510;
+      --bg2: #2A2218;
+      --text: #E8DDD0;
+      --text2: #B8A890;
+      --text3: #A89880;
+      --text4: #8B7B68;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --border: rgba(196,160,106,0.15);
+      --border2: rgba(196,160,106,0.2);
+      --border3: rgba(196,160,106,0.3);
+      --border4: rgba(196,160,106,0.4);
+      --card: rgba(42,34,24,0.7);
+      --card-hover: rgba(42,34,24,0.95);
+      --icon-bg: rgba(196,160,106,0.08);
+      --icon-border: rgba(196,160,106,0.25);
+      --timeline-shadow: rgba(196,160,106,0.15);
     }
+    
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg: #FDFCF8;
+      --bg2: #F5F0E8;
+      --text: #2A2218;
+      --text2: #5A4E3C;
+      --text3: #6B5F52;
+      --text4: #8B7B68;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --border: rgba(160,120,64,0.12);
+      --border2: rgba(160,120,64,0.2);
+      --border3: rgba(160,120,64,0.3);
+      --border4: rgba(160,120,64,0.4);
+      --card: rgba(255,255,255,0.85);
+      --card-hover: rgba(255,255,255,0.95);
+      --icon-bg: rgba(160,120,64,0.08);
+      --icon-border: rgba(160,120,64,0.25);
+      --timeline-shadow: rgba(160,120,64,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      background: #1A1510;
+      background: var(--bg);
       font-family: 'Tajawal', 'Cairo', sans-serif;
-      color: #E8DDD0;
+      color: var(--text);
       scroll-behavior: smooth;
       overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
     
-    .gold-text {
-      color: #C4A06A;
-    }
+    .gold-text { color: var(--gold); }
     
     .gold-btn {
       background: transparent;
-      border: 1.5px solid #C4A06A;
-      color: #E8DDD0;
+      border: 1.5px solid var(--gold);
+      color: var(--text);
       letter-spacing: 2px;
       font-weight: 500;
       position: relative;
@@ -43,46 +80,28 @@
     .gold-btn::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
       background: linear-gradient(90deg, transparent, rgba(196, 160, 106, 0.2), transparent);
       transition: left 0.5s;
     }
-    .gold-btn:hover::before {
-      left: 100%;
-    }
-    .gold-btn:hover {
-      transform: translateY(-2px);
-      border-color: #D4B896;
-      color: #D4B896;
-    }
+    .gold-btn:hover::before { left: 100%; }
+    .gold-btn:hover { transform: translateY(-2px); border-color: var(--gold-light); color: var(--gold-light); }
     
     .outline-gold {
       border: 1.5px solid rgba(196, 160, 106, 0.5);
       background: rgba(196, 160, 106, 0.05);
-      color: #E8DDD0;
+      color: var(--text);
       font-weight: 500;
       transition: all 0.4s;
     }
-    .outline-gold:hover {
-      background: rgba(196, 160, 106, 0.12);
-      transform: translateY(-2px);
-      border-color: #C4A06A;
-    }
+    .outline-gold:hover { background: rgba(196, 160, 106, 0.12); transform: translateY(-2px); border-color: var(--gold); }
     
     .nav-bar {
       background: rgba(26, 21, 16, 0.92);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(196, 160, 106, 0.15);
+      border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
-    }
-    
-    .logo-img {
-      height: 50px;
-      width: auto;
-      transition: all 0.3s;
     }
     
     .section-title {
@@ -98,339 +117,84 @@
       transform: translateX(-50%);
       width: 50px;
       height: 2px;
-      background: #C4A06A;
+      background: var(--gold);
     }
     
-    .darija-text {
-      font-family: 'Tajawal', 'Cairo', sans-serif;
-    }
+    .darija-text { font-family: 'Tajawal', 'Cairo', sans-serif; }
     
     .story-card {
-      background: rgba(42, 34, 24, 0.7);
+      background: var(--card);
       backdrop-filter: blur(8px);
       border-radius: 24px;
       padding: 2.5rem;
-      border: 1px solid rgba(196, 160, 106, 0.15);
+      border: 1px solid var(--border);
       transition: all 0.4s;
     }
-    .story-card:hover {
-      border-color: rgba(196, 160, 106, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(196, 160, 106, 0.08);
-    }
+    .story-card:hover { border-color: var(--border4); transform: translateY(-4px); box-shadow: 0 20px 50px rgba(196, 160, 106, 0.08); }
     
     .timeline-dot {
-      width: 16px;
-      height: 16px;
+      width: 16px; height: 16px;
       border-radius: 50%;
-      background: #C4A06A;
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 0 0 6px rgba(196, 160, 106, 0.15);
+      background: var(--gold);
+      position: relative; z-index: 2;
+      box-shadow: 0 0 0 6px var(--timeline-shadow);
     }
     
     .timeline-line {
       position: absolute;
-      top: 8px;
-      left: 50%;
+      top: 8px; left: 50%;
       transform: translateX(-50%);
       width: 2px;
       height: calc(100% - 16px);
-      background: linear-gradient(to bottom, #C4A06A, rgba(196, 160, 106, 0.1));
+      background: linear-gradient(to bottom, var(--gold), rgba(196, 160, 106, 0.1));
       z-index: 1;
     }
     
     .value-icon {
-      width: 70px;
-      height: 70px;
+      width: 70px; height: 70px;
       border-radius: 50%;
-      background: rgba(196, 160, 106, 0.08);
-      border: 1px solid rgba(196, 160, 106, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      color: #C4A06A;
+      background: var(--icon-bg);
+      border: 1px solid var(--icon-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; color: var(--gold);
       margin: 0 auto 1.2rem;
       transition: all 0.4s;
     }
-    .story-card:hover .value-icon {
-      background: rgba(196, 160, 106, 0.15);
-      border-color: #C4A06A;
-      transform: scale(1.05);
-    }
+    .story-card:hover .value-icon { background: rgba(196, 160, 106, 0.15); border-color: var(--gold); transform: scale(1.05); }
     
     .whatsapp-float {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      z-index: 100;
-      background: #25D366;
-      color: white;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      font-size: 1.5rem;
-      text-decoration: none;
+      position: fixed; bottom: 30px; left: 30px; z-index: 100;
+      background: #25D366; color: white;
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; font-size: 1.5rem; text-decoration: none;
     }
-    .whatsapp-float:hover {
-      transform: scale(1.08);
-    }
-    
-    .social-icon {
-      transition: all 0.3s;
-      cursor: pointer;
-      color: #A89880;
-    }
-    .social-icon:hover {
-      color: #C4A06A;
-      transform: translateY(-3px);
-    }
+    .whatsapp-float:hover { transform: scale(1.08); }
 
-    /* ==============================================
-       MEDIA QUERIES - تصميم متجاوب لجميع الأجهزة
-       ============================================== */
-
-    @media (max-width: 1024px) {
-      .nav-bar {
-        padding: 0.9rem 1.5rem;
-      }
-      
-      .section-title {
-        font-size: 1.8rem;
-      }
-      
-      .story-card {
-        padding: 2rem;
-      }
-      
-      section h1 {
-        font-size: 3rem;
-      }
+    /* ========== THEME TOGGLE ========== */
+    .theme-toggle-btn {
+      position: fixed; bottom: 100px; right: 30px; width: 48px; height: 48px;
+      border-radius: 50%; background: var(--bg2); border: 2px solid var(--border2);
+      color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      animation: themePulse 2s ease-in-out infinite;
     }
+    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
+    body.white-theme .theme-toggle-btn { background: #FFFFFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    @keyframes themePulse { 0%,100%{ box-shadow:0 4px 15px rgba(196,160,106,0.15); } 50%{ box-shadow:0 4px 25px rgba(196,160,106,0.3); } }
 
     @media (max-width: 768px) {
-      .logo-img {
-        height: 40px;
-      }
-      
-      .whatsapp-float {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-        bottom: 20px;
-        left: 20px;
-      }
-      
-      .nav-bar {
-        padding: 0.8rem 1rem;
-      }
-      
-      .nav-bar .gap-6 {
-        gap: 1rem;
-        font-size: 0.65rem;
-      }
-      
-      section {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-      
-      section h1 {
-        font-size: 2.2rem;
-        line-height: 1.3;
-      }
-      
-      .section-title {
-        font-size: 1.6rem;
-      }
-      
-      .story-card {
-        padding: 1.5rem;
-        border-radius: 18px;
-      }
-      
-      .timeline-dot {
-        width: 12px;
-        height: 12px;
-        box-shadow: 0 0 0 4px rgba(196, 160, 106, 0.15);
-      }
-      
-      .timeline-line {
-        top: 6px;
-      }
-      
-      .value-icon {
-        width: 55px;
-        height: 55px;
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-      }
-      
-      footer {
-        padding: 2.5rem 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .nav-bar {
-        padding: 0.6rem 0.75rem;
-      }
-      
-      .logo-img {
-        height: 35px;
-      }
-      
-      .nav-bar .gap-6 {
-        gap: 0.7rem;
-        font-size: 0.6rem;
-        letter-spacing: 0.5px;
-      }
-      
-      .nav-bar .hidden.md\\:flex {
-        display: none !important;
-      }
-      
-      .whatsapp-float {
-        width: 42px;
-        height: 42px;
-        font-size: 1.15rem;
-        bottom: 15px;
-        left: 15px;
-      }
-      
-      section h1 {
-        font-size: 1.8rem;
-      }
-      
-      section p {
-        font-size: 0.8rem;
-      }
-      
-      .section-title {
-        font-size: 1.4rem;
-      }
-      
-      .section-title::after {
-        width: 35px;
-        bottom: -8px;
-      }
-      
-      .story-card {
-        padding: 1.25rem;
-        border-radius: 14px;
-      }
-      
-      .story-card h3 {
-        font-size: 1rem;
-      }
-      
-      .story-card p {
-        font-size: 0.75rem;
-      }
-      
-      .value-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-      }
-      
-      .gold-btn {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.7rem;
-        letter-spacing: 1px;
-      }
-      
-      .outline-gold {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.7rem;
-        letter-spacing: 1px;
-      }
-      
-      footer {
-        padding: 2rem 0.75rem;
-      }
-      
-      footer h3 {
-        font-size: 0.95rem;
-      }
-    }
-
-    @media (max-width: 360px) {
-      section h1 {
-        font-size: 1.5rem;
-      }
-      
-      .section-title {
-        font-size: 1.2rem;
-      }
-      
-      .story-card {
-        padding: 1rem;
-      }
-      
-      .value-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 1rem;
-      }
-      
-      .gold-btn {
-        padding: 0.4rem 0.9rem;
-        font-size: 0.65rem;
-        letter-spacing: 0.5px;
-      }
-    }
-
-    @media (hover: none) and (pointer: coarse) {
-      .story-card:hover {
-        transform: none;
-        border-color: rgba(196, 160, 106, 0.15);
-        box-shadow: none;
-      }
-      
-      .story-card:active {
-        transform: scale(0.98);
-        border-color: rgba(196, 160, 106, 0.4);
-        box-shadow: 0 20px 50px rgba(196, 160, 106, 0.08);
-      }
-      
-      .gold-btn:hover::before {
-        left: -100%;
-      }
-      
-      .gold-btn:active::before {
-        left: 100%;
-      }
-      
-      .gold-btn:active {
-        transform: translateY(-2px);
-        border-color: #D4B896;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
+      .section-title { font-size: 1.6rem; }
+      .story-card { padding: 1.5rem; }
+      .theme-toggle-btn { bottom: 80px; right: 20px; width: 42px; height: 42px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ========== HEADER ========== -->
   <div id="header-container"></div>
   
-  <!-- ========== WHATSAPP FLOAT ========== -->
   <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float">
     <i class="fab fa-whatsapp"></i>
   </a>
@@ -439,12 +203,12 @@
     <!-- Hero Section -->
     <section class="w-full pt-20 md:pt-28 pb-12 md:pb-20 px-6 md:px-12 lg:px-20 text-center">
       <div class="max-w-4xl mx-auto" data-aos="fade-up">
-        <span class="text-xs tracking-[0.5em] uppercase text-[#C4A06A] font-light mb-4 block">✦ حكايتنا ✦</span>
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 darija-text">
+        <span class="text-xs tracking-[0.5em] uppercase gold-text font-light mb-4 block">✦ حكايتنا ✦</span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 darija-text" style="color:var(--text);">
           من أيادي الميمة<br>لقلب دارك
         </h1>
-        <div class="w-16 h-px bg-[#C4A06A] mx-auto mb-8"></div>
-        <p class="text-[#B8A890] text-base md:text-lg leading-relaxed max-w-2xl mx-auto darija-text">
+        <div class="w-16 h-px mx-auto mb-8" style="background:var(--gold);"></div>
+        <p class="text-base md:text-lg leading-relaxed max-w-2xl mx-auto darija-text" style="color:var(--text2);">
           حكاية بدات بإبرة وخيط، وولات قصة حب كتتنسج فكل قطعة. تعرفي على رحلة الميمة من دار صغيرة لعلامة كتحمل إحساس الأم فكل غرزة.
         </p>
       </div>
@@ -454,29 +218,21 @@
     <section class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
       <div class="max-w-6xl mx-auto">
         <div class="flex flex-wrap md:flex-nowrap gap-10 md:gap-16 items-center">
-          <!-- الصورة أو الفيديو -->
           <div class="w-full md:w-1/2" data-aos="fade-up">
-            <div style="background: #2A2218; border-radius: 24px; overflow: hidden; border: 1px solid rgba(196, 160, 106, 0.2); min-height: 380px; display: flex; align-items: center; justify-content: center; position: relative;">
-              <!-- يمكنك استبدال هذا بفيديو أو صورة حقيقية -->
+            <div style="background: var(--bg2); border-radius: 24px; overflow: hidden; border: 1px solid var(--border2); min-height: 380px; display: flex; align-items: center; justify-content: center; position: relative;">
               <div style="text-align: center; padding: 2rem;">
-                <i class="fas fa-hand-holding-heart" style="font-size: 5rem; color: #C4A06A; opacity: 0.6; margin-bottom: 1rem;"></i>
-                <p class="text-[#C4A06A] text-sm darija-text">الميمة فدارها الصغيرة</p>
-                <p class="text-[#8B7B68] text-xs mt-2 darija-text">البداية المتواضعة</p>
+                <i class="fas fa-hand-holding-heart" style="font-size: 5rem; color: var(--gold); opacity: 0.6; margin-bottom: 1rem;"></i>
+                <p class="gold-text text-sm darija-text">الميمة فدارها الصغيرة</p>
+                <p class="text-xs mt-2 darija-text" style="color:var(--text4);">البداية المتواضعة</p>
               </div>
             </div>
           </div>
-          
-          <!-- النص -->
           <div class="w-full md:w-1/2 space-y-5" data-aos="fade-up" data-aos-delay="100">
-            <span class="text-xs tracking-[0.3em] text-[#C4A06A] darija-text">✦ البداية ✦</span>
-            <h2 class="text-2xl md:text-3xl font-bold darija-text">حكاية بدات بحب الأم</h2>
-            <p class="text-[#B8A890] text-sm leading-relaxed darija-text">
-              السلام عليكم، أنا الميمة. كل شي بدا فدار صغيرة، فوسط العائلة، حيث كانت الإبرة والخيط هوما رفيقاتي من الصباح لليل. كنت كنخيط لولادي ولبناتي بكل حب، وكنحس بفرحة كبيرة ملي كنشوفهم لابسين شي قطعة خرجات من يدي.
-            </p>
-            <p class="text-[#B8A890] text-sm leading-relaxed darija-text">
-              مع مرور الوقت، بدات الجيران والأصحاب يلاحظوا شغلي ويعجبهم. بداو يطلبوا مني نخيط ليهم، وكنت كنفرح ملي كنلقى شي وحدة فرحانة بقطعة صاوبتها ليها. من هنا بدات الفكرة تكبر.
-            </p>
-            <p class="text-[#C4A06A] text-sm italic darija-text">— الإبرة ديالي هي طريقتي باش نعبر على الحب</p>
+            <span class="text-xs tracking-[0.3em] gold-text darija-text">✦ البداية ✦</span>
+            <h2 class="text-2xl md:text-3xl font-bold darija-text" style="color:var(--text);">حكاية بدات بحب الأم</h2>
+            <p class="text-sm leading-relaxed darija-text" style="color:var(--text2);">السلام عليكم، أنا الميمة. كل شي بدا فدار صغيرة، فوسط العائلة، حيث كانت الإبرة والخيط هوما رفيقاتي من الصباح لليل.</p>
+            <p class="text-sm leading-relaxed darija-text" style="color:var(--text2);">مع مرور الوقت، بدات الجيران والأصحاب يلاحظوا شغلي ويعجبهم. بداو يطلبوا مني نخيط ليهم.</p>
+            <p class="gold-text text-sm italic darija-text">— الإبرة ديالي هي طريقتي باش نعبر على الحب</p>
           </div>
         </div>
       </div>
@@ -486,79 +242,53 @@
     <section class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-14" data-aos="fade-up">
-          <h2 class="section-title font-bold inline-block darija-text">رحلة الميمة</h2>
-          <p class="text-[#8B7B68] text-sm mt-4 darija-text">من البداية المتواضعة حتى Almaya</p>
+          <h2 class="section-title font-bold inline-block darija-text" style="color:var(--text);">رحلة الميمة</h2>
+          <p class="text-sm mt-4 darija-text" style="color:var(--text4);">من البداية المتواضعة حتى Almaya</p>
         </div>
         
-        <!-- Timeline -->
         <div class="relative">
-          <!-- الخط العمودي -->
           <div class="timeline-line hidden md:block" style="left: 50%;"></div>
           
-          <!-- المرحلة 1 -->
           <div class="flex flex-wrap md:flex-nowrap items-start gap-6 mb-12 relative" data-aos="fade-up">
             <div class="w-full md:w-1/2 md:text-left md:pr-12">
               <div class="story-card">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="text-3xl">🧵</span>
-                  <h3 class="text-lg font-semibold darija-text">البداية فدار صغيرة</h3>
-                </div>
-                <p class="text-sm text-[#A89880] darija-text">بدات الميمة كتخيط فدارها، بإبرة بسيطة وخيط، ولكن بقلب كبير. كل قطعة كانت مغروسة بالحب والحنان ديال الأم.</p>
-                <p class="text-xs text-[#8B7B68] mt-2 darija-text">من سنوات مضت</p>
+                <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🧵</span><h3 class="text-lg font-semibold darija-text" style="color:var(--text);">البداية فدار صغيرة</h3></div>
+                <p class="text-sm darija-text" style="color:var(--text3);">بدات الميمة كتخيط فدارها، بإبرة بسيطة وخيط، ولكن بقلب كبير.</p>
+                <p class="text-xs mt-2 darija-text" style="color:var(--text4);">من سنوات مضت</p>
               </div>
             </div>
-            <div class="hidden md:flex w-1/2 items-start justify-center relative">
-              <div class="timeline-dot"></div>
-            </div>
+            <div class="hidden md:flex w-1/2 items-start justify-center relative"><div class="timeline-dot"></div></div>
           </div>
           
-          <!-- المرحلة 2 -->
           <div class="flex flex-wrap md:flex-nowrap items-start gap-6 mb-12 relative" data-aos="fade-up" data-aos-delay="100">
-            <div class="hidden md:flex w-1/2 items-start justify-center relative">
-              <div class="timeline-dot"></div>
-            </div>
+            <div class="hidden md:flex w-1/2 items-start justify-center relative"><div class="timeline-dot"></div></div>
             <div class="w-full md:w-1/2 md:text-right md:pl-12">
               <div class="story-card">
-                <div class="flex items-center gap-3 mb-3 md:justify-end">
-                  <span class="text-3xl">👗</span>
-                  <h3 class="text-lg font-semibold darija-text">الناس بداو كيعجبهم الشغل</h3>
-                </div>
-                <p class="text-sm text-[#A89880] darija-text">الجيران والأصحاب شافو الإبداع ديال الميمة وبداو يطلبوا منها قطع مخصصة. الكلمة بدات تنتشر والحب كبر.</p>
-                <p class="text-xs text-[#8B7B68] mt-2 darija-text">مرحلة النمو</p>
+                <div class="flex items-center gap-3 mb-3 md:justify-end"><span class="text-3xl">👗</span><h3 class="text-lg font-semibold darija-text" style="color:var(--text);">الناس بداو كيعجبهم الشغل</h3></div>
+                <p class="text-sm darija-text" style="color:var(--text3);">الجيران والأصحاب شافو الإبداع ديال الميمة وبداو يطلبوا منها قطع مخصصة.</p>
+                <p class="text-xs mt-2 darija-text" style="color:var(--text4);">مرحلة النمو</p>
               </div>
             </div>
           </div>
           
-          <!-- المرحلة 3 -->
           <div class="flex flex-wrap md:flex-nowrap items-start gap-6 mb-12 relative" data-aos="fade-up" data-aos-delay="200">
             <div class="w-full md:w-1/2 md:text-left md:pr-12">
               <div class="story-card">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="text-3xl">✨</span>
-                  <h3 class="text-lg font-semibold darija-text">ولادة Almaya Couture</h3>
-                </div>
-                <p class="text-sm text-[#A89880] darija-text">الفكرة تحولات لعلامة تجارية: Almaya Couture. سميتها مستوحاة من الأصالة المغربية والفخامة العصرية.</p>
-                <p class="text-xs text-[#8B7B68] mt-2 darija-text">اليوم</p>
+                <div class="flex items-center gap-3 mb-3"><span class="text-3xl">✨</span><h3 class="text-lg font-semibold darija-text" style="color:var(--text);">ولادة Almaya Couture</h3></div>
+                <p class="text-sm darija-text" style="color:var(--text3);">الفكرة تحولات لعلامة تجارية: Almaya Couture. سميتها مستوحاة من الأصالة المغربية.</p>
+                <p class="text-xs mt-2 darija-text" style="color:var(--text4);">اليوم</p>
               </div>
             </div>
-            <div class="hidden md:flex w-1/2 items-start justify-center relative">
-              <div class="timeline-dot"></div>
-            </div>
+            <div class="hidden md:flex w-1/2 items-start justify-center relative"><div class="timeline-dot"></div></div>
           </div>
           
-          <!-- المرحلة 4 -->
           <div class="flex flex-wrap md:flex-nowrap items-start gap-6 relative" data-aos="fade-up" data-aos-delay="300">
-            <div class="hidden md:flex w-1/2 items-start justify-center relative">
-              <div class="timeline-dot" style="box-shadow: 0 0 0 8px rgba(196, 160, 106, 0.25);"></div>
-            </div>
+            <div class="hidden md:flex w-1/2 items-start justify-center relative"><div class="timeline-dot" style="box-shadow: 0 0 0 8px var(--timeline-shadow);"></div></div>
             <div class="w-full md:w-1/2 md:text-right md:pl-12">
-              <div class="story-card" style="border-color: rgba(196, 160, 106, 0.4);">
-                <div class="flex items-center gap-3 mb-3 md:justify-end">
-                  <span class="text-3xl">🚀</span>
-                  <h3 class="text-lg font-semibold darija-text gold-text">مرحلة الإطلاق – أنتِ معانا</h3>
-                </div>
-                <p class="text-sm text-[#A89880] darija-text">دابا فمرحلة الإطلاق، وكل قطعة كتخرج من يدي باش توصل ليكي. أنتِ جزء من هاد الحكاية، وكل زبونة عندي هي فرد من العائلة.</p>
-                <p class="text-xs text-[#C4A06A] mt-2 darija-text">والمستقبل قدامنا ✨</p>
+              <div class="story-card" style="border-color: var(--border4);">
+                <div class="flex items-center gap-3 mb-3 md:justify-end"><span class="text-3xl">🚀</span><h3 class="text-lg font-semibold darija-text gold-text">مرحلة الإطلاق – أنتِ معانا</h3></div>
+                <p class="text-sm darija-text" style="color:var(--text3);">دابا فمرحلة الإطلاق، وكل قطعة كتخرج من يدي باش توصل ليكي.</p>
+                <p class="gold-text text-xs mt-2 darija-text">والمستقبل قدامنا ✨</p>
               </div>
             </div>
           </div>
@@ -570,42 +300,25 @@
     <section class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-14" data-aos="fade-up">
-          <h2 class="section-title font-bold inline-block darija-text">القيم ديالنا</h2>
-          <p class="text-[#8B7B68] text-sm mt-4 darija-text">شنو كيميز الميمة وAlmaya Couture</p>
+          <h2 class="section-title font-bold inline-block darija-text" style="color:var(--text);">القيم ديالنا</h2>
+          <p class="text-sm mt-4 darija-text" style="color:var(--text4);">شنو كيميز الميمة وAlmaya Couture</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <!-- قيمة 1 -->
           <div class="story-card text-center" data-aos="fade-up">
-            <div class="value-icon">
-              <i class="fas fa-heart"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-3 darija-text">الحب فكل غرزة</h3>
-            <p class="text-sm text-[#A89880] darija-text">
-              كل قطعة كتخرج من يد الميمة مغروسة بحب الأم. ما كنهتمش غير بالشكل، ولكن بالإحساس اللي كتوصلو القطعة ليك.
-            </p>
+            <div class="value-icon"><i class="fas fa-heart"></i></div>
+            <h3 class="text-lg font-semibold mb-3 darija-text" style="color:var(--text);">الحب فكل غرزة</h3>
+            <p class="text-sm darija-text" style="color:var(--text3);">كل قطعة كتخرج من يد الميمة مغروسة بحب الأم.</p>
           </div>
-          
-          <!-- قيمة 2 -->
           <div class="story-card text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="value-icon">
-              <i class="fas fa-gem"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-3 darija-text">الجودة قبل كل شي</h3>
-            <p class="text-sm text-[#A89880] darija-text">
-              كنختارو أجود الأقمشة والخيوط، وكنخدمو بكل دقة واحترافية. كل قطعة خاصها تكون فالمستوى اللي تستاهليه.
-            </p>
+            <div class="value-icon"><i class="fas fa-gem"></i></div>
+            <h3 class="text-lg font-semibold mb-3 darija-text" style="color:var(--text);">الجودة قبل كل شي</h3>
+            <p class="text-sm darija-text" style="color:var(--text3);">كنختارو أجود الأقمشة والخيوط، وكنخدمو بكل دقة واحترافية.</p>
           </div>
-          
-          <!-- قيمة 3 -->
           <div class="story-card text-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="value-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-3 darija-text">العائلة أولاً</h3>
-            <p class="text-sm text-[#A89880] darija-text">
-              فAlmaya، كل زبونة هي فرد من العائلة. كنسمعوا ليك، وكنقدرو رغباتك، وكنخيطو ليك بحال ما كنخيطو لولادنا.
-            </p>
+            <div class="value-icon"><i class="fas fa-users"></i></div>
+            <h3 class="text-lg font-semibold mb-3 darija-text" style="color:var(--text);">العائلة أولاً</h3>
+            <p class="text-sm darija-text" style="color:var(--text3);">فAlmaya، كل زبونة هي فرد من العائلة.</p>
           </div>
         </div>
       </div>
@@ -614,48 +327,52 @@
     <!-- رسالة من الميمة -->
     <section class="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
       <div class="max-w-4xl mx-auto">
-        <div class="story-card text-center" data-aos="fade-up" style="border-color: rgba(196, 160, 106, 0.3);">
+        <div class="story-card text-center" data-aos="fade-up" style="border-color: var(--border3);">
           <span class="text-5xl mb-6 block">💌</span>
-          <h2 class="text-2xl md:text-3xl font-bold mb-6 darija-text">كلمة من قلب الميمة</h2>
-          <div class="w-12 h-px bg-[#C4A06A] mx-auto mb-8"></div>
-          <p class="text-[#B8A890] text-sm md:text-base leading-relaxed max-w-2xl mx-auto darija-text">
-            "بغيت نشكر كل وحدة فيكم اللي وثقات فيا وفشغلي. كل قطعة كنخيطها كتكون محاولة باش نعبر على الحب اللي كنحسو. وعد مني: غانبقى ديما مخلصة لكم، وغانخيط ليكم بقلب الأم. راكم عائلتي، وحكايتنا غادي تكبر مع بعضياتنا."
+          <h2 class="text-2xl md:text-3xl font-bold mb-6 darija-text" style="color:var(--text);">كلمة من قلب الميمة</h2>
+          <div class="w-12 h-px mx-auto mb-8" style="background:var(--gold);"></div>
+          <p class="text-sm md:text-base leading-relaxed max-w-2xl mx-auto darija-text" style="color:var(--text2);">
+            "بغيت نشكر كل وحدة فيكم اللي وثقات فيا وفشغلي. كل قطعة كنخيطها كتكون محاولة باش نعبر على الحب اللي كنحسو."
           </p>
-          <p class="text-[#C4A06A] text-base mt-6 italic darija-text">— مع حبي، الميمة ❤️</p>
+          <p class="gold-text text-base mt-6 italic darija-text">— مع حبي، الميمة ❤️</p>
           
           <div class="mt-10 flex flex-wrap justify-center gap-4">
-            <a href="index.html" class="gold-btn px-8 py-3 rounded-full text-sm uppercase tracking-wider darija-text">
-              <i class="fas fa-home ml-2"></i> الرجوع للرئيسية
-            </a>
-            <a href="https://wa.me/212601245733" target="_blank" class="outline-gold px-8 py-3 rounded-full text-sm uppercase tracking-wider darija-text">
-              <i class="fab fa-whatsapp ml-2"></i> تواصلي مع الميمة
-            </a>
+            <a href="index.html" class="gold-btn px-8 py-3 rounded-full text-sm uppercase tracking-wider darija-text"><i class="fas fa-home ml-2"></i> الرجوع للرئيسية</a>
+            <a href="https://wa.me/212601245733" target="_blank" class="outline-gold px-8 py-3 rounded-full text-sm uppercase tracking-wider darija-text"><i class="fab fa-whatsapp ml-2"></i> تواصلي مع الميمة</a>
           </div>
         </div>
       </div>
     </section>
     
-    <!-- ========== FOOTER ========== -->
     <div id="footer-container"></div>
   </main>
 
-  <!-- ========== SCRIPTS ========== -->
   <script src="header.js"></script>
   <script src="footer.js"></script>
 
   <script>
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
+          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
+          updateIcon();
+        });
+        document.body.appendChild(btn);
+        updateIcon();
+      }
+      function updateIcon() { const btn = document.querySelector('.theme-toggle-btn'); if (btn) btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
+      function applySaved() { const s = localStorage.getItem('almaya-theme'); if (s === 'white') document.body.classList.add('white-theme'); }
+      applySaved(); createToggleButton();
+    })();
+
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
-    
-    // تفعيل الروابط بعد تحميل الهيدر والفوتر
-    document.addEventListener('DOMContentLoaded', () => {
-      // التأكد من أن الروابط فالهيدر تشتغل
-      const headerLinks = document.querySelectorAll('#header-container a');
-      headerLinks.forEach(link => {
-        if (link.getAttribute('href') === 'Story.html') {
-          link.classList.add('gold-text');
-        }
-      });
-    });
   </script>
 </body>
 </html>

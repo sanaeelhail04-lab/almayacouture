@@ -4,174 +4,150 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel - Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ========== DARK THEME (Défaut) ========== */
+    :root {
+      --bg: #1A1510;
+      --card: rgba(42, 34, 24, 0.6);
+      --input-bg: #2A2218;
+      --text: #E8DDD0;
+      --text-secondary: #A89880;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --border: rgba(196, 160, 106, 0.2);
+      --border-light: rgba(196, 160, 106, 0.1);
+      --success: #27ae60;
+      --danger: #e74c3c;
+      --warning: #f39c12;
+    }
+    
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg: #FDFCF8;
+      --card: rgba(255, 255, 255, 0.85);
+      --input-bg: #F5F0E8;
+      --text: #2A2218;
+      --text-secondary: #6B5F52;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --border: rgba(160, 120, 64, 0.2);
+      --border-light: rgba(160, 120, 64, 0.1);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #1A1510;
+      background: var(--bg);
       font-family: 'Tajawal', 'Cairo', sans-serif;
-      color: #E8DDD0;
+      color: var(--text);
       overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
     ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #2A2218; }
-    ::-webkit-scrollbar-thumb { background: #C4A06A; border-radius: 10px; }
-    .gold-text { color: #C4A06A; }
-    .admin-container {
-      max-width: 1400px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
-    }
+    ::-webkit-scrollbar-track { background: var(--input-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+    .gold-text { color: var(--gold); }
+    .admin-container { max-width: 1400px; margin: 2rem auto; padding: 0 1.5rem; }
     .admin-card {
-      background: rgba(42, 34, 24, 0.6);
+      background: var(--card);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(196, 160, 106, 0.2);
+      border: 1px solid var(--border);
       border-radius: 24px;
       padding: 2rem;
       margin-bottom: 2rem;
+      transition: background 0.5s ease, border-color 0.5s ease;
     }
     .form-input, .form-textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      background: #2A2218;
-      border: 1px solid rgba(196, 160, 106, 0.3);
-      border-radius: 12px;
-      color: #E8DDD0;
-      font-family: inherit;
-      transition: all 0.3s;
+      width: 100%; padding: 0.75rem 1rem;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px; color: var(--text);
+      font-family: inherit; transition: all 0.3s;
     }
     .form-input:focus, .form-textarea:focus {
-      outline: none;
-      border-color: #C4A06A;
+      outline: none; border-color: var(--gold);
       box-shadow: 0 0 0 2px rgba(196, 160, 106, 0.2);
     }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-secondary); }
+    
     .btn-primary {
-      background: #C4A06A;
-      color: #1A1510;
-      padding: 0.75rem 1.5rem;
-      border-radius: 40px;
-      font-weight: 600;
-      transition: all 0.3s;
-      border: none;
-      cursor: pointer;
+      background: var(--gold); color: #1A1510;
+      padding: 0.75rem 1.5rem; border-radius: 40px;
+      font-weight: 600; transition: all 0.3s; border: none; cursor: pointer;
     }
-    .btn-primary:hover {
-      background: #D4B896;
-      transform: translateY(-2px);
-    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
     .btn-secondary {
       background: rgba(196, 160, 106, 0.2);
-      border: 1px solid rgba(196, 160, 106, 0.4);
-      color: #C4A06A;
+      border: 1px solid var(--border); color: var(--gold);
     }
-    .data-table {
-      width: 100%;
-      overflow-x: auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 1rem;
-      text-align: right;
-      border-bottom: 1px solid rgba(196, 160, 106, 0.1);
-    }
-    th {
-      color: #C4A06A;
-      font-weight: 600;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .status-active {
-      background: rgba(39, 174, 96, 0.2);
-      color: #2ecc71;
-      border: 1px solid #2ecc71;
-    }
-    .status-inactive {
-      background: rgba(149, 165, 166, 0.2);
-      color: #95a5a6;
-      border: 1px solid #95a5a6;
-    }
-    .action-btn {
-      padding: 0.4rem 0.8rem;
-      margin: 0 0.25rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-    }
-    .edit-btn {
-      background: rgba(241, 196, 15, 0.2);
-      color: #f39c12;
-    }
-    .delete-btn {
-      background: rgba(231, 76, 60, 0.2);
-      color: #e74c3c;
-    }
-    .tabs {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid rgba(196, 160, 106, 0.2);
-      padding-bottom: 1rem;
-    }
-    .tab {
-      padding: 0.75rem 1.5rem;
-      cursor: pointer;
-      border-radius: 40px;
-      transition: all 0.3s;
-      font-weight: 600;
-    }
-    .tab.active {
-      background: #C4A06A;
-      color: #1A1510;
-    }
+    
+    .data-table { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 1rem; text-align: right; border-bottom: 1px solid var(--border-light); }
+    th { color: var(--gold); font-weight: 600; }
+    td { color: var(--text); }
+    
+    .status-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .status-active { background: rgba(39, 174, 96, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+    .status-inactive { background: rgba(149, 165, 166, 0.2); color: #95a5a6; border: 1px solid #95a5a6; }
+    
+    .action-btn { padding: 0.4rem 0.8rem; margin: 0 0.25rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; border: none; }
+    .edit-btn { background: rgba(241, 196, 15, 0.2); color: var(--warning); }
+    .delete-btn { background: rgba(231, 76, 60, 0.2); color: var(--danger); }
+    
+    .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; }
+    .tab { padding: 0.75rem 1.5rem; cursor: pointer; border-radius: 40px; transition: all 0.3s; font-weight: 600; color: var(--text-secondary); }
+    .tab.active { background: var(--gold); color: #1A1510; }
+    .tab:hover:not(.active) { color: var(--gold); }
+    
     .toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #27ae60;
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      z-index: 1000;
-      animation: slideIn 0.3s ease;
+      position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem;
+      border-radius: 12px; z-index: 1000; animation: slideIn 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     }
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    
     .upload-preview {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-top: 10px;
-      border: 2px solid rgba(196,160,106,0.3);
+      width: 120px; height: 120px; object-fit: cover;
+      border-radius: 12px; margin-top: 10px; border: 2px solid var(--border);
     }
-    .table-img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
+    .table-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+    
     .go-top {
       position: fixed; bottom: 95px; right: 25px; width: 40px; height: 40px;
       background: rgba(196,160,106,0.15); backdrop-filter: blur(8px); border-radius: 50%;
       display: flex; align-items: center; justify-content: center; cursor: pointer;
-      opacity: 0; transition: all 0.3s; z-index: 99; border: 1px solid rgba(196,160,106,0.3);
-      color: #C4A06A;
+      opacity: 0; transition: all 0.3s; z-index: 99; border: 1px solid var(--border);
+      color: var(--gold);
     }
     .go-top.visible { opacity: 1; }
+    .go-top:hover { background: rgba(196,160,106,0.25); }
+
+    /* ========== THEME TOGGLE ========== */
+    .theme-toggle-btn {
+      position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px;
+      border-radius: 50%; background: var(--card); border: 2px solid var(--border);
+      color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(10px);
+      animation: themePulse 2s ease-in-out infinite;
+    }
+    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
+    body.white-theme .theme-toggle-btn { background: #FFFFFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    @keyframes themePulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
+      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
+    }
+
+    @media (max-width: 768px) {
+      .admin-card { padding: 1.5rem; }
+      .tab { padding: 0.5rem 1rem; font-size: 0.8rem; }
+      .theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -180,7 +156,7 @@
 
   <div class="admin-container">
     <div class="admin-card">
-      <h1 class="text-3xl font-bold mb-6"><i class="fas fa-crown gold-text"></i>إدارة صفحة المنتجات</h1>
+      <h1 class="text-3xl font-bold mb-6"><i class="fas fa-crown gold-text"></i> إدارة صفحة المنتجات</h1>
       
       <div class="tabs">
         <div class="tab active" onclick="switchTab('slide')">📸 السلايدرات</div>
@@ -197,13 +173,11 @@
               <label class="block mb-2 text-sm">العنوان *</label>
               <input type="text" id="slide-title" class="form-input" placeholder="مثال: القفطان" required>
             </div>
-            
             <div>
               <label class="block mb-2 text-sm">رابط الزر</label>
               <input type="text" id="slide-link" class="form-input" placeholder="مثال: products.html?category=caftan">
-              <p class="text-xs text-gray-400 mt-1">اتركه فارغاً إذا لا تريد زر</p>
+              <p class="text-xs mt-1" style="color:var(--text-secondary);">اتركه فارغاً إذا لا تريد زر</p>
             </div>
-            
             <div>
               <label class="block mb-2 text-sm">صورة السلايدر</label>
               <button type="button" class="btn-secondary w-full" onclick="document.getElementById('slide-file').click()">
@@ -212,16 +186,14 @@
               <input type="file" id="slide-file" accept="image/*" style="display:none" onchange="uploadImage('slide')">
               <img id="slide-preview" class="upload-preview" style="display:none">
               <input type="hidden" id="slide-image">
-              <p class="text-xs text-gray-400 mt-1">يفضل 1920x1080</p>
+              <p class="text-xs mt-1" style="color:var(--text-secondary);">يفضل 1920x1080</p>
             </div>
-            
             <div class="md:col-span-2">
               <label class="block mb-2 text-sm">الوصف</label>
               <textarea id="slide-desc" class="form-textarea" rows="3" placeholder="وصف السلايدر..."></textarea>
             </div>
-            
             <div class="flex items-center gap-3">
-              <label class="flex items-center gap-2">
+              <label class="flex items-center gap-2" style="color:var(--text);">
                 <input type="checkbox" id="slide-active" checked> مفعل
               </label>
             </div>
@@ -235,9 +207,7 @@
         <h3 class="text-lg font-bold mb-3 gold-text">📋 قائمة السلايدرات</h3>
         <div class="data-table">
           <table class="w-full">
-            <thead>
-              <tr><th>الصورة</th><th>العنوان</th><th>الوصف</th><th>الرابط</th><th>الحالة</th><th>إجراءات</th></tr>
-            </thead>
+            <thead><tr><th>الصورة</th><th>العنوان</th><th>الوصف</th><th>الرابط</th><th>الحالة</th><th>إجراءات</th></tr></thead>
             <tbody id="slide-list"></tbody>
           </table>
         </div>
@@ -253,12 +223,10 @@
               <label class="block mb-2 text-sm">اسم التصنيف *</label>
               <input type="text" id="cat-name" class="form-input" placeholder="مثال: القفطان" required>
             </div>
-            
             <div>
               <label class="block mb-2 text-sm">عنوان الأوفرلي</label>
               <input type="text" id="cat-title" class="form-input" placeholder="مثال: فخامة ملكية">
             </div>
-            
             <div>
               <label class="block mb-2 text-sm">صورة التصنيف</label>
               <button type="button" class="btn-secondary w-full" onclick="document.getElementById('cat-file').click()">
@@ -267,16 +235,14 @@
               <input type="file" id="cat-file" accept="image/*" style="display:none" onchange="uploadImage('cat')">
               <img id="cat-preview" class="upload-preview" style="display:none">
               <input type="hidden" id="cat-image">
-              <p class="text-xs text-gray-400 mt-1">يفضل 800x1200</p>
+              <p class="text-xs mt-1" style="color:var(--text-secondary);">يفضل 800x1200</p>
             </div>
-            
             <div class="md:col-span-2">
               <label class="block mb-2 text-sm">وصف التصنيف</label>
               <textarea id="cat-desc" class="form-textarea" rows="3" placeholder="وصف التصنيف..."></textarea>
             </div>
-            
             <div class="flex items-center gap-3">
-              <label class="flex items-center gap-2">
+              <label class="flex items-center gap-2" style="color:var(--text);">
                 <input type="checkbox" id="cat-active" checked> مفعل
               </label>
             </div>
@@ -290,9 +256,7 @@
         <h3 class="text-lg font-bold mb-3 gold-text">📋 قائمة التصنيفات</h3>
         <div class="data-table">
           <table class="w-full">
-            <thead>
-              <tr><th>الصورة</th><th>اسم التصنيف</th><th>عنوان الأوفرلي</th><th>الوصف</th><th>الحالة</th><th>إجراءات</th></tr>
-            </thead>
+            <thead><tr><th>الصورة</th><th>اسم التصنيف</th><th>عنوان الأوفرلي</th><th>الوصف</th><th>الحالة</th><th>إجراءات</th></tr></thead>
             <tbody id="cat-list"></tbody>
           </table>
         </div>
@@ -307,7 +271,36 @@
   <script src="footer.js"></script>
 
   <script>
-    // Supabase Configuration
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
+          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
+          updateIcon();
+        });
+        document.body.appendChild(btn);
+        updateIcon();
+      }
+      function updateIcon() {
+        const btn = document.querySelector('.theme-toggle-btn');
+        if (!btn) return;
+        btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      }
+      function applySaved() {
+        const saved = localStorage.getItem('almaya-theme');
+        if (saved === 'white') document.body.classList.add('white-theme');
+        else if (saved === 'dark') document.body.classList.remove('white-theme');
+      }
+      applySaved(); createToggleButton();
+    })();
+
+    // ========== CONFIG ==========
     const SUPABASE_URL = 'https://ieiujnrgrfsqajcgdiys.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaXVqbnJncmZzcWFqY2dkaXlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNDc5MTEsImV4cCI6MjA5NDcyMzkxMX0.ad0ui5P37W-kNaiQk2EYxQv3iA3tWOzHICSNW_VTdvE';
     const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaXVqbnJncmZzcWFqY2dkaXlzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTE0NzkxMSwiZXhwIjoyMDk0NzIzOTExfQ.74aZYcnaVhGfggmK6kjte3VEz-kPOPXD1lUEtWGWPaw';
@@ -318,7 +311,8 @@
     function showToast(message, isError = false) {
       const toast = document.createElement('div');
       toast.className = 'toast';
-      toast.style.background = isError ? '#e74c3c' : '#27ae60';
+      toast.style.background = isError ? 'var(--danger)' : 'var(--success)';
+      toast.style.color = 'white';
       toast.innerHTML = `<i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 3000);
@@ -333,23 +327,13 @@
     async function deleteFromStorage(imageUrl) {
       const filePath = extractFilePathFromUrl(imageUrl);
       if (!filePath) return false;
-      
       try {
         const response = await fetch(`${SUPABASE_URL}/storage/v1/object/almaya-images/${filePath}`, {
           method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-            'apikey': SUPABASE_ANON_KEY
-          }
+          headers: { 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`, 'apikey': SUPABASE_ANON_KEY }
         });
-        if (response.ok) {
-          console.log('✅ Image deleted from storage:', filePath);
-          return true;
-        }
-      } catch (error) {
-        console.error('Storage delete error:', error);
-      }
-      return false;
+        return response.ok;
+      } catch (error) { return false; }
     }
 
     async function reorderItems(table) {
@@ -358,23 +342,16 @@
           headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
         });
         const items = await res.json();
-        
         for (let i = 0; i < items.length; i++) {
           if (items[i].display_order !== i) {
             await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${items[i].id}`, {
               method: 'PATCH',
-              headers: {
-                'apikey': SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                'Content-Type': 'application/json'
-              },
+              headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
               body: JSON.stringify({ display_order: i })
             });
           }
         }
-      } catch (error) {
-        console.error('Reorder error:', error);
-      }
+      } catch (error) {}
     }
 
     async function uploadImage(type) {
@@ -389,32 +366,20 @@
 
       try {
         showToast('جاري رفع الصورة...');
-        
         const response = await fetch(`${SUPABASE_URL}/storage/v1/object/almaya-images/${filePath}`, {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            'apikey': SUPABASE_ANON_KEY
-          },
+          headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'apikey': SUPABASE_ANON_KEY },
           body: optimizedBlob
         });
-
         if (response.ok) {
           const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/almaya-images/${filePath}`;
           document.getElementById(`${type}-image`).value = publicUrl;
-          
           const preview = document.getElementById(`${type}-preview`);
           preview.src = URL.createObjectURL(file);
           preview.style.display = 'block';
-          
           showToast('تم رفع الصورة بنجاح');
-        } else {
-          showToast('فشل رفع الصورة', true);
-        }
-      } catch (error) {
-        console.error('Upload error:', error);
-        showToast('حدث خطأ أثناء الرفع', true);
-      }
+        } else { showToast('فشل رفع الصورة', true); }
+      } catch (error) { showToast('حدث خطأ أثناء الرفع', true); }
     }
 
     async function optimizeImage(file, maxWidth, maxHeight) {
@@ -422,27 +387,14 @@
         const img = new Image();
         img.src = URL.createObjectURL(file);
         img.onload = () => {
-          let width = img.width;
-          let height = img.height;
-          
-          if (width > maxWidth) {
-            height = (height * maxWidth) / width;
-            width = maxWidth;
-          }
-          if (height > maxHeight) {
-            width = (width * maxHeight) / height;
-            height = maxHeight;
-          }
-          
+          let width = img.width, height = img.height;
+          if (width > maxWidth) { height = (height * maxWidth) / width; width = maxWidth; }
+          if (height > maxHeight) { width = (width * maxHeight) / height; height = maxHeight; }
           const canvas = document.createElement('canvas');
-          canvas.width = width;
-          canvas.height = height;
+          canvas.width = width; canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-          
-          canvas.toBlob((blob) => {
-            resolve(blob);
-          }, file.type, 0.85);
+          canvas.toBlob((blob) => { resolve(blob); }, file.type, 0.85);
         };
       });
     }
@@ -454,9 +406,7 @@
         });
         const data = await res.json();
         displayData(data, containerId, isSlide);
-      } catch (err) {
-        showToast('خطأ في جلب البيانات', true);
-      }
+      } catch (err) { showToast('خطأ في جلب البيانات', true); }
     }
 
     function displayData(data, containerId, isSlide) {
@@ -465,36 +415,29 @@
         container.innerHTML = '<tr><td colspan="6" class="text-center py-8">لا توجد بيانات</td></tr>'; 
         return; 
       }
-      
       container.innerHTML = data.map(item => {
         if (isSlide) {
-          return `
-            <tr>
-              <td><img src="${item.image_url || ''}" class="table-img" onerror="this.src='https://placehold.co/60x60/2A2218/C4A06A?text=No+Image'"></td>
-              <td>${item.title || ''}</td>
-              <td>${item.description || ''}</td>
-              <td>${item.link_url ? `<a href="${item.link_url}" target="_blank" class="text-gold-text underline text-sm">رابط</a>` : '—'}</td>
-              <td><span class="status-badge ${item.is_active ? 'status-active' : 'status-inactive'}">${item.is_active ? 'مفعل' : 'غير مفعل'}</span></td>
-              <td>
-                <button class="action-btn edit-btn" onclick="editItem('${item.id}', true)"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="action-btn delete-btn" onclick="deleteItem('${item.id}', true)"><i class="fas fa-trash"></i> حذف</button>
-              </td>
-            </tr>
-          `;
+          return `<tr>
+            <td><img src="${item.image_url || ''}" class="table-img" onerror="this.src='https://placehold.co/60x60/2A2218/C4A06A?text=No+Image'"></td>
+            <td>${item.title || ''}</td>
+            <td>${item.description || ''}</td>
+            <td>${item.link_url ? `<a href="${item.link_url}" target="_blank" style="color:var(--gold);text-decoration:underline;">رابط</a>` : '—'}</td>
+            <td><span class="status-badge ${item.is_active ? 'status-active' : 'status-inactive'}">${item.is_active ? 'مفعل' : 'غير مفعل'}</span></td>
+            <td>
+              <button class="action-btn edit-btn" onclick="editItem('${item.id}', true)"><i class="fas fa-edit"></i> تعديل</button>
+              <button class="action-btn delete-btn" onclick="deleteItem('${item.id}', true)"><i class="fas fa-trash"></i> حذف</button>
+            </td></tr>`;
         } else {
-          return `
-            <tr>
-              <td><img src="${item.overlay_image_url || ''}" class="table-img" onerror="this.src='https://placehold.co/60x60/2A2218/C4A06A?text=No+Image'"></td>
-              <td>${item.category_name || ''}</td>
-              <td>${item.overlay_title || ''}</td>
-              <td>${item.overlay_description || ''}</td>
-              <td><span class="status-badge ${item.is_active ? 'status-active' : 'status-inactive'}">${item.is_active ? 'مفعل' : 'غير مفعل'}</span></td>
-              <td>
-                <button class="action-btn edit-btn" onclick="editItem('${item.id}', false)"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="action-btn delete-btn" onclick="deleteItem('${item.id}', false)"><i class="fas fa-trash"></i> حذف</button>
-              </td>
-            </tr>
-          `;
+          return `<tr>
+            <td><img src="${item.overlay_image_url || ''}" class="table-img" onerror="this.src='https://placehold.co/60x60/2A2218/C4A06A?text=No+Image'"></td>
+            <td>${item.category_name || ''}</td>
+            <td>${item.overlay_title || ''}</td>
+            <td>${item.overlay_description || ''}</td>
+            <td><span class="status-badge ${item.is_active ? 'status-active' : 'status-inactive'}">${item.is_active ? 'مفعل' : 'غير مفعل'}</span></td>
+            <td>
+              <button class="action-btn edit-btn" onclick="editItem('${item.id}', false)"><i class="fas fa-edit"></i> تعديل</button>
+              <button class="action-btn delete-btn" onclick="deleteItem('${item.id}', false)"><i class="fas fa-trash"></i> حذف</button>
+            </td></tr>`;
         }
       }).join('');
     }
@@ -550,31 +493,24 @@
           if (!id) await reorderItems(table);
           if (isSlide) resetSlideForm(); else resetCatForm();
           fetchData(table, isSlide ? 'slide-list' : 'cat-list', isSlide);
-        } else {
-          showToast('حدث خطأ', true);
-        }
+        } else { showToast('حدث خطأ', true); }
       } catch (err) { showToast('فشل الحفظ', true); }
     }
 
     async function deleteItem(id, isSlide) {
       if (!confirm('⚠️ هل أنت متأكد؟ سيتم حذف الصورة نهائياً')) return;
       const table = isSlide ? 'slide_overlay' : 'cat_overlay';
-      
       const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
         headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
       });
       const item = await res.json();
       const imageUrl = isSlide ? item[0]?.image_url : item[0]?.overlay_image_url;
-      
       try {
         const deleteRes = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
           method: 'DELETE', headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
         });
-        
         if (deleteRes.ok) {
-          if (imageUrl) {
-            await deleteFromStorage(imageUrl);
-          }
+          if (imageUrl) await deleteFromStorage(imageUrl);
           await reorderItems(table);
           showToast('✅ تم الحذف بنجاح');
           fetchData(table, isSlide ? 'slide-list' : 'cat-list', isSlide);
@@ -663,7 +599,6 @@
     window.addEventListener('scroll', () => goTopBtn.classList.toggle('visible', window.scrollY > 400));
     goTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Initial load
     fetchData('slide_overlay', 'slide-list', true);
   </script>
 </body>

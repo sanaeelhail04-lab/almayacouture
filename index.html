@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -14,20 +15,55 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    body {
-      background: #1A1510;
-      font-family: 'Tajawal', 'Cairo', sans-serif;
-      color: #E8DDD0;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
+    /* ========== DARK THEME (Défaut) ========== */
+    :root {
+      --bg: #1A1510;
+      --bg2: #2A2218;
+      --text: #E8DDD0;
+      --text2: #B8A890;
+      --text3: #A89880;
+      --text4: #8B7B68;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --border: rgba(196,160,106,0.12);
+      --border2: rgba(196,160,106,0.2);
+      --card: rgba(42,34,24,0.7);
+      --card-hover: rgba(196,160,106,0.35);
+      --nav: rgba(26,21,16,0.92);
     }
     
-    .gold-text { color: #C4A06A; }
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg: #FDFCF8;
+      --bg2: #F5F0E8;
+      --text: #2A2218;
+      --text2: #5A4E3C;
+      --text3: #6B5F52;
+      --text4: #8B7B68;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --border: rgba(160,120,64,0.12);
+      --border2: rgba(160,120,64,0.2);
+      --card: rgba(245,240,232,0.85);
+      --card-hover: rgba(160,120,64,0.35);
+      --nav: rgba(253,252,248,0.92);
+    }
+    
+    body {
+      background: var(--bg);
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      color: var(--text);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+    
+    .gold-text { color: var(--gold); }
     
     .gold-btn {
       background: transparent;
-      border: 1.5px solid #C4A06A;
-      color: #E8DDD0;
+      border: 1.5px solid var(--gold);
+      color: var(--text);
       letter-spacing: 2px;
       font-weight: 500;
       position: relative;
@@ -49,27 +85,27 @@
     .gold-btn:hover::before { left: 100%; }
     .gold-btn:hover {
       transform: translateY(-2px);
-      border-color: #D4B896;
-      color: #D4B896;
+      border-color: var(--gold-light);
+      color: var(--gold-light);
     }
     
     .outline-gold {
-      border: 1.5px solid rgba(196, 160, 106, 0.5);
+      border: 1.5px solid var(--border2);
       background: rgba(196, 160, 106, 0.05);
-      color: #E8DDD0;
+      color: var(--text);
       font-weight: 500;
       transition: all 0.4s;
     }
     .outline-gold:hover {
       background: rgba(196, 160, 106, 0.12);
       transform: translateY(-2px);
-      border-color: #C4A06A;
+      border-color: var(--gold);
     }
     
     .nav-bar {
-      background: rgba(26, 21, 16, 0.92);
+      background: var(--nav);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(196, 160, 106, 0.15);
+      border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
     }
     
@@ -78,10 +114,10 @@
     .video-container {
       height: 100%;
       min-height: 480px;
-      background: #2A2218;
+      background: var(--bg2);
       overflow: hidden;
       border-radius: 24px;
-      border: 1px solid rgba(196, 160, 106, 0.2);
+      border: 1px solid var(--border2);
       position: relative;
     }
     .video-container::before {
@@ -100,36 +136,37 @@
     .float-effect { animation: float 4s ease-in-out infinite; }
     
     .step-card {
-      background: rgba(42, 34, 24, 0.8);
+      background: var(--card);
       backdrop-filter: blur(8px);
       transition: all 0.4s;
       padding: 2rem;
       border-radius: 20px;
-      border: 1px solid rgba(196, 160, 106, 0.12);
+      border: 1px solid var(--border);
     }
     .step-card:hover {
-      border-color: rgba(196, 160, 106, 0.35);
+      border-color: var(--card-hover);
       transform: translateY(-6px);
     }
     
     .review-form-card {
-      background: rgba(42, 34, 24, 0.7);
+      background: var(--card);
       backdrop-filter: blur(8px);
       border-radius: 20px;
       padding: 2rem;
-      border: 1px solid rgba(196, 160, 106, 0.12);
+      border: 1px solid var(--border);
     }
     .review-input {
-      background: rgba(26, 21, 16, 0.6);
-      border: 1px solid rgba(196, 160, 106, 0.2);
+      background: rgba(26, 21, 16, 0.1);
+      border: 1px solid var(--border2);
       border-radius: 12px;
       padding: 0.75rem 1rem;
-      color: #E8DDD0;
+      color: var(--text);
       width: 100%;
       transition: all 0.3s;
       font-family: inherit;
     }
-    .review-input:focus { outline: none; border-color: #C4A06A; }
+    .review-input:focus { outline: none; border-color: var(--gold); }
+    .review-input::placeholder { color: var(--text4); }
     
     .whatsapp-float {
       position: fixed;
@@ -163,7 +200,7 @@
       transform: translateX(-50%);
       width: 50px;
       height: 2px;
-      background: #C4A06A;
+      background: var(--gold);
     }
     
     .darija-text { font-family: 'Tajawal', 'Cairo', sans-serif; }
@@ -177,17 +214,17 @@
       margin: 0 auto;
     }
     .product-card {
-      background: #2A2218;
+      background: var(--bg2);
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.4s ease;
       cursor: pointer;
       position: relative;
-      border: 1px solid rgba(196,160,106,0.1);
+      border: 1px solid var(--border);
     }
     .product-card:hover {
       transform: translateY(-8px);
-      border-color: rgba(196,160,106,0.3);
+      border-color: var(--card-hover);
       box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
     .product-image-wrapper {
@@ -220,17 +257,17 @@
       box-shadow: 0 4px 12px rgba(196,160,106,0.3);
     }
     .product-info-card { padding: 1.2rem; }
-    .product-category-tag { color: #C4A06A; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 500; }
-    .product-title-card { font-size: 1.1rem; font-weight: 700; color: #F5EDD8; margin-bottom: 0.5rem; line-height: 1.4; }
-    .product-price-card { color: #C4A06A; font-size: 1rem; font-weight: 700; }
-    .product-desc-card { font-size: 0.8rem; color: #A89880; margin-top: 0.5rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-category-tag { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 500; }
+    .product-title-card { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; line-height: 1.4; }
+    .product-price-card { color: var(--gold); font-size: 1rem; font-weight: 700; }
+    .product-desc-card { font-size: 0.8rem; color: var(--text3); margin-top: 0.5rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     
     .featured-loader { display: flex; justify-content: center; align-items: center; min-height: 300px; }
     .loader-spinner {
       width: 40px; height: 40px;
       border: 3px solid rgba(196,160,106,0.3);
       border-radius: 50%;
-      border-top-color: #C4A06A;
+      border-top-color: var(--gold);
       animation: spin 0.8s ease-in-out infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -244,7 +281,51 @@
     }
     .review-message.success { background: rgba(37,211,102,0.1); color: #25D366; border: 1px solid rgba(37,211,102,0.3); }
     .review-message.error { background: rgba(255,71,87,0.1); color: #FF4757; border: 1px solid rgba(255,71,87,0.3); }
-    .review-message.info { background: rgba(196,160,106,0.1); color: #C4A06A; border: 1px solid rgba(196,160,106,0.3); }
+    .review-message.info { background: rgba(196,160,106,0.1); color: var(--gold); border: 1px solid rgba(196,160,106,0.3); }
+    
+    /* ========== THEME TOGGLE BUTTON ========== */
+    .theme-toggle-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 2px solid var(--border2);
+      color: var(--gold);
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      animation: themePulse 2s ease-in-out infinite;
+    }
+    .theme-toggle-btn:hover {
+      transform: scale(1.1) rotate(15deg);
+      border-color: var(--gold);
+      box-shadow: 0 6px 25px rgba(196,160,106,0.2);
+    }
+    .theme-toggle-btn:active { transform: scale(0.95); }
+    
+    body.white-theme .theme-toggle-btn {
+      background: #FFFFFF;
+      border-color: rgba(160, 120, 64, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    body.white-theme .theme-toggle-btn:hover {
+      border-color: #A07840;
+      box-shadow: 0 6px 25px rgba(160, 120, 64, 0.2);
+    }
+    
+    @keyframes themePulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
+      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
+    }
     
     @media (max-width: 1024px) {
       .section-title { font-size: 1.8rem; }
@@ -257,6 +338,13 @@
       .section-title { font-size: 1.6rem; }
       .review-form-card { padding: 1.5rem; }
       .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+      .theme-toggle-btn {
+        bottom: 80px;
+        right: 20px;
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+      }
     }
     @media (max-width: 480px) {
       .logo-img { height: 35px; }
@@ -285,9 +373,9 @@
           </div>
         </div>
         <div class="w-full md:w-1/2 space-y-5 md:space-y-7" data-aos="fade-up">
-          <span class="text-xs tracking-[0.5em] uppercase text-[#C4A06A] font-light">✦ Almaya Couture ✦</span>
-          <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight darija-text">مجموعة الإطلاق<br>إبداعات الميمة</h1>
-          <p class="text-[#B8A890] text-base md:text-lg leading-relaxed max-w-md darija-text">اكتشفي أول إبداعات الميمة فمرحلة الإطلاق. قطع فاخرة كتجمع بين الأصالة المغربية والفخامة العصرية.</p>
+          <span class="text-xs tracking-[0.5em] uppercase gold-text font-light">✦ Almaya Couture ✦</span>
+          <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight darija-text" style="color:var(--text);">مجموعة الإطلاق<br>إبداعات الميمة</h1>
+          <p class="text-base md:text-lg leading-relaxed max-w-md darija-text" style="color:var(--text2);">اكتشفي أول إبداعات الميمة فمرحلة الإطلاق. قطع فاخرة كتجمع بين الأصالة المغربية والفخامة العصرية.</p>
           <div class="flex flex-wrap gap-4 pt-3">
             <button onclick="scrollToShop()" class="gold-btn px-8 py-3 rounded-full text-sm uppercase tracking-wider darija-text">اكتشفي منتجاتنا</button>
             <button onclick="scrollToCustom()" class="outline-gold px-8 py-3 rounded-full text-sm uppercase tracking-wider darija-text">صممي قطعتك ديالك</button>
@@ -307,10 +395,10 @@
           </div>
         </div>
         <div class="w-full md:w-1/2 space-y-5" data-aos="fade-up">
-          <span class="text-xs tracking-[0.3em] text-[#C4A06A] darija-text">✦ حكايتنا ✦</span>
-          <h2 class="text-3xl md:text-4xl font-bold darija-text">من أيادي الميمة لدارك</h2>
-          <p class="text-[#B8A890] text-sm leading-relaxed darija-text">السلام عليكم، أنا الميمة. بدات هاد الحكاية فدار صغيرة، كنت كنخيط لولادي ولبناتي بكل حب. الناس شافو شغلي وعجبهم، وبداو يطلبوا مني. دابا، فمرحلة الإطلاق ديال Almaya Couture، كل قطعة كتخرج من يدي باش توصل ليكي بحب و حنان.</p>
-          <p class="text-[#C4A06A] text-sm italic darija-text">— الميمة، كل غرزة فيها حكاية حب</p>
+          <span class="text-xs tracking-[0.3em] gold-text darija-text">✦ حكايتنا ✦</span>
+          <h2 class="text-3xl md:text-4xl font-bold darija-text" style="color:var(--text);">من أيادي الميمة لدارك</h2>
+          <p class="text-sm leading-relaxed darija-text" style="color:var(--text2);">السلام عليكم، أنا الميمة. بدات هاد الحكاية فدار صغيرة، كنت كنخيط لولادي ولبناتي بكل حب. الناس شافو شغلي وعجبهم، وبداو يطلبوا مني. دابا، فمرحلة الإطلاق ديال Almaya Couture، كل قطعة كتخرج من يدي باش توصل ليكي بحب و حنان.</p>
+          <p class="text-sm italic darija-text" style="color:var(--gold);">— الميمة، كل غرزة فيها حكاية حب</p>
           <button onclick="scrollToCustom()" class="gold-btn px-6 py-2 rounded-full text-xs uppercase tracking-wider darija-text">صممي قطعتك مع الميمة</button>
         </div>
       </div>
@@ -319,13 +407,13 @@
     <!-- صممي قطعتك -->
     <section id="custom-order" class="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
       <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-3xl md:text-5xl font-bold mb-4 darija-text">صممي قطعتك ديالك</h2>
-        <p class="text-[#8B7B68] text-base mb-10 darija-text">تفصيل بإحساس الأم</p>
-        <div class="w-12 h-px bg-[#C4A06A] mx-auto mb-14"></div>
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 darija-text" style="color:var(--text);">صممي قطعتك ديالك</h2>
+        <p class="text-base mb-10 darija-text" style="color:var(--text4);">تفصيل بإحساس الأم</p>
+        <div class="w-12 h-px mx-auto mb-14" style="background:var(--gold);"></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          <div class="step-card" data-aos="fade-up"><div class="w-14 h-14 rounded-full border border-[#C4A06A] flex items-center justify-center mx-auto mb-4"><span class="text-lg text-[#C4A06A] font-light">01</span></div><h3 class="text-lg font-semibold mb-2 darija-text">نتواصلو</h3><p class="text-sm text-[#A89880] darija-text">نتواصلو معاك باش نفهمو شنو بغيتي بالضبط</p></div>
-          <div class="step-card" data-aos="fade-up" data-aos-delay="100"><div class="w-14 h-14 rounded-full border border-[#C4A06A] flex items-center justify-center mx-auto mb-4"><span class="text-lg text-[#C4A06A] font-light">02</span></div><h3 class="text-lg font-semibold mb-2 darija-text">نختارو القماش</h3><p class="text-sm text-[#A89880] darija-text">تختاري معانا أجود الأقمشة والخيوط</p></div>
-          <div class="step-card" data-aos="fade-up" data-aos-delay="200"><div class="w-14 h-14 rounded-full border border-[#C4A06A] flex items-center justify-center mx-auto mb-4"><span class="text-lg text-[#C4A06A] font-light">03</span></div><h3 class="text-lg font-semibold mb-2 darija-text">الخياطة بحب</h3><p class="text-sm text-[#A89880] darija-text">الميمة كتخيط قطعتك بحنان و دقة</p></div>
+          <div class="step-card" data-aos="fade-up"><div class="w-14 h-14 rounded-full border flex items-center justify-center mx-auto mb-4" style="border-color:var(--gold);"><span class="text-lg font-light" style="color:var(--gold);">01</span></div><h3 class="text-lg font-semibold mb-2 darija-text" style="color:var(--text);">نتواصلو</h3><p class="text-sm darija-text" style="color:var(--text3);">نتواصلو معاك باش نفهمو شنو بغيتي بالضبط</p></div>
+          <div class="step-card" data-aos="fade-up" data-aos-delay="100"><div class="w-14 h-14 rounded-full border flex items-center justify-center mx-auto mb-4" style="border-color:var(--gold);"><span class="text-lg font-light" style="color:var(--gold);">02</span></div><h3 class="text-lg font-semibold mb-2 darija-text" style="color:var(--text);">نختارو القماش</h3><p class="text-sm darija-text" style="color:var(--text3);">تختاري معانا أجود الأقمشة والخيوط</p></div>
+          <div class="step-card" data-aos="fade-up" data-aos-delay="200"><div class="w-14 h-14 rounded-full border flex items-center justify-center mx-auto mb-4" style="border-color:var(--gold);"><span class="text-lg font-light" style="color:var(--gold);">03</span></div><h3 class="text-lg font-semibold mb-2 darija-text" style="color:var(--text);">الخياطة بحب</h3><p class="text-sm darija-text" style="color:var(--text3);">الميمة كتخيط قطعتك بحنان و دقة</p></div>
         </div>
         <div class="mt-14"><a href="design.html" class="gold-btn inline-flex items-center gap-2 px-10 py-3 rounded-full text-sm uppercase tracking-wider darija-text">صممي قطعتك</a></div>
       </div>
@@ -335,9 +423,9 @@
     <section id="ready-to-wear" class="w-full px-6 md:px-12 lg:px-20 py-16 md:py-24">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
-          <span class="text-xs tracking-[0.3em] text-[#C4A06A] darija-text">✦ منتجاتنا ✦</span>
-          <h2 class="section-title font-bold inline-block darija-text mt-2">منتجاتنا</h2>
-          <p class="text-[#8B7B68] text-sm mt-4 darija-text">اكتشفي مجموعة الإطلاق الحصرية</p>
+          <span class="text-xs tracking-[0.3em] gold-text darija-text">✦ منتجاتنا ✦</span>
+          <h2 class="section-title font-bold inline-block darija-text mt-2" style="color:var(--text);">منتجاتنا</h2>
+          <p class="text-sm mt-4 darija-text" style="color:var(--text4);">اكتشفي مجموعة الإطلاق الحصرية</p>
         </div>
         <div class="products-grid" id="productsGrid"><div class="featured-loader" style="grid-column: 1 / -1;"><div class="loader-spinner"></div></div></div>
         <div class="text-center mt-12" data-aos="fade-up"><a href="products.html" class="gold-btn inline-flex items-center gap-2 px-10 py-3.5 rounded-full text-sm uppercase tracking-wider darija-text"><i class="fas fa-store"></i> شوفي جميع المنتجات</a></div>
@@ -347,16 +435,16 @@
     <!-- شاركينا رأيك -->
     <section class="w-full px-6 md:px-12 lg:px-20 py-16">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-2xl md:text-3xl font-light mb-3 darija-text">✨ شاركينا رأيك ✨</h2>
-        <p class="text-[#8B7B68] text-sm mb-8 darija-text">كوني أول وحدة تشارك تجربتها مع الميمة</p>
+        <h2 class="text-2xl md:text-3xl font-light mb-3 darija-text" style="color:var(--text);">✨ شاركينا رأيك ✨</h2>
+        <p class="text-sm mb-8 darija-text" style="color:var(--text4);">كوني أول وحدة تشارك تجربتها مع الميمة</p>
         
         <div class="review-form-card">
           <div class="flex justify-center gap-2 mb-6" id="ratingStars">
-            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="1" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;"></i>
-            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="2" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;"></i>
-            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="3" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;"></i>
-            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="4" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;"></i>
-            <i class="far fa-star rating-star text-[#C4A06A]" data-rating="5" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;"></i>
+            <i class="far fa-star rating-star" data-rating="1" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;color:var(--gold);"></i>
+            <i class="far fa-star rating-star" data-rating="2" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;color:var(--gold);"></i>
+            <i class="far fa-star rating-star" data-rating="3" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;color:var(--gold);"></i>
+            <i class="far fa-star rating-star" data-rating="4" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;color:var(--gold);"></i>
+            <i class="far fa-star rating-star" data-rating="5" style="cursor:pointer;font-size:1.5rem;transition:all 0.2s;color:var(--gold);"></i>
           </div>
           <input type="text" id="reviewerName" placeholder="سميتك" class="review-input darija-text mb-3 text-right">
           <textarea id="reviewText" rows="3" placeholder="شاركينا رأيك فهاد التجربة..." class="review-input darija-text mb-4 text-right"></textarea>
@@ -365,7 +453,7 @@
         </div>
         
         <div id="reviewsList" class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="col-span-2 text-center text-[#8B7B68] py-8 darija-text"><i class="far fa-comment-dots text-3xl mb-3 block opacity-40"></i>جاري تحميل الآراء...</div>
+          <div class="col-span-2 text-center py-8 darija-text" style="color:var(--text4);"><i class="far fa-comment-dots text-3xl mb-3 block opacity-40"></i>جاري تحميل الآراء...</div>
         </div>
       </div>
     </section>
@@ -380,6 +468,59 @@
     if (typeof CONFIG === 'undefined') console.warn('⚠️ CONFIG non trouvé');
 
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
+
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.setAttribute('aria-label', 'تغيير السمة');
+        btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) {
+            document.body.classList.remove('white-theme');
+            localStorage.setItem('almaya-theme', 'dark');
+          } else {
+            document.body.classList.add('white-theme');
+            localStorage.setItem('almaya-theme', 'white');
+          }
+          updateButtonIcon();
+        });
+        
+        document.body.appendChild(btn);
+        updateButtonIcon();
+      }
+
+      function updateButtonIcon() {
+        const btn = document.querySelector('.theme-toggle-btn');
+        if (!btn) return;
+        if (document.body.classList.contains('white-theme')) {
+          btn.innerHTML = '<i class="fas fa-sun"></i>';
+          btn.setAttribute('title', 'الوضع الداكن');
+        } else {
+          btn.innerHTML = '<i class="fas fa-moon"></i>';
+          btn.setAttribute('title', 'الوضع الفاتح');
+        }
+      }
+
+      function applySavedTheme() {
+        const saved = localStorage.getItem('almaya-theme');
+        if (saved === 'white') {
+          document.body.classList.add('white-theme');
+        } else if (saved === 'dark') {
+          document.body.classList.remove('white-theme');
+        }
+      }
+
+      applySavedTheme();
+      createToggleButton();
+      console.log('🎨 Theme toggle ready');
+    })();
 
     // === SUPABASE API ===
     async function supabaseRequest(endpoint, opts = {}) {
@@ -452,15 +593,14 @@
       if (!container) return;
       try {
         if (typeof CONFIG !== 'undefined' && CONFIG.SUPABASE_URL) {
-          // ✅ Charger UNIQUEMENT les avis approuvés
           const reviews = await supabaseRequest('/rest/v1/reviews?select=*&is_approved=eq.true&order=created_at.desc');
           if (reviews && reviews.length > 0) { renderReviews(reviews); return; }
         }
         const localReviews = JSON.parse(localStorage.getItem('almaya_reviews') || '[]');
         const approved = localReviews.filter(r => r.is_approved !== false && r.is_approved !== null);
         if (approved.length > 0) { renderReviews(approved); }
-        else { container.innerHTML = '<div class="col-span-2 text-center text-[#8B7B68] py-8 darija-text"><i class="far fa-comment-dots text-3xl mb-3 block opacity-40"></i>لا توجد آراء بعد. كوني أول وحدة تشارك رأيها!</div>'; }
-      } catch(e) { console.error(e); container.innerHTML = '<div class="col-span-2 text-center text-[#8B7B68] py-8">لا توجد آراء بعد</div>'; }
+        else { container.innerHTML = '<div class="col-span-2 text-center py-8 darija-text" style="color:var(--text4);"><i class="far fa-comment-dots text-3xl mb-3 block opacity-40"></i>لا توجد آراء بعد. كوني أول وحدة تشارك رأيها!</div>'; }
+      } catch(e) { console.error(e); container.innerHTML = '<div class="col-span-2 text-center py-8" style="color:var(--text4);">لا توجد آراء بعد</div>'; }
     }
 
     function renderReviews(reviews) {
@@ -468,7 +608,7 @@
       if (!container) return;
       container.innerHTML = reviews.map((rev, i) => {
         const d = rev.created_at ? new Date(rev.created_at).toLocaleDateString('ar-MA',{year:'numeric',month:'long',day:'numeric'}) : (rev.date||'');
-        return `<div class="review-form-card" data-aos="fade-up" data-aos-delay="${i*100}"><div class="flex justify-center mb-2">${Array(rev.rating).fill('<i class="fas fa-star text-[#C4A06A] text-sm"></i>').join('')}${Array(5-rev.rating).fill('<i class="far fa-star text-[#C4A06A] text-sm"></i>').join('')}</div><p class="text-center text-xs text-[#C4A06A] mb-2 font-semibold">${escapeHtml(rev.name)}</p><p class="text-sm text-[#B8A890] text-center darija-text">"${escapeHtml(rev.text)}"</p><p class="text-center text-[0.5rem] text-[#8B7B68] mt-3">${d}</p></div>`;
+        return `<div class="review-form-card" data-aos="fade-up" data-aos-delay="${i*100}"><div class="flex justify-center mb-2">${Array(rev.rating).fill('<i class="fas fa-star text-sm" style="color:var(--gold);"></i>').join('')}${Array(5-rev.rating).fill('<i class="far fa-star text-sm" style="color:var(--gold);"></i>').join('')}</div><p class="text-center text-xs mb-2 font-semibold" style="color:var(--gold);">${escapeHtml(rev.name)}</p><p class="text-sm text-center darija-text" style="color:var(--text2);">"${escapeHtml(rev.text)}"</p><p class="text-center text-xs mt-3" style="color:var(--text4);">${d}</p></div>`;
       }).join('');
     }
 
@@ -481,7 +621,6 @@
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i> جاري الإرسال...';
       
-      // ✅ Avis envoyé avec is_approved: false (en attente de validation)
       const reviewData = { name, text, rating: currentRating, is_approved: false };
       
       try {
@@ -499,8 +638,6 @@
         document.querySelectorAll('.rating-star').forEach(s => { s.classList.remove('fas'); s.classList.add('far'); });
         
         showReviewMessage('✨ شكراً بزاف! رأيك تلقاه الميمة وغادي يبان قريباً', 'success');
-        
-        // Recharger après 2 secondes
         setTimeout(() => loadReviews(), 2000);
       } catch(e) {
         console.error(e);

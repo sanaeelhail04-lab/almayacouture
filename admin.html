@@ -9,141 +9,314 @@
   <script src="config.js"></script>
   
   <style>
+    /* ========== DARK THEME (Défaut) ========== */
+    :root {
+      --bg: #1A1510;
+      --bg2: #0F0C09;
+      --card: #2A2218;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --text: #F5EDD8;
+      --text-secondary: #A89880;
+      --border: rgba(196,160,106,0.15);
+      --border-hover: rgba(196,160,106,0.3);
+      --info: #3B82F6;
+      --success: #25D366;
+      --warning: #FFA502;
+      --danger: #FF4757;
+    }
+    
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg: #FDFCF8;
+      --bg2: #F5F0E8;
+      --card: #FFFFFF;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --text: #2A2218;
+      --text-secondary: #6B5F52;
+      --border: rgba(160,120,64,0.15);
+      --border-hover: rgba(160,120,64,0.3);
+      --info: #3B82F6;
+      --success: #25D366;
+      --warning: #E67E00;
+      --danger: #E74C3C;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: linear-gradient(135deg, #1A1510 0%, #0F0C09 100%);
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
       font-family: 'Tajawal', sans-serif;
-      color: #E8DDD0;
+      color: var(--text);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #2A2218; }
-    ::-webkit-scrollbar-thumb { background: #C4A06A; border-radius: 10px; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
     #header-container { position: sticky; top: 0; z-index: 100; }
 
     .main-content {
-      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Header simple */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .page-header .badge {
+      display: inline-block;
+      background: rgba(196,160,106,0.15);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      border: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    /* 4 stats mini en ligne */
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .mini-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .mini-stat:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .mini-stat i {
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+    .mini-stat .value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .mini-stat .label {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      margin-top: 0.1rem;
+    }
+
+    /* Liste des pages admin */
+    .admin-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .admin-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .admin-menu-item:hover {
+      border-color: var(--border-hover);
+      background: rgba(196,160,106,0.05);
+      transform: translateX(-5px);
+    }
+    .admin-menu-item .menu-icon {
+      width: 45px;
+      height: 45px;
+      min-width: 45px;
+      background: rgba(196,160,106,0.1);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1.5rem;
+      font-size: 1.2rem;
+      color: var(--gold);
+      transition: all 0.3s;
+    }
+    .admin-menu-item:hover .menu-icon {
+      background: rgba(196,160,106,0.2);
+      transform: scale(1.1);
+    }
+    .admin-menu-item .menu-info {
+      flex: 1;
+    }
+    .admin-menu-item .menu-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+    }
+    .admin-menu-item .menu-desc {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+    .admin-menu-item .menu-badge {
+      background: rgba(196,160,106,0.15);
+      color: var(--gold);
+      padding: 0.25rem 0.6rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .admin-menu-item .menu-badge.new {
+      background: rgba(59,130,246,0.15);
+      color: var(--info);
+    }
+    .admin-menu-item .menu-badge.pending {
+      background: rgba(255,165,2,0.15);
+      color: var(--warning);
+    }
+    .admin-menu-item .menu-arrow {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      transition: all 0.3s;
+    }
+    .admin-menu-item:hover .menu-arrow {
+      color: var(--gold);
+      transform: translateX(-3px);
     }
 
-    .hero-section { text-align: center; margin-bottom: 3rem; }
-    .hero-section h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 800; color: #F5EDD8; margin-bottom: 0.5rem; }
-    .hero-section .welcome-badge {
-      display: inline-block; background: rgba(196,160,106,0.15); padding: 0.5rem 1.2rem;
-      border-radius: 30px; font-size: 0.85rem; color: #C4A06A; margin-bottom: 1rem;
-      border: 1px solid rgba(196,160,106,0.3);
+    /* Quick actions */
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 2rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .hero-section p { color: #A89880; font-size: 1rem; max-width: 500px; margin: 0 auto; }
-
-    .dashboard-container { max-width: 1000px; margin: 0 auto; width: 100%; }
-
-    /* Stats */
-    .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-    .stat-card {
-      background: #2A2218; border: 1px solid rgba(196,160,106,0.15);
-      border-radius: 20px; padding: 1.5rem; text-align: center; transition: all 0.3s ease;
+    .section-title i { color: var(--gold); }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
-    .stat-card:hover { transform: translateY(-5px); border-color: rgba(196,160,106,0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-    .stat-icon {
-      width: 60px; height: 60px; background: rgba(196,160,106,0.1); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+    
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
-    .stat-icon i { font-size: 1.8rem; color: #C4A06A; }
-    .stat-number { font-size: 2rem; font-weight: 800; color: #F5EDD8; margin-bottom: 0.25rem; }
-    .stat-label { color: #A89880; font-size: 0.85rem; }
-
-    /* Admin Cards */
-    .admin-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1rem; }
-    .admin-card {
-      background: #2A2218; border-radius: 24px; overflow: hidden; transition: all 0.4s ease;
-      cursor: pointer; border: 1px solid rgba(196,160,106,0.1); position: relative;
-    }
-    .admin-card:hover { transform: translateY(-8px); border-color: rgba(196,160,106,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-    .card-header { padding: 2rem 1.5rem 1rem; text-align: center; position: relative; }
-    .card-icon {
-      width: 80px; height: 80px;
-      background: linear-gradient(135deg, rgba(196,160,106,0.2) 0%, rgba(196,160,106,0.05) 100%);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1rem; transition: all 0.3s ease;
-    }
-    .admin-card:hover .card-icon { transform: scale(1.1); background: linear-gradient(135deg, rgba(196,160,106,0.3) 0%, rgba(196,160,106,0.1) 100%); }
-    .card-icon i { font-size: 2.5rem; color: #C4A06A; }
-    .card-header h2 { color: #F5EDD8; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .card-header p { color: #A89880; font-size: 0.85rem; line-height: 1.5; }
-    .card-stats {
-      display: flex; justify-content: space-around; padding: 1rem 1.5rem;
-      background: rgba(0,0,0,0.2); border-top: 1px solid rgba(196,160,106,0.1);
-      border-bottom: 1px solid rgba(196,160,106,0.1);
-    }
-    .card-stat { text-align: center; }
-    .card-stat-value { font-size: 1.2rem; font-weight: 700; color: #C4A06A; }
-    .card-stat-label { font-size: 0.7rem; color: #8B7B68; }
-    .card-footer { padding: 1rem 1.5rem 1.5rem; text-align: center; }
-    .card-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem; background: transparent;
-      border: 1.5px solid #C4A06A; color: #C4A06A; padding: 0.7rem 1.5rem;
-      border-radius: 30px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
-      transition: all 0.3s; font-family: inherit;
-    }
-    .admin-card:hover .card-btn { background: #C4A06A; color: #1A1510; }
-    .admin-card:hover .card-btn i { transform: translateX(-4px); }
-
-    /* Quick Actions */
-    .quick-actions { margin-top: 3rem; background: #2A2218; border-radius: 20px; padding: 1.5rem; border: 1px solid rgba(196,160,106,0.15); }
-    .quick-actions h3 { color: #F5EDD8; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-    .quick-actions h3 i { color: #C4A06A; }
-    .actions-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .action-btn {
-      background: #1A1510; border: 1px solid rgba(196,160,106,0.2); color: #E8DDD0;
-      padding: 0.6rem 1.2rem; border-radius: 30px; font-size: 0.8rem; cursor: pointer;
-      transition: all 0.3s; font-family: inherit; display: inline-flex; align-items: center; gap: 0.5rem;
+    .quick-link {
+      padding: 0.5rem 0.9rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
       text-decoration: none;
     }
-    .action-btn:hover { border-color: #C4A06A; color: #C4A06A; transform: translateY(-2px); }
-
-    #footer-container { margin-top: auto; }
-
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
-      z-index: 1000; display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    .quick-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
     }
-    .modal-overlay.active { opacity: 1; pointer-events: all; }
-    .confirm-modal {
-      background: #2A2218; border-radius: 20px; padding: 2rem; max-width: 400px;
-      width: 90%; text-align: center; border: 1px solid rgba(196,160,106,0.2);
-      animation: modalFadeIn 0.3s ease;
-    }
-    @keyframes modalFadeIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
-    .confirm-modal i { font-size: 3rem; color: #C4A06A; margin-bottom: 1rem; }
-    .confirm-modal h3 { color: #F5EDD8; margin-bottom: 0.5rem; }
-    .confirm-modal p { color: #A89880; margin-bottom: 1.5rem; font-size: 0.9rem; }
-    .modal-buttons { display: flex; gap: 1rem; justify-content: center; }
-    .modal-btn { padding: 0.6rem 1.5rem; border-radius: 30px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: inherit; border: none; }
-    .modal-btn.confirm { background: #C4A06A; color: #1A1510; }
-    .modal-btn.confirm:hover { background: #D4B896; transform: scale(1.05); }
-    .modal-btn.cancel { background: transparent; border: 1px solid rgba(255,71,87,0.5); color: #FF4757; }
-    .modal-btn.cancel:hover { background: rgba(255,71,87,0.1); }
 
-    @media (max-width: 768px) {
-      .main-content { padding: 1.5rem 1rem; }
-      .stats-container { gap: 1rem; }
-      .stat-card { padding: 1rem; }
-      .stat-icon { width: 45px; height: 45px; }
-      .stat-icon i { font-size: 1.3rem; }
-      .stat-number { font-size: 1.5rem; }
-      .admin-cards { gap: 1rem; }
-      .card-header { padding: 1.5rem 1rem 0.75rem; }
-      .card-icon { width: 60px; height: 60px; }
-      .card-icon i { font-size: 1.8rem; }
+    /* ========== THEME TOGGLE BUTTON ========== */
+    .theme-toggle-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 2px solid var(--border);
+      color: var(--gold);
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      backdrop-filter: blur(10px);
+      animation: themePulse 2s ease-in-out infinite;
+    }
+    .theme-toggle-btn:hover {
+      transform: scale(1.1) rotate(15deg);
+      border-color: var(--gold);
+      box-shadow: 0 6px 25px rgba(196,160,106,0.2);
+    }
+    .theme-toggle-btn:active { transform: scale(0.95); }
+    
+    body.white-theme .theme-toggle-btn {
+      background: #FFFFFF;
+      border-color: rgba(160, 120, 64, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    body.white-theme .theme-toggle-btn:hover {
+      border-color: #A07840;
+      box-shadow: 0 6px 25px rgba(160, 120, 64, 0.2);
+    }
+    
+    @keyframes themePulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
+      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
+    }
+
+    #footer-container { margin-top: 2rem; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .mini-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .admin-menu-item {
+        padding: 0.8rem 1rem;
+      }
+      .admin-menu-item .menu-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 1rem;
+      }
+      .admin-menu-item .menu-title {
+        font-size: 0.85rem;
+      }
+      .theme-toggle-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -152,127 +325,108 @@
   <div id="header-container"></div>
 
   <div class="main-content">
-    <div class="dashboard-container">
-      
-      <!-- Hero Section -->
-      <div class="hero-section">
-        <div class="welcome-badge"><i class="fas fa-crown"></i> لوحة التحكم</div>
-        <h1>مرحباً بك في Almaya Couture</h1>
-        <p>قم بإدارة منتجاتك، مجموعاتك وآراء الزبائن بكل سهولة واحترافية</p>
+    
+    <!-- Header -->
+    <div class="page-header">
+      <div class="badge"><i class="fas fa-crown"></i> لوحة التحكم</div>
+      <h1>Almaya Couture</h1>
+    </div>
+
+    <!-- Mini Stats -->
+    <div class="mini-stats">
+      <div class="mini-stat">
+        <i class="fas fa-tshirt"></i>
+        <div class="value" id="statProducts">0</div>
+        <div class="label">منتجات</div>
       </div>
-
-      <!-- Stats Cards -->
-      <div class="stats-container" id="statsContainer">
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fas fa-tshirt"></i></div>
-          <div class="stat-number" id="productsCount">0</div>
-          <div class="stat-label">إجمالي المنتجات</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
-          <div class="stat-number" id="collectionsCount">0</div>
-          <div class="stat-label">إجمالي المجموعات</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fas fa-star"></i></div>
-          <div class="stat-number" id="reviewsCount">0</div>
-          <div class="stat-label">إجمالي الآراء</div>
-        </div>
+      <div class="mini-stat">
+        <i class="fas fa-layer-group"></i>
+        <div class="value" id="statCollections">0</div>
+        <div class="label">مجموعات</div>
       </div>
-
-      <!-- Admin Cards -->
-      <div class="admin-cards">
-        <!-- Card 1: Collections -->
-        <div class="admin-card" onclick="navigateTo('admin-collections.html')">
-          <div class="card-header">
-            <div class="card-icon"><i class="fas fa-layer-group"></i></div>
-            <h2>إدارة المجموعات</h2>
-            <p>أضف، عدل، أو احذف المجموعات والأقسام</p>
-          </div>
-          <div class="card-stats">
-            <div class="card-stat">
-              <div class="card-stat-value" id="collectionsStat">0</div>
-              <div class="card-stat-label">مجموعة</div>
-            </div>
-            <div class="card-stat">
-              <div class="card-stat-value" id="activeCollectionsStat">0</div>
-              <div class="card-stat-label">نشطة</div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <button class="card-btn"><i class="fas fa-arrow-left"></i> إدارة المجموعات</button>
-          </div>
-        </div>
-
-        <!-- Card 2: Products -->
-        <div class="admin-card" onclick="navigateTo('admin-produits.html')">
-          <div class="card-header">
-            <div class="card-icon"><i class="fas fa-tshirt"></i></div>
-            <h2>إدارة المنتجات</h2>
-            <p>أضف منتجات جديدة، عدل الأسعار، والصور والفيديوهات</p>
-          </div>
-          <div class="card-stats">
-            <div class="card-stat">
-              <div class="card-stat-value" id="productsStat">0</div>
-              <div class="card-stat-label">منتج</div>
-            </div>
-            <div class="card-stat">
-              <div class="card-stat-value" id="activeProductsStat">0</div>
-              <div class="card-stat-label">نشط</div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <button class="card-btn"><i class="fas fa-arrow-left"></i> إدارة المنتجات</button>
-          </div>
-        </div>
-
-        <!-- ✅ Card 3: Reviews (NOUVEAU) -->
-        <div class="admin-card" onclick="navigateTo('admin-reviews.html')">
-          <div class="card-header">
-            <div class="card-icon"><i class="fas fa-star"></i></div>
-            <h2>إدارة الآراء</h2>
-            <p>راجع، اقبل، ارفض أو احذف آراء الزبائن</p>
-          </div>
-          <div class="card-stats">
-            <div class="card-stat">
-              <div class="card-stat-value" id="reviewsStat">0</div>
-              <div class="card-stat-label">رأي</div>
-            </div>
-            <div class="card-stat">
-              <div class="card-stat-value" id="pendingReviewsStat">0</div>
-              <div class="card-stat-label">قيد الانتظار</div>
-            </div>
-          </div>
-          <div class="card-footer">
-            <button class="card-btn"><i class="fas fa-arrow-left"></i> إدارة الآراء</button>
-          </div>
-        </div>
+      <div class="mini-stat">
+        <i class="fas fa-clipboard-list"></i>
+        <div class="value" id="statOrders">0</div>
+        <div class="label">طلبات</div>
       </div>
-
-      <!-- Quick Actions -->
-      <div class="quick-actions">
-        <h3><i class="fas fa-bolt"></i> إجراءات سريعة</h3>
-        <div class="actions-grid">
-          <button class="action-btn" onclick="navigateTo('admin-produits.html')"><i class="fas fa-plus-circle"></i> إضافة منتج جديد</button>
-          <button class="action-btn" onclick="navigateTo('admin-collections.html')"><i class="fas fa-plus-circle"></i> إضافة مجموعة جديدة</button>
-          <button class="action-btn" onclick="navigateTo('admin-reviews.html')"><i class="fas fa-star"></i> مراجعة الآراء</button>
-          <button class="action-btn" onclick="refreshStats()"><i class="fas fa-sync-alt"></i> تحديث الإحصائيات</button>
-          <button class="action-btn" onclick="viewSite()"><i class="fas fa-globe"></i> زيارة الموقع</button>
-        </div>
+      <div class="mini-stat">
+        <i class="fas fa-star"></i>
+        <div class="value" id="statReviews">0</div>
+        <div class="label">آراء</div>
       </div>
     </div>
-  </div>
 
-  <!-- Logout Modal -->
-  <div class="modal-overlay" id="logoutModal">
-    <div class="confirm-modal">
-      <i class="fas fa-sign-out-alt"></i>
-      <h3>تسجيل الخروج</h3>
-      <p>هل أنت متأكد من رغبتك في تسجيل الخروج؟</p>
-      <div class="modal-buttons">
-        <button class="modal-btn confirm" onclick="logout()">تسجيل خروج</button>
-        <button class="modal-btn cancel" onclick="closeLogoutModal()">إلغاء</button>
+    <!-- Menu principal -->
+    <div class="admin-menu">
+      
+      <!-- Produits -->
+      <div class="admin-menu-item" onclick="navigateTo('admin-produits.html')">
+        <div class="menu-icon"><i class="fas fa-tshirt"></i></div>
+        <div class="menu-info">
+          <div class="menu-title">إدارة المنتجات</div>
+          <div class="menu-desc">إضافة، تعديل، حذف المنتجات والصور</div>
+        </div>
+        <span class="menu-badge" id="badgeProducts">0</span>
+        <i class="fas fa-chevron-left menu-arrow"></i>
       </div>
+
+      <!-- Collections -->
+      <div class="admin-menu-item" onclick="navigateTo('admin-collections.html')">
+        <div class="menu-icon"><i class="fas fa-layer-group"></i></div>
+        <div class="menu-info">
+          <div class="menu-title">إدارة المجموعات</div>
+          <div class="menu-desc">إضافة، تعديل، حذف المجموعات والأقسام</div>
+        </div>
+        <span class="menu-badge" id="badgeCollections">0</span>
+        <i class="fas fa-chevron-left menu-arrow"></i>
+      </div>
+
+      <!-- Commandes -->
+      <div class="admin-menu-item" onclick="navigateTo('admin-orders.html')">
+        <div class="menu-icon"><i class="fas fa-clipboard-list"></i></div>
+        <div class="menu-info">
+          <div class="menu-title">إدارة الطلبات</div>
+          <div class="menu-desc">متابعة طلبات العملاء وتغيير حالتها</div>
+        </div>
+        <span class="menu-badge new" id="badgeNewOrders">0 جديد</span>
+        <i class="fas fa-chevron-left menu-arrow"></i>
+      </div>
+
+      <!-- Avis -->
+      <div class="admin-menu-item" onclick="navigateTo('admin-reviews.html')">
+        <div class="menu-icon"><i class="fas fa-star"></i></div>
+        <div class="menu-info">
+          <div class="menu-title">إدارة الآراء</div>
+          <div class="menu-desc">قبول، رفض، حذف آراء الزبائن</div>
+        </div>
+        <span class="menu-badge pending" id="badgePendingReviews">0 قيد الانتظار</span>
+        <i class="fas fa-chevron-left menu-arrow"></i>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section-title">
+      <i class="fas fa-bolt"></i> إجراءات سريعة
+    </div>
+    <div class="quick-links">
+      <button class="quick-link" onclick="navigateTo('admin-produits.html')">
+        <i class="fas fa-plus-circle"></i> منتج جديد
+      </button>
+      <button class="quick-link" onclick="navigateTo('admin-collections.html')">
+        <i class="fas fa-plus-circle"></i> مجموعة جديدة
+      </button>
+      <button class="quick-link" onclick="navigateTo('admin-orders.html')">
+        <i class="fas fa-eye"></i> الطلبات الجديدة
+      </button>
+      <button class="quick-link" onclick="navigateTo('admin-reviews.html')">
+        <i class="fas fa-check-circle"></i> مراجعة الآراء
+      </button>
+      <button class="quick-link" onclick="refreshStats()">
+        <i class="fas fa-sync-alt"></i> تحديث
+      </button>
+      <button class="quick-link" onclick="window.open('/','_blank')">
+        <i class="fas fa-globe"></i> زيارة الموقع
+      </button>
     </div>
   </div>
 
@@ -282,170 +436,155 @@
   <script src="footer.js"></script>
 
   <script>
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.setAttribute('aria-label', 'تغيير السمة');
+        btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) {
+            document.body.classList.remove('white-theme');
+            localStorage.setItem('almaya-theme', 'dark');
+          } else {
+            document.body.classList.add('white-theme');
+            localStorage.setItem('almaya-theme', 'white');
+          }
+          updateButtonIcon();
+        });
+        
+        document.body.appendChild(btn);
+        updateButtonIcon();
+      }
+
+      function updateButtonIcon() {
+        const btn = document.querySelector('.theme-toggle-btn');
+        if (!btn) return;
+        if (document.body.classList.contains('white-theme')) {
+          btn.innerHTML = '<i class="fas fa-sun"></i>';
+          btn.setAttribute('title', 'الوضع الداكن');
+        } else {
+          btn.innerHTML = '<i class="fas fa-moon"></i>';
+          btn.setAttribute('title', 'الوضع الفاتح');
+        }
+      }
+
+      function applySavedTheme() {
+        const saved = localStorage.getItem('almaya-theme');
+        if (saved === 'white') {
+          document.body.classList.add('white-theme');
+        } else if (saved === 'dark') {
+          document.body.classList.remove('white-theme');
+        }
+      }
+
+      applySavedTheme();
+      createToggleButton();
+      console.log('🎨 Theme toggle ready');
+    })();
+
     if (typeof CONFIG === 'undefined') {
-      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG غير موجود!</div>';
+      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js manquant !</div>';
       throw new Error('CONFIG missing');
     }
 
     const SUPABASE_URL = CONFIG.SUPABASE_URL;
     const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
 
-    async function supabaseRequest(endpoint, opts = {}) {
-      const url = `${SUPABASE_URL}${endpoint}`;
-      const fetchOpts = {
-        method: opts.method || 'GET',
+    async function supabaseRequest(endpoint) {
+      const res = await fetch(`${SUPABASE_URL}${endpoint}`, {
         headers: {
           'apikey': SUPABASE_KEY,
           'Authorization': `Bearer ${SUPABASE_KEY}`,
           'Content-Type': 'application/json'
         }
-      };
-      if (opts.body) fetchOpts.body = JSON.stringify(opts.body);
-      
-      try {
-        const res = await fetch(url, fetchOpts);
-        if (res.status === 204) return null;
-        const text = await res.text();
-        if (!text) return res.ok ? null : Promise.reject(new Error(`خطأ ${res.status}`));
-        const data = JSON.parse(text);
-        if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
-        return data;
-      } catch(e) { console.error('Supabase error:', e); throw e; }
+      });
+      if (res.status === 204) return null;
+      const text = await res.text();
+      if (!text) return [];
+      return JSON.parse(text);
     }
 
-    // ✅ Load ALL stats including reviews
     async function loadStats() {
       try {
-        // Products
         const products = await supabaseRequest('/rest/v1/products?select=id,is_active');
-        const productsList = products || [];
-        const totalProducts = productsList.length;
-        const activeProducts = productsList.filter(p => p.is_active === true).length;
+        const totalProducts = products ? products.length : 0;
+        const activeProducts = products ? products.filter(p => p.is_active).length : 0;
         
-        // Collections
         const collections = await supabaseRequest('/rest/v1/cat_overlay?select=id,is_active');
-        const collectionsList = collections || [];
-        const totalCollections = collectionsList.length;
-        const activeCollections = collectionsList.filter(c => c.is_active === true).length;
+        const totalCollections = collections ? collections.length : 0;
         
-        // ✅ Reviews
-        let totalReviews = 0;
-        let pendingReviews = 0;
+        let totalOrders = 0, newOrders = 0;
+        try {
+          const orders = await supabaseRequest('/rest/v1/orders?select=id,status');
+          if (orders) {
+            totalOrders = orders.length;
+            newOrders = orders.filter(o => o.status === 'new').length;
+          }
+        } catch(e) {}
+        
+        let totalReviews = 0, pendingReviews = 0;
         try {
           const reviews = await supabaseRequest('/rest/v1/reviews?select=id,is_approved');
-          const reviewsList = reviews || [];
-          totalReviews = reviewsList.length;
-          pendingReviews = reviewsList.filter(r => r.is_approved === false).length;
-        } catch(e) { console.warn('Reviews table not found:', e); }
+          if (reviews) {
+            totalReviews = reviews.length;
+            pendingReviews = reviews.filter(r => !r.is_approved).length;
+          }
+        } catch(e) {}
         
-        // Update header stats
-        document.getElementById('productsCount').textContent = totalProducts;
-        document.getElementById('collectionsCount').textContent = totalCollections;
-        document.getElementById('reviewsCount').textContent = totalReviews;
+        document.getElementById('statProducts').textContent = totalProducts;
+        document.getElementById('statCollections').textContent = totalCollections;
+        document.getElementById('statOrders').textContent = totalOrders;
+        document.getElementById('statReviews').textContent = totalReviews;
         
-        // Update card stats
-        document.getElementById('collectionsStat').textContent = totalCollections;
-        document.getElementById('activeCollectionsStat').textContent = activeCollections;
-        document.getElementById('productsStat').textContent = totalProducts;
-        document.getElementById('activeProductsStat').textContent = activeProducts;
-        document.getElementById('reviewsStat').textContent = totalReviews;
-        document.getElementById('pendingReviewsStat').textContent = pendingReviews;
+        document.getElementById('badgeProducts').textContent = activeProducts + ' نشط';
+        document.getElementById('badgeCollections').textContent = totalCollections;
+        document.getElementById('badgeNewOrders').textContent = newOrders + ' جديد';
+        document.getElementById('badgePendingReviews').textContent = pendingReviews + ' قيد الانتظار';
         
       } catch(e) {
-        console.error('Error loading stats:', e);
-        // Fallback
-        ['productsCount','collectionsCount','reviewsCount','collectionsStat','activeCollectionsStat','productsStat','activeProductsStat','reviewsStat','pendingReviewsStat'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.textContent = '0';
-        });
+        console.error('Erreur stats:', e);
       }
     }
 
-    window.navigateTo = function(page) { window.location.href = page; };
-    
-    window.refreshStats = function() {
-      loadStats();
-      showToast('✅ تم تحديث الإحصائيات بنجاح');
-    };
+    function navigateTo(page) {
+      window.location.href = page;
+    }
 
-    function showToast(message) {
-      let toast = document.getElementById('customToast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'customToast';
-        toast.style.cssText = `
-          position:fixed;bottom:20px;left:20px;background:#25D366;color:white;padding:12px 24px;
-          border-radius:12px;font-size:0.85rem;z-index:1100;animation:slideIn 0.3s ease;
-          box-shadow:0 4px 12px rgba(0,0,0,0.3);
-        `;
-        document.body.appendChild(toast);
-        const style = document.createElement('style');
-        style.textContent = `
-          @keyframes slideIn { from{opacity:0;transform:translateX(-20px);} to{opacity:1;transform:translateX(0);} }
-          @keyframes slideOut { from{opacity:1;transform:translateX(0);} to{opacity:0;transform:translateX(-20px);} }
-        `;
-        document.head.appendChild(style);
-      }
-      toast.textContent = message;
-      toast.style.display = 'block';
-      toast.style.animation = 'slideIn 0.3s ease';
+    function refreshStats() {
+      loadStats();
+      const btn = event.target;
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> تم التحديث';
+      btn.style.color = '#25D366';
+      btn.style.borderColor = '#25D366';
       setTimeout(() => {
-        toast.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => { toast.style.display = 'none'; }, 300);
+        btn.innerHTML = originalHTML;
+        btn.style.color = '';
+        btn.style.borderColor = '';
       }, 2000);
     }
 
-    window.viewSite = function() { window.open('/', '_blank'); };
-
-    window.logout = function() {
-      localStorage.removeItem('user');
-      sessionStorage.clear();
-      window.location.href = '/';
-    };
-
-    window.showLogoutModal = function() {
-      document.getElementById('logoutModal').classList.add('active');
-    };
-
-    window.closeLogoutModal = function() {
-      document.getElementById('logoutModal').classList.remove('active');
-    };
-
-    function addLogoutButton() {
-      setTimeout(() => {
-        if (!document.querySelector('.logout-btn-custom')) {
-          const logoutBtn = document.createElement('button');
-          logoutBtn.className = 'logout-btn-custom';
-          logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> تسجيل الخروج';
-          logoutBtn.style.cssText = `
-            position:fixed;top:80px;left:20px;background:rgba(255,71,87,0.2);border:1px solid rgba(255,71,87,0.3);
-            color:#FF4757;padding:8px 16px;border-radius:30px;font-size:0.8rem;cursor:pointer;font-family:inherit;
-            display:flex;align-items:center;gap:8px;z-index:100;transition:all 0.3s;
-          `;
-          logoutBtn.onclick = showLogoutModal;
-          logoutBtn.onmouseover = () => { logoutBtn.style.background = 'rgba(255,71,87,0.3)'; };
-          logoutBtn.onmouseout = () => { logoutBtn.style.background = 'rgba(255,71,87,0.2)'; };
-          document.body.appendChild(logoutBtn);
-        }
-      }, 500);
-    }
-
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLogoutModal(); });
-    
-    const modal = document.getElementById('logoutModal');
-    if (modal) modal.addEventListener('click', (e) => { if (e.target.id === 'logoutModal') closeLogoutModal(); });
+    window.navigateTo = navigateTo;
+    window.refreshStats = refreshStats;
 
     document.addEventListener('DOMContentLoaded', () => {
       loadStats();
-      addLogoutButton();
       
-      const cards = document.querySelectorAll('.admin-card');
-      cards.forEach((card, index) => {
-        card.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s both`;
+      document.querySelectorAll('.admin-menu-item').forEach((item, i) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(20px)';
+        item.style.animation = `slideIn 0.4s ease ${i * 0.1}s forwards`;
       });
       
       const style = document.createElement('style');
-      style.textContent = `@keyframes fadeInUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }`;
+      style.textContent = `@keyframes slideIn { to { opacity:1; transform:translateX(0); } }`;
       document.head.appendChild(style);
     });
   </script>
