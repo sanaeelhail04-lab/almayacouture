@@ -4,39 +4,118 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Almaya Couture | جبادور المعلم - حرفة مغربية أصيلة</title>
+  <link rel="icon" href="images/logo.jpg">
+  
   <!-- Google Fonts: Luxury Moroccan Fusion -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
-  <!-- Header Auto-Loader -->
-  <script src="header.js"></script>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <!-- Config -->
+  <script src="config.js"></script>
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* ========== DARK THEME (Défaut) ========== */
+    :root {
+      --bg: #1A1510;
+      --bg2: #2A2218;
+      --text: #E8DDD0;
+      --text2: #B8A890;
+      --text3: #A89880;
+      --text4: #8B7B68;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --border: rgba(196,160,106,0.12);
+      --border2: rgba(196,160,106,0.2);
+      --card: rgba(42,34,24,0.7);
+      --card-hover: rgba(196,160,106,0.35);
+      --nav: rgba(26,21,16,0.92);
+      --input-bg: rgba(26,21,16,0.6);
+      --section-bg: rgba(42,34,24,0.5);
     }
-
+    
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg: #FDFCF8;
+      --bg2: #F5F0E8;
+      --text: #2A2218;
+      --text2: #5A4E3C;
+      --text3: #6B5F52;
+      --text4: #8B7B68;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --border: rgba(160,120,64,0.12);
+      --border2: rgba(160,120,64,0.2);
+      --card: rgba(245,240,232,0.85);
+      --card-hover: rgba(160,120,64,0.35);
+      --nav: rgba(253,252,248,0.92);
+      --input-bg: rgba(245,240,232,0.6);
+      --section-bg: rgba(245,240,232,0.5);
+    }
+    
     body {
-      background: #1A1510;
+      background: var(--bg);
       font-family: 'Tajawal', 'Cairo', sans-serif;
-      color: #E8DDD0;
+      color: var(--text);
       scroll-behavior: smooth;
       overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
-
+    
+    .gold-text { color: var(--gold); }
+    
+    /* Gold Buttons */
+    .gold-btn {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--text);
+      letter-spacing: 2px;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+      cursor: pointer;
+      display: inline-block;
+      font-family: 'Tajawal', sans-serif;
+    }
+    .gold-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196, 160, 106, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    .gold-btn:hover::before { left: 100%; }
+    .gold-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+    }
+    
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 2rem 2rem 2rem 2rem;
+      padding: clamp(1rem, 4vw, 2rem);
       position: relative;
     }
 
     /* Royal Accent */
     .royal-accent {
       height: 3px;
-      background: linear-gradient(90deg, #C4A06A, #D4B896, #C4A06A);
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
       width: 120px;
       margin: 0.5rem auto 1rem auto;
       border-radius: 4px;
@@ -51,8 +130,8 @@
     .luxury-header h1 {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 700;
-      font-size: 3rem;
-      background: linear-gradient(135deg, #C4A06A 0%, #D4B896 80%);
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 80%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -61,9 +140,9 @@
     
     .luxury-header p {
       font-family: 'Amiri', serif;
-      font-size: 1rem;
-      color: #A89880;
-      border-top: 1px solid rgba(196, 160, 106, 0.2);
+      font-size: clamp(0.7rem, 2vw, 1rem);
+      color: var(--text3);
+      border-top: 1px solid var(--border2);
       display: inline-block;
       padding-top: 0.4rem;
     }
@@ -72,9 +151,10 @@
     .tabs-container {
       display: flex;
       justify-content: center;
-      gap: 2rem;
-      margin-bottom: 3rem;
-      border-bottom: 1px solid rgba(196, 160, 106, 0.2);
+      gap: clamp(1rem, 3vw, 2rem);
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+      border-bottom: 1px solid var(--border2);
+      flex-wrap: wrap;
     }
     
     .tab-btn {
@@ -83,30 +163,26 @@
       padding: 0.8rem 1.8rem;
       font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
-      font-size: 1.2rem;
-      color: #A89880;
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      color: var(--text3);
       cursor: pointer;
       transition: 0.3s;
       border-bottom: 2px solid transparent;
     }
     
     .tab-btn.active {
-      color: #C4A06A;
-      border-bottom: 2px solid #C4A06A;
+      color: var(--gold);
+      border-bottom: 2px solid var(--gold);
     }
     
-    .tab-btn:hover {
-      color: #D4B896;
-    }
+    .tab-btn:hover { color: var(--gold-light); }
     
     .tab-content {
       display: none;
       animation: fadeSlide 0.4s ease-out;
     }
     
-    .tab-content.active-tab {
-      display: block;
-    }
+    .tab-content.active-tab { display: block; }
     
     @keyframes fadeSlide {
       from { opacity: 0; transform: translateY(8px); }
@@ -115,20 +191,20 @@
 
     /* Sections */
     .config-section {
-      margin-bottom: 3.2rem;
-      background: rgba(42, 34, 24, 0.5);
+      margin-bottom: clamp(2rem, 4vw, 3.2rem);
+      background: var(--section-bg);
       backdrop-filter: blur(8px);
       border-radius: 36px;
-      padding: 0.5rem 0 1rem;
-      border: 1px solid rgba(196, 160, 106, 0.1);
+      padding: clamp(1rem, 3vw, 2rem);
+      border: 1px solid var(--border);
     }
     
     .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
       font-weight: 600;
-      color: #C4A06A;
-      border-right: 5px solid #C4A06A;
+      color: var(--gold);
+      border-right: 5px solid var(--gold);
       padding-right: 1rem;
       margin-bottom: 1.8rem;
     }
@@ -137,28 +213,28 @@
     .options-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 1.8rem;
+      gap: clamp(1rem, 2.5vw, 1.8rem);
     }
     
     .option-card {
-      background: rgba(42, 34, 24, 0.8);
+      background: var(--card);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(196, 160, 106, 0.12);
+      border: 1px solid var(--border);
       border-radius: 28px;
-      padding: 1rem;
+      padding: clamp(0.8rem, 2vw, 1rem);
       cursor: pointer;
       transition: all 0.4s ease;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+      position: relative;
     }
     
     .option-card:hover {
       transform: translateY(-6px);
+      border-color: var(--card-hover);
       box-shadow: 0 20px 28px -12px rgba(196, 160, 106, 0.15);
-      border-color: rgba(196, 160, 106, 0.35);
     }
     
     .option-card.selected {
-      border: 2px solid #C4A06A;
+      border: 2px solid var(--gold);
       background: rgba(196, 160, 106, 0.1);
       box-shadow: 0 10px 22px -10px rgba(196, 160, 106, 0.25);
     }
@@ -168,7 +244,7 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 22px;
-      background: #2A2218;
+      background: var(--bg2);
       display: block;
       margin-bottom: 0.8rem;
       transition: 0.2s;
@@ -176,32 +252,32 @@
     
     .option-title {
       font-weight: 700;
-      font-size: 1rem;
-      color: #E8DDD0;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      color: var(--text);
       font-family: 'Cormorant Garamond', serif;
     }
     
     .option-desc {
-      font-size: 0.7rem;
-      color: #A89880;
+      font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+      color: var(--text3);
       margin-top: 0.25rem;
     }
 
     /* Color Section */
     .color-section {
       margin: 2rem 0;
-      background: rgba(42, 34, 24, 0.5);
+      background: var(--section-bg);
       backdrop-filter: blur(8px);
       border-radius: 36px;
-      padding: 1rem 1.5rem;
-      border: 1px solid rgba(196, 160, 106, 0.1);
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+      border: 1px solid var(--border);
     }
     
     .color-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
       font-weight: 600;
-      color: #C4A06A;
+      color: var(--gold);
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
@@ -211,7 +287,7 @@
     .color-palette {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: clamp(1rem, 2.5vw, 1.5rem);
       align-items: center;
     }
     
@@ -225,8 +301,8 @@
     }
     
     .color-circle {
-      width: 55px;
-      height: 55px;
+      width: clamp(40px, 8vw, 55px);
+      height: clamp(40px, 8vw, 55px);
       border-radius: 50%;
       border: 2px solid transparent;
       transition: 0.2s;
@@ -234,76 +310,68 @@
     }
     
     .color-option.selected .color-circle {
-      border: 3px solid #C4A06A;
+      border: 3px solid var(--gold);
       transform: scale(1.08);
-      box-shadow: 0 0 0 2px #1A1510, 0 0 0 4px #C4A06A;
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--gold);
     }
     
     .color-label {
-      font-size: 0.7rem;
+      font-size: clamp(0.6rem, 1.5vw, 0.75rem);
       font-weight: 600;
-      color: #A89880;
+      color: var(--text3);
     }
 
     /* Measurements */
     .measure-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.5rem;
-      background: rgba(42, 34, 24, 0.7);
+      gap: clamp(1rem, 2.5vw, 1.5rem);
+      background: var(--card);
       backdrop-filter: blur(8px);
-      padding: 2rem;
+      padding: clamp(1.5rem, 3vw, 2rem);
       border-radius: 40px;
-      border: 1px solid rgba(196, 160, 106, 0.12);
+      border: 1px solid var(--border);
       margin: 2rem 0;
-      box-shadow: 0 12px 22px rgba(0,0,0,0.3);
     }
     
-    .input-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
+    .input-field { display: flex; flex-direction: column; gap: 0.4rem; }
     
     .input-field label {
-      font-size: 0.7rem;
+      font-size: clamp(0.65rem, 1.5vw, 0.75rem);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #C4A06A;
+      color: var(--gold);
       font-family: 'Tajawal', sans-serif;
     }
     
     .input-field input {
-      background: rgba(26, 21, 16, 0.6);
-      border: 1px solid rgba(196, 160, 106, 0.2);
+      background: var(--input-bg);
+      border: 1px solid var(--border2);
       padding: 0.7rem 1rem;
       border-radius: 12px;
       font-family: 'Tajawal', sans-serif;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 2vw, 0.95rem);
       outline: none;
       transition: all 0.3s;
-      color: #E8DDD0;
+      color: var(--text);
     }
     
     .input-field input:focus {
-      border-color: #C4A06A;
+      border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(196, 160, 106, 0.15);
     }
     
-    .input-field input::placeholder {
-      color: rgba(168, 152, 128, 0.5);
-    }
+    .input-field input::placeholder { color: var(--text4); }
 
     /* Design Sheet */
     .design-sheet {
-      background: rgba(42, 34, 24, 0.7);
+      background: var(--card);
       backdrop-filter: blur(8px);
       border-radius: 40px;
-      border: 1px solid rgba(196, 160, 106, 0.15);
-      padding: 2rem;
+      border: 1px solid var(--border);
+      padding: clamp(1.5rem, 3vw, 2rem);
       margin: 2rem 0 1.5rem;
-      box-shadow: 0 16px 28px -12px rgba(0,0,0,0.3);
       position: relative;
     }
     
@@ -312,22 +380,22 @@
       position: absolute;
       top: -14px;
       right: 32px;
-      background: #1A1510;
+      background: var(--bg);
       padding: 0 16px;
-      font-size: 0.7rem;
+      font-size: clamp(0.6rem, 1.5vw, 0.75rem);
       letter-spacing: 2px;
-      color: #C4A06A;
+      color: var(--gold);
       font-weight: bold;
       font-family: 'Amiri', serif;
     }
     
     .sheet-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
       font-weight: 700;
-      color: #C4A06A;
+      color: var(--gold);
       margin-bottom: 1.2rem;
-      border-right: 3px solid #C4A06A;
+      border-right: 3px solid var(--gold);
       padding-right: 1rem;
     }
     
@@ -336,30 +404,23 @@
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 0.8rem;
-      border-bottom: 1px dashed rgba(196, 160, 106, 0.15);
+      border-bottom: 1px dashed var(--border);
       padding: 0.9rem 0;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 1.8vw, 0.95rem);
     }
     
-    .sheet-label {
-      font-weight: 700;
-      color: #A89880;
-    }
-    
-    .sheet-value {
-      color: #E8DDD0;
-      font-weight: 500;
-    }
+    .sheet-label { font-weight: 700; color: var(--text3); }
+    .sheet-value { color: var(--text); font-weight: 500; }
 
     /* Maalem Wisdom */
     .maalem-wisdom {
       background: rgba(196, 160, 106, 0.08);
-      border-right: 8px solid #C4A06A;
+      border-right: 8px solid var(--gold);
       padding: 1rem 1.5rem;
       border-radius: 28px;
       margin: 1rem 0 1.8rem;
-      font-size: 0.85rem;
-      color: #D4B896;
+      font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+      color: var(--gold-light);
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -368,20 +429,17 @@
 
     /* Floating Bar */
     .floating-bar {
-      position: static;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(26, 21, 16, 0.96);
+      background: var(--nav);
       backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(196, 160, 106, 0.2);
-      padding: 1rem 2rem;
-      z-index: 200;
+      border-top: 1px solid var(--border);
+      padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1rem, 3vw, 2rem);
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      gap: clamp(0.8rem, 2vw, 1.5rem);
       flex-wrap: wrap;
-      box-shadow: 0 -8px 28px rgba(0,0,0,0.5);
+      position: sticky;
+      bottom: 0;
+      z-index: 200;
     }
     
     .whatsapp-btn {
@@ -397,6 +455,7 @@
       color: white;
       transition: all 0.3s;
       font-family: 'Tajawal', sans-serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.95rem);
     }
     
     .whatsapp-btn:hover {
@@ -406,8 +465,8 @@
     
     .reset-btn {
       background: transparent;
-      border: 1.5px solid #C4A06A;
-      color: #E8DDD0;
+      border: 1.5px solid var(--gold);
+      color: var(--text);
       padding: 0.85rem 2rem;
       border-radius: 60px;
       font-weight: 600;
@@ -416,6 +475,7 @@
       font-family: 'Tajawal', sans-serif;
       position: relative;
       overflow: hidden;
+      font-size: clamp(0.75rem, 1.8vw, 0.95rem);
     }
     
     .reset-btn::before {
@@ -429,70 +489,127 @@
       transition: left 0.5s;
     }
     
-    .reset-btn:hover::before {
-      left: 100%;
-    }
+    .reset-btn:hover::before { left: 100%; }
     
     .reset-btn:hover {
       background: rgba(196, 160, 106, 0.12);
-      border-color: #D4B896;
-      color: #D4B896;
+      border-color: var(--gold-light);
+      color: var(--gold-light);
       transform: translateY(-2px);
     }
     
     hr {
       margin: 0.8rem 0;
       border: none;
-      border-top: 1px solid rgba(196, 160, 106, 0.15);
+      border-top: 1px solid var(--border);
+    }
+
+    /* WhatsApp Float */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 120px;
+      left: 30px;
+      z-index: 100;
+      background: #25D366;
+      color: white;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); }
+
+    /* Theme Toggle */
+    .theme-toggle-btn {
+      position: fixed;
+      bottom: 180px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 2px solid var(--border2);
+      color: var(--gold);
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      animation: themePulse 2s ease-in-out infinite;
+    }
+    .theme-toggle-btn:hover {
+      transform: scale(1.1) rotate(15deg);
+      border-color: var(--gold);
+      box-shadow: 0 6px 25px rgba(196,160,106,0.2);
+    }
+    .theme-toggle-btn:active { transform: scale(0.95); }
+    
+    body.white-theme .theme-toggle-btn {
+      background: #FFFFFF;
+      border-color: rgba(160, 120, 64, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    body.white-theme .theme-toggle-btn:hover {
+      border-color: #A07840;
+      box-shadow: 0 6px 25px rgba(160, 120, 64, 0.2);
+    }
+    
+    @keyframes themePulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
+      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
     }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #1A1510; }
-    ::-webkit-scrollbar-thumb { background: rgba(196, 160, 106, 0.3); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(196, 160, 106, 0.5); }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
     /* ===== MEDIA QUERIES ===== */
     @media (max-width: 1024px) {
-      .container { padding: 1.5rem 1.5rem 2rem 1.5rem; }
-      .luxury-header h1 { font-size: 2.5rem; }
-      .section-title { font-size: 1.5rem; }
-      .options-grid { gap: 1.2rem; }
+      .container { padding: clamp(1rem, 3vw, 1.5rem); }
+      .options-grid { gap: clamp(0.8rem, 1.8vw, 1.5rem); }
     }
     
     @media (max-width: 768px) {
-      .container { padding: 1rem 1rem 1rem 1rem; }
-      .options-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
-      .section-title { font-size: 1.3rem; }
-      .luxury-header h1 { font-size: 2rem; }
-      .measure-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 1.5rem; gap: 1rem; }
-      .floating-bar { padding: 1rem 1rem; gap: 1rem; }
-      .whatsapp-btn { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
-      .reset-btn { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
-      .color-circle { width: 45px; height: 45px; }
+      .container { padding: clamp(0.8rem, 2.5vw, 1.2rem); }
+      .options-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: clamp(0.7rem, 1.5vw, 1.2rem); }
+      .measure-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: clamp(1rem, 2.5vw, 1.5rem); gap: clamp(0.7rem, 1.5vw, 1rem); }
+      .floating-bar { padding: clamp(0.7rem, 1.8vw, 1rem) clamp(0.8rem, 2vw, 1.2rem); gap: clamp(0.6rem, 1.5vw, 1rem); }
+      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 100px; left: 20px; }
+      .theme-toggle-btn { bottom: 160px; right: 20px; width: 42px; height: 42px; font-size: 1rem; }
+      .config-section { padding: clamp(0.8rem, 2vw, 1.5rem); }
     }
     
     @media (max-width: 480px) {
-      .container { padding: 0.8rem 0.8rem 1rem 0.8rem; }
-      .options-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem; }
-      .option-card { border-radius: 20px; padding: 0.8rem; }
+      .container { padding: clamp(0.6rem, 2vw, 1rem); }
+      .options-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: clamp(0.5rem, 1.2vw, 0.8rem); }
+      .option-card { border-radius: 20px; padding: clamp(0.6rem, 1.5vw, 0.8rem); }
       .option-img { border-radius: 16px; }
-      .section-title { font-size: 1.1rem; border-right-width: 3px; }
-      .luxury-header h1 { font-size: 1.6rem; }
-      .luxury-header p { font-size: 0.7rem; }
-      .measure-grid { padding: 1rem; gap: 0.8rem; border-radius: 24px; }
-      .design-sheet { padding: 1.5rem; border-radius: 24px; }
-      .design-sheet:before { font-size: 0.6rem; right: 20px; }
-      .floating-bar { padding: 0.8rem 0.8rem; gap: 0.8rem; }
-      .whatsapp-btn { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
-      .reset-btn { padding: 0.6rem 1.2rem; font-size: 0.75rem; }
-      .color-circle { width: 40px; height: 40px; }
-      .color-palette { gap: 1rem; }
+      .section-title { border-right-width: 3px; }
+      .measure-grid { padding: clamp(0.8rem, 2vw, 1.2rem); gap: clamp(0.6rem, 1.2vw, 0.8rem); border-radius: 24px; }
+      .design-sheet { padding: clamp(1rem, 2.5vw, 1.5rem); border-radius: 24px; }
+      .design-sheet:before { right: 20px; }
+      .floating-bar { padding: clamp(0.6rem, 1.5vw, 0.8rem); gap: clamp(0.5rem, 1.2vw, 0.8rem); }
+      .whatsapp-btn { padding: 0.6rem 1.2rem; }
+      .reset-btn { padding: 0.6rem 1.2rem; }
+      .color-palette { gap: clamp(0.8rem, 1.5vw, 1rem); }
+      .config-section { border-radius: 24px; }
+      .color-section { border-radius: 24px; }
     }
     
     @media (max-width: 360px) {
-      .options-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-      .option-card { border-radius: 16px; padding: 0.6rem; }
+      .options-grid { grid-template-columns: 1fr 1fr; gap: clamp(0.4rem, 1vw, 0.6rem); }
+      .option-card { border-radius: 16px; padding: 0.5rem; }
       .option-img { border-radius: 12px; }
       .option-title { font-size: 0.85rem; }
       .option-desc { font-size: 0.65rem; }
@@ -501,10 +618,11 @@
     
     /* Touch devices */
     @media (hover: none) and (pointer: coarse) {
-      .option-card:hover { transform: none; border-color: rgba(196, 160, 106, 0.12); }
-      .option-card:active { transform: scale(0.97); border-color: rgba(196, 160, 106, 0.35); }
+      .option-card:hover { transform: none; border-color: var(--border); }
+      .option-card:active { transform: scale(0.97); border-color: var(--card-hover); }
       .reset-btn:hover::before { left: -100%; }
       .reset-btn:active::before { left: 100%; }
+      .reset-btn:active { background: rgba(196, 160, 106, 0.12); transform: translateY(-2px); }
     }
     
     /* Reduced motion */
@@ -518,277 +636,352 @@
 </head>
 <body>
 
-<div class="container">
-  <div class="luxury-header">
-    <h1>تصميم جبادور </h1>
-    <div class="royal-accent"></div>
-    <p>تمغربيت أصيلة · فصالة مخزنية وحرفة يدوية نادرة</p>
-  </div>
+  <!-- Header Auto-Loaded -->
+  <div id="header-container"></div>
+  
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" aria-label="واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
-  <!-- TABS -->
-  <div class="tabs-container">
-    <button class="tab-btn active" data-tab="top-tab">❁ الفوقي (التوب) التفصيل</button>
-    <button class="tab-btn" data-tab="bottom-tab">❀ السروال & الأثواب</button>
-  </div>
-
-  <!-- Tab 1: الفوقي -->
-  <div id="top-tab" class="tab-content active-tab">
-    <div class="config-section">
-      <div class="section-title">① الفوقي · فصالة مخزنية متقنة</div>
-      <div class="options-grid" id="top-style-options"></div>
-    </div>
-    <div class="config-section">
-      <div class="section-title">② الخياطة واللمسة الحرفية</div>
-      <div class="options-grid" id="craft-options"></div>
-    </div>
-  </div>
-
-  <!-- Tab 2: السروال + الأقمشة -->
-  <div id="bottom-tab" class="tab-content">
-    <div class="config-section">
-      <div class="section-title">③ السروال · قندريسي و Droit</div>
-      <div class="options-grid" id="pants-options"></div>
-    </div>
-    <div class="config-section">
-      <div class="section-title">④ الأثواب الملكية (الأقمشة)</div>
-      <div class="options-grid" id="fabric-options"></div>
-    </div>
-  </div>
-
-  <!-- اختيار اللون -->
-  <div class="color-section">
-    <div class="color-title">
-      <i class="fas fa-palette"></i> ⑤ اختيار اللون الرئيسي
-    </div>
-    <div class="color-palette" id="colorPaletteContainer"></div>
-  </div>
-
-  <!-- نصيحة المعلم -->
-  <div id="maalemWisdom" class="maalem-wisdom" style="display: none;">
-    <i class="fas fa-hamsa"></i> <span id="wisdomText"></span>
-  </div>
-
-  <!-- المقاسات -->
-  <div class="measure-grid">
-    <div class="input-field"><label>الكتف (سم)</label><input type="number" id="shoulder" placeholder="مثال: 38" step="0.5"></div>
-    <div class="input-field"><label>الصدر (سم)</label><input type="number" id="bust" placeholder="مثال: 88" step="0.5"></div>
-    <div class="input-field"><label>الخصر (سم)</label><input type="number" id="waist" placeholder="مثال: 70" step="0.5"></div>
-    <div class="input-field"><label>دورة الذراع (سم)</label><input type="number" id="armCircumference" placeholder="دقيقة للمعلم" step="0.5"></div>
-    <div class="input-field"><label>طول الفوقي (سم)</label><input type="number" id="topLength" placeholder="مثال: 75" step="0.5"></div>
-    <div class="input-field"><label>طول الكم (سم)</label><input type="number" id="sleeveLength" placeholder="مثال: 58" step="0.5"></div>
-    <div class="input-field"><label>طول السروال (سم)</label><input type="number" id="pantsLength" placeholder="مثال: 102" step="0.5"></div>
-    <div class="input-field"><label>عرض فتحة السروال (سم)</label><input type="number" id="pantsOpening" placeholder="فتحة القندريسي" step="0.5"></div>
-  </div>
-
-  <!-- كناش المعلم -->
-  <div class="design-sheet">
-    <div class="sheet-title">📜 كناش الطلب | Bon de Commande - Maalam</div>
-    <div id="summaryContent">
-      <div class="sheet-row"><span class="sheet-label">🧥 الفوقي (التوب):</span><span class="sheet-value">— لم تختاري بعد</span></div>
-      <div class="sheet-row"><span class="sheet-label">👖 السروال:</span><span class="sheet-value">—</span></div>
-      <div class="sheet-row"><span class="sheet-label">🏵️ الثوب (القماش):</span><span class="sheet-value">—</span></div>
-      <div class="sheet-row"><span class="sheet-label">✧ اللمسة/الخدمة:</span><span class="sheet-value">—</span></div>
-      <div class="sheet-row"><span class="sheet-label">🎨 اللون المختار:</span><span class="sheet-value">—</span></div>
-      <div class="sheet-row"><span class="sheet-label">📏 تفاصيل المقاس:</span><span class="sheet-value">—</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="floating-bar">
-  <button class="reset-btn" id="resetBtn">⟳ تجديد التصميم</button>
-  <button class="whatsapp-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i> إرسال الكناش للمعلمة (0601245733)</button>
-</div>
-
-<!-- Footer Auto-Loader -->
-<script src="footer.js"></script>
-
-<script>
-  // قاعدة بيانات الجبادور
-  const topStyles = [
-    { id: "top_makhzeni", title: "فصالة مخزنية بـ الخرطة", desc: "تقليد ملكي أصيل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Khorta+Makhzeni", craftAffinity: "traditional" },
-    { id: "top_nus_toq", title: "جبادور بـ نص طوق", desc: "أناقة عصرية بالطوق", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Nos+Toq", craftAffinity: "modern" },
-    { id: "top_cintree", title: "فصالة عصرية Cintrée", desc: "قصّة ضيقة ومحتضنة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Cintree", craftAffinity: "slim" }
-  ];
-
-  const pantsOptions = [
-    { id: "pants_kandrisi", title: "سروال قندريسي عصري", desc: "فتحة في الأسفل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Kandrisi", style: "flow" },
-    { id: "pants_droit_dhbana", title: "سروال Droit بالذبابة", desc: "مخدوم بـ الذبانة في الجناب", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Droit+Dhabana", style: "tailored" }
-  ];
-
-  const luxuryFabrics = [
-    { id: "fab_melifa", title: "المليفة الحريرية", desc: "انسياب فاخر", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Melifa", weight: "light" },
-    { id: "fab_crepe_dior", title: "كريب ديور", desc: "نعومة راقية", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Crepe+Dior", weight: "medium" },
-    { id: "fab_lin_parchemin", title: "الكتان (Lin) بالبرشمان", desc: "مخدوم بأصالة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Lin+Parchemin", weight: "medium", perfectForParchemin: true },
-    { id: "fab_soussi", title: "ثوب السوسدي التقليدي", desc: "لمسة تراثية", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Soussi", weight: "heavy" }
-  ];
-
-  const craftOptionsArr = [
-    { id: "craft_parchemin", title: "خياطة البرشمان اليدوية", desc: "خدمة دقيقة للمعلم", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Parchemin", requiresLin: true },
-    { id: "craft_aqad_baldia", title: "العقاد البلدية الصغيرة", desc: "مخدومة بالحبة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Aqad+Baladia", requiresLin: false },
-    { id: "craft_sfifa_siklia", title: "السفيفة الصقلية", desc: "تطريز رفيع", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Sfifa+Siklia", requiresLin: false },
-    { id: "craft_tarz_maalem", title: "طرز المعلم التقليدي", desc: "تطريز يدوي أصيل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Tarz+Maalem", requiresLin: false }
-  ];
-
-  const colorOptions = [
-    { name: "ذهبي ملكي", code: "#C4A06A", value: "ذهبي ملكي" },
-    { name: "أخضر زمردي", code: "#006747", value: "أخضر زمردي" },
-    { name: "أبيض لؤلؤي", code: "#F5F0E8", value: "أبيض لؤلؤي" },
-    { name: "عنابي فخم", code: "#722F37", value: "عنابي فخم" },
-    { name: "أسود أنيق", code: "#1E1E1E", value: "أسود أنيق" },
-    { name: "كحلي مخملي", code: "#191970", value: "كحلي مخملي" }
-  ];
-
-  let selections = {
-    topStyle: null,
-    pants: null,
-    fabric: null,
-    craft: null,
-    color: null
-  };
-
-  function renderColorPalette() {
-    const container = document.getElementById('colorPaletteContainer');
-    if (!container) return;
-    container.innerHTML = colorOptions.map(opt => `
-      <div class="color-option" data-color-code="${opt.code}" data-color-name="${opt.value}">
-        <div class="color-circle" style="background: ${opt.code};"></div>
-        <span class="color-label">${opt.name}</span>
+  <!-- Main Content -->
+  <main>
+    <div class="container" data-aos="fade-up">
+      <div class="luxury-header">
+        <h1>تصميم جبادور</h1>
+        <div class="royal-accent"></div>
+        <p>تمغربيت أصيلة · فصالة مخزنية وحرفة يدوية نادرة</p>
       </div>
-    `).join('');
-    document.querySelectorAll('.color-option').forEach(el => {
-      el.addEventListener('click', () => {
-        document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
-        el.classList.add('selected');
-        selections.color = el.dataset.colorName;
-        updateDesignSheet();
-      });
-      if (selections.color && el.dataset.colorName === selections.color) el.classList.add('selected');
-    });
-  }
 
-  function renderOptions(containerId, optionsArray, categoryKey) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.innerHTML = optionsArray.map(opt => `
-      <div class="option-card" data-category="${categoryKey}" data-id="${opt.id}" data-name="${opt.title}" data-craftreq="${opt.requiresLin || false}" data-weight="${opt.weight || ''}">
-        <img class="option-img" src="${opt.img}" alt="${opt.title}" onerror="this.src='https://placehold.co/400x400/2A2218/C4A06A?text=Almaya'">
-        <div class="option-title">${opt.title}</div>
-        <div class="option-desc">${opt.desc}</div>
+      <!-- TABS -->
+      <div class="tabs-container">
+        <button class="tab-btn active" data-tab="top-tab">❁ الفوقي (التوب) التفصيل</button>
+        <button class="tab-btn" data-tab="bottom-tab">❀ السروال & الأثواب</button>
       </div>
-    `).join('');
-    document.querySelectorAll(`#${containerId} .option-card`).forEach(card => {
-      if (card.dataset.id === selections[categoryKey]) card.classList.add('selected');
-      else card.classList.remove('selected');
-    });
-  }
 
-  function bindGlobalClicks() {
-    document.querySelectorAll('.option-card').forEach(card => {
-      card.removeEventListener('click', cardClickHandler);
-      card.addEventListener('click', cardClickHandler);
-    });
-  }
+      <!-- Tab 1: الفوقي -->
+      <div id="top-tab" class="tab-content active-tab">
+        <div class="config-section">
+          <div class="section-title">① الفوقي · فصالة مخزنية متقنة</div>
+          <div class="options-grid" id="top-style-options"></div>
+        </div>
+        <div class="config-section">
+          <div class="section-title">② الخياطة واللمسة الحرفية</div>
+          <div class="options-grid" id="craft-options"></div>
+        </div>
+      </div>
 
-  function checkCraftHarmony() {
-    const selectedCraft = craftOptionsArr.find(c => c.id === selections.craft);
-    const selectedFabric = luxuryFabrics.find(f => f.id === selections.fabric);
-    const wisdomDiv = document.getElementById('maalemWisdom');
-    const wisdomSpan = document.getElementById('wisdomText');
-    if (selectedCraft && selectedCraft.id === 'craft_parchemin') {
-      if (selectedFabric && (selectedFabric.id === 'fab_lin_parchemin' || selectedFabric.id === 'fab_melifa')) {
-        wisdomDiv.style.display = 'none';
-      } else {
-        wisdomDiv.style.display = 'flex';
-        wisdomSpan.innerHTML = `🧵 تناسق الهمة: خياطة "البرشمان" اليدوية تحتاج إلى ثوب "الكتان بالبرشمان" أو "المليفة الحريرية" للحصول على خدمة تقليدية ناعمة وراقية. ننصح بتغيير القماش 🌟`;
+      <!-- Tab 2: السروال + الأقمشة -->
+      <div id="bottom-tab" class="tab-content">
+        <div class="config-section">
+          <div class="section-title">③ السروال · قندريسي و Droit</div>
+          <div class="options-grid" id="pants-options"></div>
+        </div>
+        <div class="config-section">
+          <div class="section-title">④ الأثواب الملكية (الأقمشة)</div>
+          <div class="options-grid" id="fabric-options"></div>
+        </div>
+      </div>
+
+      <!-- اختيار اللون -->
+      <div class="color-section">
+        <div class="color-title">
+          <i class="fas fa-palette"></i> ⑤ اختيار اللون الرئيسي
+        </div>
+        <div class="color-palette" id="colorPaletteContainer"></div>
+      </div>
+
+      <!-- نصيحة المعلم -->
+      <div id="maalemWisdom" class="maalem-wisdom" style="display: none;">
+        <i class="fas fa-hamsa"></i> <span id="wisdomText"></span>
+      </div>
+
+      <!-- المقاسات -->
+      <div class="measure-grid">
+        <div class="input-field"><label>الكتف (سم)</label><input type="number" id="shoulder" placeholder="مثال: 38" step="0.5"></div>
+        <div class="input-field"><label>الصدر (سم)</label><input type="number" id="bust" placeholder="مثال: 88" step="0.5"></div>
+        <div class="input-field"><label>الخصر (سم)</label><input type="number" id="waist" placeholder="مثال: 70" step="0.5"></div>
+        <div class="input-field"><label>دورة الذراع (سم)</label><input type="number" id="armCircumference" placeholder="دقيقة للمعلم" step="0.5"></div>
+        <div class="input-field"><label>طول الفوقي (سم)</label><input type="number" id="topLength" placeholder="مثال: 75" step="0.5"></div>
+        <div class="input-field"><label>طول الكم (سم)</label><input type="number" id="sleeveLength" placeholder="مثال: 58" step="0.5"></div>
+        <div class="input-field"><label>طول السروال (سم)</label><input type="number" id="pantsLength" placeholder="مثال: 102" step="0.5"></div>
+        <div class="input-field"><label>عرض فتحة السروال (سم)</label><input type="number" id="pantsOpening" placeholder="فتحة القندريسي" step="0.5"></div>
+      </div>
+
+      <!-- كناش المعلم -->
+      <div class="design-sheet" data-aos="fade-up">
+        <div class="sheet-title">📜 كناش الطلب | Bon de Commande - Maalam</div>
+        <div id="summaryContent">
+          <div class="sheet-row"><span class="sheet-label">🧥 الفوقي (التوب):</span><span class="sheet-value">— لم تختاري بعد</span></div>
+          <div class="sheet-row"><span class="sheet-label">👖 السروال:</span><span class="sheet-value">—</span></div>
+          <div class="sheet-row"><span class="sheet-label">🏵️ الثوب (القماش):</span><span class="sheet-value">—</span></div>
+          <div class="sheet-row"><span class="sheet-label">✧ اللمسة/الخدمة:</span><span class="sheet-value">—</span></div>
+          <div class="sheet-row"><span class="sheet-label">🎨 اللون المختار:</span><span class="sheet-value">—</span></div>
+          <div class="sheet-row"><span class="sheet-label">📏 تفاصيل المقاس:</span><span class="sheet-value">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="floating-bar">
+      <button class="reset-btn" id="resetBtn">⟳ تجديد التصميم</button>
+      <button class="whatsapp-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i> إرسال الكناش للمعلمة</button>
+    </div>
+  </main>
+
+  <!-- Footer Auto-Loaded -->
+  <div id="footer-container"></div>
+
+  <!-- Header & Footer Loaders -->
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+
+  <!-- Main Script -->
+  <script>
+    // ========== AOS INIT ==========
+    AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
+
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.setAttribute('aria-label', 'تغيير السمة');
+        btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) {
+            document.body.classList.remove('white-theme');
+            localStorage.setItem('almaya-theme', 'dark');
+          } else {
+            document.body.classList.add('white-theme');
+            localStorage.setItem('almaya-theme', 'white');
+          }
+          updateButtonIcon();
+        });
+        
+        document.body.appendChild(btn);
+        updateButtonIcon();
       }
-    } else {
-      wisdomDiv.style.display = 'none';
+
+      function updateButtonIcon() {
+        const btn = document.querySelector('.theme-toggle-btn');
+        if (!btn) return;
+        if (document.body.classList.contains('white-theme')) {
+          btn.innerHTML = '<i class="fas fa-sun"></i>';
+          btn.setAttribute('title', 'الوضع الداكن');
+        } else {
+          btn.innerHTML = '<i class="fas fa-moon"></i>';
+          btn.setAttribute('title', 'الوضع الفاتح');
+        }
+      }
+
+      function applySavedTheme() {
+        const saved = localStorage.getItem('almaya-theme');
+        if (saved === 'white') {
+          document.body.classList.add('white-theme');
+        } else if (saved === 'dark') {
+          document.body.classList.remove('white-theme');
+        }
+      }
+
+      applySavedTheme();
+      createToggleButton();
+      console.log('🎨 Theme toggle ready');
+    })();
+
+    // ========== JBADOUR LOGIC ==========
+    const topStyles = [
+      { id: "top_makhzeni", title: "فصالة مخزنية بـ الخرطة", desc: "تقليد ملكي أصيل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Khorta+Makhzeni", craftAffinity: "traditional" },
+      { id: "top_nus_toq", title: "جبادور بـ نص طوق", desc: "أناقة عصرية بالطوق", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Nos+Toq", craftAffinity: "modern" },
+      { id: "top_cintree", title: "فصالة عصرية Cintrée", desc: "قصّة ضيقة ومحتضنة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Cintree", craftAffinity: "slim" }
+    ];
+
+    const pantsOptions = [
+      { id: "pants_kandrisi", title: "سروال قندريسي عصري", desc: "فتحة في الأسفل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Kandrisi", style: "flow" },
+      { id: "pants_droit_dhbana", title: "سروال Droit بالذبابة", desc: "مخدوم بـ الذبانة في الجناب", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Droit+Dhabana", style: "tailored" }
+    ];
+
+    const luxuryFabrics = [
+      { id: "fab_melifa", title: "المليفة الحريرية", desc: "انسياب فاخر", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Melifa", weight: "light" },
+      { id: "fab_crepe_dior", title: "كريب ديور", desc: "نعومة راقية", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Crepe+Dior", weight: "medium" },
+      { id: "fab_lin_parchemin", title: "الكتان (Lin) بالبرشمان", desc: "مخدوم بأصالة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Lin+Parchemin", weight: "medium", perfectForParchemin: true },
+      { id: "fab_soussi", title: "ثوب السوسدي التقليدي", desc: "لمسة تراثية", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Soussi", weight: "heavy" }
+    ];
+
+    const craftOptionsArr = [
+      { id: "craft_parchemin", title: "خياطة البرشمان اليدوية", desc: "خدمة دقيقة للمعلم", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Parchemin", requiresLin: true },
+      { id: "craft_aqad_baldia", title: "العقاد البلدية الصغيرة", desc: "مخدومة بالحبة", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Aqad+Baladia", requiresLin: false },
+      { id: "craft_sfifa_siklia", title: "السفيفة الصقلية", desc: "تطريز رفيع", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Sfifa+Siklia", requiresLin: false },
+      { id: "craft_tarz_maalem", title: "طرز المعلم التقليدي", desc: "تطريز يدوي أصيل", img: "https://placehold.co/400x400/2A2218/C4A06A?text=Tarz+Maalem", requiresLin: false }
+    ];
+
+    const colorOptions = [
+      { name: "ذهبي ملكي", code: "#C4A06A", value: "ذهبي ملكي" },
+      { name: "أخضر زمردي", code: "#006747", value: "أخضر زمردي" },
+      { name: "أبيض لؤلؤي", code: "#F5F0E8", value: "أبيض لؤلؤي" },
+      { name: "عنابي فخم", code: "#722F37", value: "عنابي فخم" },
+      { name: "أسود أنيق", code: "#1E1E1E", value: "أسود أنيق" },
+      { name: "كحلي مخملي", code: "#191970", value: "كحلي مخملي" }
+    ];
+
+    let selections = {
+      topStyle: null,
+      pants: null,
+      fabric: null,
+      craft: null,
+      color: null
+    };
+
+    function renderColorPalette() {
+      const container = document.getElementById('colorPaletteContainer');
+      if (!container) return;
+      container.innerHTML = colorOptions.map(opt => `
+        <div class="color-option" data-color-code="${opt.code}" data-color-name="${opt.value}">
+          <div class="color-circle" style="background: ${opt.code};"></div>
+          <span class="color-label">${opt.name}</span>
+        </div>
+      `).join('');
+      document.querySelectorAll('.color-option').forEach(el => {
+        el.addEventListener('click', () => {
+          document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
+          el.classList.add('selected');
+          selections.color = el.dataset.colorName;
+          updateDesignSheet();
+        });
+        if (selections.color && el.dataset.colorName === selections.color) el.classList.add('selected');
+      });
     }
-  }
 
-  function cardClickHandler(e) {
-    const card = e.currentTarget;
-    const category = card.dataset.category;
-    const optionId = card.dataset.id;
-    if (!category || !optionId) return;
-    selections[category] = optionId;
-    if (category === 'topStyle') renderOptions('top-style-options', topStyles, 'topStyle');
-    if (category === 'pants') renderOptions('pants-options', pantsOptions, 'pants');
-    if (category === 'fabric') renderOptions('fabric-options', luxuryFabrics, 'fabric');
-    if (category === 'craft') renderOptions('craft-options', craftOptionsArr, 'craft');
-    updateDesignSheet();
-    checkCraftHarmony();
-    bindGlobalClicks();
-  }
+    function renderOptions(containerId, optionsArray, categoryKey) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = optionsArray.map(opt => `
+        <div class="option-card" data-category="${categoryKey}" data-id="${opt.id}" data-name="${opt.title}" data-craftreq="${opt.requiresLin || false}" data-weight="${opt.weight || ''}" data-aos="fade-up">
+          <img class="option-img" src="${opt.img}" alt="${opt.title}" onerror="this.src='https://placehold.co/400x400/2A2218/C4A06A?text=Almaya'">
+          <div class="option-title">${opt.title}</div>
+          <div class="option-desc">${opt.desc}</div>
+        </div>
+      `).join('');
+      document.querySelectorAll(`#${containerId} .option-card`).forEach(card => {
+        if (card.dataset.id === selections[categoryKey]) card.classList.add('selected');
+        else card.classList.remove('selected');
+      });
+      
+      // Refresh AOS for new elements
+      setTimeout(() => AOS.refresh(), 100);
+    }
 
-  function updateDesignSheet() {
-    const topObj = topStyles.find(t => t.id === selections.topStyle);
-    const pantsObj = pantsOptions.find(p => p.id === selections.pants);
-    const fabricObj = luxuryFabrics.find(f => f.id === selections.fabric);
-    const craftObj = craftOptionsArr.find(c => c.id === selections.craft);
-    const topDisplay = topObj ? topObj.title : '—';
-    const pantsDisplay = pantsObj ? pantsObj.title : '—';
-    const fabricDisplay = fabricObj ? fabricObj.title : '—';
-    const craftDisplay = craftObj ? craftObj.title : '—';
-    const colorDisplay = selections.color || '—';
-    
-    const shoulder = document.getElementById('shoulder')?.value || '—';
-    const bust = document.getElementById('bust')?.value || '—';
-    const waist = document.getElementById('waist')?.value || '—';
-    const armCirc = document.getElementById('armCircumference')?.value || '—';
-    const topLen = document.getElementById('topLength')?.value || '—';
-    const sleeveLen = document.getElementById('sleeveLength')?.value || '—';
-    const pantsLen = document.getElementById('pantsLength')?.value || '—';
-    const pantsOpen = document.getElementById('pantsOpening')?.value || '—';
-    
-    document.getElementById('summaryContent').innerHTML = `
-      <div class="sheet-row"><span class="sheet-label">🧥 الفوقي (التوب):</span><span class="sheet-value">${topDisplay !== '—' ? topDisplay : '❌ لم تحددي'}</span></div>
-      <div class="sheet-row"><span class="sheet-label">👖 السروال:</span><span class="sheet-value">${pantsDisplay}</span></div>
-      <div class="sheet-row"><span class="sheet-label">🏵️ ثوب الجبادور:</span><span class="sheet-value">${fabricDisplay}</span></div>
-      <div class="sheet-row"><span class="sheet-label">✧ الخدمة/اللمسة:</span><span class="sheet-value">${craftDisplay}</span></div>
-      <div class="sheet-row"><span class="sheet-label">🎨 اللون الرئيسي:</span><span class="sheet-value">${colorDisplay}</span></div>
-      <hr>
-      <div class="sheet-row"><span class="sheet-label">📐 المقاسات الدقيقة:</span><span class="sheet-value">الكتف ${shoulder} | الصدر ${bust} | الخصر ${waist}</span></div>
-      <div class="sheet-row"><span class="sheet-label">🔄 تفاصيل الخياطة:</span><span class="sheet-value">دورة الذراع ${armCirc} | طول الفوقي ${topLen} | طول الكم ${sleeveLen}</span></div>
-      <div class="sheet-row"><span class="sheet-label">📏 السروال والفتحة:</span><span class="sheet-value">طول السروال ${pantsLen} | عرض الفتحة ${pantsOpen}</span></div>
-    `;
-  }
+    function bindGlobalClicks() {
+      document.querySelectorAll('.option-card').forEach(card => {
+        card.removeEventListener('click', cardClickHandler);
+        card.addEventListener('click', cardClickHandler);
+      });
+    }
 
-  function fullReset() {
-    selections = { topStyle: null, pants: null, fabric: null, craft: null, color: null };
-    ['shoulder','bust','waist','armCircumference','topLength','sleeveLength','pantsLength','pantsOpening'].forEach(id => {
-      let inp = document.getElementById(id);
-      if (inp) inp.value = '';
-    });
-    renderOptions('top-style-options', topStyles, 'topStyle');
-    renderOptions('pants-options', pantsOptions, 'pants');
-    renderOptions('fabric-options', luxuryFabrics, 'fabric');
-    renderOptions('craft-options', craftOptionsArr, 'craft');
-    renderColorPalette();
-    updateDesignSheet();
-    bindGlobalClicks();
-    document.getElementById('maalemWisdom').style.display = 'none';
-  }
+    function checkCraftHarmony() {
+      const selectedCraft = craftOptionsArr.find(c => c.id === selections.craft);
+      const selectedFabric = luxuryFabrics.find(f => f.id === selections.fabric);
+      const wisdomDiv = document.getElementById('maalemWisdom');
+      const wisdomSpan = document.getElementById('wisdomText');
+      if (selectedCraft && selectedCraft.id === 'craft_parchemin') {
+        if (selectedFabric && (selectedFabric.id === 'fab_lin_parchemin' || selectedFabric.id === 'fab_melifa')) {
+          wisdomDiv.style.display = 'none';
+        } else {
+          wisdomDiv.style.display = 'flex';
+          wisdomSpan.innerHTML = `🧵 تناسق الهمة: خياطة "البرشمان" اليدوية تحتاج إلى ثوب "الكتان بالبرشمان" أو "المليفة الحريرية" للحصول على خدمة تقليدية ناعمة وراقية. ننصح بتغيير القماش 🌟`;
+        }
+      } else {
+        wisdomDiv.style.display = 'none';
+      }
+    }
 
-  function buildWhatsAppMasterMessage() {
-    const topObj = topStyles.find(t => t.id === selections.topStyle);
-    const pantsObj = pantsOptions.find(p => p.id === selections.pants);
-    const fabricObj = luxuryFabrics.find(f => f.id === selections.fabric);
-    const craftObj = craftOptionsArr.find(c => c.id === selections.craft);
-    const topText = topObj?.title || 'غير محدد';
-    const pantsText = pantsObj?.title || 'غير محدد';
-    const fabricText = fabricObj?.title || 'غير محدد';
-    const craftText = craftObj?.title || 'غير محدد';
-    const colorText = selections.color || 'غير محدد';
-    const shoulder = document.getElementById('shoulder')?.value || '—';
-    const bust = document.getElementById('bust')?.value || '—';
-    const waist = document.getElementById('waist')?.value || '—';
-    const armCirc = document.getElementById('armCircumference')?.value || '—';
-    const topLen = document.getElementById('topLength')?.value || '—';
-    const sleeve = document.getElementById('sleeveLength')?.value || '—';
-    const pantsLen = document.getElementById('pantsLength')?.value || '—';
-    const pantsOpen = document.getElementById('pantsOpening')?.value || '—';
-    return encodeURIComponent(`🌹 السلام عليكم - كناش الطلب من Almaya Couture 🌹
+    function cardClickHandler(e) {
+      const card = e.currentTarget;
+      const category = card.dataset.category;
+      const optionId = card.dataset.id;
+      if (!category || !optionId) return;
+      selections[category] = optionId;
+      if (category === 'topStyle') renderOptions('top-style-options', topStyles, 'topStyle');
+      if (category === 'pants') renderOptions('pants-options', pantsOptions, 'pants');
+      if (category === 'fabric') renderOptions('fabric-options', luxuryFabrics, 'fabric');
+      if (category === 'craft') renderOptions('craft-options', craftOptionsArr, 'craft');
+      updateDesignSheet();
+      checkCraftHarmony();
+      bindGlobalClicks();
+    }
+
+    function updateDesignSheet() {
+      const topObj = topStyles.find(t => t.id === selections.topStyle);
+      const pantsObj = pantsOptions.find(p => p.id === selections.pants);
+      const fabricObj = luxuryFabrics.find(f => f.id === selections.fabric);
+      const craftObj = craftOptionsArr.find(c => c.id === selections.craft);
+      const topDisplay = topObj ? topObj.title : '—';
+      const pantsDisplay = pantsObj ? pantsObj.title : '—';
+      const fabricDisplay = fabricObj ? fabricObj.title : '—';
+      const craftDisplay = craftObj ? craftObj.title : '—';
+      const colorDisplay = selections.color || '—';
+      
+      const shoulder = document.getElementById('shoulder')?.value || '—';
+      const bust = document.getElementById('bust')?.value || '—';
+      const waist = document.getElementById('waist')?.value || '—';
+      const armCirc = document.getElementById('armCircumference')?.value || '—';
+      const topLen = document.getElementById('topLength')?.value || '—';
+      const sleeveLen = document.getElementById('sleeveLength')?.value || '—';
+      const pantsLen = document.getElementById('pantsLength')?.value || '—';
+      const pantsOpen = document.getElementById('pantsOpening')?.value || '—';
+      
+      document.getElementById('summaryContent').innerHTML = `
+        <div class="sheet-row"><span class="sheet-label">🧥 الفوقي (التوب):</span><span class="sheet-value">${topDisplay !== '—' ? topDisplay : '❌ لم تحددي'}</span></div>
+        <div class="sheet-row"><span class="sheet-label">👖 السروال:</span><span class="sheet-value">${pantsDisplay}</span></div>
+        <div class="sheet-row"><span class="sheet-label">🏵️ ثوب الجبادور:</span><span class="sheet-value">${fabricDisplay}</span></div>
+        <div class="sheet-row"><span class="sheet-label">✧ الخدمة/اللمسة:</span><span class="sheet-value">${craftDisplay}</span></div>
+        <div class="sheet-row"><span class="sheet-label">🎨 اللون الرئيسي:</span><span class="sheet-value">${colorDisplay}</span></div>
+        <hr>
+        <div class="sheet-row"><span class="sheet-label">📐 المقاسات الدقيقة:</span><span class="sheet-value">الكتف ${shoulder} | الصدر ${bust} | الخصر ${waist}</span></div>
+        <div class="sheet-row"><span class="sheet-label">🔄 تفاصيل الخياطة:</span><span class="sheet-value">دورة الذراع ${armCirc} | طول الفوقي ${topLen} | طول الكم ${sleeveLen}</span></div>
+        <div class="sheet-row"><span class="sheet-label">📏 السروال والفتحة:</span><span class="sheet-value">طول السروال ${pantsLen} | عرض الفتحة ${pantsOpen}</span></div>
+      `;
+    }
+
+    function fullReset() {
+      selections = { topStyle: null, pants: null, fabric: null, craft: null, color: null };
+      ['shoulder','bust','waist','armCircumference','topLength','sleeveLength','pantsLength','pantsOpening'].forEach(id => {
+        let inp = document.getElementById(id);
+        if (inp) inp.value = '';
+      });
+      renderOptions('top-style-options', topStyles, 'topStyle');
+      renderOptions('pants-options', pantsOptions, 'pants');
+      renderOptions('fabric-options', luxuryFabrics, 'fabric');
+      renderOptions('craft-options', craftOptionsArr, 'craft');
+      renderColorPalette();
+      updateDesignSheet();
+      bindGlobalClicks();
+      document.getElementById('maalemWisdom').style.display = 'none';
+    }
+
+    function buildWhatsAppMasterMessage() {
+      const topObj = topStyles.find(t => t.id === selections.topStyle);
+      const pantsObj = pantsOptions.find(p => p.id === selections.pants);
+      const fabricObj = luxuryFabrics.find(f => f.id === selections.fabric);
+      const craftObj = craftOptionsArr.find(c => c.id === selections.craft);
+      const topText = topObj?.title || 'غير محدد';
+      const pantsText = pantsObj?.title || 'غير محدد';
+      const fabricText = fabricObj?.title || 'غير محدد';
+      const craftText = craftObj?.title || 'غير محدد';
+      const colorText = selections.color || 'غير محدد';
+      const shoulder = document.getElementById('shoulder')?.value || '—';
+      const bust = document.getElementById('bust')?.value || '—';
+      const waist = document.getElementById('waist')?.value || '—';
+      const armCirc = document.getElementById('armCircumference')?.value || '—';
+      const topLen = document.getElementById('topLength')?.value || '—';
+      const sleeve = document.getElementById('sleeveLength')?.value || '—';
+      const pantsLen = document.getElementById('pantsLength')?.value || '—';
+      const pantsOpen = document.getElementById('pantsOpening')?.value || '—';
+      return encodeURIComponent(`🌹 السلام عليكم - كناش الطلب من Almaya Couture 🌹
 ━━━━━━━━━━━━━━━━━
 *🪡 جبادور المعلم - تصميم مخصص*
 • الفوقي (التوب): ${topText}
@@ -804,46 +997,46 @@
 
 ✨ تفضلوا بقبول فائق التقدير، بانتظار تأكيد المعلم.
 بارك الله فيكم 🤲`);
-  }
+    }
 
-  function sendWhatsApp() {
-    const phone = "212601245733";
-    window.open(`https://wa.me/${phone}?text=${buildWhatsAppMasterMessage()}`, '_blank');
-  }
+    function sendWhatsApp() {
+      const phone = "212601245733";
+      window.open(`https://wa.me/${phone}?text=${buildWhatsAppMasterMessage()}`, '_blank');
+    }
 
-  function bindMeasurementEvents() {
-    const ids = ['shoulder','bust','waist','armCircumference','topLength','sleeveLength','pantsLength','pantsOpening'];
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', () => updateDesignSheet());
-    });
-  }
-
-  function initTabs() {
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
-        document.getElementById(btn.dataset.tab).classList.add('active-tab');
+    function bindMeasurementEvents() {
+      const ids = ['shoulder','bust','waist','armCircumference','topLength','sleeveLength','pantsLength','pantsOpening'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', () => updateDesignSheet());
       });
-    });
-  }
+    }
 
-  function init() {
-    renderOptions('top-style-options', topStyles, 'topStyle');
-    renderOptions('pants-options', pantsOptions, 'pants');
-    renderOptions('fabric-options', luxuryFabrics, 'fabric');
-    renderOptions('craft-options', craftOptionsArr, 'craft');
-    renderColorPalette();
-    bindGlobalClicks();
-    bindMeasurementEvents();
-    updateDesignSheet();
-    initTabs();
-    document.getElementById('resetBtn').addEventListener('click', fullReset);
-    document.getElementById('whatsappBtn').addEventListener('click', sendWhatsApp);
-  }
-  init();
-</script>
+    function initTabs() {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
+          document.getElementById(btn.dataset.tab).classList.add('active-tab');
+        });
+      });
+    }
+
+    function init() {
+      renderOptions('top-style-options', topStyles, 'topStyle');
+      renderOptions('pants-options', pantsOptions, 'pants');
+      renderOptions('fabric-options', luxuryFabrics, 'fabric');
+      renderOptions('craft-options', craftOptionsArr, 'craft');
+      renderColorPalette();
+      bindGlobalClicks();
+      bindMeasurementEvents();
+      updateDesignSheet();
+      initTabs();
+      document.getElementById('resetBtn').addEventListener('click', fullReset);
+      document.getElementById('whatsappBtn').addEventListener('click', sendWhatsApp);
+    }
+    init();
+  </script>
 </body>
 </html>
