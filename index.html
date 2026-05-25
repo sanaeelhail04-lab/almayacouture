@@ -60,6 +60,7 @@
     
     .gold-text { color: var(--gold); }
     
+    /* --- LES BOUTONS (inchangés) --- */
     .gold-btn {
       background: transparent;
       border: 1.5px solid var(--gold);
@@ -102,6 +103,7 @@
       border-color: var(--gold);
     }
     
+    /* --- NAV (inchangé) --- */
     .nav-bar {
       background: var(--nav);
       backdrop-filter: blur(12px);
@@ -111,6 +113,7 @@
     
     .logo-img { height: 50px; width: auto; transition: all 0.3s; }
     
+    /* --- HERO & VIDEO (inchangé) --- */
     .video-container {
       height: 100%;
       min-height: 480px;
@@ -135,11 +138,12 @@
     }
     .float-effect { animation: float 4s ease-in-out infinite; }
     
+    /* --- LES CARTES (step-card / review-form-card) --- */
     .step-card {
       background: var(--card);
       backdrop-filter: blur(8px);
       transition: all 0.4s;
-      padding: 2rem;
+      padding: clamp(1.5rem, 5vw, 2rem); /* PADDING FLUIDE */
       border-radius: 20px;
       border: 1px solid var(--border);
     }
@@ -152,7 +156,7 @@
       background: var(--card);
       backdrop-filter: blur(8px);
       border-radius: 20px;
-      padding: 2rem;
+      padding: clamp(1.5rem, 5vw, 2rem); /* PADDING FLUIDE */
       border: 1px solid var(--border);
     }
     .review-input {
@@ -190,7 +194,7 @@
     .section-title {
       position: relative;
       display: inline-block;
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 5vw, 2rem); /* TITRE FLUIDE */
     }
     .section-title::after {
       content: '';
@@ -205,11 +209,11 @@
     
     .darija-text { font-family: 'Tajawal', 'Cairo', sans-serif; }
 
-    /* Products Grid */
+    /* Products Grid (FLUIDE) */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
+      gap: clamp(1rem, 3vw, 2rem); /* ÉCART FLUIDE ENTRE LES CARTES */
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -256,7 +260,7 @@
       gap: 0.3rem;
       box-shadow: 0 4px 12px rgba(196,160,106,0.3);
     }
-    .product-info-card { padding: 1.2rem; }
+    .product-info-card { padding: clamp(1rem, 3vw, 1.2rem); } /* PADDING FLUIDE DANS LES CARTES */
     .product-category-tag { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 500; }
     .product-title-card { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; line-height: 1.4; }
     .product-price-card { color: var(--gold); font-size: 1rem; font-weight: 700; }
@@ -327,15 +331,24 @@
       50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
     }
     
-    @media (max-width: 1024px) {
-      .section-title { font-size: 1.8rem; }
-      .step-card { padding: 1.5rem; }
-      .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+    /* ========== PADDING RESPONSIVE FINAL (ajusté ici) ========== */
+    /* Au lieu d'utiliser les classes Tailwind statiques sur les sections,
+       on fait les sections responsives via CSS pur pour plus de contrôle */
+    section {
+      padding-left: 1.5rem;   /* 24px sur mobile */
+      padding-right: 1.5rem;
+      /* padding vertical fluide : minimum 40px, idéal 8% de la hauteur d'écran, max 100px */
+      padding-top: clamp(40px, 8vh, 100px);
+      padding-bottom: clamp(40px, 8vh, 100px);
     }
-    @media (max-width: 768px) {
+    
+    @media (min-width: 768px) {
+      section {
+        padding-left: 3rem;   /* md: 48px */
+        padding-right: 3rem;
+      }
       .logo-img { height: 40px; }
       .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
-      .section-title { font-size: 1.6rem; }
       .review-form-card { padding: 1.5rem; }
       .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
       .theme-toggle-btn {
@@ -346,10 +359,25 @@
         font-size: 1rem;
       }
     }
+    
+    @media (min-width: 1024px) {
+      section {
+        padding-left: 5rem;   /* lg: 80px */
+        padding-right: 5rem;
+      }
+      .section-title { font-size: 1.8rem; }
+      .step-card { padding: 1.5rem; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+    }
+
     @media (max-width: 480px) {
+      section {
+        padding-left: 1rem;   /* plus petit padding sur très petits écrans */
+        padding-right: 1rem;
+      }
       .logo-img { height: 35px; }
       .section-title { font-size: 1.4rem; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
     }
   </style>
 </head>
@@ -362,8 +390,8 @@
   </a>
   
   <main>
-    <!-- Hero Section -->
-    <section id="hero" class="w-full py-12 md:py-24 px-6 md:px-12 lg:px-20">
+    <!-- Hero Section (sans classes py-12 md:py-24 px-... car on utilise le CSS général sur <section>) -->
+    <section id="hero" class="w-full">
       <div class="flex flex-wrap md:flex-nowrap gap-12 md:gap-16 items-center max-w-7xl mx-auto">
         <div class="w-full md:w-1/2 order-first md:order-last" data-aos="fade-up">
           <div class="video-container float-effect relative">
@@ -384,28 +412,8 @@
       </div>
     </section>
 
-    <!-- حكاية الميمة -->
-    <section id="story" class="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
-      <div class="max-w-6xl mx-auto flex flex-wrap md:flex-nowrap gap-12 items-center">
-        <div class="w-full md:w-1/2" data-aos="fade-up">
-          <div class="video-container float-effect relative">
-            <video autoplay loop muted playsinline class="w-full h-full object-cover min-h-[380px] md:min-h-[450px]">
-              <source src="Videos/intro2.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-        <div class="w-full md:w-1/2 space-y-5" data-aos="fade-up">
-          <span class="text-xs tracking-[0.3em] gold-text darija-text">✦ حكايتنا ✦</span>
-          <h2 class="text-3xl md:text-4xl font-bold darija-text" style="color:var(--text);">من أيادي الميمة لدارك</h2>
-          <p class="text-sm leading-relaxed darija-text" style="color:var(--text2);">السلام عليكم، أنا الميمة. بدات هاد الحكاية فدار صغيرة، كنت كنخيط لولادي ولبناتي بكل حب. الناس شافو شغلي وعجبهم، وبداو يطلبوا مني. دابا، فمرحلة الإطلاق ديال Almaya Couture، كل قطعة كتخرج من يدي باش توصل ليكي بحب و حنان.</p>
-          <p class="text-sm italic darija-text" style="color:var(--gold);">— الميمة، كل غرزة فيها حكاية حب</p>
-          <button onclick="scrollToCustom()" class="gold-btn px-6 py-2 rounded-full text-xs uppercase tracking-wider darija-text">صممي قطعتك مع الميمة</button>
-        </div>
-      </div>
-    </section>
-
     <!-- صممي قطعتك -->
-    <section id="custom-order" class="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
+    <section id="custom-order" class="w-full">
       <div class="max-w-6xl mx-auto text-center">
         <h2 class="text-3xl md:text-5xl font-bold mb-4 darija-text" style="color:var(--text);">صممي قطعتك ديالك</h2>
         <p class="text-base mb-10 darija-text" style="color:var(--text4);">تفصيل بإحساس الأم</p>
@@ -420,7 +428,7 @@
     </section>
 
     <!-- منتجاتنا -->
-    <section id="ready-to-wear" class="w-full px-6 md:px-12 lg:px-20 py-16 md:py-24">
+    <section id="ready-to-wear" class="w-full">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
           <span class="text-xs tracking-[0.3em] gold-text darija-text">✦ منتجاتنا ✦</span>
@@ -433,7 +441,7 @@
     </section>
 
     <!-- شاركينا رأيك -->
-    <section class="w-full px-6 md:px-12 lg:px-20 py-16">
+    <section class="w-full">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-2xl md:text-3xl font-light mb-3 darija-text" style="color:var(--text);">✨ شاركينا رأيك ✨</h2>
         <p class="text-sm mb-8 darija-text" style="color:var(--text4);">كوني أول وحدة تشارك تجربتها مع الميمة</p>
