@@ -174,19 +174,17 @@
     
     /* بطاقات الاختيار */
     .cards-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1rem;
       margin: 1rem 0;
     }
     .choice-card {
-      flex: 1 1 180px;
       background: rgba(26, 21, 16, 0.8);
       border-radius: 16px;
       border: 1px solid rgba(196, 160, 106, 0.2);
       padding: 1rem;
       cursor: pointer;
-      text-align: center;
       transition: all 0.3s ease;
     }
     .choice-card:hover {
@@ -197,17 +195,17 @@
       border: 2px solid #C4A06A;
       background: rgba(196, 160, 106, 0.1);
     }
-    .choice-card img {
-      width: 100%;
-      height: 130px;
-      object-fit: cover;
-      border-radius: 12px;
-      background: #2A2218;
-      margin-bottom: 10px;
-    }
     .card-title {
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #C4A06A;
+      margin-bottom: 0.5rem;
+    }
+    .card-desc {
+      font-size: 0.75rem;
+      color: #A89880;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
     }
     .best-tag {
       font-size: 0.6rem;
@@ -217,6 +215,11 @@
       padding: 2px 10px;
       border-radius: 20px;
       margin-top: 6px;
+    }
+    .fabric-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #C4A06A;
     }
     
     /* ألوان */
@@ -291,7 +294,7 @@
       background: rgba(196, 160, 106, 0.1);
       padding: 8px 20px;
       border-radius: 40px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #D4B896;
     }
     .whatsapp-btn {
@@ -326,22 +329,11 @@
       border-color: #C4A06A;
     }
     
-    .maalem-tip {
-      background: rgba(196, 160, 106, 0.1);
-      border-right: 3px solid #C4A06A;
-      padding: 0.8rem;
-      border-radius: 12px;
-      margin: 1rem 0;
-      font-size: 0.8rem;
-      color: #D4B896;
-    }
-    
     @media (max-width: 768px) {
       .container-custom { padding: 1rem; }
       .page-header h1 { font-size: 1.8rem; }
       .fixed-bottom-bar { padding: 0.8rem 1rem; }
-      .choice-card { flex: 1 1 140px; }
-      .choice-card img { height: 100px; }
+      .cards-grid { grid-template-columns: 1fr; }
     }
     
     .darija-text {
@@ -441,9 +433,10 @@
         </div>
       </div>
 
-      <!-- الأقمشة -->
+      <!-- الأقمشة مع وصف مفصل -->
       <div class="design-section" data-aos="fade-up" data-aos-delay="200">
         <div class="section-title"><i class="fas fa-tshirt gold-text"></i> اختاري القماش</div>
+        <p class="text-xs text-[#A89880] mb-3 darija-text">كل قماش له خصائصه - شوفي الوصف باش تختاري اللي يناسبك</p>
         <div class="cards-grid" id="fabricContainer"></div>
       </div>
 
@@ -492,62 +485,69 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
     
-    // البيانات
+    // البيانات مع وصف مفصل لكل قماش
     let currentStyle = "royal";
     let selections = { fabric: null, cut: null, finishing: null, color: null };
     
     const fabrics = {
       royal: [
-        { id: "fab_melifa", name: "المليفة الحريرية", best: "دفء وأصالة مخزنية", img: "melifa.jpg" },
-        { id: "fab_soussi", name: "السوسدي التقليدي", best: "للمناسبات الكبرى", img: "soussi.jpg" },
-        { id: "fab_nice", name: "ثوب النيس", best: "فخامة الأحجار", img: "nice.jpg" }
+        { id: "fab_melifa", name: "المليفة الحريرية", desc: "قماش فاخر وثقيل، كيعطي وقار وفخمة. مناسب للحفلات والمناسبات الكبيرة. فيه لمعان حريري طبيعي.", best: "للمناسبات الكبرى" },
+        { id: "fab_soussi", name: "السوسدي التقليدي", desc: "قماش مغربي أصيل بلمسة قطنية، كيتنفس ومريح. مثالي للجلابة اليومية والمناسبات العائلية.", best: "أصالة و راحة" },
+        { id: "fab_nice", name: "ثوب النيس", desc: "قماش ناعم وفاخر مع لمعان خفيف، كيتحمل التطريز الثقيل. مناسب للمناسبات السعيدة.", best: "فخامة الأحجار" },
+        { id: "fab_brocard", name: "البروكار الذهبي", desc: "قماش فاخر منسوج بخيوط ذهبية، كيعطي إطلالة ملكية. مناسب للأعراس والحفلات الكبرى.", best: "فخامة ملكية" },
+        { id: "fab_tfaf", name: "التفاف الملكي", desc: "قماش سميك بملمس فخم، كيتحمل التشطيبات الثقيلة. يستخدم فالقفاطين الملكية.", best: "للمناسبات الرسمية" }
       ],
       modern: [
-        { id: "fab_crepe", name: "كريب ديور", best: "خفيف وصيفي أنيق", img: "crepe-dior.jpg" },
-        { id: "fab_lin", name: "الكتان الطبيعي", best: "عصري وناعم", img: "lin.jpg" },
-        { id: "fab_cashmere", name: "كشمير فاخر", best: "دفء ومودرن", img: "cashmere.jpg" }
+        { id: "fab_crepe", name: "الكريب الطبيعي", desc: "قماش خفيف يطي على الجسم بطريقة أنيقة، لا يتجعد بسرعة. مناسب للجلابة العصرية اليومية.", best: "خفيف وصيفي" },
+        { id: "fab_lin", name: "الكتان الطبيعي", desc: "قماش صديق للبيئة، كيتنفس وبارد فالصيف. مثالي للجلابة الصيفية والعصرية.", best: "طبيعي وناعم" },
+        { id: "fab_cashmere", name: "الكشمير الفاخر", desc: "قماش دافيء وناعم جداً، كيعطي إحساس بالفخامة. مناسب للشتاء والخروجات المسائية.", best: "دفء وأناقة" },
+        { id: "fab_viscose", name: "الفسكوز", desc: "قماش ناعم مطاطي، كيتحرك مع الجسم. مناسب للجلابة العصرية واليومية.", best: "حركة ومرونة" },
+        { id: "fab_polyester", name: "البوليستر الملكي", desc: "قماش مقاوم للتجاعيد، كيبقى شكله راقي. مناسب للجلابة المسائية.", best: "ثبات ولمعان" }
       ],
       boho: [
-        { id: "fab_lin_boho", name: "اللين المطرز", best: "بوهو ملون", img: "lin-boho.jpg" },
-        { id: "fab_jawhara", name: "جوهرة حرة", best: "طابع شبابي", img: "jawhara-boho.jpg" },
-        { id: "fab_pastel", name: "مليفة باستيل", best: "ناعم ورومانسي", img: "melifa-pastel.jpg" }
+        { id: "fab_lin_boho", name: "اللين المطرز", desc: "كتان ناعم مع تطريزات بسيطة، كيعطي طابع بوهو أنيق. مناسب للخروجات اليومية.", best: "بوهو ملون" },
+        { id: "fab_jawhara", name: "الجوهرة الحرة", desc: "ألوان جريئة ومبهجة، كتضيف لمسة شبابية. مناسبة للفتيات العصريات.", best: "طابع شبابي" },
+        { id: "fab_pastel", name: "المليفة باستيل", desc: "ألوان باستيل هادئة وناعمة، كتعطي إطلالة رومانسية. مناسبة للربيع والصيف.", best: "ناعم ورومانسي" },
+        { id: "fab_coton", name: "القطن المغربي", desc: "قطن 100% طبيعي ومريح، كيتنفس. مثالي للجلابة اليومية فالصيف.", best: "طبيعي ومريح" },
+        { id: "fab_tassels", name: "القطن مع الأهداب", desc: "قطن مريح مع تفاصيل الأهداب، كيعطي طابع بوهو عصري.", best: "أناقة عصرية" }
       ]
     };
     
     const cuts = {
       royal: [
-        { id: "cut_makhzani", name: "فصالة مخزنية عريضة", img: "makhzani.jpg" },
-        { id: "cut_baladi", name: "فصالة بلادي أصيلة", img: "baladi.jpg" }
+        { id: "cut_makhzani", name: "فصالة مخزنية عريضة", desc: "قصة واسعة وفضفاضة، كتعطي إطلالة ملكية فخمة." },
+        { id: "cut_baladi", name: "فصالة بلادي أصيلة", desc: "قصة تقليدية مغربية أصيلة، مريحة وأنيقة." }
       ],
       modern: [
-        { id: "cut_cintree", name: "فصالة Cintrée (نحيفة)", img: "cintree.jpg" },
-        { id: "cut_evase", name: "فصالة إيفازي خفيفة", img: "evase.jpg" }
+        { id: "cut_cintree", name: "فصالة Cintrée (نحيفة)", desc: "قصة لاصقة على الجسم، كتعطي إطلالة عصرية وجذابة." },
+        { id: "cut_evase", name: "فصالة إيفازي خفيفة", desc: "قصة متوسطة متسعة من الأسفل، أنيقة وعملية." }
       ],
       boho: [
-        { id: "cut_jbalia", name: "فصالة جبلية قصيرة", img: "jbalia.jpg" },
-        { id: "cut_relaxed", name: "فصالة فضفاضة (Relaxed)", img: "relaxed.jpg" }
+        { id: "cut_jbalia", name: "فصالة جبلية قصيرة", desc: "قصة قصيرة ومريحة، مثالية للخروجات اليومية." },
+        { id: "cut_relaxed", name: "فصالة فضفاضة (Relaxed)", desc: "قصة واسعة ومريحة، كتعطي إطلالة شبابية عصرية." }
       ]
     };
     
     const finishes = {
       royal: [
-        { id: "fin_parchemin", name: "خياطة البرشمان اليدوية", img: "parchemin.jpg" },
-        { id: "fin_aqad", name: "العقاد والضريس الملكي", img: "aqad.jpg" }
+        { id: "fin_parchemin", name: "خياطة البرشمان اليدوية", desc: "تطريز يدوي دقيق بأجود الخيوط، تشطيب فاخر للمناسبات." },
+        { id: "fin_aqad", name: "العقاد والضريس الملكي", desc: "عقود وضريسة ذهبية تضفي فخامة ملكية على الجلابة." }
       ],
       modern: [
-        { id: "fin_zips", name: "سحّاب منسوج مخفي", img: "zips.jpg" },
-        { id: "fin_randa", name: "راندا خفيفة ونظيفة", img: "randa-light.jpg" }
+        { id: "fin_zips", name: "سحّاب منسوج مخفي", desc: "تشطيب عصري نظيف بسحابات مخفية." },
+        { id: "fin_randa", name: "راندا خفيفة ونظيفة", desc: "تشطيب بسيط وأنيق بالراندا." }
       ],
       boho: [
-        { id: "fin_sfifa", name: "سفائف عريضة ملونة", img: "sfifa-big.jpg" },
-        { id: "fin_tarz", name: "طرز يدوي ملون", img: "tarz-hand.jpg" }
+        { id: "fin_sfifa", name: "سفائف عريضة ملونة", desc: "سفايف ملونة كتعطي طابع بوهو وفني." },
+        { id: "fin_tarz", name: "طرز يدوي ملون", desc: "تطريز يدوي بألوان مبهجة ومتناسقة." }
       ]
     };
     
     const colorGroups = [
       { name: "ألوان ترابية (كلاسيك)", colors: ["#8B5A2B", "#A0522D", "#CD853F", "#D2B48C", "#C2A575", "#6B4E2E"] },
       { name: "ألوان صارخة (شبابي)", colors: ["#E63946", "#F4A261", "#E9C46A", "#2A9D8F", "#E76F51", "#D90368"] },
-      { name: "ألوان باستيل (عصري/ناعم)", colors: ["#FADADD", "#E6E6FA", "#B0E0E6", "#FDE2C4", "#D8BFD8", "#C5E0B4"] }
+      { name: "ألوان باستيل (عصري/ناعم)", colors: ["#FADADD", "#E6E6FA", "#B0E0E6", "#FDE2C4", "#D8BFD8", "#C5E0B4"] },
+      { name: "ألوان كلاسيكية غامقة", colors: ["#1A1A1A", "#2C2C2C", "#3D3D3D", "#4A4A4A", "#5C5C5C", "#707070"] }
     ];
     
     function renderItems(containerId, items, selectedId) {
@@ -555,9 +555,10 @@
       if (!container) return;
       container.innerHTML = items.map(item => `
         <div class="choice-card ${selectedId === item.id ? 'selected' : ''}" data-id="${item.id}">
-          <img src="images/${item.img}" alt="${item.name}" onerror="this.src='https://placehold.co/200x140/2A2218/C4A06A?text=${item.name}'">
+          <div class="fabric-icon"><i class="fas fa-${containerId === 'fabricContainer' ? 'tshirt' : (containerId === 'cutContainer' ? 'cut' : 'thread')}"></i></div>
           <div class="card-title darija-text">${item.name}</div>
-          ${item.best ? `<div class="best-tag darija-text">${item.best}</div>` : ''}
+          <div class="card-desc darija-text">${item.desc}</div>
+          ${item.best ? `<div class="best-tag darija-text">✨ ${item.best}</div>` : ''}
         </div>
       `).join('');
       container.querySelectorAll('.choice-card').forEach(el => {
@@ -624,8 +625,9 @@
       let msg = `🪡 *ألمايا كوتور - طلب تصميم جلابة* 🪡\n━━━━━━━━━━━━━━━━━━\n`;
       msg += `👑 *الذوق:* ${styleNames[currentStyle]}\n`;
       msg += `🧥 *القماش:* ${fabricItem?.name || 'غير محدد'}\n`;
-      msg += `✂️ *الفصالة:* ${cutItem?.name || 'غير محدد'}\n`;
-      msg += `🧵 *التشطيب:* ${finishItem?.name || 'غير محدد'}\n`;
+      msg += `📝 *وصف القماش:* ${fabricItem?.desc || '—'}\n`;
+      msg += `✂️ *الفصالة:* ${cutItem?.name || 'غير محدد'} - ${cutItem?.desc || ''}\n`;
+      msg += `🧵 *التشطيب:* ${finishItem?.name || 'غير محدد'} - ${finishItem?.desc || ''}\n`;
       msg += `🎨 *اللون:* ${selections.color || 'غير محدد'}\n\n`;
       msg += `📏 *القياسات (سم):*\n`;
       msg += `الكتف: ${shoulder} | الصدر: ${bust} | الطول: ${length}\n`;
