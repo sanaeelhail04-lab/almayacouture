@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الطلبات | Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="config.js"></script>
+  
+  <style>
+    /* ========== DARK THEME (Défaut) ========== */
+    :root {
+      --bg-primary: #0F0B08;
+      --bg-secondary: #1A1510;
+      --bg-card: #231D15;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --gold-dark: #A07840;
+      --text-primary: #F5EDD8;
+      --text-secondary: #A89880;
+      --text-muted: #6B5F52;
+      --border: rgba(196,160,106,0.15);
+      --border-hover: rgba(196,160,106,0.4);
+      --success: #25D366;
+      --danger: #FF4757;
+      --warning: #FFA502;
+      --info: #3B82F6;
+      --radius-sm: 10px;
+      --radius: 16px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.3);
+      --shadow-gold: 0 0 20px rgba(196,160,106,0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg-primary: #F5F0E8;
+      --bg-secondary: #FDFCF8;
+      --bg-card: #FFFFFF;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --gold-dark: #8B6330;
+      --text-primary: #2A2218;
+      --text-secondary: #6B5F52;
+      --text-muted: #8B7B68;
+      --border: rgba(160,120,64,0.15);
+      --border-hover: rgba(160,120,64,0.4);
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-gold: 0 0 20px rgba(160,120,64,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg-primary);
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    #header-container { position: sticky; top: 0; z-index: 50; }
+    .main-content { flex: 1; }
+
+    .admin-container { max-width: 1400px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    .admin-header { text-align: center; margin-bottom: 2.5rem; position: relative; }
+    .admin-header::after { content: ''; position: absolute; bottom: -0.8rem; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); border-radius: 10px; }
+    .admin-header .icon-circle { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(196,160,106,0.15), rgba(196,160,106,0.05)); border: 1px solid var(--border); border-radius: 50%; margin-bottom: 1rem; font-size: 1.5rem; color: var(--gold); }
+    .admin-header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: var(--text-primary); margin-bottom: 0.3rem; }
+    .admin-header p { color: var(--text-muted); font-size: 0.85rem; }
+
+    .debug-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1rem; text-align: center; display: none; }
+    .debug-info.show { display: block; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; text-align: center; transition: var(--transition); }
+    .stat-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: var(--shadow); }
+    .stat-card .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--gold); }
+    .stat-card .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+    .stat-icon.new { color: var(--info); }
+    .stat-icon.processing { color: var(--warning); }
+    .stat-icon.completed { color: var(--success); }
+    .stat-icon.cancelled { color: var(--danger); }
+
+    .filters-bar { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+    .filters-bar select, .filters-bar input { padding: 0.6rem 1rem; background: var(--bg-secondary); border: 1.5px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-family: inherit; font-size: 0.8rem; }
+    .btn-refresh { padding: 0.6rem 1.2rem; background: var(--gold); color: #1A1510; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+
+    .table-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .table-wrapper { overflow-x: auto; }
+    .orders-table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+    .orders-table th { background: var(--bg-secondary); color: var(--gold); padding: 0.85rem 0.7rem; font-size: 0.72rem; text-align: right; font-weight: 700; border-bottom: 2px solid var(--border); }
+    .orders-table td { padding: 0.75rem 0.7rem; border-bottom: 1px solid var(--border); font-size: 0.78rem; color: var(--text-secondary); }
+    .orders-table tr:hover td { background: rgba(196,160,106,0.03); }
+    .customer-name { font-weight: 700; color: var(--text-primary) !important; }
+    .product-name { color: var(--gold) !important; }
+    .product-thumb { width: 50px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); cursor: pointer; }
+    .product-thumb:hover { border-color: var(--gold); transform: scale(1.5); z-index: 10; position: relative; }
+
+    .status-badge { padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.3rem; }
+    .status-new { background: rgba(59,130,246,0.15); color: var(--info); }
+    .status-processing { background: rgba(255,165,2,0.15); color: var(--warning); }
+    .status-completed { background: rgba(37,211,102,0.15); color: var(--success); }
+    .status-cancelled { background: rgba(255,71,87,0.15); color: var(--danger); }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; width: 95%; max-width: 650px; max-height: 90vh; overflow-y: auto; }
+    .btn { padding: 0.6rem 1.2rem; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+    .btn-danger { background: linear-gradient(135deg, #FF4757, #e84118); color: white; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); }
+
+    .loader { width: 40px; height: 40px; border: 3px solid var(--border); border-radius: 50%; border-top-color: var(--gold); animation: spin 0.8s ease-in-out infinite; margin: 2rem auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ========== THEME TOGGLE ========== */
+    .theme-toggle-btn { position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border); color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(10px); animation: themePulse 2s ease-in-out infinite; }
+    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
+    body.white-theme .theme-toggle-btn { background: #FFFFFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    @keyframes themePulse { 0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); } 50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); } }
+
+    #footer-container { margin-top: auto; }
+
+    @media (max-width: 768px) {
+      .admin-container { padding: 1rem; }
+      .filters-bar { flex-direction: column; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-container"></div>
+
+  <div class="main-content">
+    <div class="admin-container">
+      
+      <div class="debug-info" id="debugInfo"><p>🔍 جاري التحقق من الاتصال بقاعدة البيانات...</p></div>
+
+      <div class="admin-header">
+        <div class="icon-circle"><i class="fas fa-clipboard-list"></i></div>
+        <h1>إدارة الطلبات</h1>
+        <p>متابعة وإدارة طلبات العملاء مع صور المنتجات</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon new"><i class="fas fa-star"></i></div><div class="stat-value" id="statNew">-</div><div class="stat-label">جديدة</div></div>
+        <div class="stat-card"><div class="stat-icon processing"><i class="fas fa-spinner"></i></div><div class="stat-value" id="statProcessing">-</div><div class="stat-label">قيد المعالجة</div></div>
+        <div class="stat-card"><div class="stat-icon completed"><i class="fas fa-check-circle"></i></div><div class="stat-value" id="statCompleted">-</div><div class="stat-label">مكتملة</div></div>
+        <div class="stat-card"><div class="stat-icon cancelled"><i class="fas fa-times-circle"></i></div><div class="stat-value" id="statCancelled">-</div><div class="stat-label">ملغية</div></div>
+      </div>
+
+      <div class="filters-bar">
+        <div class="filter-group" style="display:flex;gap:0.75rem;">
+          <input type="text" id="searchOrders" placeholder="🔍 بحث..." onkeyup="filterOrders()">
+          <select id="filterStatus" onchange="filterOrders()">
+            <option value="">كل الحالات</option>
+            <option value="new">جديد</option>
+            <option value="processing">قيد المعالجة</option>
+            <option value="completed">مكتمل</option>
+            <option value="cancelled">ملغي</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:center;">
+          <span class="products-count" id="ordersCount" style="color:var(--gold);">0 طلب</span>
+          <button class="btn-refresh" onclick="loadOrders()"><i class="fas fa-sync-alt"></i> تحديث</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-wrapper">
+          <table class="orders-table">
+            <thead><tr><th>صورة</th><th>#</th><th>العميل</th><th>الهاتف</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>التاريخ</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+            <tbody id="ordersTableBody"><tr><td colspan="10"><div class="loader"></div></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal">
+      <i class="fas fa-info-circle modal-icon" style="font-size:2.5rem;color:var(--info);display:block;text-align:center;margin-bottom:0.8rem;"></i>
+      <h3 style="text-align:center;">تفاصيل الطلب</h3>
+      <div class="modal-product-image" id="modalProductImage" style="text-align:center;margin-bottom:1rem;"></div>
+      <div class="order-details-content" id="orderDetailsContent" style="background:var(--bg-secondary);padding:1rem;border-radius:var(--radius);line-height:2;text-align:right;"></div>
+      <div class="btn-group" style="display:flex;gap:0.75rem;justify-content:center;margin-top:1rem;">
+        <button class="btn btn-outline" onclick="closeModal('detailsModal')"><i class="fas fa-times"></i> إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <i class="fas fa-exclamation-triangle modal-icon" style="font-size:2.5rem;color:var(--danger);display:block;text-align:center;margin-bottom:0.8rem;"></i>
+      <h3 style="text-align:center;">تأكيد الحذف</h3>
+      <p style="text-align:center;">هل أنت متأكد من حذف هذا الطلب؟</p>
+      <div class="btn-group" style="display:flex;gap:0.75rem;justify-content:center;margin-top:1rem;">
+        <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash-alt"></i> نعم، احذف</button>
+        <button class="btn btn-outline" onclick="closeModal('deleteModal')"><i class="fas fa-times"></i> إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+
+  <script>
+    // ========== THEME TOGGLE ==========
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
+          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
+          updateIcon();
+        });
+        document.body.appendChild(btn);
+        updateIcon();
+      }
+      function updateIcon() { const btn = document.querySelector('.theme-toggle-btn'); if (btn) btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
+      function applySaved() { const s = localStorage.getItem('almaya-theme'); if (s === 'white') document.body.classList.add('white-theme'); }
+      applySaved(); createToggleButton();
+    })();
+
+    if (typeof CONFIG === 'undefined') throw new Error('CONFIG missing');
+    const SUPABASE_URL = CONFIG.SUPABASE_URL, SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
+    let allOrders = [], allProducts = [], deleteOrderId = null;
+
+    async function supabaseRequest(endpoint, opts = {}) {
+      const res = await fetch(`${SUPABASE_URL}${endpoint}`, {
+        method: opts.method || 'GET',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+        body: opts.body ? JSON.stringify(opts.body) : undefined
+      });
+      if (res.status === 204) return null;
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || `Erreur ${res.status}`);
+      return data;
+    }
+
+    function escapeHtml(s) { return s ? s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]) : ''; }
+
+    function getProductImage(productId, productName) {
+      const p = allProducts.find(x => x.id == productId);
+      if (p?.product_image_url) return p.product_image_url;
+      const pn = allProducts.find(x => x.product_name?.toLowerCase() === productName?.toLowerCase());
+      return pn?.product_image_url || null;
+    }
+
+    async function loadAllData() {
+      try {
+        allProducts = (await supabaseRequest('/rest/v1/products?select=*')) || [];
+        const orders = await supabaseRequest('/rest/v1/orders?select=*');
+        if (!orders) return;
+        allOrders = orders;
+        updateStats();
+        filterOrders();
+      } catch(e) { console.error(e); }
+    }
+
+    function updateStats() {
+      const c = { new:0, processing:0, completed:0, cancelled:0 };
+      allOrders.forEach(o => { const s = o.status || 'new'; if (c[s] !== undefined) c[s]++; });
+      document.getElementById('statNew').textContent = c.new;
+      document.getElementById('statProcessing').textContent = c.processing;
+      document.getElementById('statCompleted').textContent = c.completed;
+      document.getElementById('statCancelled').textContent = c.cancelled;
+    }
+
+    function filterOrders() {
+      const s = document.getElementById('searchOrders')?.value.toLowerCase() || '';
+      const st = document.getElementById('filterStatus')?.value || '';
+      let f = [...allOrders];
+      if (s) f = f.filter(o => (o.customer_name||'').includes(s) || (o.customer_phone||'').includes(s) || (o.product_name||'').includes(s));
+      if (st) f = f.filter(o => o.status === st);
+      document.getElementById('ordersCount').textContent = `${f.length} طلب`;
+      document.getElementById('ordersTableBody').innerHTML = f.length ? f.map((o, i) => {
+        const img = getProductImage(o.product_id, o.product_name);
+        const imgHTML = img ? `<img src="${img}" class="product-thumb" onclick="window.open('${img}','_blank')" onerror="this.style.display='none'">` : '<div class="product-thumb-placeholder" style="width:50px;height:60px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);"><i class="fas fa-image"></i></div>';
+        return `<tr><td>${imgHTML}</td><td>${i+1}</td><td class="customer-name">${escapeHtml(o.customer_name)}</td><td>${escapeHtml(o.customer_phone)}</td><td class="product-name">${escapeHtml(o.product_name)}</td><td>${escapeHtml(o.product_category)}</td><td>${escapeHtml(o.product_price)||'-'}</td><td>${o.created_at?new Date(o.created_at).toLocaleDateString('ar-MA'):'-'}</td><td><span class="status-badge status-${o.status||'new'}">${({new:'جديد',processing:'قيد المعالجة',completed:'مكتمل',cancelled:'ملغي'})[o.status||'new']}</span></td><td><button class="action-btn" onclick="viewOrderDetails(${o.id})" style="padding:0.3rem 0.5rem;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:transparent;color:var(--text-secondary);"><i class="fas fa-eye"></i></button> ${o.status==='new'?`<button class="action-btn" onclick="updateStatus(${o.id},'processing')" style="color:var(--warning);"><i class="fas fa-play"></i></button>`:''} ${o.status==='processing'?`<button class="action-btn" onclick="updateStatus(${o.id},'completed')" style="color:var(--success);"><i class="fas fa-check"></i></button>`:''} <button class="action-btn" onclick="openDeleteModal(${o.id})" style="color:var(--danger);"><i class="fas fa-trash-alt"></i></button></td></tr>`;
+      }).join('') : '<tr><td colspan="10"><div class="empty-state" style="text-align:center;padding:3rem;color:var(--text-muted);"><i class="fas fa-inbox" style="font-size:2.5rem;opacity:0.4;"></i><p>لا توجد طلبات</p></div></td></tr>';
+    }
+
+    window.updateStatus = async function(id, s) { await supabaseRequest(`/rest/v1/orders?id=eq.${id}`, { method:'PATCH', body:{ status:s } }); loadAllData(); };
+    window.viewOrderDetails = function(id) {
+      const o = allOrders.find(x => x.id === id);
+      if (!o) return;
+      document.getElementById('modalProductImage').innerHTML = getProductImage(o.product_id, o.product_name) ? `<img src="${getProductImage(o.product_id, o.product_name)}" style="width:120px;height:150px;object-fit:cover;border-radius:10px;border:2px solid var(--gold);cursor:pointer;" onclick="window.open('${getProductImage(o.product_id, o.product_name)}','_blank')">` : '';
+      document.getElementById('orderDetailsContent').innerHTML = `<p><strong style="color:var(--gold);">📦 المنتج:</strong> ${escapeHtml(o.product_name)}</p><p><strong style="color:var(--gold);">👤 العميل:</strong> ${escapeHtml(o.customer_name)}</p><p><strong style="color:var(--gold);">📞 الهاتف:</strong> ${escapeHtml(o.customer_phone)}</p><p><strong style="color:var(--gold);">📅 التاريخ:</strong> ${o.created_at?new Date(o.created_at).toLocaleString('ar-MA'):'-'}</p>`;
+      document.getElementById('detailsModal').classList.add('active');
+    };
+    window.openDeleteModal = function(id) { deleteOrderId = id; document.getElementById('deleteModal').classList.add('active'); };
+    window.confirmDelete = async function() {
+      if (!deleteOrderId) return;
+      await supabaseRequest(`/rest/v1/orders?id=eq.${deleteOrderId}`, { method:'DELETE' });
+      document.getElementById('deleteModal').classList.remove('active');
+      loadAllData();
+    };
+    window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); };
+    window.filterOrders = filterOrders;
+    window.loadOrders = loadAllData;
+
+    document.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active')); });
+    document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+    loadAllData();
+  </script>
+</body>
+</html>
