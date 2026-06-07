@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="config.js"></script>
+  <script src="auth.js"></script>
   <script src="admin.js"></script>
   
   <style>
@@ -314,7 +315,6 @@
 </head>
 <body>
 
-
   <div id="header-container"></div>
 
   <div class="main-content">
@@ -332,25 +332,25 @@
         <div class="stat-icon"><i class="fas fa-tshirt"></i></div>
         <div class="stat-value" id="totalProducts">0</div>
         <div class="stat-label">إجمالي المنتجات</div>
-        <div class="stat-change positive" id="productsChange"><i class="fas fa-chart-line"></i> <span>+0</span> هذا الشهر</div>
+        <div class="stat-change positive" id="productsChange"><i class="fas fa-chart-line"></i> <span>جاري...</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
         <div class="stat-value" id="totalOrders">0</div>
         <div class="stat-label">إجمالي الطلبات</div>
-        <div class="stat-change positive" id="ordersChange"><i class="fas fa-chart-line"></i> <span>+0</span> هذا الشهر</div>
+        <div class="stat-change positive" id="ordersChange"><i class="fas fa-chart-line"></i> <span>جاري...</span></div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-users"></i></div>
-        <div class="stat-value" id="totalRevenue">0</div>
-        <div class="stat-label">إجمالي الإيرادات</div>
-        <div class="stat-change positive" id="revenueChange"><i class="fas fa-chart-line"></i> <span>+0%</span></div>
+        <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+        <div class="stat-value" id="totalMessages">0</div>
+        <div class="stat-label">الرسائل الواردة</div>
+        <div class="stat-change positive" id="messagesChange"><i class="fas fa-chart-line"></i> <span>جاري...</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-star"></i></div>
         <div class="stat-value" id="avgRating">0</div>
         <div class="stat-label">متوسط التقييم</div>
-        <div class="stat-change positive" id="ratingChange"><i class="fas fa-star"></i> <span>+0.0</span></div>
+        <div class="stat-change positive" id="ratingChange"><i class="fas fa-star"></i> <span>جاري...</span></div>
       </div>
     </div>
 
@@ -388,6 +388,17 @@
       </div>
     </div>
 
+    <!-- Recent Messages -->
+    <div class="section-card">
+      <div class="section-header">
+        <h3><i class="fas fa-envelope" style="color: var(--gold);"></i> آخر الرسائل الواردة</h3>
+        <button class="quick-btn" onclick="window.location.href='admin-contact.html'" style="padding: 0.3rem 0.7rem;">عرض الكل <i class="fas fa-arrow-left"></i></button>
+      </div>
+      <div class="top-products-list" id="recentMessagesList">
+        <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">جاري التحميل...</div>
+      </div>
+    </div>
+
     <!-- Quick Actions -->
     <div class="quick-actions">
       <div class="quick-actions-title"><i class="fas fa-bolt"></i> إجراءات سريعة</div>
@@ -396,6 +407,7 @@
         <button class="quick-btn" onclick="window.location.href='admin-collections.html'"><i class="fas fa-plus-circle"></i> مجموعة جديدة</button>
         <button class="quick-btn" onclick="window.location.href='admin-orders.html'"><i class="fas fa-eye"></i> مراجعة الطلبات</button>
         <button class="quick-btn" onclick="window.location.href='admin-reviews.html'"><i class="fas fa-check-circle"></i> مراجعة الآراء</button>
+        <button class="quick-btn" onclick="window.location.href='admin-contact.html'"><i class="fas fa-envelope"></i> مراجعة الرسائل</button>
         <button class="quick-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> تحديث الكل</button>
         <button class="quick-btn" onclick="window.open('/','_blank')"><i class="fas fa-globe"></i> زيارة الموقع</button>
       </div>
@@ -444,8 +456,9 @@
       createToggleButton();
     })();
 
+    // ========== التحقق من CONFIG ==========
     if (typeof CONFIG === 'undefined') {
-      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js manquant !</div>';
+      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js مفقود</div>';
       throw new Error('CONFIG missing');
     }
 
@@ -454,12 +467,50 @@
     let salesChart, ordersChart;
 
     async function supabaseRequest(endpoint) {
-      const res = await fetch(`${SUPABASE_URL}${endpoint}`, {
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' }
-      });
-      if (res.status === 204) return null;
-      const text = await res.text();
-      return text ? JSON.parse(text) : [];
+      try {
+        const res = await fetch(`${SUPABASE_URL}${endpoint}`, {
+          headers: { 
+            'apikey': SUPABASE_KEY, 
+            'Authorization': `Bearer ${SUPABASE_KEY}`, 
+            'Content-Type': 'application/json' 
+          }
+        });
+        if (res.status === 204) return null;
+        const text = await res.text();
+        return text ? JSON.parse(text) : [];
+      } catch(e) {
+        console.error('Supabase error:', e);
+        return [];
+      }
+    }
+
+    // حساب عدد الطلبات في الشهر الحالي
+    function getCurrentMonthOrders(orders) {
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+      
+      return orders.filter(order => {
+        const orderDate = new Date(order.created_at);
+        return orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear;
+      }).length;
+    }
+
+    // حساب عدد المنتجات المضافة في الشهر الحالي
+    function getCurrentMonthProducts(products) {
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+      
+      return products.filter(product => {
+        const productDate = new Date(product.created_at);
+        return productDate.getMonth() === currentMonth && productDate.getFullYear() === currentYear;
+      }).length;
+    }
+
+    // حساب عدد الرسائل الجديدة (غير مقروءة)
+    function getUnreadMessages(messages) {
+      return messages.filter(msg => !msg.is_read || msg.status === 'pending').length;
     }
 
     async function loadAllData() {
@@ -468,31 +519,58 @@
         loadSalesChart(),
         loadOrdersChart(),
         loadTopProducts(),
-        loadRecentOrders()
+        loadRecentOrders(),
+        loadRecentMessages()
       ]);
     }
 
     async function loadStats() {
       try {
-        const products = await supabaseRequest('/rest/v1/products?select=id');
-        const orders = await supabaseRequest('/rest/v1/orders?select=id,total,created_at');
-        const reviews = await supabaseRequest('/rest/v1/reviews?select=rating');
+        // جلب المنتجات
+        const products = await supabaseRequest('/rest/v1/products?select=id,created_at');
+        const totalProducts = products?.length || 0;
+        const newProductsThisMonth = getCurrentMonthProducts(products || []);
         
-        document.getElementById('totalProducts').textContent = products?.length || 0;
-        document.getElementById('totalOrders').textContent = orders?.length || 0;
+        // جلب الطلبات
+        const orders = await supabaseRequest('/rest/v1/orders?select=id,created_at,total');
+        const totalOrders = orders?.length || 0;
+        const newOrdersThisMonth = getCurrentMonthOrders(orders || []);
         
+        // حساب الإيرادات
         const totalRevenue = orders?.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0) || 0;
-        document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString() + ' د.م';
         
+        // جلب التقييمات
+        const reviews = await supabaseRequest('/rest/v1/reviews?select=rating');
         const avgRating = reviews?.length ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length).toFixed(1) : 0;
+        
+        // جلب الرسائل
+        const messages = await supabaseRequest('/rest/v1/contact_messages?select=id,is_read,status');
+        const totalMessages = messages?.length || 0;
+        const unreadMessages = getUnreadMessages(messages || []);
+        
+        // تحديث الواجهة
+        document.getElementById('totalProducts').textContent = totalProducts;
+        document.getElementById('totalOrders').textContent = totalOrders;
+        document.getElementById('totalMessages').textContent = totalMessages;
         document.getElementById('avgRating').textContent = avgRating + ' ★';
         
-        // حساب التغيرات (محاكاة)
-        document.getElementById('productsChange').innerHTML = '<i class="fas fa-chart-line"></i> <span>+' + Math.floor(Math.random() * 20) + '</span> هذا الشهر';
-        document.getElementById('ordersChange').innerHTML = '<i class="fas fa-chart-line"></i> <span>+' + Math.floor(Math.random() * 30) + '</span> هذا الشهر';
-        document.getElementById('revenueChange').innerHTML = '<i class="fas fa-chart-line"></i> <span>+' + Math.floor(Math.random() * 25) + '%</span>';
-        document.getElementById('ratingChange').innerHTML = '<i class="fas fa-star"></i> <span>+' + (Math.random() * 0.5).toFixed(1) + '</span>';
-      } catch(e) { console.error(e); }
+        // تحديث الإيرادات
+        document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString() + ' د.م';
+        
+        // تحديث التغيرات
+        document.getElementById('productsChange').innerHTML = `<i class="fas fa-chart-line"></i> <span>+${newProductsThisMonth}</span> هذا الشهر`;
+        document.getElementById('ordersChange').innerHTML = `<i class="fas fa-chart-line"></i> <span>+${newOrdersThisMonth}</span> هذا الشهر`;
+        document.getElementById('messagesChange').innerHTML = `<i class="fas fa-envelope"></i> <span>${unreadMessages}</span> غير مقروءة`;
+        
+        // حساب نسبة التغير في التقييم (محاكاة بسيطة)
+        const ratingChange = avgRating > 4 ? '+0.3' : avgRating > 3 ? '+0.2' : '+0.1';
+        document.getElementById('ratingChange').innerHTML = `<i class="fas fa-star"></i> <span>${ratingChange}</span>`;
+        
+      } catch(e) { 
+        console.error('خطأ في تحميل الإحصائيات:', e);
+        document.getElementById('productsChange').innerHTML = '<i class="fas fa-chart-line"></i> <span>خطأ</span>';
+        document.getElementById('ordersChange').innerHTML = '<i class="fas fa-chart-line"></i> <span>خطأ</span>';
+      }
     }
 
     async function loadSalesChart() {
@@ -513,26 +591,56 @@
         const ctx = document.getElementById('salesChart').getContext('2d');
         salesChart = new Chart(ctx, {
           type: 'line',
-          data: { labels: months, datasets: [{ label: 'المبيعات (د.م)', data: monthlySales, borderColor: '#C4A06A', backgroundColor: 'rgba(196,160,106,0.1)', tension: 0.4, fill: true }] },
-          options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#A89880' } } } }
+          data: { 
+            labels: months, 
+            datasets: [{ 
+              label: 'المبيعات (د.م)', 
+              data: monthlySales, 
+              borderColor: '#C4A06A', 
+              backgroundColor: 'rgba(196,160,106,0.1)', 
+              tension: 0.4, 
+              fill: true 
+            }] 
+          },
+          options: { 
+            responsive: true, 
+            maintainAspectRatio: true, 
+            plugins: { 
+              legend: { labels: { color: '#A89880' } } 
+            } 
+          }
         });
-      } catch(e) { console.error(e); }
+      } catch(e) { console.error('خطأ في رسم المبيعات:', e); }
     }
 
     async function loadOrdersChart() {
       try {
         const orders = await supabaseRequest('/rest/v1/orders?select=status');
         const statusCount = { new: 0, processing: 0, completed: 0, cancelled: 0 };
-        orders?.forEach(order => { if (statusCount[order.status] !== undefined) statusCount[order.status]++; });
+        orders?.forEach(order => { 
+          if (statusCount[order.status] !== undefined) statusCount[order.status]++; 
+        });
         
         if (ordersChart) ordersChart.destroy();
         const ctx = document.getElementById('ordersChart').getContext('2d');
         ordersChart = new Chart(ctx, {
           type: 'doughnut',
-          data: { labels: ['جديد', 'قيد المعالجة', 'مكتمل', 'ملغي'], datasets: [{ data: [statusCount.new, statusCount.processing, statusCount.completed, statusCount.cancelled], backgroundColor: ['#C4A06A', '#3B82F6', '#25D366', '#FF4757'] }] },
-          options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { color: '#A89880' } } } }
+          data: { 
+            labels: ['جديد', 'قيد المعالجة', 'مكتمل', 'ملغي'], 
+            datasets: [{ 
+              data: [statusCount.new, statusCount.processing, statusCount.completed, statusCount.cancelled], 
+              backgroundColor: ['#C4A06A', '#3B82F6', '#25D366', '#FF4757'] 
+            }] 
+          },
+          options: { 
+            responsive: true, 
+            maintainAspectRatio: true, 
+            plugins: { 
+              legend: { position: 'bottom', labels: { color: '#A89880' } } 
+            } 
+          }
         });
-      } catch(e) { console.error(e); }
+      } catch(e) { console.error('خطأ في رسم الطلبات:', e); }
     }
 
     async function loadTopProducts() {
@@ -542,9 +650,13 @@
         
         orders?.forEach(order => {
           if (order.items) {
-            const items = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+            let items = order.items;
+            if (typeof items === 'string') {
+              try { items = JSON.parse(items); } catch(e) { items = []; }
+            }
             items?.forEach(item => {
-              productCount[item.name] = (productCount[item.name] || 0) + (item.quantity || 1);
+              const name = item.name || item.product_name || 'منتج';
+              productCount[name] = (productCount[name] || 0) + (item.quantity || 1);
             });
           }
         });
@@ -561,13 +673,16 @@
           <div class="top-product-item">
             <div class="product-rank">#${i+1}</div>
             <div class="product-info">
-              <div class="product-name">${name.length > 30 ? name.substring(0,30)+'...' : name}</div>
+              <div class="product-name">${name.length > 35 ? name.substring(0,35)+'...' : name}</div>
               <div class="product-orders">تم طلبه ${count} مرة</div>
             </div>
             <div class="product-count">${count}</div>
           </div>
         `).join('');
-      } catch(e) { console.error(e); }
+      } catch(e) { 
+        console.error('خطأ في تحميل أفضل المنتجات:', e);
+        document.getElementById('topProductsList').innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--danger);">خطأ في تحميل البيانات</div>';
+      }
     }
 
     async function loadRecentOrders() {
@@ -593,7 +708,38 @@
             <div class="product-count" style="color: ${statusColor[order.status]}">${order.total} د.م</div>
           </div>
         `).join('');
-      } catch(e) { console.error(e); }
+      } catch(e) { 
+        console.error('خطأ في تحميل الطلبات الأخيرة:', e);
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--danger);">خطأ في تحميل البيانات</div>';
+      }
+    }
+
+    async function loadRecentMessages() {
+      try {
+        const messages = await supabaseRequest('/rest/v1/contact_messages?select=id,name,email,subject,message,is_read,status,created_at&order=created_at.desc&limit=5');
+        const container = document.getElementById('recentMessagesList');
+        
+        if (!messages || messages.length === 0) {
+          container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">لا توجد رسائل حديثة</div>';
+          return;
+        }
+        
+        container.innerHTML = messages.map(msg => `
+          <div class="top-product-item" style="cursor: pointer;" onclick="window.location.href='admin-contact.html'">
+            <div class="product-rank"><i class="fas ${msg.is_read ? 'fa-envelope-open' : 'fa-envelope'}"></i></div>
+            <div class="product-info">
+              <div class="product-name">${msg.name} <span style="font-size:0.65rem; color:var(--text-secondary);">(${msg.email})</span></div>
+              <div class="product-orders">${msg.subject.substring(0, 40)}${msg.subject.length > 40 ? '...' : ''}</div>
+            </div>
+            <div class="product-count" style="color: ${msg.is_read ? 'var(--success)' : 'var(--warning)'}; font-size:0.7rem;">
+              ${new Date(msg.created_at).toLocaleDateString('ar-MA')}
+            </div>
+          </div>
+        `).join('');
+      } catch(e) { 
+        console.error('خطأ في تحميل الرسائل الأخيرة:', e);
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--danger);">خطأ في تحميل البيانات</div>';
+      }
     }
 
     // تحديث كل 30 ثانية
@@ -601,7 +747,13 @@
       loadStats();
       loadTopProducts();
       loadRecentOrders();
+      loadRecentMessages();
     }, 30000);
+
+    window.loadTopProducts = loadTopProducts;
+    window.loadRecentOrders = loadRecentOrders;
+    window.loadRecentMessages = loadRecentMessages;
+    window.loadStats = loadStats;
 
     document.addEventListener('DOMContentLoaded', loadAllData);
   </script>

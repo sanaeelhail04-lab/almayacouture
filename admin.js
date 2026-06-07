@@ -222,7 +222,8 @@
                     <div class="admin-link" data-page="admin-collections.html"><i class="fas fa-layer-group"></i><span>المجموعات</span></div>
                     <div class="admin-link" data-page="admin-orders.html"><i class="fas fa-clipboard-list"></i><span>الطلبات</span></div>
                     <div class="admin-link" data-page="admin-reviews.html"><i class="fas fa-star"></i><span>الآراء</span></div>
-                    <div class="admin-link" data-page="admin-login.html"><i class="fas fa-user"></i><span>إدارة المسؤولين</span></div>
+                    <div class="admin-link" data-page="admin-contact.html"><i class="fas fa-envelope"></i><span>الرسائل</span></div>
+                    <div class="admin-link" data-page="admin-login.html"><i class="fas fa-users"></i><span>المسؤولين</span></div>
                 </div>
                 <div class="admin-refresh" id="admin-refresh-btn"><i class="fas fa-sync-alt"></i><span>تحديث</span></div>
                 <button class="admin-menu-toggle" id="admin-menu-toggle"><i class="fas fa-bars"></i></button>
@@ -243,7 +244,8 @@
                 <div class="admin-sidebar-link" data-page="admin-collections.html"><i class="fas fa-layer-group"></i><span>المجموعات</span></div>
                 <div class="admin-sidebar-link" data-page="admin-orders.html"><i class="fas fa-clipboard-list"></i><span>الطلبات</span></div>
                 <div class="admin-sidebar-link" data-page="admin-reviews.html"><i class="fas fa-star"></i><span>الآراء</span></div>
-                <div class="admin-sidebar-link" data-page="admin-login.html"><i class="fas fa-user"></i><span>إدارة المسؤولين</span></div>
+                <div class="admin-sidebar-link" data-page="admin-contact.html"><i class="fas fa-envelope"></i><span>الرسائل</span></div>
+                <div class="admin-sidebar-link" data-page="admin-login.html"><i class="fas fa-users"></i><span>المسؤولين</span></div>
             </div>
         `;
 
@@ -252,7 +254,8 @@
         overlay.id = 'sidebar-overlay';
 
         // إضافة العناصر للصفحة
-        document.body.insertBefore(navbar, document.body.firstChild);
+        const firstChild = document.body.firstChild;
+        document.body.insertBefore(navbar, firstChild);
         document.body.appendChild(sidebar);
         document.body.appendChild(overlay);
 
@@ -275,6 +278,13 @@
         if (toggleBtn) toggleBtn.addEventListener('click', openSidebar);
         if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
         overlay.addEventListener('click', closeSidebar);
+        
+        // إغلاق القائمة بالـ Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
         
         // التنقل
         function navigateTo(page) {

@@ -524,7 +524,6 @@
     }
 
     .hours-list li:last-child { border-bottom: none; }
-
     .hours-list .day { color: var(--text2); font-weight: 500; }
     .hours-list .time { color: var(--gold); font-weight: 600; font-size: 0.75em; }
     .hours-list .closed { color: var(--text4); }
@@ -693,14 +692,6 @@
           <h2 class="form-card-title">أرسل لنا رسالة</h2>
           <p class="form-card-subtitle">سنرد عليك في أقرب وقت ممكن</p>
 
-          <!--
-            DEVELOPER NOTE:
-            To connect this form to a backend:
-            - Supabase: POST to /rest/v1/contact_messages with your apikey header
-            - PHP handler: Set action="your-handler.php" method="POST"
-            - Email API (e.g. EmailJS): call emailjs.send() in handleSubmit()
-            Form fields: name, email, subject, message
-          -->
           <form id="contactForm" novalidate autocomplete="off">
 
             <div class="form-grid">
@@ -854,12 +845,6 @@
               <i class="fab fa-whatsapp" style="color:#25D366;"></i>
               +212 601-245733
             </a>
-            <br>
-            <span style="font-size:0.78rem; color:var(--text4); margin-top:4px; display:block;">
-              <!-- PLACEHOLDER: Replace with actual phone number if different -->
-              <i class="fas fa-phone" style="font-size:0.7em;"></i>
-              <span style="color: var(--gold);">[أدخل رقم هاتف إضافي إن وجد]</span>
-            </span>
           </div>
         </div>
 
@@ -869,9 +854,7 @@
           <div class="info-card-label">العنوان وساعات العمل</div>
           <div class="info-card-title">زيارتنا في الأتيلييه</div>
           <div class="info-card-value">
-            <!-- PLACEHOLDER: Replace with actual address -->
-            <span style="color:var(--gold);">[أدخل العنوان الكامل]</span><br>
-            المغرب
+            <span style="color:var(--gold);">الدار البيضاء، المغرب</span><br>
           </div>
           <ul class="hours-list">
             <li>
@@ -920,26 +903,15 @@
           📍 موقعنا على الخريطة
         </p>
         <div class="map-inner">
-          <!--
-            DEVELOPER NOTE:
-            Replace this placeholder with a real Google Maps embed:
-            <iframe
-              src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE"
-              width="100%" height="300" style="border:0;" allowfullscreen loading="lazy">
-            </iframe>
-          -->
-          <i class="fas fa-map-marked-alt"></i>
-          <p>ضعي رابط خريطة Google Maps هنا</p>
-          <a
-            href="https://www.google.com/maps"
-            target="_blank"
-            rel="noopener"
-            style="display:inline-flex; align-items:center; gap:6px; margin-top:0.5rem; padding:0.5rem 1.2rem; border:1.5px solid var(--border2); border-radius:50px; font-size:0.78rem; color:var(--gold); text-decoration:none; transition:all 0.3s;"
-            onmouseover="this.style.borderColor='var(--gold)'"
-            onmouseout="this.style.borderColor='var(--border2)'"
-          >
-            <i class="fas fa-directions"></i> فتح في خرائط Google
-          </a>
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13293.307323650974!2d-7.623454!3d33.573109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7cdb8f3d9b4c3%3A0x8a5f5e5e5e5e5e5e!2sCasablanca%2C%20Morocco!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma" 
+            width="100%" 
+            height="300" 
+            style="border:0; border-radius:12px;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
         </div>
       </div>
     </div>
@@ -985,6 +957,14 @@
       }
       applySaved(); createToggleButton();
     })();
+
+    // ========== CONNECTION TO SUPABASE ==========
+    if (typeof CONFIG === 'undefined') {
+      console.error('❌ CONFIG.js غير موجود');
+    }
+
+    const SUPABASE_URL = CONFIG?.SUPABASE_URL;
+    const SUPABASE_KEY = CONFIG?.SUPABASE_ANON_KEY;
 
     // ========== FORM VALIDATION & SUBMISSION ==========
     (function() {
@@ -1050,35 +1030,43 @@
         }, 6000);
       }
 
-      /*
-       * ============================================================
-       * DEVELOPER: Connect to your backend here inside handleSubmit()
-       *
-       * Option A — Supabase:
-       *   await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/contact_messages`, {
-       *     method: 'POST',
-       *     headers: {
-       *       'apikey': CONFIG.SUPABASE_ANON_KEY,
-       *       'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
-       *       'Content-Type': 'application/json',
-       *       'Prefer': 'return=minimal'
-       *     },
-       *     body: JSON.stringify(payload)
-       *   });
-       *
-       * Option B — PHP handler:
-       *   await fetch('contact-handler.php', { method:'POST', body: new FormData(form) });
-       *
-       * Option C — EmailJS:
-       *   await emailjs.send('SERVICE_ID', 'TEMPLATE_ID', payload);
-       * ============================================================
-       */
+      // ========== إرسال البيانات إلى Supabase ==========
+      async function sendToSupabase(payload) {
+        if (!SUPABASE_URL || !SUPABASE_KEY) {
+          throw new Error('Supabase configuration manquante');
+        }
+
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            name: payload.name,
+            email: payload.email,
+            phone: payload.phone || null,
+            subject: payload.subject,
+            message: payload.message,
+            status: 'pending',
+            is_read: false,
+            created_at: new Date().toISOString()
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json().catch(() => ({}));
+          throw new Error(error.message || 'فشل إرسال الرسالة');
+        }
+
+        return true;
+      }
+
       async function handleSubmit(payload) {
-        // ---- REPLACE THIS BLOCK WITH YOUR API CALL ----
-        // Simulated delay for demo purposes:
-        await new Promise(resolve => setTimeout(resolve, 1400));
-        // On real usage: throw an error if the request fails
-        // ------------------------------------------------
+        // إرسال البيانات إلى Supabase
+        await sendToSupabase(payload);
         return true;
       }
 
@@ -1096,8 +1084,7 @@
           email:   document.getElementById('contact-email').value.trim(),
           phone:   document.getElementById('contact-phone').value.trim() || null,
           subject: document.getElementById('contact-subject').value,
-          message: document.getElementById('contact-message').value.trim(),
-          created_at: new Date().toISOString()
+          message: document.getElementById('contact-message').value.trim()
         };
 
         submitBtn.classList.add('loading');
@@ -1111,8 +1098,8 @@
             document.getElementById(id).classList.remove('error');
           });
         } catch (err) {
-          showFeedback('error', 'حدث خطأ أثناء الإرسال. يُرجى المحاولة مرة أخرى أو التواصل معنا عبر واتساب.');
           console.error('Contact form error:', err);
+          showFeedback('error', 'حدث خطأ أثناء الإرسال. يُرجى المحاولة مرة أخرى أو التواصل معنا عبر واتساب.');
         } finally {
           submitBtn.classList.remove('loading');
           submitBtn.disabled = false;
