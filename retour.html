@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>سياسة الإرجاع | Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="config.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg:#1A1510;--bg2:#2A2218;--text:#E8DDD0;--text2:#B8A890;--text3:#A89880;--text4:#8B7B68;--gold:#C4A06A;--gold-light:#D4B896;--gold-dim:rgba(196,160,106,0.12);--border:rgba(196,160,106,0.12);--border2:rgba(196,160,106,0.2);--card:rgba(42,34,24,0.75); }
+    body.white-theme { --bg:#FDFCF8;--bg2:#F5F0E8;--text:#2A2218;--text2:#5A4E3C;--text3:#6B5F52;--text4:#8B7B68;--gold:#A07840;--gold-light:#C4A06A;--gold-dim:rgba(160,120,64,0.1);--border:rgba(160,120,64,0.12);--border2:rgba(160,120,64,0.2);--card:rgba(245,240,232,0.85); }
+    body { background:var(--bg);font-family:'Tajawal',sans-serif;color:var(--text);scroll-behavior:smooth;overflow-x:hidden;transition:background-color 0.5s ease,color 0.5s ease; }
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px}
+    body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3C/svg%3E");background-repeat:repeat;background-size:45px;pointer-events:none;z-index:0; }
+
+    .page-hero { position:relative;z-index:1;text-align:center;padding:clamp(3.5rem,9vw,6rem) clamp(1rem,4vw,2rem) clamp(2.5rem,6vw,4rem);border-bottom:1px solid var(--border2);background:var(--bg2);overflow:hidden; }
+    .page-hero::after { content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+    .hero-eyebrow { display:inline-flex;align-items:center;gap:8px;font-size:clamp(0.6rem,1.5vw,0.7rem);letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;position:relative;z-index:1; }
+    .hero-eyebrow::before,.hero-eyebrow::after { content:'✦';font-size:0.5rem;opacity:0.6; }
+    .page-hero h1 { font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,6vw,4rem);font-weight:600;background:linear-gradient(135deg,var(--gold) 20%,var(--gold-light) 80%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1rem;position:relative;z-index:1; }
+    .page-hero p { font-family:'Amiri',serif;font-size:clamp(0.88rem,2vw,1.05rem);color:var(--text3);max-width:500px;margin:0 auto;line-height:1.9;position:relative;z-index:1; }
+
+    .page-container { position:relative;z-index:1;max-width:900px;margin:0 auto;padding:clamp(2.5rem,6vw,4.5rem) clamp(1rem,4vw,2rem); }
+
+    /* YES / NO GRID */
+    .yesno-grid { display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.5rem 0; }
+    .yesno-card { border-radius:20px;padding:1.5rem;border:1px solid; }
+    .yesno-card.yes { background:rgba(37,211,102,0.07);border-color:rgba(37,211,102,0.25); }
+    .yesno-card.no { background:rgba(255,71,87,0.06);border-color:rgba(255,71,87,0.2); }
+    .yesno-header { display:flex;align-items:center;gap:10px;margin-bottom:1rem;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600; }
+    .yesno-card.yes .yesno-header { color:#25D366; }
+    .yesno-card.no .yesno-header { color:#FF4757; }
+    .yesno-list { list-style:none; }
+    .yesno-list li { display:flex;align-items:flex-start;gap:8px;font-size:0.8rem;color:var(--text2);padding:0.35rem 0;border-bottom:1px solid;line-height:1.6; }
+    .yesno-card.yes .yesno-list li { border-color:rgba(37,211,102,0.1); }
+    .yesno-card.no .yesno-list li { border-color:rgba(255,71,87,0.1); }
+    .yesno-list li:last-child { border-bottom:none; }
+    .yesno-list li::before { content:''; flex-shrink:0;margin-top:4px; }
+    .yesno-card.yes .yesno-list li::before { content:'✓';color:#25D366;font-weight:700;font-size:0.85rem; }
+    .yesno-card.no .yesno-list li::before { content:'✗';color:#FF4757;font-weight:700;font-size:0.85rem; }
+
+    /* PROCESS STEPS */
+    .process-steps { display:flex;flex-direction:column;gap:0;margin:1.5rem 0; }
+    .process-step { display:flex;gap:1.2rem;align-items:flex-start;position:relative;padding-bottom:1.5rem; }
+    .process-step:last-child { padding-bottom:0; }
+    .process-step:not(:last-child)::after { content:'';position:absolute;right:19px;top:40px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),transparent);opacity:0.3; }
+    .step-circle { width:40px;height:40px;min-width:40px;background:var(--gold-dim);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gold);flex-shrink:0; }
+    .step-content { padding-top:0.5rem; }
+    .step-content strong { display:block;color:var(--text);font-size:0.9rem;margin-bottom:0.3rem; }
+    .step-content p { font-size:0.8rem;color:var(--text3);line-height:1.6; }
+
+    /* SHARED */
+    .legal-section { margin-bottom:clamp(2rem,5vw,3.5rem);scroll-margin-top:100px; }
+    .section-header { display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem; }
+    .section-icon { width:44px;height:44px;min-width:44px;background:var(--gold-dim);border:1px solid var(--border2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gold);margin-top:2px; }
+    .section-title { font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:600;color:var(--text);line-height:1.3; }
+    .section-title span { display:block;font-family:'Tajawal',sans-serif;font-size:clamp(0.6rem,1.4vw,0.7rem);color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;font-weight:500;margin-bottom:0.2rem; }
+    .section-divider { height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:1.4rem;opacity:0.3; }
+    .legal-section p { font-size:clamp(0.82rem,1.8vw,0.93rem);color:var(--text2);margin-bottom:1rem;line-height:1.9; }
+    .highlight-box { background:var(--gold-dim);border:1px solid var(--border2);border-right:4px solid var(--gold);border-radius:12px;padding:clamp(0.9rem,2vw,1.2rem) clamp(1rem,2.5vw,1.5rem);margin:1.2rem 0;font-size:clamp(0.8rem,1.8vw,0.9rem);color:var(--text2);line-height:1.8; }
+    .highlight-box strong { color:var(--gold-light);display:block;margin-bottom:0.3rem;font-size:0.8rem; }
+    .legal-list { list-style:none;margin:0.8rem 0 1rem; }
+    .legal-list li { display:flex;align-items:flex-start;gap:10px;font-size:clamp(0.8rem,1.8vw,0.9rem);color:var(--text2);padding:0.45rem 0;border-bottom:1px solid var(--border);line-height:1.7; }
+    .legal-list li:last-child { border-bottom:none; }
+    .legal-list li::before { content:'◆';font-size:0.4rem;color:var(--gold);margin-top:0.55rem;flex-shrink:0; }
+    .royal-sep { display:flex;align-items:center;gap:1rem;margin:clamp(2rem,4vw,3rem) 0; }
+    .royal-sep-line { flex:1;height:1px;background:var(--border2); }
+    .royal-sep-diamond { width:8px;height:8px;background:var(--gold);transform:rotate(45deg);opacity:0.6;flex-shrink:0; }
+    .whatsapp-float { position:fixed;bottom:30px;left:30px;z-index:100;background:#25D366;color:white;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-size:1.5rem;text-decoration:none; }
+    .whatsapp-float:hover { transform:scale(1.08); }
+    .theme-toggle-btn { position:fixed;bottom:100px;right:30px;width:48px;height:48px;border-radius:50%;background:var(--bg2);border:2px solid var(--border2);color:var(--gold);font-size:1.2rem;cursor:pointer;z-index:99;display:flex;align-items:center;justify-content:center;transition:all 0.4s;box-shadow:0 4px 15px rgba(0,0,0,0.2);animation:themePulse 2s ease-in-out infinite; }
+    .theme-toggle-btn:hover { transform:scale(1.1) rotate(15deg);border-color:var(--gold); }
+    body.white-theme .theme-toggle-btn { background:#FFF;box-shadow:0 4px 15px rgba(0,0,0,0.08);border-color:rgba(160,120,64,0.3); }
+    @keyframes themePulse { 0%,100%{box-shadow:0 4px 15px rgba(196,160,106,0.15)}50%{box-shadow:0 4px 25px rgba(196,160,106,0.3)} }
+    @media(max-width:768px){.yesno-grid{grid-template-columns:1fr}.whatsapp-float{width:45px;height:45px;font-size:1.3rem;bottom:20px;left:20px}.theme-toggle-btn{bottom:80px;right:20px;width:42px;height:42px}}
+  </style>
+</head>
+<body>
+  <div id="header-container"></div>
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
+
+  <main>
+    <div class="page-hero" data-aos="fade-down">
+      <div class="hero-eyebrow">POLITIQUE DE RETOUR</div>
+      <h1>سياسة الإرجاع والاستبدال</h1>
+      <p>رضاك أمانة عندنا — اقرئي شروط الإرجاع بعناية قبل تقديم طلبك</p>
+    </div>
+
+    <div class="page-container">
+
+      <!-- تنبيه مهم -->
+      <div data-aos="fade-up" style="margin-bottom:2.5rem;">
+        <div class="highlight-box" style="border-right-color:#FF4757;background:rgba(255,71,87,0.06);border-color:rgba(255,71,87,0.25);">
+          <strong style="color:#FF6B7A;"><i class="fas fa-exclamation-triangle"></i> تنبيه أساسي حول طبيعة منتجاتنا</strong>
+          جميع قطع Almaya Couture مصنوعة <strong>يدوياً حسب الطلب</strong> ومخصصة لكل زبونة على حدة. هذا الطابع المخصص يجعل بعض حالات الإرجاع غير ممكنة من الناحية التقنية. يُرجى قراءة هذه السياسة جيداً قبل تأكيد طلبك.
+        </div>
+      </div>
+
+      <!-- ماذا يُقبل وما لا يُقبل -->
+      <div class="legal-section" id="ret-1" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-balance-scale"></i></div>
+          <div class="section-title"><span>01 · Éligibilité</span>ما يُقبل وما لا يُقبل للإرجاع</div>
+        </div>
+        <div class="section-divider"></div>
+        <div class="yesno-grid">
+          <div class="yesno-card yes">
+            <div class="yesno-header"><i class="fas fa-check-circle"></i> يُقبل الإرجاع / الإصلاح</div>
+            <ul class="yesno-list">
+              <li>عيب في الخياطة ليس من مسؤولية الزبونة</li>
+              <li>اختلاف واضح عن النموذج المتفق عليه</li>
+              <li>قماش مختلف عما طُلب</li>
+              <li>تلف حاصل أثناء التوصيل (مع إثبات)</li>
+              <li>خطأ في اللون من طرف الميمة</li>
+            </ul>
+          </div>
+          <div class="yesno-card no">
+            <div class="yesno-header"><i class="fas fa-times-circle"></i> لا يُقبل الإرجاع</div>
+            <ul class="yesno-list">
+              <li>خطأ في المقاسات المُقدَّمة من الزبونة</li>
+              <li>تغيير رأي الزبونة بعد التصنيع</li>
+              <li>القطع المُستعملة أو المغسولة</li>
+              <li>القطع المُعدَّلة من طرف آخر</li>
+              <li>إرجاع بعد مرور أكثر من 15 يوماً</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="royal-sep"><div class="royal-sep-line"></div><div class="royal-sep-diamond"></div><div class="royal-sep-line"></div></div>
+
+      <!-- إجراءات الإرجاع -->
+      <div class="legal-section" id="ret-2" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-undo-alt"></i></div>
+          <div class="section-title"><span>02 · Procédure</span>كيفية تقديم طلب إرجاع</div>
+        </div>
+        <div class="section-divider"></div>
+        <p>اتبعي هذه الخطوات لتقديم طلب إرجاع أو إصلاح:</p>
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-circle"><i class="fab fa-whatsapp"></i></div>
+            <div class="step-content">
+              <strong>الخطوة 1 — التواصل خلال 15 يوماً</strong>
+              <p>أرسلي لنا رسالة على واتساب خلال 15 يوم من تاريخ الاستلام. اذكري رقم طلبك وسبب الإرجاع.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-circle"><i class="fas fa-camera"></i></div>
+            <div class="step-content">
+              <strong>الخطوة 2 — إرسال الصور</strong>
+              <p>أرسلي صوراً واضحة للعيب أو المشكل من زوايا متعددة. هذا يساعدنا في تقييم الحالة بدقة.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-circle"><i class="fas fa-comments"></i></div>
+            <div class="step-content">
+              <strong>الخطوة 3 — دراسة الطلب</strong>
+              <p>ستردّ عليك الميمة خلال 48 ساعة بالقرار المناسب (إصلاح مجاني، استبدال، أو استرداد جزئي).</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-circle"><i class="fas fa-box"></i></div>
+            <div class="step-content">
+              <strong>الخطوة 4 — إعادة الشحن</strong>
+              <p>في حال قبول الإرجاع، سيتم إرسال عنوان الإرسال. تكاليف الشحن تُحدد حسب طبيعة المشكل.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-circle"><i class="fas fa-check"></i></div>
+            <div class="step-content">
+              <strong>الخطوة 5 — الحل</strong>
+              <p>الإصلاح يتم خلال 7 إلى 14 يوم. الاسترداد المالي يتم خلال 5 أيام عمل بعد استلام القطعة.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="royal-sep"><div class="royal-sep-line"></div><div class="royal-sep-diamond"></div><div class="royal-sep-line"></div></div>
+
+      <!-- الاسترداد -->
+      <div class="legal-section" id="ret-3" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-wallet"></i></div>
+          <div class="section-title"><span>03 · Remboursement</span>الاسترداد المالي</div>
+        </div>
+        <div class="section-divider"></div>
+        <p>في حالات الاسترداد المقبولة، يتم الدفع بنفس الطريقة المستخدمة في الشراء:</p>
+        <ul class="legal-list">
+          <li><strong>تحويل بنكي:</strong> خلال 3 إلى 5 أيام عمل بعد الموافقة.</li>
+          <li><strong>نقداً:</strong> عند إعادة القطعة للأتيلييه مباشرة.</li>
+          <li>تكاليف التوصيل غير قابلة للاسترداد إلا في حالة الخطأ من طرف Almaya Couture.</li>
+        </ul>
+        <div class="highlight-box"><strong><i class="fas fa-heart"></i> التزامنا معك</strong>نحن نعمل بكل جهد لضمان رضاك التام. إذا لم تكوني راضية عن قطعتك لأي سبب مشروع، لا تترددي في التواصل معنا — رضاك هو أهم شيء بالنسبة للميمة ✨</div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+  <script>
+    AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-quad' });
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.setAttribute('aria-label', 'تغيير السمة');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
+          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
+          updateIcon();
+        });
+        document.body.appendChild(btn);
+        updateIcon();
+      }
+      function updateIcon() { const btn = document.querySelector('.theme-toggle-btn'); if (!btn) return; btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
+      function applySaved() { const s = localStorage.getItem('almaya-theme'); if (s === 'white') document.body.classList.add('white-theme'); }
+      applySaved(); createToggleButton();
+    })();
+  </script>
+</body>
+</html>
