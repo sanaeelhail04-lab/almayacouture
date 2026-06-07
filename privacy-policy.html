@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>سياسة الخصوصية | Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="config.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ========== DARK THEME (Default) ========== */
+    :root {
+      --bg: #1A1510;
+      --bg2: #2A2218;
+      --bg3: #221C14;
+      --text: #E8DDD0;
+      --text2: #B8A890;
+      --text3: #A89880;
+      --text4: #8B7B68;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --gold-dim: rgba(196,160,106,0.15);
+      --border: rgba(196,160,106,0.12);
+      --border2: rgba(196,160,106,0.2);
+      --border3: rgba(196,160,106,0.3);
+      --card: rgba(42,34,24,0.7);
+      --nav: rgba(26,21,16,0.92);
+      --section-alt: rgba(34,28,20,0.6);
+    }
+
+    /* ========== WHITE THEME ========== */
+    body.white-theme {
+      --bg: #FDFCF8;
+      --bg2: #F5F0E8;
+      --bg3: #EDE8E0;
+      --text: #2A2218;
+      --text2: #5A4E3C;
+      --text3: #6B5F52;
+      --text4: #8B7B68;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --gold-dim: rgba(160,120,64,0.1);
+      --border: rgba(160,120,64,0.12);
+      --border2: rgba(160,120,64,0.2);
+      --border3: rgba(160,120,64,0.3);
+      --card: rgba(245,240,232,0.85);
+      --nav: rgba(253,252,248,0.92);
+      --section-alt: rgba(245,240,232,0.5);
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      color: var(--text);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      line-height: 1.8;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* ========== HERO ========== */
+    .privacy-hero {
+      position: relative;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border2);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 3.5rem);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .privacy-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.03'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3Cpath fill='%23D4B896' d='M50,25 L75,50 L50,75 L25,50 Z'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 50px;
+      pointer-events: none;
+    }
+
+    .privacy-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border2);
+      border-radius: 50px;
+      padding: 0.4rem 1.2rem;
+      font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .privacy-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .privacy-hero p {
+      font-family: 'Amiri', serif;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: var(--text3);
+      max-width: 560px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .last-updated {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text4);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .last-updated i { color: var(--gold); font-size: 0.65rem; }
+
+    /* ========== LAYOUT ========== */
+    .privacy-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
+    }
+
+    /* ========== TOC ========== */
+    .toc-card {
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border2);
+      border-radius: 24px;
+      padding: clamp(1.2rem, 3vw, 1.8rem);
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toc-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      border-radius: 0 24px 24px 0;
+    }
+
+    .toc-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.4rem 1.5rem;
+    }
+
+    .toc-list li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      color: var(--text3);
+      text-decoration: none;
+      padding: 0.3rem 0;
+      transition: color 0.3s;
+    }
+
+    .toc-list li a::before {
+      content: '✦';
+      font-size: 0.5rem;
+      color: var(--gold);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .toc-list li a:hover { color: var(--gold); }
+
+    /* ========== SECTIONS ========== */
+    .privacy-section {
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
+      scroll-margin-top: 100px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .section-title span {
+      display: block;
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 1.4rem;
+      opacity: 0.3;
+    }
+
+    .privacy-section p {
+      font-size: clamp(0.82rem, 1.8vw, 0.93rem);
+      color: var(--text2);
+      margin-bottom: 1rem;
+      line-height: 1.9;
+    }
+
+    .privacy-section p:last-child { margin-bottom: 0; }
+
+    /* ========== HIGHLIGHT BOX ========== */
+    .highlight-box {
+      background: var(--gold-dim);
+      border: 1px solid var(--border2);
+      border-right: 4px solid var(--gold);
+      border-radius: 12px;
+      padding: clamp(0.9rem, 2vw, 1.2rem) clamp(1rem, 2.5vw, 1.5rem);
+      margin: 1.2rem 0;
+      font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+      color: var(--text2);
+      line-height: 1.8;
+    }
+
+    .highlight-box strong {
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 0.3rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* ========== LIST ========== */
+    .privacy-list {
+      list-style: none;
+      margin: 0.8rem 0 1rem;
+    }
+
+    .privacy-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+      color: var(--text2);
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.7;
+    }
+
+    .privacy-list li:last-child { border-bottom: none; }
+
+    .privacy-list li::before {
+      content: '◆';
+      font-size: 0.4rem;
+      color: var(--gold);
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    /* ========== CONTACT CARD ========== */
+    .contact-card {
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border2);
+      border-radius: 24px;
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      margin-top: 1.2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: var(--gold-dim);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: var(--gold);
+    }
+
+    .contact-item-label {
+      font-size: 0.65rem;
+      color: var(--text4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .contact-item-value {
+      font-size: clamp(0.78rem, 1.8vw, 0.88rem);
+      color: var(--text2);
+      word-break: break-all;
+    }
+
+    .contact-item-value a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-item-value a:hover { color: var(--gold-light); }
+
+    /* ========== PLACEHOLDER ========== */
+    .placeholder {
+      display: inline-block;
+      background: rgba(196,160,106,0.08);
+      border: 1px dashed var(--gold);
+      border-radius: 4px;
+      padding: 1px 8px;
+      color: var(--gold);
+      font-size: 0.85em;
+      font-family: monospace;
+    }
+
+    /* ========== SEPARATOR ========== */
+    .royal-separator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: clamp(2rem, 4vw, 3rem) 0;
+    }
+
+    .royal-separator-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border2);
+    }
+
+    .royal-separator-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    /* ========== WHATSAPP FLOAT ========== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 100;
+      background: #25D366;
+      color: white;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); }
+
+    /* ========== THEME TOGGLE ========== */
+    .theme-toggle-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 2px solid var(--border2);
+      color: var(--gold);
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      animation: themePulse 2s ease-in-out infinite;
+    }
+    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
+    body.white-theme .theme-toggle-btn { background: #FFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-color: rgba(160,120,64,0.3); }
+
+    @keyframes themePulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
+      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .toc-list { grid-template-columns: 1fr; }
+      .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
+      .theme-toggle-btn { bottom: 80px; right: 20px; width: 42px; height: 42px; }
+      .contact-card { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Auto-Loaded -->
+  <div id="header-container"></div>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" aria-label="واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <div class="privacy-hero" data-aos="fade-down">
+      <div class="hero-badge">
+        <i class="fas fa-shield-alt"></i>
+        سياسة الخصوصية
+      </div>
+      <h1>حماية بياناتك حقنا وواجبنا</h1>
+      <p>نلتزم بحفظ خصوصيتك وحماية معلوماتك — اقرئي هذه الصفحة لتعرفي كيف نتعامل مع بياناتك</p>
+      <div class="last-updated">
+        <i class="fas fa-calendar-alt"></i>
+        آخر تحديث: <span class="placeholder">[أدخل التاريخ]</span>
+      </div>
+    </div>
+
+    <!-- ===== CONTENT ===== -->
+    <div class="privacy-container">
+
+      <!-- Table of Contents -->
+      <div class="toc-card" data-aos="fade-up">
+        <div class="toc-title">
+          <i class="fas fa-list-ul" style="color:var(--gold);"></i>
+          محتويات السياسة
+        </div>
+        <ul class="toc-list">
+          <li><a href="#section-intro">مقدمة عامة</a></li>
+          <li><a href="#section-collect">المعلومات التي نجمعها</a></li>
+          <li><a href="#section-logfiles">ملفات السجل (Log Files)</a></li>
+          <li><a href="#section-cookies">ملفات تعريف الارتباط</a></li>
+          <li><a href="#section-thirdparty">الشركاء والأطراف الثالثة</a></li>
+          <li><a href="#section-adsense">Google AdSense والإعلانات</a></li>
+          <li><a href="#section-dart">ملف DART Cookie</a></li>
+          <li><a href="#section-use">كيف نستخدم بياناتك</a></li>
+          <li><a href="#section-protection">حماية البيانات</a></li>
+          <li><a href="#section-children">خصوصية الأطفال</a></li>
+          <li><a href="#section-rights">حقوقك</a></li>
+          <li><a href="#section-contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+
+      <!-- 1. INTRO -->
+      <div class="privacy-section" id="section-intro" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-book-open"></i></div>
+          <div>
+            <div class="section-title">
+              <span>01 · Introduction</span>
+              مقدمة عامة
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          في <strong>Almaya Couture</strong>، نُولي خصوصيتك أهمية قصوى. تصف سياسة الخصوصية هذه الأنواع المختلفة من المعلومات التي يتم جمعها واستخدامها عبر موقعنا
+          <span class="placeholder">[أدخل رابط الموقع]</span>.
+        </p>
+        <p>
+          باستخدامك لموقعنا، فإنك توافق على ممارسات جمع المعلومات وتخزينها واستخدامها وفقاً لما هو موضح في هذه السياسة. إن كنت لا توافق على أي بند منها، يُرجى التوقف عن استخدام الموقع.
+        </p>
+        <div class="highlight-box">
+          <strong><i class="fas fa-info-circle"></i> ملاحظة مهمة</strong>
+          تسري هذه السياسة فقط على موقع Almaya Couture، ولا تمتد لتشمل المواقع التي قد يُعيد توجيهك إليها الموقع عبر روابط خارجية.
+        </div>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 2. INFORMATION COLLECTED -->
+      <div class="privacy-section" id="section-collect" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-database"></i></div>
+          <div>
+            <div class="section-title">
+              <span>02 · Data Collection</span>
+              المعلومات التي نجمعها
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>نقوم بجمع نوعين من المعلومات: المعلومات التي تقدمينها طوعاً، والمعلومات التي يتم جمعها تلقائياً خلال تصفحك للموقع.</p>
+
+        <ul class="privacy-list">
+          <li><strong>معلومات الطلبات:</strong> عند تقديم طلب تصميم عبر نموذج واتساب، نحصل على اسمك ورقم هاتفك والمقاسات التي تشاركينها.</li>
+          <li><strong>بيانات المراجعات:</strong> الاسم والتقييم والتعليق عند إرسالك رأياً حول منتجاتنا.</li>
+          <li><strong>معلومات الحساب:</strong> في حال إنشاء حساب مستخدم، نجمع البريد الإلكتروني وبيانات تسجيل الدخول.</li>
+          <li><strong>بيانات التصفح:</strong> معلومات تقنية كعنوان IP ونوع المتصفح والصفحات المزورة ومدة الزيارة.</li>
+          <li><strong>تفضيلات المستخدم:</strong> الإعدادات المحلية كتفضيل الوضع الداكن أو الفاتح المحفوظة في المتصفح.</li>
+        </ul>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 3. LOG FILES -->
+      <div class="privacy-section" id="section-logfiles" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-file-alt"></i></div>
+          <div>
+            <div class="section-title">
+              <span>03 · Log Files</span>
+              ملفات السجل
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          كغيره من مواقع الإنترنت، يستخدم موقع <strong>Almaya Couture</strong> ملفات السجل (Log Files). تتضمن هذه الملفات عادةً عناوين بروتوكول الإنترنت (IP)، ونوع المتصفح، ومزود خدمة الإنترنت، وطوابع التاريخ والوقت، وصفحات الإحالة والخروج.
+        </p>
+        <p>
+          لا تُربط هذه البيانات بأي معلومات شخصية تعرّف الهوية. الغرض من جمع هذه المعلومات هو تحليل الاتجاهات، وإدارة الموقع، وتتبع تنقلات المستخدمين على الموقع، وتجميع المعلومات الديموغرافية لأغراض إحصائية واستخدامها في تحسين تجربة التصفح.
+        </p>
+        <div class="highlight-box">
+          <strong><i class="fas fa-lock"></i> حفظ ملفات السجل</strong>
+          يتم الاحتفاظ بملفات السجل لفترة محدودة لا تتجاوز <span class="placeholder">[X أشهر]</span>، وتُحذف بعد ذلك تلقائياً.
+        </div>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 4. COOKIES -->
+      <div class="privacy-section" id="section-cookies" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-cookie-bite"></i></div>
+          <div>
+            <div class="section-title">
+              <span>04 · Cookies Policy</span>
+              ملفات تعريف الارتباط (Cookies)
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          يستخدم موقعنا ملفات تعريف الارتباط (Cookies) لتخزين معلومات حول تفضيلات الزوار والصفحات التي وصل إليها المستخدم، وذلك بهدف تخصيص محتوى صفحة الويب بناءً على نوع متصفح الزائر و/أو المعلومات الأخرى التي يرسلها الزائر عبر متصفحه.
+        </p>
+        <p>نستخدم أنواع ملفات تعريف الارتباط التالية:</p>
+        <ul class="privacy-list">
+          <li><strong>ملفات الجلسة (Session Cookies):</strong> مؤقتة وتُحذف عند إغلاق المتصفح، تُستخدم للحفاظ على جلسة التصفح.</li>
+          <li><strong>ملفات دائمة (Persistent Cookies):</strong> تبقى على جهازك لفترة محددة، تُستخدم لحفظ تفضيلاتك كالوضع الداكن/الفاتح.</li>
+          <li><strong>ملفات الأطراف الثالثة:</strong> تُنشئها خدمات خارجية مثل Google لأغراض الإعلانات والتحليلات.</li>
+        </ul>
+        <p>
+          يمكنك التحكم في ملفات تعريف الارتباط وإدارتها من خلال إعدادات متصفحك. إلا أن تعطيل بعض أنواع ملفات تعريف الارتباط قد يؤثر على تجربتك في استخدام الموقع.
+        </p>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 5. THIRD PARTY -->
+      <div class="privacy-section" id="section-thirdparty" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-handshake"></i></div>
+          <div>
+            <div class="section-title">
+              <span>05 · Third-Party Partners</span>
+              الشركاء والأطراف الثالثة
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          نتعاون مع شركاء موثوقين من الأطراف الثالثة لتقديم خدمات متنوعة على الموقع. لهذه الأطراف سياسات خصوصية خاصة بها تحكم استخدامها للبيانات التي تجمعها.
+        </p>
+        <ul class="privacy-list">
+          <li><strong>Supabase:</strong> نستخدمه كقاعدة بيانات لتخزين المنتجات والطلبات والمراجعات بشكل آمن ومشفر.</li>
+          <li><strong>Cloudinary:</strong> منصة تخزين الصور والوسائط المرفوعة على الموقع.</li>
+          <li><strong>Google AdSense:</strong> خدمة الإعلانات المستهدفة من Google (تفصيل في القسم التالي).</li>
+          <li><strong>Google Analytics:</strong> لتحليل إحصاءات الزيارات وتحسين تجربة المستخدم.</li>
+          <li><strong>WhatsApp Business:</strong> للتواصل المباشر مع العملاء وإتمام الطلبات.</li>
+          <li><strong>Google Fonts:</strong> لتحميل الخطوط المستخدمة في الموقع.</li>
+        </ul>
+        <div class="highlight-box">
+          <strong><i class="fas fa-external-link-alt"></i> تنويه مهم</strong>
+          لا نتحكم في ممارسات الخصوصية لهذه الأطراف الثالثة ولسنا مسؤولين عنها. نوصي بمراجعة سياسات الخصوصية الخاصة بكل منها.
+        </div>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 6. GOOGLE ADSENSE -->
+      <div class="privacy-section" id="section-adsense" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fab fa-google"></i></div>
+          <div>
+            <div class="section-title">
+              <span>06 · Google AdSense</span>
+              Google AdSense والإعلانات
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          قد يستخدم موقع <strong>Almaya Couture</strong> برنامج <strong>Google AdSense</strong>، وهو خدمة إعلانية تابعة لشركة Google Inc. يستخدم Google AdSense ملفات تعريف الارتباط DoubleClick DART لعرض الإعلانات للمستخدمين بناءً على زياراتهم السابقة لموقعنا ومواقع أخرى على الإنترنت.
+        </p>
+        <p>
+          يُستخدم برنامج الإعلانات هذا لتقديم إعلانات ذات صلة باهتمامات الزوار. تُستخدم ملفات تعريف الارتباط (Cookies) لتخصيص الإعلانات بناءً على الزيارات السابقة للمستخدم لهذا الموقع وغيره من المواقع.
+        </p>
+        <p>
+          تتوفر لدى Google القدرة على عرض إعلانات مستهدفة عبر الشبكة الإعلانية لـ Google. ويتمتع المستخدمون بحق إلغاء الاشتراك في الإعلانات المخصصة من خلال زيارة صفحة إعدادات الإعلانات من Google.
+        </p>
+        <div class="highlight-box">
+          <strong><i class="fas fa-user-shield"></i> إلغاء الاشتراك في الإعلانات المخصصة</strong>
+          يمكنك زيارة صفحة <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener" style="color:var(--gold);">إعدادات الإعلانات من Google</a> أو <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener" style="color:var(--gold);">www.aboutads.info</a> لإلغاء استخدام DoubleClick في الإعلانات المخصصة.
+        </div>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 7. DART COOKIE -->
+      <div class="privacy-section" id="section-dart" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-bullseye"></i></div>
+          <div>
+            <div class="section-title">
+              <span>07 · DART Cookie</span>
+              ملف DART Cookie من Google
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          يستخدم Google، بوصفه بائعاً خارجياً، ملفات تعريف ارتباط DART لعرض الإعلانات للزائرين بناءً على زيارتهم لموقع <strong>Almaya Couture</strong> والمواقع الأخرى على الإنترنت. ويمنح هذا الملف Google القدرة على تقديم إعلانات مخصصة استناداً إلى تاريخ تصفحك.
+        </p>
+        <p>
+          يُخضَع استخدام ملف DART Cookie من قبل Google لسياسة الخصوصية والشروط الخاصة بالإعلانات في Google المتاحة على الرابط التالي:
+          <a href="https://www.google.com/policies/technologies/ads/" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:none;">policies.google.com/technologies/ads</a>
+        </p>
+        <div class="highlight-box">
+          <strong><i class="fas fa-times-circle"></i> رفض ملف DART Cookie</strong>
+          يمكنك رفض استخدام ملف DART Cookie من خلال زيارة سياسة الخصوصية الخاصة بشبكة إعلانات Google والمحتوى على العنوان:
+          <a href="http://www.google.com/privacy_ads.html" target="_blank" rel="noopener" style="color:var(--gold);">google.com/privacy_ads.html</a>
+        </div>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 8. HOW WE USE DATA -->
+      <div class="privacy-section" id="section-use" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-cogs"></i></div>
+          <div>
+            <div class="section-title">
+              <span>08 · Data Usage</span>
+              كيف نستخدم بياناتك
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
+        <ul class="privacy-list">
+          <li>تقديم خدماتنا وتلبية طلبات التصميم والمنتجات.</li>
+          <li>التواصل معك بشأن طلباتك وتحديثاتها عبر واتساب أو البريد الإلكتروني.</li>
+          <li>تخصيص تجربتك وعرض المحتوى الأكثر ملاءمة لاهتمامك.</li>
+          <li>تحسين موقعنا وخدماتنا بناءً على ملاحظاتك وتقييماتك.</li>
+          <li>عرض إعلانات ذات صلة من خلال Google AdSense.</li>
+          <li>تحليل بيانات الاستخدام لفهم سلوك الزوار وتحسين الأداء العام للموقع.</li>
+          <li>الامتثال للمتطلبات القانونية والتنظيمية المعمول بها.</li>
+        </ul>
+        <div class="highlight-box">
+          <strong><i class="fas fa-ban"></i> ما لا نفعله أبداً</strong>
+          لا نبيع بياناتك الشخصية لأطراف ثالثة، ولا نشاركها مع أطراف تسويقية خارجية دون موافقتك الصريحة.
+        </div>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 9. DATA PROTECTION -->
+      <div class="privacy-section" id="section-protection" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <div class="section-title">
+              <span>09 · Data Protection</span>
+              حماية البيانات
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          نتخذ تدابير أمنية مناسبة من الناحيتين الإلكترونية والمادية لحماية المعلومات التي نجمعها في مواجهة الوصول غير المرخص والإفصاح والتعديل والإتلاف.
+        </p>
+        <ul class="privacy-list">
+          <li>تشفير البيانات المرسلة بين متصفحك وخوادمنا باستخدام بروتوكول HTTPS/SSL.</li>
+          <li>تخزين البيانات على خوادم آمنة مدارة من Supabase مع أعلى معايير الحماية.</li>
+          <li>تقييد الوصول إلى البيانات الشخصية على الموظفين المفوّضين فقط.</li>
+          <li>مراجعة دورية لممارسات جمع البيانات وتخزينها ومعالجتها.</li>
+        </ul>
+        <p>
+          مع ذلك، تجدر الإشارة إلى أنه لا توجد طريقة نقل عبر الإنترنت أو طريقة تخزين إلكتروني آمنة بنسبة 100%، ولا نستطيع ضمان الأمن المطلق.
+        </p>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 10. CHILDREN -->
+      <div class="privacy-section" id="section-children" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-child"></i></div>
+          <div>
+            <div class="section-title">
+              <span>10 · Children's Privacy</span>
+              خصوصية الأطفال
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          لا يستهدف موقع <strong>Almaya Couture</strong> الأطفال دون سن 13 عاماً، ولا نجمع معلومات شخصية عن علم منا من أطفال دون هذا السن. إذا كنتِ تعتقدين أن طفلك قدّم لنا معلومات شخصية، نرجو التواصل معنا فوراً لنتمكن من حذف هذه المعلومات من سجلاتنا.
+        </p>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 11. YOUR RIGHTS -->
+      <div class="privacy-section" id="section-rights" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-gavel"></i></div>
+          <div>
+            <div class="section-title">
+              <span>11 · Your Rights</span>
+              حقوقك
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>تتمتعين بالحقوق التالية فيما يتعلق ببياناتك الشخصية:</p>
+        <ul class="privacy-list">
+          <li><strong>حق الوصول:</strong> طلب نسخة من البيانات الشخصية التي نحتفظ بها عنك.</li>
+          <li><strong>حق التصحيح:</strong> طلب تصحيح أي بيانات غير دقيقة أو غير مكتملة.</li>
+          <li><strong>حق الحذف:</strong> طلب حذف بياناتك الشخصية من أنظمتنا، رهناً ببعض القيود القانونية.</li>
+          <li><strong>حق الاعتراض:</strong> الاعتراض على معالجة بياناتك لأغراض التسويق المباشر.</li>
+          <li><strong>حق إلغاء الاشتراك في الإعلانات:</strong> إلغاء الإعلانات المخصصة عبر إعدادات Google.</li>
+          <li><strong>حق تقديم شكوى:</strong> تقديم شكوى لجهة حماية البيانات المختصة في منطقتك.</li>
+        </ul>
+      </div>
+
+      <div class="royal-separator"><div class="royal-separator-line"></div><div class="royal-separator-diamond"></div><div class="royal-separator-line"></div></div>
+
+      <!-- 12. CONTACT -->
+      <div class="privacy-section" id="section-contact" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="section-title">
+              <span>12 · Contact Us</span>
+              تواصل معنا
+            </div>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <p>
+          إن كان لديك أي استفسار حول سياسة الخصوصية هذه، أو ترغبين في ممارسة أي من حقوقك المذكورة أعلاه، يُرجى التواصل معنا عبر إحدى القنوات التالية:
+        </p>
+        <div class="contact-card">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="far fa-envelope"></i></div>
+            <div>
+              <div class="contact-item-label">البريد الإلكتروني</div>
+              <div class="contact-item-value">
+                <a href="mailto:almayacouture@gmail.com">almayacouture@gmail.com</a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <div class="contact-item-label">واتساب</div>
+              <div class="contact-item-value">
+                <a href="https://wa.me/212601245733" target="_blank">+212 601-245733</a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="contact-item-label">العنوان</div>
+              <div class="contact-item-value">
+                <span class="placeholder">[أدخل العنوان الكامل]</span>، المغرب
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <div class="contact-item-label">مدة الرد</div>
+              <div class="contact-item-value">خلال 48 ساعة عمل</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top: 1.5rem;">
+          <strong><i class="fas fa-edit"></i> تحديثات السياسة</strong>
+          نحتفظ بحق تعديل سياسة الخصوصية هذه في أي وقت. سيتم نشر أي تغييرات على هذه الصفحة مع تحديث تاريخ "آخر تعديل" في أعلى الصفحة. ننصح بمراجعة هذه الصفحة بشكل دوري للاطلاع على أحدث المعلومات حول ممارساتنا المتعلقة بالخصوصية.
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Auto-Loaded -->
+  <div id="footer-container"></div>
+
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+
+  <script>
+    AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-quad' });
+
+    // Theme Toggle
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.setAttribute('aria-label', 'تغيير السمة');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
+          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
+          updateIcon();
+        });
+        document.body.appendChild(btn);
+        updateIcon();
+      }
+      function updateIcon() {
+        const btn = document.querySelector('.theme-toggle-btn');
+        if (!btn) return;
+        btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      }
+      function applySaved() {
+        const s = localStorage.getItem('almaya-theme');
+        if (s === 'white') document.body.classList.add('white-theme');
+        else if (s === 'dark') document.body.classList.remove('white-theme');
+      }
+      applySaved(); createToggleButton();
+    })();
+
+    // Smooth scroll for TOC links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -129,6 +129,8 @@
               '<li><a href="design.html">صممي قطعتك</a></li>' +
               // ✅ STORY LINK
               '<li><a href="story.html">حكايتنا</a></li>' +
+              '<li><a href="privacy-policy.html">سياسة الخصوصية</a></li>' +
+              '<li><a href="contact.html">اتصل بنا</a></li>' +
             '</ul>' +
           '</div>' +
           // Contact
