@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>سياسة التوصيل | Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Amiri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="config.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg:#1A1510;--bg2:#2A2218;--text:#E8DDD0;--text2:#B8A890;--text3:#A89880;--text4:#8B7B68;--gold:#C4A06A;--gold-light:#D4B896;--gold-dim:rgba(196,160,106,0.12);--border:rgba(196,160,106,0.12);--border2:rgba(196,160,106,0.2);--card:rgba(42,34,24,0.75); }
+    body.white-theme { --bg:#FDFCF8;--bg2:#F5F0E8;--text:#2A2218;--text2:#5A4E3C;--text3:#6B5F52;--text4:#8B7B68;--gold:#A07840;--gold-light:#C4A06A;--gold-dim:rgba(160,120,64,0.1);--border:rgba(160,120,64,0.12);--border2:rgba(160,120,64,0.2);--card:rgba(245,240,232,0.85); }
+    body { background:var(--bg);font-family:'Tajawal',sans-serif;color:var(--text);scroll-behavior:smooth;overflow-x:hidden;transition:background-color 0.5s ease,color 0.5s ease; }
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px}
+    body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3C/svg%3E");background-repeat:repeat;background-size:45px;pointer-events:none;z-index:0; }
+
+    .page-hero { position:relative;z-index:1;text-align:center;padding:clamp(3.5rem,9vw,6rem) clamp(1rem,4vw,2rem) clamp(2.5rem,6vw,4rem);border-bottom:1px solid var(--border2);background:var(--bg2);overflow:hidden; }
+    .page-hero::after { content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+    .hero-eyebrow { display:inline-flex;align-items:center;gap:8px;font-size:clamp(0.6rem,1.5vw,0.7rem);letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;position:relative;z-index:1; }
+    .hero-eyebrow::before,.hero-eyebrow::after { content:'✦';font-size:0.5rem;opacity:0.6; }
+    .page-hero h1 { font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,6vw,4rem);font-weight:600;background:linear-gradient(135deg,var(--gold) 20%,var(--gold-light) 80%);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1rem;position:relative;z-index:1; }
+    .page-hero p { font-family:'Amiri',serif;font-size:clamp(0.88rem,2vw,1.05rem);color:var(--text3);max-width:500px;margin:0 auto;line-height:1.9;position:relative;z-index:1; }
+
+    .page-container { position:relative;z-index:1;max-width:900px;margin:0 auto;padding:clamp(2.5rem,6vw,4.5rem) clamp(1rem,4vw,2rem); }
+
+    /* DELIVERY STEPS */
+    .steps-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:2rem 0; }
+    .step-card { background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--border2);border-radius:20px;padding:1.5rem;text-align:center;transition:all 0.3s; }
+    .step-card:hover { transform:translateY(-5px);border-color:rgba(196,160,106,0.4); }
+    .step-num { width:48px;height:48px;background:var(--gold-dim);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--gold);margin:0 auto 1rem; }
+    .step-title { font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.4rem; }
+    .step-desc { font-size:0.75rem;color:var(--text3);line-height:1.6; }
+
+    /* ZONES TABLE */
+    .zones-table { width:100%;border-collapse:collapse;margin:1.5rem 0;background:var(--card);backdrop-filter:blur(10px);border-radius:20px;overflow:hidden;border:1px solid var(--border2); }
+    .zones-table th { background:rgba(196,160,106,0.1);color:var(--gold);padding:0.9rem 1rem;font-size:0.75rem;text-align:right;font-weight:700;border-bottom:2px solid var(--border2); }
+    .zones-table td { padding:0.8rem 1rem;border-bottom:1px solid var(--border);font-size:0.82rem;color:var(--text2); }
+    .zones-table tr:last-child td { border-bottom:none; }
+    .zones-table tr:hover td { background:rgba(196,160,106,0.04); }
+    .badge-free { background:rgba(37,211,102,0.15);color:#25D366;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700; }
+    .badge-paid { background:rgba(196,160,106,0.15);color:var(--gold);padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700; }
+
+    /* SHARED */
+    .legal-section { margin-bottom:clamp(2rem,5vw,3.5rem);scroll-margin-top:100px; }
+    .section-header { display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem; }
+    .section-icon { width:44px;height:44px;min-width:44px;background:var(--gold-dim);border:1px solid var(--border2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gold);margin-top:2px; }
+    .section-title { font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:600;color:var(--text);line-height:1.3; }
+    .section-title span { display:block;font-family:'Tajawal',sans-serif;font-size:clamp(0.6rem,1.4vw,0.7rem);color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;font-weight:500;margin-bottom:0.2rem; }
+    .section-divider { height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:1.4rem;opacity:0.3; }
+    .legal-section p { font-size:clamp(0.82rem,1.8vw,0.93rem);color:var(--text2);margin-bottom:1rem;line-height:1.9; }
+    .highlight-box { background:var(--gold-dim);border:1px solid var(--border2);border-right:4px solid var(--gold);border-radius:12px;padding:clamp(0.9rem,2vw,1.2rem) clamp(1rem,2.5vw,1.5rem);margin:1.2rem 0;font-size:clamp(0.8rem,1.8vw,0.9rem);color:var(--text2);line-height:1.8; }
+    .highlight-box strong { color:var(--gold-light);display:block;margin-bottom:0.3rem;font-size:0.8rem; }
+    .legal-list { list-style:none;margin:0.8rem 0 1rem; }
+    .legal-list li { display:flex;align-items:flex-start;gap:10px;font-size:clamp(0.8rem,1.8vw,0.9rem);color:var(--text2);padding:0.45rem 0;border-bottom:1px solid var(--border);line-height:1.7; }
+    .legal-list li:last-child { border-bottom:none; }
+    .legal-list li::before { content:'◆';font-size:0.4rem;color:var(--gold);margin-top:0.55rem;flex-shrink:0; }
+    .royal-sep { display:flex;align-items:center;gap:1rem;margin:clamp(2rem,4vw,3rem) 0; }
+    .royal-sep-line { flex:1;height:1px;background:var(--border2); }
+    .royal-sep-diamond { width:8px;height:8px;background:var(--gold);transform:rotate(45deg);opacity:0.6;flex-shrink:0; }
+    .whatsapp-float { position:fixed;bottom:30px;left:30px;z-index:100;background:#25D366;color:white;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-size:1.5rem;text-decoration:none; }
+    .whatsapp-float:hover { transform:scale(1.08); }
+    .theme-toggle-btn { position:fixed;bottom:100px;right:30px;width:48px;height:48px;border-radius:50%;background:var(--bg2);border:2px solid var(--border2);color:var(--gold);font-size:1.2rem;cursor:pointer;z-index:99;display:flex;align-items:center;justify-content:center;transition:all 0.4s;box-shadow:0 4px 15px rgba(0,0,0,0.2);animation:themePulse 2s ease-in-out infinite; }
+    .theme-toggle-btn:hover { transform:scale(1.1) rotate(15deg);border-color:var(--gold); }
+    body.white-theme .theme-toggle-btn { background:#FFF;box-shadow:0 4px 15px rgba(0,0,0,0.08);border-color:rgba(160,120,64,0.3); }
+    @keyframes themePulse { 0%,100%{box-shadow:0 4px 15px rgba(196,160,106,0.15)}50%{box-shadow:0 4px 25px rgba(196,160,106,0.3)} }
+    @media(max-width:768px){.whatsapp-float{width:45px;height:45px;font-size:1.3rem;bottom:20px;left:20px}.theme-toggle-btn{bottom:80px;right:20px;width:42px;height:42px}.zones-table th,.zones-table td{padding:0.6rem 0.75rem;font-size:0.75rem}}
+  </style>
+</head>
+<body>
+  <div id="header-container"></div>
+  <a href="https://wa.me/212601245733" target="_blank" class="whatsapp-float" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
+
+  <main>
+    <div class="page-hero" data-aos="fade-down">
+      <div class="hero-eyebrow">POLITIQUE DE LIVRAISON</div>
+      <h1>سياسة التوصيل</h1>
+      <p>كل ما تحتاجين معرفته حول توصيل قطعتك من يدي الميمة إلى دارك</p>
+    </div>
+
+    <div class="page-container">
+
+      <!-- خطوات الطلب -->
+      <div data-aos="fade-up" style="margin-bottom:3rem;">
+        <div style="text-align:center;margin-bottom:1.5rem;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,3vw,1.8rem);font-weight:600;color:var(--gold);">مراحل وصول قطعتك</div>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="step-num">01</div>
+            <div class="step-title">تأكيد الطلب</div>
+            <div class="step-desc">التواصل مع الميمة وتأكيد التفاصيل والدفع المقدّم</div>
+          </div>
+          <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="step-num">02</div>
+            <div class="step-title">مرحلة الإنجاز</div>
+            <div class="step-desc">الميمة تشغل على قطعتك بكل حب ودقة — 7 إلى 21 يوم</div>
+          </div>
+          <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="step-num">03</div>
+            <div class="step-title">الإرسال</div>
+            <div class="step-desc">يتم التغليف الفاخر وإرسال رقم التتبع عبر واتساب</div>
+          </div>
+          <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="step-num">04</div>
+            <div class="step-title">الاستلام</div>
+            <div class="step-desc">قطعتك تصل إلى دارك — استمتعي بها!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1 -->
+      <div class="legal-section" id="liv-1" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="section-title"><span>01 · Zones de Livraison</span>مناطق التوصيل والتكاليف</div>
+        </div>
+        <div class="section-divider"></div>
+        <p>نوصّل قطعتك لجميع أنحاء المغرب عبر شركاء موثوقين. تكاليف التوصيل حسب المنطقة:</p>
+        <table class="zones-table">
+          <thead>
+            <tr>
+              <th>المنطقة</th>
+              <th>المدة التقديرية</th>
+              <th>التكلفة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>المدن الكبرى (الدار البيضاء، الرباط، مراكش، فاس...)</td>
+              <td>2 – 3 أيام عمل</td>
+              <td><span class="badge-paid">30 – 40 درهم</span></td>
+            </tr>
+            <tr>
+              <td>المدن المتوسطة</td>
+              <td>3 – 5 أيام عمل</td>
+              <td><span class="badge-paid">40 – 55 درهم</span></td>
+            </tr>
+            <tr>
+              <td>المناطق النائية</td>
+              <td>5 – 7 أيام عمل</td>
+              <td><span class="badge-paid">55 – 70 درهم</span></td>
+            </tr>
+            <tr>
+              <td>الاستلام من الأتيلييه مباشرة</td>
+              <td>حسب الاتفاق</td>
+              <td><span class="badge-free">مجانًا</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="highlight-box"><strong><i class="fas fa-gift"></i> توصيل مجاني</strong>عند الطلبات التي تتجاوز <strong>1500 درهم</strong>، يصبح التوصيل مجانياً داخل المدن الكبرى. التفاصيل تُحدد عند تأكيد الطلب.</div>
+      </div>
+
+      <div class="royal-sep"><div class="royal-sep-line"></div><div class="royal-sep-diamond"></div><div class="royal-sep-line"></div></div>
+
+      <!-- 2 -->
+      <div class="legal-section" id="liv-2" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-clock"></i></div>
+          <div class="section-title"><span>02 · Délais</span>مدد الإنجاز والتوصيل</div>
+        </div>
+        <div class="section-divider"></div>
+        <p>مدة التوصيل تبدأ من تاريخ تسليم القطعة لشركة التوصيل، وليس من تاريخ تأكيد الطلب. يجب إضافة مدة إنجاز القطعة التالية:</p>
+        <ul class="legal-list">
+          <li><strong>الجلابة والجبادور:</strong> 7 إلى 14 يوم عمل.</li>
+          <li><strong>القفطان والعباية:</strong> 10 إلى 18 يوم عمل.</li>
+          <li><strong>التكشيطة:</strong> 14 إلى 21 يوم عمل (لكثافة التطريز والتفاصيل).</li>
+          <li><strong>الطلبات الاستعجالية:</strong> ممكنة بحسب التوفر، وتخضع لرسوم إضافية.</li>
+        </ul>
+        <div class="highlight-box"><strong><i class="fas fa-exclamation-triangle"></i> تنبيه مهم</strong>مدد الإنجاز تقديرية وليست مضمونة. قد تتأخر في المناسبات الكبرى (عيد الفطر، عيد الأضحى، رأس السنة). يُنصح بتقديم الطلب مسبقاً.</div>
+      </div>
+
+      <div class="royal-sep"><div class="royal-sep-line"></div><div class="royal-sep-diamond"></div><div class="royal-sep-line"></div></div>
+
+      <!-- 3 -->
+      <div class="legal-section" id="liv-3" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-box-open"></i></div>
+          <div class="section-title"><span>03 · Emballage</span>التغليف</div>
+        </div>
+        <div class="section-divider"></div>
+        <p>كل قطعة تُغلَّف بعناية فائقة لتصل إليك في أحسن حالة:</p>
+        <ul class="legal-list">
+          <li>تغليف فاخر بورق حريري ناعم يحمي القماش من الانكماش.</li>
+          <li>كيس حماية مضاد للرطوبة للحفاظ على جودة القطعة.</li>
+          <li>علبة مقواة خارجية لحماية من الضغط أثناء النقل.</li>
+          <li>بطاقة شخصية من الميمة مع كل طلب ✨</li>
+        </ul>
+      </div>
+
+      <div class="royal-sep"><div class="royal-sep-line"></div><div class="royal-sep-diamond"></div><div class="royal-sep-line"></div></div>
+
+      <!-- 4 -->
+      <div class="legal-section" id="liv-4" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-search-location"></i></div>
+          <div class="section-title"><span>04 · Suivi</span>تتبع الطرد</div>
+        </div>
+        <div class="section-divider"></div>
+        <p>بمجرد إرسال طردك، ستصلك رسالة على واتساب تحتوي على:</p>
+        <ul class="legal-list">
+          <li>رقم التتبع الخاص بطردك.</li>
+          <li>رابط مباشر لتتبع حالة التوصيل.</li>
+          <li>الموعد المقدر للتسليم.</li>
+        </ul>
+        <div class="highlight-box"><strong><i class="fas fa-phone-alt"></i> عند التأخر</strong>إن تجاوز توصيلك المدة المقدرة، لا تترددي في التواصل معنا عبر واتساب على <a href="https://wa.me/212601245733" style="color:var(--gold);">0601245733</a> وسنتدخل فوراً لمتابعة ملفك مع شركة التوصيل.</div>
+      </div>
+
+      <div class="royal-sep"><div class="royal-sep-line"></div><div class="royal-sep-diamond"></div><div class="royal-sep-line"></div></div>
+
+      <!-- 5 -->
+      <div class="legal-section" id="liv-5" data-aos="fade-up">
+        <div class="section-header">
+          <div class="section-icon"><i class="fas fa-hand-paper"></i></div>
+          <div class="section-title"><span>05 · Réception</span>عند الاستلام</div>
+        </div>
+        <div class="section-divider"></div>
+        <p>عند استلام طردك، يُرجى التحقق من الحالة قبل التوقيع للمندوب:</p>
+        <ul class="legal-list">
+          <li>تحققي من سلامة العلبة الخارجية — أي تلف ظاهر يجب تسجيله فوراً.</li>
+          <li>في حال وجود تلف، التقطي صوراً وأرسليها لنا على واتساب خلال 24 ساعة.</li>
+          <li>التوقيع دون تحفظ يُعتبر قبولاً نهائياً لحالة الطرد.</li>
+          <li>Almaya Couture تتحمل المسؤولية عن التلف الحاصل أثناء النقل إذا تم الإبلاغ في الوقت المناسب.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+  <script>
+    AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-quad' });
+    (function() {
+      function createToggleButton() {
+        if (document.querySelector('.theme-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle-btn';
+        btn.setAttribute('aria-label', 'تغيير السمة');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.addEventListener('click', function() {
+          const isWhite = document.body.classList.contains('white-theme');
+          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
+          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
+          updateIcon();
+        });
+        document.body.appendChild(btn);
+        updateIcon();
+      }
+      function updateIcon() { const btn = document.querySelector('.theme-toggle-btn'); if (!btn) return; btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
+      function applySaved() { const s = localStorage.getItem('almaya-theme'); if (s === 'white') document.body.classList.add('white-theme'); }
+      applySaved(); createToggleButton();
+    })();
+  </script>
+</body>
+</html>
