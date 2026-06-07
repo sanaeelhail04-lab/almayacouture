@@ -52,7 +52,7 @@
       '.almaya-footer__diamond{display:inline-block;width:8px;height:8px;background:var(--gold);transform:rotate(45deg);margin:0 1rem;flex-shrink:0;position:relative;top:-1px;opacity:0.7}' +
       
       // Inner grid
-      '.almaya-footer__inner{max-width:1200px;margin:0 auto;padding:3rem 2rem 2rem;display:grid;grid-template-columns:2fr 1fr 1.4fr;gap:3rem;align-items:start}' +
+      '.almaya-footer__inner{max-width:1200px;margin:0 auto;padding:3rem 2rem 2rem;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:2rem;align-items:start}' +
       
       // Logo avec police élégante
       '.almaya-footer__logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;margin-bottom:1rem}' +
@@ -95,21 +95,21 @@
       '@keyframes themePulse{0%,100%{box-shadow:0 4px 15px rgba(196,160,106,0.2)}50%{box-shadow:0 4px 25px rgba(196,160,106,0.4)}}' +
       
       // ========== RESPONSIVE ==========
-      '@media(max-width:900px){.almaya-footer__inner{grid-template-columns:1fr 1fr;gap:2rem}.almaya-footer__brand{grid-column:1/-1}.almaya-footer__about{max-width:100%}}' +
+      '@media(max-width:1000px){.almaya-footer__inner{grid-template-columns:1fr 1fr;gap:2rem}.almaya-footer__brand{grid-column:1/-1}.almaya-footer__about{max-width:100%}}' +
       '@media(max-width:600px){.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}.almaya-footer__brand{grid-column:auto}.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}.theme-toggle-btn{bottom:20px;right:20px;width:42px;height:42px;font-size:1rem}}' +
       '@media(max-width:400px){.almaya-footer__inner{padding:1.5rem 1rem 1.25rem;gap:1.5rem}.almaya-footer__logo img{height:42px}.almaya-footer__social{width:30px;height:30px;font-size:0.8rem}}';
     
     document.head.appendChild(style);
     console.log('🎨 Footer CSS + Theme Toggle injecté');
 
-    // Injecter HTML Footer avec lien Story
+    // Injecter HTML Footer avec 4 colonnes (retour, livraison, cgv inclus)
     var footerHTML = 
       '<footer class="almaya-footer" id="almayaFooter">' +
         '<div class="almaya-footer__divider">' +
           '<span class="almaya-footer__diamond"></span>' +
         '</div>' +
         '<div class="almaya-footer__inner">' +
-          // Brand
+          // COLONNE 1: Brand (Plus large)
           '<div class="almaya-footer__brand">' +
             '<a href="index.html" class="almaya-footer__logo">' +
               '<img src="images/logo.jpg" alt="Almaya Couture" onerror="this.src=\'https://placehold.co/60x60/C4A06A/1A1510?text=AC\'">' +
@@ -120,20 +120,31 @@
             '</a>' +
             '<p class="almaya-footer__about">تصاميم مغربية أصيلة بلمسة عصرية — جلابة، قفطان، تكشيطة وأكثر، كل قطعة تحكي قصة.</p>' +
           '</div>' +
-          // Pages - AVEC STORY
+          
+          // COLONNE 2: Navigation (Pages principales)
           '<div class="almaya-footer__col">' +
-            '<h4 class="almaya-footer__col-title">الصفحات</h4>' +
+            '<h4 class="almaya-footer__col-title">التصفح</h4>' +
             '<ul class="almaya-footer__list">' +
               '<li><a href="index.html">الرئيسية</a></li>' +
               '<li><a href="collections.html">المنتجات</a></li>' +
               '<li><a href="design.html">صممي قطعتك</a></li>' +
-              // ✅ STORY LINK
               '<li><a href="story.html">حكايتنا</a></li>' +
-              '<li><a href="privacy-policy.html">سياسة الخصوصية</a></li>' +
               '<li><a href="contact.html">اتصل بنا</a></li>' +
             '</ul>' +
           '</div>' +
-          // Contact
+          
+          // COLONNE 3: Informations légales (retour + livraison + cgv)
+          '<div class="almaya-footer__col">' +
+            '<h4 class="almaya-footer__col-title">معلومات قانونية</h4>' +
+            '<ul class="almaya-footer__list">' +
+              '<li><a href="retour.html">سياسة الإرجاع والاستبدال</a></li>' +
+              '<li><a href="livraison.html">سياسة التوصيل والشحن</a></li>' +
+              '<li><a href="cgv.html">الشروط العامة للبيع</a></li>' +
+              '<li><a href="privacy-policy.html">سياسة الخصوصية</a></li>' +
+            '</ul>' +
+          '</div>' +
+          
+          // COLONNE 4: Contact & Social
           '<div class="almaya-footer__col">' +
             '<h4 class="almaya-footer__col-title">تواصلي معنا</h4>' +
             '<ul class="almaya-footer__contact">' +
@@ -173,7 +184,7 @@
 
     // Insérer le footer
     document.body.insertAdjacentHTML('beforeend', footerHTML);
-    console.log('📝 Footer HTML injecté avec lien Story');
+    console.log('📝 Footer HTML injecté avec les pages: retour, livraison, cgv');
 
     // ========== THEME TOGGLE SYSTEM ==========
     function createToggleButton() {
