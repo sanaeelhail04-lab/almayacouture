@@ -4,6 +4,89 @@
   
   console.log('🚀 Header auto-loader start');
 
+  // التحقق من حالة تسجيل الدخول
+  function isAdminLoggedIn() {
+    return sessionStorage.getItem('admin_logged_in') === 'true';
+  }
+
+  function getAdminName() {
+    return sessionStorage.getItem('admin_name') || 'مسؤول';
+  }
+
+  function logout() {
+    sessionStorage.clear();
+    showToast('تم تسجيل الخروج بنجاح', 'success');
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1000);
+  }
+
+  function showToast(message, type) {
+    // إزالة أي توست موجود
+    const existingToast = document.querySelector('.almaya-toast');
+    if (existingToast) existingToast.remove();
+
+    const toast = document.createElement('div');
+    toast.className = `almaya-toast almaya-toast-${type}`;
+    toast.innerHTML = `
+      <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+      <span>${message}</span>
+    `;
+    
+    // أنماط التوست
+    const style = document.createElement('style');
+    style.textContent = `
+      .almaya-toast {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 0.8rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        z-index: 10000;
+        animation: slideInLeft 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        font-family: 'Tajawal', sans-serif;
+        font-size: 0.85rem;
+        color: var(--text);
+      }
+      .almaya-toast-success {
+        border-right: 3px solid var(--success);
+      }
+      .almaya-toast-success i {
+        color: var(--success);
+      }
+      .almaya-toast-error {
+        border-right: 3px solid var(--danger);
+      }
+      .almaya-toast-error i {
+        color: var(--danger);
+      }
+      @keyframes slideInLeft {
+        from { transform: translateX(-100px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOutLeft {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(-100px); opacity: 0; }
+      }
+    `;
+    if (!document.querySelector('.almaya-toast-style')) {
+      style.classList.add('almaya-toast-style');
+      document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.animation = 'slideOutLeft 0.3s ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
   // Attendre que le DOM soit prêt
   function whenReady(callback) {
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
@@ -64,6 +147,16 @@
       'body.white-theme .almaya-nav__login-btn{color:#FFFFFF !important}' +
       'body.white-theme .almaya-nav__login-btn:hover{background:#C4A06A !important;box-shadow:0 4px 12px rgba(160,120,64,0.3)}' +
       
+      // Style pour le bouton logout (dashboard)
+      '.almaya-nav__logout-btn{padding:0.5rem 1.2rem !important;background:rgba(255,71,87,0.15);border:1px solid rgba(255,71,87,0.3);color:var(--danger) !important;border-radius:4px;font-weight:700 !important;letter-spacing:1px !important;transition:all 0.3s !important;font-family:"Tajawal",sans-serif !important}' +
+      '.almaya-nav__logout-btn:hover{background:rgba(255,71,87,0.25) !important;transform:translateY(-1px)}' +
+      '.almaya-nav__logout-btn::after{display:none !important}' +
+      
+      // User info dans le header
+      '.almaya-nav__user-info{display:flex;align-items:center;gap:0.5rem;color:var(--gold);font-size:0.75rem;font-weight:500}' +
+      '.almaya-nav__user-info i{font-size:0.9rem}' +
+      '.almaya-nav__user-info span{color:var(--text-secondary)}' +
+      
       // Burger
       '.almaya-nav__burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:36px;height:36px;background:rgba(255,255,255,0.04);border:1px solid rgba(196,160,106,0.2);border-radius:8px;cursor:pointer;padding:6px 8px;flex-shrink:0;transition:background 0.3s,border-color 0.3s;z-index:1000}' +
       '.almaya-nav__burger:hover{background:var(--gold-dim);border-color:rgba(196,160,106,0.4)}' +
@@ -96,6 +189,10 @@
       'body.white-theme .almaya-nav__mobile .mobile-login-btn{color:#FFFFFF !important}' +
       'body.white-theme .almaya-nav__mobile .mobile-login-btn:hover{background:#C4A06A !important}' +
       
+      // Bouton logout dans le menu mobile
+      '.almaya-nav__mobile .mobile-logout-btn{background:rgba(255,71,87,0.15) !important;border:1px solid rgba(255,71,87,0.3) !important;color:var(--danger) !important;text-align:center !important;margin-top:0.5rem !important;border-radius:4px !important;font-weight:700 !important;padding:0.7rem 0 !important;border-bottom:none !important;font-family:"Tajawal",sans-serif !important}' +
+      '.almaya-nav__mobile .mobile-logout-btn:hover{background:rgba(255,71,87,0.25) !important;color:var(--danger) !important;padding-right:0 !important}' +
+      
       // ========== RESPONSIVE ==========
       '@media(min-width:769px){.almaya-nav__links{display:flex}.almaya-nav__burger{display:none}.almaya-nav__mobile{display:none}}' +
       '@media(max-width:768px){.almaya-nav__inner{padding:0.75rem 1rem}.almaya-nav__links{display:none}.almaya-nav__burger{display:flex}.almaya-nav__brand{font-size:1rem}.almaya-nav__logo-img{height:40px}}' +
@@ -104,49 +201,87 @@
     document.head.appendChild(style);
     console.log('🎨 Header CSS injecté (Dark + White theme)');
 
-    // Injecter HTML avec tous les liens
+    // التحقق من حالة تسجيل الدخول لإنشاء الروابط المناسبة
+    const loggedIn = isAdminLoggedIn();
+    const adminName = getAdminName();
+
+    // Injecter HTML avec tous les liens (avec ou sans logout selon l'état)
+    var desktopLinks = '';
+    var mobileLinks = '';
+
+    if (loggedIn) {
+      // إذا كان المسؤول مسجل الدخول → عرض dashboard و logout
+      desktopLinks = `
+        <li><a href="dashbord.html" data-page="dashbord">لوحة التحكم</a></li>
+        <li><div class="almaya-nav__user-info"><i class="fas fa-user-shield"></i> <span>${adminName}</span></div></li>
+        <li><a href="#" data-page="logout" class="almaya-nav__logout-btn" id="logoutBtnDesktop"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+      `;
+      mobileLinks = `
+        <li><a href="dashbord.html" data-page="dashbord">لوحة التحكم</a></li>
+        <li><a href="#" data-page="logout" class="mobile-logout-btn" id="logoutBtnMobile"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
+      `;
+    } else {
+      // إذا لم يكن مسجل الدخول → عرض login فقط
+      desktopLinks = `
+        <li><a href="login.html" data-page="login" class="almaya-nav__login-btn">تسجيل الدخول</a></li>
+      `;
+      mobileLinks = `
+        <li><a href="login.html" data-page="login" class="mobile-login-btn">تسجيل الدخول</a></li>
+      `;
+    }
+
     var headerHTML = 
       '<nav class="almaya-nav" id="almayaNav">' +
         '<div class="almaya-nav__inner">' +
-          // Logo
           '<a href="index.html" class="almaya-nav__logo">' +
             '<img src="images/logo.jpg" alt="Almaya Couture" class="almaya-nav__logo-img" onerror="this.src=\'https://placehold.co/60x60/C4A06A/1A1510?text=AC\'">' +
             '<div>' +
               '<span class="almaya-nav__brand">Almaya Couture</span>' +
             '</div>' +
           '</a>' +
-          // Liens Desktop
           '<ul class="almaya-nav__links" id="almayaNavLinks">' +
             '<li><a href="index.html" data-page="index">الرئيسية</a></li>' +
             '<li><a href="collections.html" data-page="collections">المنتجات</a></li>' +
             '<li><a href="design.html" data-page="design">صممي قطعتك</a></li>' +
-            // ✅ STORY LINK
             '<li><a href="story.html" data-page="story">حكايتنا</a></li>' +
-            // 🔑 BOUTON LOGIN
-            '<li><a href="login.html" data-page="login" class="almaya-nav__login-btn">تسجيل الدخول</a></li>' +
+            desktopLinks +
           '</ul>' +
-          // Burger
           '<button class="almaya-nav__burger" id="almayaBurger" aria-label="القائمة" aria-expanded="false">' +
             '<span></span><span></span><span></span>' +
           '</button>' +
         '</div>' +
-        // Menu Mobile
         '<div class="almaya-nav__mobile" id="almayaMobile">' +
           '<ul>' +
             '<li><a href="index.html" data-page="index">الرئيسية</a></li>' +
             '<li><a href="collections.html" data-page="collections">المنتجات</a></li>' +
             '<li><a href="design.html" data-page="design">صممي قطعتك</a></li>' +
-            // ✅ STORY LINK MOBILE
             '<li><a href="story.html" data-page="story">حكايتنا</a></li>' +
-            // 🔑 BOUTON LOGIN MOBILE
-            '<li><a href="login.html" data-page="login" class="mobile-login-btn">تسجيل الدخول</a></li>' +
+            mobileLinks +
           '</ul>' +
         '</div>' +
       '</nav>';
 
-    // Insérer au début du body
     document.body.insertAdjacentHTML('afterbegin', headerHTML);
-    console.log('📝 Header HTML injecté avec tous les liens (incl. Story)');
+    console.log('📝 Header HTML injecté avec tous les liens');
+
+    // إضافة أحداث تسجيل الخروج
+    if (loggedIn) {
+      const logoutBtnDesktop = document.getElementById('logoutBtnDesktop');
+      const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+      
+      if (logoutBtnDesktop) {
+        logoutBtnDesktop.addEventListener('click', (e) => {
+          e.preventDefault();
+          logout();
+        });
+      }
+      if (logoutBtnMobile) {
+        logoutBtnMobile.addEventListener('click', (e) => {
+          e.preventDefault();
+          logout();
+        });
+      }
+    }
 
     // Initialiser
     initHeaderEvents();
@@ -176,7 +311,6 @@
 
     console.log('✅ Burger initialisé');
 
-    // Burger click
     burger.onclick = function(e) {
       e.stopPropagation();
       var isOpen = !burger.classList.contains('open');
@@ -190,10 +324,8 @@
       }
       
       burger.setAttribute('aria-expanded', isOpen);
-      console.log('🍔 Menu', isOpen ? 'OUVERT' : 'FERMÉ');
     };
 
-    // Fermer sur lien click
     var mobileLinks = mobileMenu.querySelectorAll('a');
     for (var j = 0; j < mobileLinks.length; j++) {
       mobileLinks[j].onclick = function() {
@@ -203,7 +335,6 @@
       };
     }
 
-    // Fermer sur clic extérieur
     document.onclick = function(e) {
       if (!nav.contains(e.target) && mobileMenu.classList.contains('open')) {
         burger.classList.remove('open');
@@ -212,7 +343,6 @@
       }
     };
 
-    // Fermer sur Escape
     document.onkeydown = function(e) {
       if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
         burger.classList.remove('open');
@@ -222,7 +352,6 @@
       }
     };
 
-    // Scroll effect
     window.onscroll = function() {
       if (window.scrollY > 30) {
         nav.classList.add('scrolled');
@@ -231,4 +360,14 @@
       }
     };
   }
+
+  // تصدير دوال تسجيل الخروج للاستخدام في صفحات أخرى
+  window.almayaLogout = function() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+  };
+  
+  window.isAdminLoggedIn = function() {
+    return sessionStorage.getItem('admin_logged_in') === 'true';
+  };
 })();

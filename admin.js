@@ -215,13 +215,14 @@
             <div class="admin-navbar-container">
                 <div class="admin-logo" onclick="window.location.href='dashbord.html'">
                     <i class="fas fa-crown"></i>
-                    <span>Almaya</span>
+                    <span>لوحة التحكم</span>
                 </div>
                 <div class="admin-links">
                     <div class="admin-link" data-page="admin-produits.html"><i class="fas fa-tshirt"></i><span>المنتجات</span></div>
                     <div class="admin-link" data-page="admin-collections.html"><i class="fas fa-layer-group"></i><span>المجموعات</span></div>
                     <div class="admin-link" data-page="admin-orders.html"><i class="fas fa-clipboard-list"></i><span>الطلبات</span></div>
                     <div class="admin-link" data-page="admin-reviews.html"><i class="fas fa-star"></i><span>الآراء</span></div>
+                    <div class="admin-link" data-page="admin-login.html"><i class="fas fa-user"></i><span>إدارة المسؤولين</span></div>
                 </div>
                 <div class="admin-refresh" id="admin-refresh-btn"><i class="fas fa-sync-alt"></i><span>تحديث</span></div>
                 <button class="admin-menu-toggle" id="admin-menu-toggle"><i class="fas fa-bars"></i></button>
@@ -242,6 +243,7 @@
                 <div class="admin-sidebar-link" data-page="admin-collections.html"><i class="fas fa-layer-group"></i><span>المجموعات</span></div>
                 <div class="admin-sidebar-link" data-page="admin-orders.html"><i class="fas fa-clipboard-list"></i><span>الطلبات</span></div>
                 <div class="admin-sidebar-link" data-page="admin-reviews.html"><i class="fas fa-star"></i><span>الآراء</span></div>
+                <div class="admin-sidebar-link" data-page="admin-login.html"><i class="fas fa-user"></i><span>إدارة المسؤولين</span></div>
             </div>
         `;
 
