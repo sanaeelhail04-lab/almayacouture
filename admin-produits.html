@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="config.js"></script>
+  <script src="admin.js"></script>
   
   <style>
     /* ========== DARK THEME (Défaut) ========== */
@@ -78,10 +79,12 @@
     #header-container { position: sticky; top: 0; z-index: 50; }
     .main-content { flex: 1; }
 
+    /* تعديل الـ admin container لإفساح مساحة للقائمة الجانبية */
     .admin-container {
       max-width: 1300px;
       margin: 0 auto;
       padding: 2.5rem 1.5rem;
+      transition: margin-right 0.3s ease;
     }
 
     /* ===== HEADER ===== */
@@ -248,6 +251,18 @@
     }
     .image-card.has-image:hover .card-actions { opacity: 1; }
     .image-card input[type="file"] { display: none; }
+    .main-badge {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #1A1510;
+      font-size: 0.6rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      z-index: 4;
+    }
 
     /* ===== BUTTONS ===== */
     .btn {
@@ -295,23 +310,6 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto;
     }
 
-    /* ===== THEME TOGGLE ===== */
-    .theme-toggle-btn {
-      position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px;
-      border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border);
-      color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(10px);
-      animation: themePulse 2s ease-in-out infinite;
-    }
-    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
-    body.white-theme .theme-toggle-btn { background: #FFFFFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-    @keyframes themePulse {
-      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
-      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
-    }
-
     .loader { width: 40px; height: 40px; border: 3px solid var(--border); border-radius: 50%; border-top-color: var(--gold); animation: spin 0.8s ease-in-out infinite; margin: 2rem auto; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -321,7 +319,6 @@
       .admin-container { padding: 1rem; }
       .form-grid { grid-template-columns: 1fr; }
       .tabs { flex-direction: column; }
-      .theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; font-size: 1rem; }
     }
   </style>
 </head>
@@ -402,8 +399,16 @@
             <hr class="section-divider">
 
             <div class="section-title"><i class="fas fa-sliders-h"></i> خيارات العرض</div>
-            <div class="checkbox-group"><input type="checkbox" id="isFeatured"><label for="isFeatured"><i class="fas fa-star"></i> منتج مميز</label></div>
-            <div class="checkbox-group"><input type="checkbox" id="isActive" checked><label for="isActive"><i class="fas fa-eye"></i> نشط</label></div>
+            <div style="display: flex; gap: 2rem; margin-bottom: 1rem;">
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" id="isFeatured" style="width: 18px; height: 18px; cursor: pointer;">
+                <i class="fas fa-star"></i> منتج مميز
+              </label>
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" id="isActive" checked style="width: 18px; height: 18px; cursor: pointer;">
+                <i class="fas fa-eye"></i> نشط
+              </label>
+            </div>
             <input type="hidden" id="editProductId" value="">
 
             <div class="btn-group" id="formButtons">
@@ -425,8 +430,11 @@
           </div>
           <div style="overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--border);">
             <table class="products-table">
-              <thead><tr><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></tr></thead>
-              <tbody id="productsTableBody"><tr><td colspan="6"><div class="loader"></div></td></tr></tbody>
+              <thead><tr><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></tr>
+              </thead>
+              <tbody id="productsTableBody">
+                <tr><td colspan="6"><div class="loader"></div></td></tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -439,8 +447,8 @@
   <!-- Modal Suppression -->
   <div class="modal-overlay" id="deleteModal">
     <div class="modal modal-delete">
-      <i class="fas fa-exclamation-triangle modal-icon" style="font-size:3rem;color:var(--danger);"></i>
-      <h3 style="color:var(--text-primary);">تأكيد حذف المنتج</h3>
+      <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:var(--danger);"></i>
+      <h3 style="color:var(--text-primary); margin: 1rem 0;">تأكيد حذف المنتج</h3>
       <p style="color:var(--text-secondary);">سيتم حذف المنتج وجميع الملفات المرتبطة به</p>
       <div class="product-name-highlight" id="deleteProductName" style="color:var(--text-primary);background:rgba(255,71,87,0.1);padding:0.4rem 1rem;border-radius:var(--radius-sm);display:inline-block;margin:0.5rem 0;"></div>
       <div class="btn-group" style="justify-content:center;">
@@ -454,38 +462,12 @@
   <script src="footer.js"></script>
 
   <script>
-    // ========== THEME TOGGLE ==========
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
-          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
-          updateIcon();
-        });
-        document.body.appendChild(btn);
-        updateIcon();
-      }
-      function updateIcon() {
-        const btn = document.querySelector('.theme-toggle-btn');
-        if (!btn) return;
-        if (document.body.classList.contains('white-theme')) { btn.innerHTML = '<i class="fas fa-sun"></i>'; }
-        else { btn.innerHTML = '<i class="fas fa-moon"></i>'; }
-      }
-      function applySaved() {
-        const saved = localStorage.getItem('almaya-theme');
-        if (saved === 'white') document.body.classList.add('white-theme');
-        else if (saved === 'dark') document.body.classList.remove('white-theme');
-      }
-      applySaved(); createToggleButton();
-    })();
-
     // ==================== CONFIGURATION ====================
-    if (typeof CONFIG === 'undefined') { throw new Error('CONFIG missing'); }
+    if (typeof CONFIG === 'undefined') { 
+      console.error('❌ CONFIG missing');
+      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js manquant !</div>';
+      throw new Error('CONFIG missing'); 
+    }
 
     const CLOUD_NAME = CONFIG.CLOUDINARY_CLOUD_NAME;
     const UPLOAD_PRESET = CONFIG.CLOUDINARY_UPLOAD_PRESET;
@@ -523,9 +505,18 @@
       if (hasImage) {
         card.classList.add('has-image');
         if (isMain) card.classList.add('is-main');
-        card.innerHTML = `<img src="${imageUrl}" alt="صورة ${index + 1}">${isMain ? '<span class="main-badge" style="position:absolute;top:0.5rem;right:0.5rem;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#1A1510;font-size:0.6rem;font-weight:800;padding:0.2rem 0.55rem;border-radius:20px;z-index:4;"><i class="fas fa-crown"></i> الرئيسية</span>' : ''}<div class="card-actions">${!isMain ? `<button class="action-btn btn-set-main" onclick="event.stopPropagation();setAsMain(${index})" style="background:var(--gold);color:#1A1510;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-crown"></i></button>` : ''}<button class="action-btn btn-delete-img" onclick="event.stopPropagation();removeImage(${index})" style="background:var(--danger);color:white;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-trash-alt"></i></button></div><input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">`;
+        card.innerHTML = `<img src="${imageUrl}" alt="صورة ${index + 1}">
+          ${isMain ? '<span class="main-badge"><i class="fas fa-crown"></i> الرئيسية</span>' : ''}
+          <div class="card-actions">
+            ${!isMain ? `<button class="action-btn btn-set-main" onclick="event.stopPropagation();setAsMain(${index})" style="background:var(--gold);color:#1A1510;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-crown"></i></button>` : ''}
+            <button class="action-btn btn-delete-img" onclick="event.stopPropagation();removeImage(${index})" style="background:var(--danger);color:white;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+          </div>
+          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">`;
       } else {
-        card.innerHTML = `${isMain ? '<span class="main-badge" style="position:absolute;top:0.5rem;right:0.5rem;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#1A1510;font-size:0.6rem;font-weight:800;padding:0.2rem 0.55rem;border-radius:20px;z-index:4;opacity:0.7;"><i class="fas fa-crown"></i> مطلوبة</span>' : ''}<i class="fas fa-image" style="font-size:2rem;color:var(--text-muted);"></i><span style="font-size:0.65rem;color:var(--text-muted);text-align:center;">${isMain ? 'الصورة الرئيسية *' : 'أضف صورة'}</span><input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">`;
+        card.innerHTML = `${isMain ? '<span class="main-badge" style="opacity:0.7;"><i class="fas fa-crown"></i> مطلوبة</span>' : ''}
+          <i class="fas fa-image" style="font-size:2rem;color:var(--text-muted);"></i>
+          <span style="font-size:0.65rem;color:var(--text-muted);text-align:center;">${isMain ? 'الصورة الرئيسية *' : 'أضف صورة'}</span>
+          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">`;
       }
     }
 
@@ -541,15 +532,20 @@
 
     async function deleteFromCloudinary(publicId, type) {
       if (!publicId) return false;
-      const { sig, ts } = await cloudinarySignature(publicId);
-      const fd = new FormData();
-      fd.append('public_id', publicId);
-      fd.append('signature', sig);
-      fd.append('api_key', CLOUDINARY_API_KEY);
-      fd.append('timestamp', ts);
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/destroy`, { method: 'POST', body: fd });
-      const data = await res.json();
-      return data.result === 'ok';
+      try {
+        const { sig, ts } = await cloudinarySignature(publicId);
+        const fd = new FormData();
+        fd.append('public_id', publicId);
+        fd.append('signature', sig);
+        fd.append('api_key', CLOUDINARY_API_KEY);
+        fd.append('timestamp', ts);
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/destroy`, { method: 'POST', body: fd });
+        const data = await res.json();
+        return data.result === 'ok';
+      } catch(e) {
+        console.error('Delete error:', e);
+        return false;
+      }
     }
 
     function uploadToCloudinary(file, type) {
@@ -588,6 +584,23 @@
         updateMainUploadZone();
         showMessage(`✅ تم رفع الصورة ${index + 1} بنجاح`, 'success');
       } catch(e) { showMessage('❌ فشل رفع الصورة', 'error'); card.classList.remove('uploading'); }
+    };
+
+    window.handleBulkImages = async function(event) {
+      const files = Array.from(event.target.files);
+      for (let i = 0; i < files.length && i < MAX_IMAGES; i++) {
+        const file = files[i];
+        if (file && file.size <= 10*1024*1024 && file.type.startsWith('image/')) {
+          const data = await uploadToCloudinary(file, 'image');
+          if (data) {
+            uploadedImages[i] = { url: data.secure_url, public_id: data.public_id };
+            const card = document.getElementById(`imageCard${i}`);
+            if (card) updateImageCardHTML(card, i, true, data.secure_url);
+          }
+        }
+      }
+      rebuildGridFromData();
+      showMessage(`✅ تم رفع ${files.length} صور`, 'success');
     };
 
     window.setAsMain = function(index) {
@@ -677,18 +690,28 @@
           const imgs = [p.product_image_url, ...(p.additional_images||[])].filter(u => u);
           return `<tr>
             <td><img src="${p.product_image_url||imgs[0]||'https://placehold.co/55x70/231D15/C4A06A'}" class="product-thumb" onerror="this.src='https://placehold.co/55x70/231D15/C4A06A'"></td>
-            <td style="font-weight:700;color:var(--text-primary);">${p.product_name}</td>
-            <td>${p.category_name}</td>
+            <td style="font-weight:700;color:var(--text-primary);">${escapeHtml(p.product_name)}</td>
+            <td>${escapeHtml(p.category_name)}</td>
             <td style="color:var(--gold);">${p.price_range||'-'}</td>
             <td><span class="status-badge ${p.is_active?'status-active':'status-inactive'}">${p.is_active?'نشط':'مخفي'}</span></td>
-            <td>
-              <button onclick="openEditModal(${p.id},'${p.product_name.replace(/'/g,"\\'")}','${p.category_name.replace(/'/g,"\\'")}','${(p.price_range||'').replace(/'/g,"\\'")}','${(p.product_description||'').replace(/'/g,"\\'")}',${p.display_order||0},${p.is_featured||false},${p.is_active},'${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--edit);cursor:pointer;"><i class="fas fa-edit"></i></button>
+            <td style="display: flex; gap: 0.5rem;">
+              <button onclick="openEditModal(${p.id},'${escapeHtml(p.product_name)}','${escapeHtml(p.category_name)}','${escapeHtml(p.price_range||'')}','${escapeHtml(p.product_description||'')}',${p.display_order||0},${p.is_featured||false},${p.is_active},'${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--edit);cursor:pointer;"><i class="fas fa-edit"></i></button>
               <button onclick="toggleProduct(${p.id},${!p.is_active})" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text-secondary);cursor:pointer;"><i class="fas fa-${p.is_active?'eye-slash':'eye'}"></i></button>
-              <button onclick="openDeleteModal(${p.id},'${p.product_name.replace(/'/g,"\\'")}','${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--danger);cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+              <button onclick="openDeleteModal(${p.id},'${escapeHtml(p.product_name)}','${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--danger);cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
             </td>
           </tr>`;
         }).join('');
-      } catch(e) { tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:3rem;color:var(--text-muted);">خطأ في التحميل</div></td></tr>'; }
+      } catch(e) { tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:3rem;color:var(--text-muted);">خطأ في التحميل</div></tr></tr>'; }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
     }
 
     // ==================== ADD/UPDATE ====================
@@ -795,7 +818,11 @@
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.innerHTML = '<i class="fas fa-save"></i> تحديث المنتج';
       submitBtn.className = 'btn btn-edit';
-      document.getElementById('formButtons').innerHTML = `<button type="submit" class="btn btn-edit" id="submitBtn"><i class="fas fa-save"></i> تحديث المنتج</button><button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-times"></i> إلغاء</button>`;
+      const formButtons = document.getElementById('formButtons');
+      if (formButtons) {
+        formButtons.innerHTML = `<button type="submit" class="btn btn-edit" id="submitBtn"><i class="fas fa-save"></i> تحديث المنتج</button>
+        <button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-times"></i> إلغاء</button>`;
+      }
       switchTab('add');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -806,17 +833,26 @@
     };
 
     // ==================== EXPORT ====================
-    window.switchTab = switchTab; window.loadProducts = loadProducts;
-    window.openDeleteModal = openDeleteModal; window.closeDeleteModal = closeDeleteModal;
-    window.confirmDelete = confirmDelete; window.openEditModal = openEditModal;
-    window.toggleProduct = toggleProduct; window.resetForm = resetForm;
-    window.handleImage = handleImage; window.removeImage = removeImage;
-    window.setAsMain = setAsMain; window.handleVideo = handleVideo;
+    window.switchTab = switchTab; 
+    window.loadProducts = loadProducts;
+    window.openDeleteModal = openDeleteModal; 
+    window.closeDeleteModal = closeDeleteModal;
+    window.confirmDelete = confirmDelete; 
+    window.openEditModal = openEditModal;
+    window.toggleProduct = toggleProduct; 
+    window.resetForm = resetForm;
+    window.handleImage = handleImage; 
+    window.removeImage = removeImage;
+    window.setAsMain = setAsMain; 
+    window.handleVideo = handleVideo;
     window.removeVideo = removeVideo;
+    window.handleBulkImages = handleBulkImages;
 
     // ==================== INIT ====================
     document.addEventListener('DOMContentLoaded', () => {
-      buildImagesGrid(); updateMainUploadZone(); loadCategories();
+      buildImagesGrid(); 
+      updateMainUploadZone(); 
+      loadCategories();
       document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
       document.getElementById('deleteModal').addEventListener('click', (e) => { if (e.target.id === 'deleteModal') closeDeleteModal(); });
     });
