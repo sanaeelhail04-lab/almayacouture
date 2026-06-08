@@ -235,26 +235,7 @@
   <script src="footer.js"></script>
   <script>
     AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-quad' });
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.setAttribute('aria-label', 'تغيير السمة');
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
-          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
-          updateIcon();
-        });
-        document.body.appendChild(btn);
-        updateIcon();
-      }
-      function updateIcon() { const btn = document.querySelector('.theme-toggle-btn'); if (!btn) return; btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
-      function applySaved() { const s = localStorage.getItem('almaya-theme'); if (s === 'white') document.body.classList.add('white-theme'); }
-      applySaved(); createToggleButton();
-    })();
+   
   </script>
 </body>
 </html>
