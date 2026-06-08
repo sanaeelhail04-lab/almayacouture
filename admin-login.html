@@ -462,35 +462,7 @@
     <script src="footer.js"></script>
     
     <script>
-        // ========== THEME TOGGLE ==========
-        (function() {
-            const themeBtn = document.getElementById('themeToggle');
-            function applySavedTheme() {
-                const saved = localStorage.getItem('almaya-theme');
-                if (saved === 'white') {
-                    document.body.classList.add('white-theme');
-                    themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                } else {
-                    document.body.classList.remove('white-theme');
-                    themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                }
-            }
-            function toggleTheme() {
-                const isWhite = document.body.classList.contains('white-theme');
-                if (isWhite) {
-                    document.body.classList.remove('white-theme');
-                    localStorage.setItem('almaya-theme', 'dark');
-                    themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                } else {
-                    document.body.classList.add('white-theme');
-                    localStorage.setItem('almaya-theme', 'white');
-                    themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                }
-            }
-            themeBtn.addEventListener('click', toggleTheme);
-            applySavedTheme();
-        })();
-
+       
         // التحقق من CONFIG
         if (typeof CONFIG === 'undefined') {
             document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js مفقود</div>';
