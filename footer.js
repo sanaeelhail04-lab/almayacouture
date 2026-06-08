@@ -26,6 +26,9 @@
       // ========== FONTS ==========
       '@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap");' +
       
+      // ========== FONT AWESOME 6 (Free) ==========
+      '@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");' +
+      
       // ========== DARK THEME (Défaut) ==========
       ':root{--gold:#C4A06A;--gold-light:#D4B896;--gold-dim:rgba(196,160,106,0.15);--bg:#1A1510;--bg2:#221C14;--text:#E8DDD0;--text-muted:#A89880;--text-dim:#8B7B68}' +
       
@@ -45,6 +48,8 @@
       'body.white-theme .almaya-footer__contact-link:hover{color:#A07840 !important}' +
       'body.white-theme .almaya-footer__social{border-color:rgba(160,120,64,0.2) !important;color:#5A4E3C !important}' +
       'body.white-theme .almaya-footer__social:hover{background:rgba(160,120,64,0.08) !important;border-color:rgba(160,120,64,0.4) !important}' +
+      'body.white-theme .almaya-footer__theme-toggle{background:rgba(160,120,64,0.1) !important;border-color:rgba(160,120,64,0.25) !important;color:#A07840 !important}' +
+      'body.white-theme .almaya-footer__theme-toggle:hover{background:rgba(160,120,64,0.2) !important;border-color:rgba(160,120,64,0.4) !important}' +
       
       // Divider
       '.almaya-footer__divider{display:flex;align-items:center;justify-content:center;padding:0;position:relative}' +
@@ -52,9 +57,9 @@
       '.almaya-footer__diamond{display:inline-block;width:8px;height:8px;background:var(--gold);transform:rotate(45deg);margin:0 1rem;flex-shrink:0;position:relative;top:-1px;opacity:0.7}' +
       
       // Inner grid
-      '.almaya-footer__inner{max-width:1200px;margin:0 auto;padding:3rem 2rem 2rem;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:2rem;align-items:start}' +
+      '.almaya-footer__inner{max-width:1400px;margin:0 auto;padding:3rem 2rem 2rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr 1fr;gap:2rem;align-items:start}' +
       
-      // Logo avec police élégante
+      // Logo
       '.almaya-footer__logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;margin-bottom:1rem}' +
       '.almaya-footer__logo img{height:50px;width:auto;border-radius:8px;opacity:0.9;transition:opacity 0.3s}' +
       '.almaya-footer__logo:hover img{opacity:1}' +
@@ -67,6 +72,12 @@
       '.almaya-footer__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.6rem}' +
       '.almaya-footer__list a{font-family:"Tajawal",sans-serif;font-size:0.68rem;font-weight:400;letter-spacing:1.2px;color:var(--text-dim);text-decoration:none;transition:color 0.3s,padding-right 0.3s;display:inline-block}' +
       '.almaya-footer__list a:hover{color:var(--gold);padding-right:4px}' +
+      
+      // Flagship Brands
+      '.almaya-footer__flagship-title{font-family:"Tajawal",sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;font-weight:700}' +
+      '.almaya-footer__flagship-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.5rem}' +
+      '.almaya-footer__flagship-list a{font-family:"Tajawal",sans-serif;font-size:0.65rem;font-weight:400;color:var(--text-dim);text-decoration:none;transition:color 0.3s;display:inline-block}' +
+      '.almaya-footer__flagship-list a:hover{color:var(--gold)}' +
       
       // Contact
       '.almaya-footer__contact{list-style:none;padding:0;margin:0 0 1.25rem;display:flex;flex-direction:column;gap:0.65rem}' +
@@ -82,34 +93,38 @@
       '.almaya-footer__social:hover{color:var(--gold);border-color:rgba(196,160,106,0.45);background:var(--gold-dim);transform:translateY(-3px)}' +
       '.almaya-footer__social--yt:hover{color:#FF0000;border-color:rgba(255,0,0,0.35);background:rgba(255,0,0,0.08)}' +
       
+      // ========== THEME TOGGLE BUTTON (Inside Footer - NOT Fixed) ==========
+      '.almaya-footer__theme-wrapper{display:flex;justify-content:center;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(196,160,106,0.08)}' +
+      '.almaya-footer__theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:8px 20px;border-radius:50px;background:rgba(196,160,106,0.1);border:1px solid rgba(196,160,106,0.2);color:var(--gold);font-size:0.75rem;font-family:"Tajawal",sans-serif;font-weight:500;cursor:pointer;transition:all 0.3s ease;backdrop-filter:blur(5px)}' +
+      '.almaya-footer__theme-toggle i{font-size:0.9rem}' +
+      '.almaya-footer__theme-toggle span{margin:0 5px}' +
+      '.almaya-footer__theme-toggle:hover{background:rgba(196,160,106,0.2);border-color:rgba(196,160,106,0.4);transform:scale(1.02)}' +
+      '.almaya-footer__theme-toggle:active{transform:scale(0.98)}' +
+      
       // Bottom
-      '.almaya-footer__bottom{max-width:1200px;margin:0 auto;padding:1.25rem 2rem;border-top:1px solid rgba(196,160,106,0.08);display:flex;align-items:center;justify-content:center;gap:0.75rem;font-family:"Tajawal",sans-serif;font-size:0.55rem;font-weight:300;letter-spacing:1px;color:var(--text-dim);flex-wrap:wrap;text-align:center}' +
+      '.almaya-footer__bottom{max-width:1400px;margin:0 auto;padding:1.25rem 2rem;border-top:1px solid rgba(196,160,106,0.08);display:flex;align-items:center;justify-content:space-between;font-family:"Tajawal",sans-serif;font-size:0.55rem;font-weight:300;letter-spacing:1px;color:var(--text-dim);flex-wrap:wrap;text-align:center}' +
+      '.almaya-footer__bottom-links{display:flex;gap:1.5rem;align-items:center}' +
+      '.almaya-footer__bottom-links a{color:var(--text-dim);text-decoration:none;transition:color 0.3s}' +
+      '.almaya-footer__bottom-links a:hover{color:var(--gold)}' +
       '.almaya-footer__bottom-sep{color:var(--gold);opacity:0.5;font-size:0.45rem}' +
       
-      // ========== THEME TOGGLE BUTTON ==========
-      '.theme-toggle-btn{position:fixed;bottom:30px;right:30px;width:50px;height:50px;border-radius:50%;background:rgba(34,28,20,0.8);border:2px solid rgba(196,160,106,0.3);color:#C4A06A;font-size:1.2rem;cursor:pointer;z-index:999;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 4px 15px rgba(0,0,0,0.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:themePulse 2s ease-in-out infinite}' +
-      '.theme-toggle-btn:hover{transform:scale(1.1) rotate(15deg);border-color:#C4A06A;box-shadow:0 6px 25px rgba(196,160,106,0.2)}' +
-      '.theme-toggle-btn:active{transform:scale(0.95)}' +
-      'body.white-theme .theme-toggle-btn{background:rgba(255,255,255,0.9);border-color:rgba(160,120,64,0.3);color:#A07840;box-shadow:0 4px 15px rgba(0,0,0,0.1)}' +
-      'body.white-theme .theme-toggle-btn:hover{border-color:#A07840;box-shadow:0 6px 25px rgba(160,120,64,0.2)}' +
-      '@keyframes themePulse{0%,100%{box-shadow:0 4px 15px rgba(196,160,106,0.2)}50%{box-shadow:0 4px 25px rgba(196,160,106,0.4)}}' +
-      
       // ========== RESPONSIVE ==========
-      '@media(max-width:1000px){.almaya-footer__inner{grid-template-columns:1fr 1fr;gap:2rem}.almaya-footer__brand{grid-column:1/-1}.almaya-footer__about{max-width:100%}}' +
-      '@media(max-width:600px){.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}.almaya-footer__brand{grid-column:auto}.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}.theme-toggle-btn{bottom:20px;right:20px;width:42px;height:42px;font-size:1rem}}' +
-      '@media(max-width:400px){.almaya-footer__inner{padding:1.5rem 1rem 1.25rem;gap:1.5rem}.almaya-footer__logo img{height:42px}.almaya-footer__social{width:30px;height:30px;font-size:0.8rem}}';
+      '@media(max-width:1100px){.almaya-footer__inner{grid-template-columns:1fr 1fr 1fr;gap:2rem}.almaya-footer__brand{grid-column:1/-1}}' +
+      '@media(max-width:768px){.almaya-footer__inner{grid-template-columns:1fr 1fr;gap:2rem}.almaya-footer__bottom{flex-direction:column;gap:0.75rem}}' +
+      '@media(max-width:600px){.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}.almaya-footer__brand{grid-column:auto}.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}}' +
+      '@media(max-width:400px){.almaya-footer__inner{padding:1.5rem 1rem 1.25rem;gap:1.5rem}.almaya-footer__logo img{height:42px}.almaya-footer__social{width:30px;height:30px;font-size:0.8rem}.almaya-footer__theme-toggle{padding:6px 16px;font-size:0.7rem}}';
     
     document.head.appendChild(style);
-    console.log('🎨 Footer CSS + Theme Toggle injecté');
+    console.log('🎨 Footer CSS injecté (Theme Toggle dans footer)');
 
-    // Injecter HTML Footer avec 4 colonnes (retour, livraison, cgv inclus)
+    // Injecter HTML Footer avec Theme Toggle à l'intérieur
     var footerHTML = 
       '<footer class="almaya-footer" id="almayaFooter">' +
         '<div class="almaya-footer__divider">' +
           '<span class="almaya-footer__diamond"></span>' +
         '</div>' +
         '<div class="almaya-footer__inner">' +
-          // COLONNE 1: Brand (Plus large)
+          // COLONNE 1: Brand
           '<div class="almaya-footer__brand">' +
             '<a href="index.html" class="almaya-footer__logo">' +
               '<img src="images/logo.jpg" alt="Almaya Couture" onerror="this.src=\'https://placehold.co/60x60/C4A06A/1A1510?text=AC\'">' +
@@ -121,7 +136,23 @@
             '<p class="almaya-footer__about">تصاميم مغربية أصيلة بلمسة عصرية — جلابة، قفطان، تكشيطة وأكثر، كل قطعة تحكي قصة.</p>' +
           '</div>' +
           
-          // COLONNE 2: Navigation (Pages principales)
+          // COLONNE 2: Flagship Brands
+          '<div class="almaya-footer__col">' +
+            '<h4 class="almaya-footer__flagship-title">Flagship Brands</h4>' +
+            '<ul class="almaya-footer__flagship-list">' +
+              '<li><a href="about.html">About</a></li>' +
+              '<li><a href="corporate-history.html">Corporate History</a></li>' +
+              '<li><a href="leadership.html">Leadership</a></li>' +
+              '<li><a href="credit-card.html">Credit Card</a></li>' +
+              '<li><a href="products.html">Products</a></li>' +
+              '<li><a href="careers.html">Careers</a></li>' +
+              '<li><a href="esg.html">ESG</a></li>' +
+              '<li><a href="contact.html">Contact</a></li>' +
+              '<li><a href="rebrand.html">Rebrand</a></li>' +
+            '</ul>' +
+          '</div>' +
+          
+          // COLONNE 3: Navigation
           '<div class="almaya-footer__col">' +
             '<h4 class="almaya-footer__col-title">التصفح</h4>' +
             '<ul class="almaya-footer__list">' +
@@ -133,7 +164,7 @@
             '</ul>' +
           '</div>' +
           
-          // COLONNE 3: Informations légales (retour + livraison + cgv)
+          // COLONNE 4: Informations légales
           '<div class="almaya-footer__col">' +
             '<h4 class="almaya-footer__col-title">معلومات قانونية</h4>' +
             '<ul class="almaya-footer__list">' +
@@ -144,7 +175,7 @@
             '</ul>' +
           '</div>' +
           
-          // COLONNE 4: Contact & Social
+          // COLONNE 5: Contact & Social + Theme Toggle
           '<div class="almaya-footer__col">' +
             '<h4 class="almaya-footer__col-title">تواصلي معنا</h4>' +
             '<ul class="almaya-footer__contact">' +
@@ -172,88 +203,114 @@
                 '<i class="fab fa-youtube"></i>' +
               '</a>' +
             '</div>' +
+            '<div style="margin-top: 1rem;">' +
+              '<a href="investors.html" class="almaya-footer__contact-link" style="font-weight: 500;">' +
+                '<i class="fas fa-chart-line"></i>' +
+                '<span>Investors</span>' +
+              '</a>' +
+            '</div>' +
+            // THEME TOGGLE BUTTON - Now inside the footer!
+            '<div class="almaya-footer__theme-wrapper">' +
+              '<button class="almaya-footer__theme-toggle" id="footerThemeToggle">' +
+                '<i class="fas fa-moon"></i>' +
+                '<span>الوضع المظلم / النهار</span>' +
+                '<i class="fas fa-sun"></i>' +
+              '</button>' +
+            '</div>' +
           '</div>' +
         '</div>' +
         // Bottom
         '<div class="almaya-footer__bottom">' +
           '<span>© 2026 Almaya Couture — المغرب</span>' +
-          '<span class="almaya-footer__bottom-sep">✦</span>' +
+          '<div class="almaya-footer__bottom-links">' +
+            '<a href="privacy.html">Privacy</a>' +
+            '<span class="almaya-footer__bottom-sep">✦</span>' +
+            '<a href="terms.html">Terms</a>' +
+            '<span class="almaya-footer__bottom-sep">✦</span>' +
+            '<a href="sitemap.html">Sitemap</a>' +
+          '</div>' +
           '<span>صُنع بـ ♡ للمرأة المغربية</span>' +
         '</div>' +
       '</footer>';
 
     // Insérer le footer
     document.body.insertAdjacentHTML('beforeend', footerHTML);
-    console.log('📝 Footer HTML injecté avec les pages: retour, livraison, cgv');
+    console.log('📝 Footer HTML injecté avec Theme Toggle à l\'intérieur');
 
-    // ========== THEME TOGGLE SYSTEM ==========
-    function createToggleButton() {
-      if (document.querySelector('.theme-toggle-btn')) return;
+    // ========== THEME TOGGLE SYSTEM (Modified for footer button) ==========
+    function setupThemeToggle() {
+      var toggleBtn = document.getElementById('footerThemeToggle');
+      if (!toggleBtn) {
+        console.warn('⚠️ Bouton theme toggle non trouvé');
+        return;
+      }
       
-      var btn = document.createElement('button');
-      btn.className = 'theme-toggle-btn';
-      btn.setAttribute('aria-label', 'تغيير السمة');
-      btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
-      btn.innerHTML = '<i class="fas fa-moon"></i>';
+      // Mettre à jour l'icône du bouton selon le thème
+      function updateFooterButtonIcon() {
+        if (!toggleBtn) return;
+        var isWhite = document.body.classList.contains('white-theme');
+        var moonIcon = toggleBtn.querySelector('.fa-moon');
+        var sunIcon = toggleBtn.querySelector('.fa-sun');
+        
+        if (isWhite) {
+          // Mode white: sun visible, moon caché (ou style différent)
+          if (moonIcon) moonIcon.style.opacity = '0.5';
+          if (sunIcon) sunIcon.style.opacity = '1';
+          toggleBtn.style.color = '#A07840';
+        } else {
+          // Mode dark: moon visible
+          if (moonIcon) moonIcon.style.opacity = '1';
+          if (sunIcon) sunIcon.style.opacity = '0.5';
+          toggleBtn.style.color = '#C4A06A';
+        }
+      }
       
-      btn.addEventListener('click', function() {
+      // Event listener
+      toggleBtn.addEventListener('click', function() {
         var isWhite = document.body.classList.contains('white-theme');
         
         if (isWhite) {
           document.body.classList.remove('white-theme');
           localStorage.setItem('almaya-theme', 'dark');
+          console.log('🌙 Changé en mode Dark');
         } else {
           document.body.classList.add('white-theme');
           localStorage.setItem('almaya-theme', 'white');
+          console.log('☀️ Changé en mode White');
         }
         
-        updateButtonIcon();
+        updateFooterButtonIcon();
         
+        // Animation de transition
         document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
         setTimeout(function() {
           document.body.style.transition = '';
         }, 500);
       });
       
-      document.body.appendChild(btn);
-      updateButtonIcon();
-      console.log('🎯 Bouton theme toggle créé');
-    }
-
-    function updateButtonIcon() {
-      var btn = document.querySelector('.theme-toggle-btn');
-      if (!btn) return;
-      
-      if (document.body.classList.contains('white-theme')) {
-        btn.innerHTML = '<i class="fas fa-sun"></i>';
-        btn.setAttribute('title', 'الوضع الداكن');
-      } else {
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.setAttribute('title', 'الوضع الفاتح');
+      // Appliquer le thème sauvegardé
+      function applySavedTheme() {
+        var saved = localStorage.getItem('almaya-theme');
+        
+        if (saved === 'white') {
+          document.body.classList.add('white-theme');
+          console.log('☀️ Thème White appliqué (sauvegardé)');
+        } else if (saved === 'dark') {
+          document.body.classList.remove('white-theme');
+          console.log('🌙 Thème Dark appliqué (sauvegardé)');
+        } else {
+          console.log('🌙 Thème Dark par défaut');
+        }
+        updateFooterButtonIcon();
       }
-    }
-
-    function applySavedTheme() {
-      var saved = localStorage.getItem('almaya-theme');
       
-      if (saved === 'white') {
-        document.body.classList.add('white-theme');
-        console.log('☀️ Thème White appliqué (sauvegardé)');
-      } else if (saved === 'dark') {
-        document.body.classList.remove('white-theme');
-        console.log('🌙 Thème Dark appliqué (sauvegardé)');
-      } else {
-        console.log('🌙 Thème Dark par défaut');
-      }
+      applySavedTheme();
     }
-
-    // Initialiser le thème
-    applySavedTheme();
     
-    // Créer le bouton toggle
-    createToggleButton();
+    // Initialiser le système de thème
+    setupThemeToggle();
     
-    console.log('🎨 Theme toggle system ready');
+    console.log('🎨 Theme toggle system ready (bouton dans le footer)');
     console.log('✅ Footer + Theme Toggle chargés avec succès');
   });
 })();
