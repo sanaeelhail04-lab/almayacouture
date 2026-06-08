@@ -77,33 +77,32 @@
       '.almaya-footer__icon--mail{color:var(--gold)}' +
       
       // Social
-      '.almaya-footer__socials{display:flex;gap:0.6rem;align-items:center;margin-bottom:1.5rem}' +
+      '.almaya-footer__socials{display:flex;gap:0.6rem;align-items:center}' +
       '.almaya-footer__social{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid rgba(196,160,106,0.18);background:rgba(255,255,255,0.03);color:var(--text-dim);font-size:0.9rem;text-decoration:none;transition:color 0.3s,border-color 0.3s,background 0.3s,transform 0.3s}' +
       '.almaya-footer__social:hover{color:var(--gold);border-color:rgba(196,160,106,0.45);background:var(--gold-dim);transform:translateY(-3px)}' +
       '.almaya-footer__social--yt:hover{color:#FF0000;border-color:rgba(255,0,0,0.35);background:rgba(255,0,0,0.08)}' +
-      
-      // ========== NOUVEAU BOUTON THEME DANS FOOTER ==========
-      '.footer-theme-toggle{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:12px 20px;border-radius:50px;background:rgba(196,160,106,0.1);border:1px solid rgba(196,160,106,0.25);color:var(--gold);font-family:"Tajawal",sans-serif;font-size:0.75rem;font-weight:500;cursor:pointer;transition:all 0.3s ease;margin-top:0.5rem}' +
-      '.footer-theme-toggle i{font-size:1rem;transition:transform 0.3s ease}' +
-      '.footer-theme-toggle:hover{background:rgba(196,160,106,0.2);border-color:rgba(196,160,106,0.5);transform:translateY(-2px)}' +
-      '.footer-theme-toggle:hover i{transform:scale(1.1)}' +
-      '.footer-theme-toggle:active{transform:translateY(0)}' +
-      'body.white-theme .footer-theme-toggle{background:rgba(160,120,64,0.08);border-color:rgba(160,120,64,0.25);color:#A07840}' +
-      'body.white-theme .footer-theme-toggle:hover{background:rgba(160,120,64,0.15);border-color:rgba(160,120,64,0.45)}' +
       
       // Bottom
       '.almaya-footer__bottom{max-width:1200px;margin:0 auto;padding:1.25rem 2rem;border-top:1px solid rgba(196,160,106,0.08);display:flex;align-items:center;justify-content:center;gap:0.75rem;font-family:"Tajawal",sans-serif;font-size:0.55rem;font-weight:300;letter-spacing:1px;color:var(--text-dim);flex-wrap:wrap;text-align:center}' +
       '.almaya-footer__bottom-sep{color:var(--gold);opacity:0.5;font-size:0.45rem}' +
       
+      // ========== THEME TOGGLE BUTTON ==========
+      '.theme-toggle-btn{position:fixed;bottom:30px;right:30px;width:50px;height:50px;border-radius:50%;background:rgba(34,28,20,0.8);border:2px solid rgba(196,160,106,0.3);color:#C4A06A;font-size:1.2rem;cursor:pointer;z-index:999;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 4px 15px rgba(0,0,0,0.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:themePulse 2s ease-in-out infinite}' +
+      '.theme-toggle-btn:hover{transform:scale(1.1) rotate(15deg);border-color:#C4A06A;box-shadow:0 6px 25px rgba(196,160,106,0.2)}' +
+      '.theme-toggle-btn:active{transform:scale(0.95)}' +
+      'body.white-theme .theme-toggle-btn{background:rgba(255,255,255,0.9);border-color:rgba(160,120,64,0.3);color:#A07840;box-shadow:0 4px 15px rgba(0,0,0,0.1)}' +
+      'body.white-theme .theme-toggle-btn:hover{border-color:#A07840;box-shadow:0 6px 25px rgba(160,120,64,0.2)}' +
+      '@keyframes themePulse{0%,100%{box-shadow:0 4px 15px rgba(196,160,106,0.2)}50%{box-shadow:0 4px 25px rgba(196,160,106,0.4)}}' +
+      
       // ========== RESPONSIVE ==========
       '@media(max-width:1000px){.almaya-footer__inner{grid-template-columns:1fr 1fr;gap:2rem}.almaya-footer__brand{grid-column:1/-1}.almaya-footer__about{max-width:100%}}' +
-      '@media(max-width:600px){.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}.almaya-footer__brand{grid-column:auto}.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}.footer-theme-toggle{padding:10px 16px;font-size:0.7rem}}' +
+      '@media(max-width:600px){.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}.almaya-footer__brand{grid-column:auto}.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}.theme-toggle-btn{bottom:20px;right:20px;width:42px;height:42px;font-size:1rem}}' +
       '@media(max-width:400px){.almaya-footer__inner{padding:1.5rem 1rem 1.25rem;gap:1.5rem}.almaya-footer__logo img{height:42px}.almaya-footer__social{width:30px;height:30px;font-size:0.8rem}}';
     
     document.head.appendChild(style);
-    console.log('🎨 Footer CSS injecté');
+    console.log('🎨 Footer CSS + Theme Toggle injecté');
 
-    // Injecter HTML Footer avec 4 colonnes et le nouveau bouton dans la dernière colonne
+    // Injecter HTML Footer avec 4 colonnes (retour, livraison, cgv inclus)
     var footerHTML = 
       '<footer class="almaya-footer" id="almayaFooter">' +
         '<div class="almaya-footer__divider">' +
@@ -145,7 +144,7 @@
             '</ul>' +
           '</div>' +
           
-          // COLONNE 4: Contact & Social + NOUVEAU BOUTON THEME
+          // COLONNE 4: Contact & Social
           '<div class="almaya-footer__col">' +
             '<h4 class="almaya-footer__col-title">تواصلي معنا</h4>' +
             '<ul class="almaya-footer__contact">' +
@@ -173,12 +172,6 @@
                 '<i class="fab fa-youtube"></i>' +
               '</a>' +
             '</div>' +
-            <!-- NOUVEAU BOUTON THEME DANS LE FOOTER -->
-            '<button class="footer-theme-toggle" id="footerThemeToggle">' +
-              '<i class="fas fa-sun"></i>' +
-              '<span>الوضع المظلم / النهار</span>' +
-              '<i class="fas fa-moon"></i>' +
-            '</button>' +
           '</div>' +
         '</div>' +
         // Bottom
@@ -191,11 +184,55 @@
 
     // Insérer le footer
     document.body.insertAdjacentHTML('beforeend', footerHTML);
-    console.log('📝 Footer HTML injecté avec le nouveau bouton theme dans la dernière colonne');
+    console.log('📝 Footer HTML injecté avec les pages: retour, livraison, cgv');
 
-    // ========== SYSTEME DE THEME SANS BOUTON FLOTTANT ==========
-    
-    // Appliquer le thème sauvegardé
+    // ========== THEME TOGGLE SYSTEM ==========
+    function createToggleButton() {
+      if (document.querySelector('.theme-toggle-btn')) return;
+      
+      var btn = document.createElement('button');
+      btn.className = 'theme-toggle-btn';
+      btn.setAttribute('aria-label', 'تغيير السمة');
+      btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
+      btn.innerHTML = '<i class="fas fa-moon"></i>';
+      
+      btn.addEventListener('click', function() {
+        var isWhite = document.body.classList.contains('white-theme');
+        
+        if (isWhite) {
+          document.body.classList.remove('white-theme');
+          localStorage.setItem('almaya-theme', 'dark');
+        } else {
+          document.body.classList.add('white-theme');
+          localStorage.setItem('almaya-theme', 'white');
+        }
+        
+        updateButtonIcon();
+        
+        document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
+        setTimeout(function() {
+          document.body.style.transition = '';
+        }, 500);
+      });
+      
+      document.body.appendChild(btn);
+      updateButtonIcon();
+      console.log('🎯 Bouton theme toggle créé');
+    }
+
+    function updateButtonIcon() {
+      var btn = document.querySelector('.theme-toggle-btn');
+      if (!btn) return;
+      
+      if (document.body.classList.contains('white-theme')) {
+        btn.innerHTML = '<i class="fas fa-sun"></i>';
+        btn.setAttribute('title', 'الوضع الداكن');
+      } else {
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        btn.setAttribute('title', 'الوضع الفاتح');
+      }
+    }
+
     function applySavedTheme() {
       var saved = localStorage.getItem('almaya-theme');
       
@@ -207,65 +244,16 @@
         console.log('🌙 Thème Dark appliqué (sauvegardé)');
       } else {
         console.log('🌙 Thème Dark par défaut');
-        document.body.classList.remove('white-theme');
       }
-    }
-
-    // Mettre à jour l'icône du bouton dans le footer
-    function updateFooterButtonIcon() {
-      var footerBtn = document.getElementById('footerThemeToggle');
-      if (!footerBtn) return;
-      
-      var iconSun = footerBtn.querySelector('i:first-child');
-      var iconMoon = footerBtn.querySelector('i:last-child');
-      
-      if (document.body.classList.contains('white-theme')) {
-        // Mode clair -> montrer lune (pour passer en sombre)
-        if (iconSun) iconSun.style.opacity = '0.5';
-        if (iconMoon) iconMoon.style.opacity = '1';
-        footerBtn.setAttribute('title', 'الوضع الداكن');
-      } else {
-        // Mode sombre -> montrer soleil (pour passer en clair)
-        if (iconSun) iconSun.style.opacity = '1';
-        if (iconMoon) iconMoon.style.opacity = '0.5';
-        footerBtn.setAttribute('title', 'الوضع الفاتح');
-      }
-    }
-
-    // Fonction pour basculer le thème
-    function toggleTheme() {
-      var isWhite = document.body.classList.contains('white-theme');
-      
-      if (isWhite) {
-        document.body.classList.remove('white-theme');
-        localStorage.setItem('almaya-theme', 'dark');
-      } else {
-        document.body.classList.add('white-theme');
-        localStorage.setItem('almaya-theme', 'white');
-      }
-      
-      updateFooterButtonIcon();
-      
-      document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
-      setTimeout(function() {
-        document.body.style.transition = '';
-      }, 500);
     }
 
     // Initialiser le thème
     applySavedTheme();
     
-    // Attacher l'événement au bouton du footer
-    var footerThemeBtn = document.getElementById('footerThemeToggle');
-    if (footerThemeBtn) {
-      footerThemeBtn.addEventListener('click', toggleTheme);
-      updateFooterButtonIcon();
-      console.log('🎯 Bouton theme dans le footer initialisé');
-    } else {
-      console.error('❌ Bouton footerThemeToggle non trouvé');
-    }
+    // Créer le bouton toggle
+    createToggleButton();
     
-    console.log('✅ Footer + Theme Toggle (dans footer) chargés avec succès');
-    console.log('✨ Bouton flottant supprimé - Le bouton est maintenant dans le footer');
+    console.log('🎨 Theme toggle system ready');
+    console.log('✅ Footer + Theme Toggle chargés avec succès');
   });
 })();
