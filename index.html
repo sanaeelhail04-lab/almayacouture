@@ -60,7 +60,7 @@
     
     .gold-text { color: var(--gold); }
     
-    /* --- LES BOUTONS (inchangés) --- */
+    /* --- LES BOUTONS --- */
     .gold-btn {
       background: transparent;
       border: 1.5px solid var(--gold);
@@ -103,7 +103,7 @@
       border-color: var(--gold);
     }
     
-    /* --- NAV (inchangé) --- */
+    /* --- NAV --- */
     .nav-bar {
       background: var(--nav);
       backdrop-filter: blur(12px);
@@ -113,7 +113,7 @@
     
     .logo-img { height: 50px; width: auto; transition: all 0.3s; }
     
-    /* --- HERO & VIDEO (inchangé) --- */
+    /* --- HERO & VIDEO --- */
     .video-container {
       height: 100%;
       min-height: 480px;
@@ -138,12 +138,12 @@
     }
     .float-effect { animation: float 4s ease-in-out infinite; }
     
-    /* --- LES CARTES (step-card / review-form-card) --- */
+    /* --- LES CARTES --- */
     .step-card {
       background: var(--card);
       backdrop-filter: blur(8px);
       transition: all 0.4s;
-      padding: clamp(1.5rem, 5vw, 2rem); /* PADDING FLUIDE */
+      padding: clamp(1.5rem, 5vw, 2rem);
       border-radius: 20px;
       border: 1px solid var(--border);
     }
@@ -156,7 +156,7 @@
       background: var(--card);
       backdrop-filter: blur(8px);
       border-radius: 20px;
-      padding: clamp(1.5rem, 5vw, 2rem); /* PADDING FLUIDE */
+      padding: clamp(1.5rem, 5vw, 2rem);
       border: 1px solid var(--border);
     }
     .review-input {
@@ -194,7 +194,7 @@
     .section-title {
       position: relative;
       display: inline-block;
-      font-size: clamp(1.5rem, 5vw, 2rem); /* TITRE FLUIDE */
+      font-size: clamp(1.5rem, 5vw, 2rem);
     }
     .section-title::after {
       content: '';
@@ -209,11 +209,11 @@
     
     .darija-text { font-family: 'Tajawal', 'Cairo', sans-serif; }
 
-    /* Products Grid (FLUIDE) */
+    /* Products Grid */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: clamp(1rem, 3vw, 2rem); /* ÉCART FLUIDE ENTRE LES CARTES */
+      gap: clamp(1rem, 3vw, 2rem);
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -260,7 +260,7 @@
       gap: 0.3rem;
       box-shadow: 0 4px 12px rgba(196,160,106,0.3);
     }
-    .product-info-card { padding: clamp(1rem, 3vw, 1.2rem); } /* PADDING FLUIDE DANS LES CARTES */
+    .product-info-card { padding: clamp(1rem, 3vw, 1.2rem); }
     .product-category-tag { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 500; }
     .product-title-card { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; line-height: 1.4; }
     .product-price-card { color: var(--gold); font-size: 1rem; font-weight: 700; }
@@ -287,82 +287,28 @@
     .review-message.error { background: rgba(255,71,87,0.1); color: #FF4757; border: 1px solid rgba(255,71,87,0.3); }
     .review-message.info { background: rgba(196,160,106,0.1); color: var(--gold); border: 1px solid rgba(196,160,106,0.3); }
     
-    /* ========== THEME TOGGLE BUTTON ========== */
-    .theme-toggle-btn {
-      position: fixed;
-      bottom: 100px;
-      right: 30px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--bg2);
-      border: 2px solid var(--border2);
-      color: var(--gold);
-      font-size: 1.2rem;
-      cursor: pointer;
-      z-index: 99;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      backdrop-filter: blur(10px);
-      animation: themePulse 2s ease-in-out infinite;
-    }
-    .theme-toggle-btn:hover {
-      transform: scale(1.1) rotate(15deg);
-      border-color: var(--gold);
-      box-shadow: 0 6px 25px rgba(196,160,106,0.2);
-    }
-    .theme-toggle-btn:active { transform: scale(0.95); }
-    
-    body.white-theme .theme-toggle-btn {
-      background: #FFFFFF;
-      border-color: rgba(160, 120, 64, 0.3);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-    body.white-theme .theme-toggle-btn:hover {
-      border-color: #A07840;
-      box-shadow: 0 6px 25px rgba(160, 120, 64, 0.2);
-    }
-    
-    @keyframes themePulse {
-      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
-      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
-    }
-    
-    /* ========== PADDING RESPONSIVE FINAL (ajusté ici) ========== */
-    /* Au lieu d'utiliser les classes Tailwind statiques sur les sections,
-       on fait les sections responsives via CSS pur pour plus de contrôle */
+    /* ========== PADDING RESPONSIVE ========== */
     section {
-      padding-left: 1.5rem;   /* 24px sur mobile */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
-      /* padding vertical fluide : minimum 40px, idéal 8% de la hauteur d'écran, max 100px */
       padding-top: clamp(40px, 8vh, 100px);
       padding-bottom: clamp(40px, 8vh, 100px);
     }
     
     @media (min-width: 768px) {
       section {
-        padding-left: 3rem;   /* md: 48px */
+        padding-left: 3rem;
         padding-right: 3rem;
       }
       .logo-img { height: 40px; }
       .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
       .review-form-card { padding: 1.5rem; }
       .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
-      .theme-toggle-btn {
-        bottom: 80px;
-        right: 20px;
-        width: 42px;
-        height: 42px;
-        font-size: 1rem;
-      }
     }
     
     @media (min-width: 1024px) {
       section {
-        padding-left: 5rem;   /* lg: 80px */
+        padding-left: 5rem;
         padding-right: 5rem;
       }
       .section-title { font-size: 1.8rem; }
@@ -372,7 +318,7 @@
 
     @media (max-width: 480px) {
       section {
-        padding-left: 1rem;   /* plus petit padding sur très petits écrans */
+        padding-left: 1rem;
         padding-right: 1rem;
       }
       .logo-img { height: 35px; }
@@ -390,7 +336,7 @@
   </a>
   
   <main>
-    <!-- Hero Section (sans classes py-12 md:py-24 px-... car on utilise le CSS général sur <section>) -->
+    <!-- Hero Section -->
     <section id="hero" class="w-full">
       <div class="flex flex-wrap md:flex-nowrap gap-12 md:gap-16 items-center max-w-7xl mx-auto">
         <div class="w-full md:w-1/2 order-first md:order-last" data-aos="fade-up">
@@ -477,57 +423,21 @@
 
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
 
-    // ========== THEME TOGGLE ==========
+    // ========== تطبيق الثيم المخزن فقط (بدون إنشاء زر عائم) ==========
     (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.setAttribute('aria-label', 'تغيير السمة');
-        btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) {
-            document.body.classList.remove('white-theme');
-            localStorage.setItem('almaya-theme', 'dark');
-          } else {
-            document.body.classList.add('white-theme');
-            localStorage.setItem('almaya-theme', 'white');
-          }
-          updateButtonIcon();
-        });
-        
-        document.body.appendChild(btn);
-        updateButtonIcon();
-      }
-
-      function updateButtonIcon() {
-        const btn = document.querySelector('.theme-toggle-btn');
-        if (!btn) return;
-        if (document.body.classList.contains('white-theme')) {
-          btn.innerHTML = '<i class="fas fa-sun"></i>';
-          btn.setAttribute('title', 'الوضع الداكن');
-        } else {
-          btn.innerHTML = '<i class="fas fa-moon"></i>';
-          btn.setAttribute('title', 'الوضع الفاتح');
-        }
-      }
-
       function applySavedTheme() {
         const saved = localStorage.getItem('almaya-theme');
         if (saved === 'white') {
           document.body.classList.add('white-theme');
+          console.log('☀️ Thème White appliqué depuis localStorage');
         } else if (saved === 'dark') {
           document.body.classList.remove('white-theme');
+          console.log('🌙 Thème Dark appliqué depuis localStorage');
+        } else {
+          console.log('🌙 Thème Dark par défaut');
         }
       }
-
       applySavedTheme();
-      createToggleButton();
-      console.log('🎨 Theme toggle ready');
     })();
 
     // === SUPABASE API ===
