@@ -478,58 +478,7 @@
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
 
     // ========== THEME TOGGLE ==========
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.setAttribute('aria-label', 'تغيير السمة');
-        btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) {
-            document.body.classList.remove('white-theme');
-            localStorage.setItem('almaya-theme', 'dark');
-          } else {
-            document.body.classList.add('white-theme');
-            localStorage.setItem('almaya-theme', 'white');
-          }
-          updateButtonIcon();
-        });
-        
-        document.body.appendChild(btn);
-        updateButtonIcon();
-      }
-
-      function updateButtonIcon() {
-        const btn = document.querySelector('.theme-toggle-btn');
-        if (!btn) return;
-        if (document.body.classList.contains('white-theme')) {
-          btn.innerHTML = '<i class="fas fa-sun"></i>';
-          btn.setAttribute('title', 'الوضع الداكن');
-        } else {
-          btn.innerHTML = '<i class="fas fa-moon"></i>';
-          btn.setAttribute('title', 'الوضع الفاتح');
-        }
-      }
-
-      function applySavedTheme() {
-        const saved = localStorage.getItem('almaya-theme');
-        if (saved === 'white') {
-          document.body.classList.add('white-theme');
-        } else if (saved === 'dark') {
-          document.body.classList.remove('white-theme');
-        }
-      }
-
-      applySavedTheme();
-      createToggleButton();
-      console.log('🎨 Theme toggle ready');
-    })();
-
+   
     // === SUPABASE API ===
     async function supabaseRequest(endpoint, opts = {}) {
       const url = `${CONFIG.SUPABASE_URL}${endpoint}`;
