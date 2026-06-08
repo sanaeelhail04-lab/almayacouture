@@ -272,34 +272,7 @@
   <script src="footer.js"></script>
 <script src="auth.js"></script>
   <script>
-    // ========== THEME TOGGLE ==========
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
-          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
-          updateIcon();
-        });
-        document.body.appendChild(btn);
-        updateIcon();
-      }
-      function updateIcon() {
-        const btn = document.querySelector('.theme-toggle-btn');
-        if (!btn) return;
-        btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      }
-      function applySaved() {
-        const saved = localStorage.getItem('almaya-theme');
-        if (saved === 'white') document.body.classList.add('white-theme');
-        else if (saved === 'dark') document.body.classList.remove('white-theme');
-      }
-      applySaved(); createToggleButton();
-    })();
+    
 
     // ========== CONFIG ==========
     const SUPABASE_URL = 'https://ieiujnrgrfsqajcgdiys.supabase.co';
