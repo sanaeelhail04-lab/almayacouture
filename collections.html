@@ -315,7 +315,6 @@
 
     
     
-  
 
     /* Cat Card */
     .cat-card {
@@ -395,32 +394,8 @@
     }
     .whatsapp-float:hover { transform: scale(1.1); }
 
-    .go-top {
-      position: fixed;
-      bottom: 95px;
-      right: 25px;
-      width: 40px;
-      height: 40px;
-      background: rgba(196,160,106,0.15);
-      backdrop-filter: blur(8px);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      transition: all 0.3s;
-      z-index: 99;
-      border: 1px solid var(--border3);
-      color: var(--gold);
-    }
-    .go-top.visible { opacity: 1; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { animation: fadeUp 0.7s ease forwards; }
+   
+   
 
     /* Media Queries */
     @media (max-width: 1200px) {
@@ -735,7 +710,7 @@
             const slug = this.createSlug(cat.category_name);
             
             return `
-              <div class="cat-card fade-up" 
+              <div class="cat-card " 
                    style="animation-delay: ${index * 0.1}s"
                    onclick="location.href='products.html?category=${slug}'"
                    role="button"
@@ -767,7 +742,7 @@
 
         showFallback() {
           this.grid.innerHTML = `
-            <div class="cat-card fade-up" onclick="location.href='products.html?category=jellaba'">
+            <div class="cat-card " onclick="location.href='products.html?category=jellaba'">
               <img src="https://placehold.co/400x600/2A2218/C4A06A?text=الجلابة" class="cat-img" alt="الجلابة">
               <div class="cat-overlay">
                 <div class="cat-name">الجلابة</div>
@@ -775,7 +750,7 @@
                 <div class="cat-desc">للأيام العادية والمناسبات</div>
               </div>
             </div>
-            <div class="cat-card fade-up" onclick="location.href='products.html?category=caftan'">
+            <div class="cat-card " onclick="location.href='products.html?category=caftan'">
               <img src="https://placehold.co/400x600/2A2218/C4A06A?text=القفطان" class="cat-img" alt="القفطان">
               <div class="cat-overlay">
                 <div class="cat-name">القفطان</div>

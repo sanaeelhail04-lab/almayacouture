@@ -18,12 +18,12 @@
     function _updateButtons() {
       document.querySelectorAll(BTN_SELECTOR).forEach(function (btn) {
         if (_isWhite()) {
-          btn.innerHTML = '<i class="fas fa-sun"></i>';
-          btn.setAttribute('title',      'التحويل للوضع الداكن');
+          btn.innerHTML = '<i class="fas fa-sun"></i><span class="btn-text">فاتح</span>';
+          btn.setAttribute('title', 'التحويل للوضع الداكن');
           btn.setAttribute('aria-label', 'التحويل للوضع الداكن');
         } else {
-          btn.innerHTML = '<i class="fas fa-moon"></i>';
-          btn.setAttribute('title',      'التحويل للوضع الفاتح');
+          btn.innerHTML = '<i class="fas fa-moon"></i><span class="btn-text">داكن</span>';
+          btn.setAttribute('title', 'التحويل للوضع الفاتح');
           btn.setAttribute('aria-label', 'التحويل للوضع الفاتح');
         }
       });
@@ -56,27 +56,28 @@
         const footer = document.getElementById('almayaFooter') || document.querySelector('.almaya-footer');
         
         if (footer) {
-          // تحويل الزر إلى رابط <a>
+          const themeDiv = document.createElement('div');
+          themeDiv.className = 'theme-btn-wrapper';
+          
           const themeLink = document.createElement('a');
           themeLink.className = BTN_CLASS;
           themeLink.setAttribute('aria-label', 'تغيير السمة');
           themeLink.setAttribute('title', 'تغيير السمة');
           themeLink.setAttribute('href', 'javascript:void(0);');
           themeLink.setAttribute('role', 'button');
-          themeLink.innerHTML = '<i class="fas fa-moon"></i>';
+          themeLink.innerHTML = '<i class="fas fa-moon"></i><span class="btn-text">داكن</span>';
           
-          // نضيف الرابط لقسم socials
+          themeDiv.appendChild(themeLink);
+          
           const socialsDiv = footer.querySelector('.almaya-footer__socials');
           if (socialsDiv) {
-            socialsDiv.appendChild(themeLink);
-            console.log('✅ Theme link added to socials section');
+            socialsDiv.parentNode.insertBefore(themeDiv, socialsDiv.nextSibling);
+            console.log('✅ Theme div added after socials section');
           } else {
-            const bottomDiv = footer.querySelector('.almaya-footer__bottom');
-            if (bottomDiv) {
-              bottomDiv.appendChild(themeLink);
-              console.log('✅ Theme link added to footer bottom (fallback)');
-            } else {
-              footer.appendChild(themeLink);
+            const colDiv = footer.querySelector('.almaya-footer__col:last-child');
+            if (colDiv) {
+              colDiv.appendChild(themeDiv);
+              console.log('✅ Theme div added to last column');
             }
           }
           
@@ -92,7 +93,7 @@
       document.addEventListener('click', function (e) {
         const target = e.target.closest(BTN_SELECTOR);
         if (target) {
-          e.preventDefault(); // منع السلوك الافتراضي للرابط
+          e.preventDefault();
           toggle();
         }
       });
@@ -161,8 +162,10 @@
       'body.white-theme .almaya-footer__contact-link:hover{color:#A07840!important}' +
       'body.white-theme .almaya-footer__social{border-color:rgba(160,120,64,0.2)!important;color:#5A4E3C!important}' +
       'body.white-theme .almaya-footer__social:hover{background:rgba(160,120,64,0.08)!important;border-color:rgba(160,120,64,0.4)!important}' +
-      'body.white-theme .almaya-footer .theme-toggle-btn{border-color:rgba(160,120,64,0.2)!important;color:#5A4E3C!important}' +
-      'body.white-theme .almaya-footer .theme-toggle-btn:hover{background:rgba(160,120,64,0.08)!important;border-color:rgba(160,120,64,0.4)!important;color:#A07840!important}' +
+      'body.white-theme .almaya-footer .theme-toggle-btn{background:linear-gradient(135deg,rgba(245,240,232,0.98),rgba(255,255,255,0.92));border-color:rgba(160,120,64,0.3);color:#5A4E3C}' +
+      'body.white-theme .almaya-footer .theme-toggle-btn:hover{background:linear-gradient(135deg,rgba(245,240,232,1),rgba(255,255,255,0.98));border-color:#A07840;color:#A07840;box-shadow:0 4px 15px rgba(160,120,64,0.15)}' +
+      'body.white-theme .almaya-footer .theme-toggle-btn .btn-text{color:#5A4E3C}' +
+      'body.white-theme .almaya-footer .theme-toggle-btn:hover .btn-text{color:#A07840}' +
 
       // Divider
       '.almaya-footer__divider{display:flex;align-items:center;justify-content:center;padding:0;position:relative}' +
@@ -194,15 +197,30 @@
       '.almaya-footer__icon--whatsapp{color:#25D366}' +
       '.almaya-footer__icon--mail{color:var(--gold)}' +
 
-      // Socials - avec theme link comme <a>
-      '.almaya-footer__socials{display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap}' +
-      '.almaya-footer__social,.almaya-footer .theme-toggle-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid rgba(196,160,106,0.18);background:rgba(255,255,255,0.03);color:var(--text-dim);font-size:0.9rem;text-decoration:none;transition:all 0.3s ease;cursor:pointer}' +
-      '.almaya-footer__social:hover,.almaya-footer .theme-toggle-btn:hover{color:var(--gold);border-color:rgba(196,160,106,0.45);background:var(--gold-dim);transform:translateY(-3px)}' +
-      '.almaya-footer__social--yt:hover{color:#FF0000;border-color:rgba(255,0,0,0.35);background:rgba(255,0,0,0.08)}' +
+      // Socials
+      '.almaya-footer__socials{display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem}' +
+      '.almaya-footer__social{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(196,160,106,0.25);background:rgba(255,255,255,0.05);color:var(--text-dim);font-size:0.95rem;text-decoration:none;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);cursor:pointer;position:relative}' +
+      '.almaya-footer__social::before{content:attr(title);position:absolute;bottom:100%;margin-bottom:8px;padding:4px 8px;background:rgba(0,0,0,0.8);color:#fff;font-size:0.65rem;font-family:"Tajawal",sans-serif;border-radius:6px;white-space:nowrap;opacity:0;visibility:hidden;transition:all 0.2s;pointer-events:none;z-index:10}' +
+      '.almaya-footer__social:hover::before{opacity:1;visibility:visible;transform:translateY(-2px)}' +
+      '.almaya-footer__social:hover{color:var(--gold);border-color:var(--gold);background:var(--gold-dim);transform:translateY(-3px) scale(1.05)}' +
+      '.almaya-footer__social--yt:hover{color:#FF0000;border-color:#FF0000;background:rgba(255,0,0,0.1)}' +
+
+      // Theme button wrapper
+      '.theme-btn-wrapper{display:flex;justify-content:center;align-items:center;margin:0.5rem 0 0 0;padding-top:0.5rem}' +
       
-      // Style spécifique pour le theme link
-      '.almaya-footer .theme-toggle-btn{margin:0;padding:0;font-size:1rem}' +
-      '.almaya-footer .theme-toggle-btn:hover{transform:translateY(-3px)}' +
+      // Theme toggle button - تصميم صغير وأنيق
+      '.almaya-footer .theme-toggle-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 14px;border-radius:40px;border:1.5px solid rgba(196,160,106,0.35);background:linear-gradient(135deg,rgba(34,28,20,0.95),rgba(26,21,16,0.9));color:var(--gold);font-size:0.75rem;font-family:"Tajawal",sans-serif;font-weight:500;text-decoration:none;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);cursor:pointer;position:relative;backdrop-filter:blur(10px);box-shadow:0 2px 10px rgba(0,0,0,0.15);letter-spacing:0.3px}' +
+      '.almaya-footer .theme-toggle-btn i{font-size:0.9rem;transition:transform 0.3s ease}' +
+      '.almaya-footer .theme-toggle-btn .btn-text{font-size:0.7rem;font-weight:500}' +
+      '.almaya-footer .theme-toggle-btn:hover{transform:translateY(-2px) scale(1.02);border-color:var(--gold);box-shadow:0 4px 15px rgba(196,160,106,0.2);gap:8px}' +
+      '.almaya-footer .theme-toggle-btn:hover i{transform:rotate(15deg)}' +
+      '.almaya-footer .theme-toggle-btn:active{transform:translateY(0) scale(0.98)}' +
+      
+      // Animation pulse
+      '@keyframes theme-pulse{0%,100%{box-shadow:0 2px 10px rgba(196,160,106,0.15)}50%{box-shadow:0 2px 15px rgba(196,160,106,0.3)}}' +
+      '.almaya-footer .theme-toggle-btn{animation:theme-pulse 2s ease-in-out infinite}' +
+      'body.white-theme .almaya-footer .theme-toggle-btn{animation:theme-pulse-white 2s ease-in-out infinite}' +
+      '@keyframes theme-pulse-white{0%,100%{box-shadow:0 2px 10px rgba(160,120,64,0.1)}50%{box-shadow:0 2px 15px rgba(160,120,64,0.2)}}' +
 
       // Bottom bar
       '.almaya-footer__bottom{max-width:1200px;margin:0 auto;padding:1.25rem 2rem;border-top:1px solid rgba(196,160,106,0.08);display:flex;align-items:center;justify-content:center;gap:0.75rem;font-family:"Tajawal",sans-serif;font-size:0.55rem;font-weight:300;letter-spacing:1px;color:var(--text-dim);flex-wrap:wrap;text-align:center}' +
@@ -217,21 +235,31 @@
       
       '@media(max-width:768px){' +
         '.almaya-footer__socials{gap:0.5rem}' +
-        '.almaya-footer__social,.almaya-footer .theme-toggle-btn{width:32px;height:32px;font-size:0.85rem}' +
+        '.almaya-footer__social{width:32px;height:32px;font-size:0.9rem}' +
+        '.almaya-footer .theme-toggle-btn{padding:5px 12px;gap:5px}' +
+        '.almaya-footer .theme-toggle-btn i{font-size:0.85rem}' +
+        '.almaya-footer .theme-toggle-btn .btn-text{font-size:0.65rem}' +
       '}' +
       
       '@media(max-width:600px){' +
         '.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}' +
         '.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}' +
-        '.almaya-footer__socials{gap:0.45rem}' +
-        '.almaya-footer__social,.almaya-footer .theme-toggle-btn{width:30px;height:30px;font-size:0.8rem}' +
+        '.almaya-footer__socials{gap:0.45rem;margin-bottom:0.25rem}' +
+        '.almaya-footer__social{width:30px;height:30px;font-size:0.85rem}' +
+        '.almaya-footer .theme-toggle-btn{padding:4px 10px;gap:4px}' +
+        '.almaya-footer .theme-toggle-btn i{font-size:0.8rem}' +
+        '.almaya-footer .theme-toggle-btn .btn-text{font-size:0.6rem}' +
+        '.theme-btn-wrapper{margin:0.4rem 0 0 0;padding-top:0.4rem}' +
       '}' +
       
       '@media(max-width:400px){' +
         '.almaya-footer__inner{padding:1.5rem 1rem 1.25rem;gap:1.5rem}' +
         '.almaya-footer__logo img{height:42px}' +
         '.almaya-footer__socials{gap:0.4rem}' +
-        '.almaya-footer__social,.almaya-footer .theme-toggle-btn{width:28px;height:28px;font-size:0.75rem}' +
+        '.almaya-footer__social{width:28px;height:28px;font-size:0.8rem}' +
+        '.almaya-footer .theme-toggle-btn{padding:3px 8px;gap:3px}' +
+        '.almaya-footer .theme-toggle-btn i{font-size:0.75rem}' +
+        '.almaya-footer .theme-toggle-btn .btn-text{font-size:0.55rem}' +
       '}';
 
     document.head.appendChild(style);
@@ -287,28 +315,28 @@
               '<li>' +
                 '<a href="https://wa.me/212601245733" target="_blank" rel="noopener" class="almaya-footer__contact-link">' +
                   '<i class="fab fa-whatsapp almaya-footer__icon--whatsapp"></i>' +
-                  '<span>0601245733</span>' +
+                  '<span>واتساب</span>' +
                 '</a>' +
               '</li>' +
               '<li>' +
                 '<a href="mailto:almayacouture@gmail.com" class="almaya-footer__contact-link">' +
                   '<i class="far fa-envelope almaya-footer__icon--mail"></i>' +
-                  '<span>almayacouture@gmail.com</span>' +
+                  '<span>البريد الإلكتروني</span>' +
                 '</a>' +
               '</li>' +
             '</ul>' +
             '<div class="almaya-footer__socials">' +
-              '<a href="https://www.instagram.com/almaya_couture" target="_blank" rel="noopener" class="almaya-footer__social" aria-label="Instagram">' +
+              '<a href="https://www.instagram.com/almaya_couture" target="_blank" rel="noopener" class="almaya-footer__social" aria-label="Instagram" title="إنستغرام">' +
                 '<i class="fab fa-instagram"></i>' +
               '</a>' +
-              '<a href="https://www.tiktok.com/@almayacouture" target="_blank" rel="noopener" class="almaya-footer__social" aria-label="TikTok">' +
+              '<a href="https://www.tiktok.com/@almayacouture" target="_blank" rel="noopener" class="almaya-footer__social" aria-label="TikTok" title="تيك توك">' +
                 '<i class="fab fa-tiktok"></i>' +
               '</a>' +
-              '<a href="https://www.youtube.com/@InnovatorEssence" target="_blank" rel="noopener" class="almaya-footer__social almaya-footer__social--yt" aria-label="YouTube">' +
+              '<a href="https://www.youtube.com/@InnovatorEssence" target="_blank" rel="noopener" class="almaya-footer__social almaya-footer__social--yt" aria-label="YouTube" title="يوتيوب">' +
                 '<i class="fab fa-youtube"></i>' +
               '</a>' +
-              '<!-- Theme link will be added here dynamically -->' +
             '</div>' +
+            '<!-- Theme button wrapper will be added here dynamically -->' +
           '</div>' +
 
         '</div>' +
