@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - الصفحة غير موجودة | Almaya Couture</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="images/logo.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #1A1510;
+      --bg2: #2A2218;
+      --text: #E8DDD0;
+      --text2: #B8A890;
+      --text3: #A89880;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --border: rgba(196,160,106,0.15);
+      --border2: rgba(196,160,106,0.2);
+    }
+
+    body.white-theme {
+      --bg: #FDFCF8;
+      --bg2: #F5F0E8;
+      --text: #2A2218;
+      --text2: #5A4E3C;
+      --text3: #6B5F52;
+      --gold: #A07840;
+      --gold-light: #C4A06A;
+      --border: rgba(160,120,64,0.12);
+      --border2: rgba(160,120,64,0.2);
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.025'%3E%3Cpath fill='%23C4A06A' d='M50,0 L100,50 L50,100 L0,50 Z'/%3E%3Cpath fill='%23D4B896' d='M50,25 L75,50 L50,75 L25,50 Z'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 45px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+
+    .logo-wrap {
+      margin-bottom: 2.5rem;
+    }
+    .logo-wrap img {
+      height: 70px;
+      width: auto;
+      border-radius: 12px;
+      opacity: 0.9;
+    }
+
+    .error-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5rem, 20vw, 9rem);
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .gold-line {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1rem auto;
+      border-radius: 4px;
+    }
+
+    .error-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+
+    .error-subtitle {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: var(--text3);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btns-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.85rem 2rem;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      border-radius: 50px;
+      color: var(--text);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+    }
+
+    .btn-home::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196,160,106,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-home:hover::before { left: 100%; }
+    .btn-home:hover {
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.85rem 2rem;
+      background: #25D366;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-whatsapp:hover {
+      background: #20b859;
+      transform: translateY(-2px);
+    }
+
+    .quick-links {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .quick-links p {
+      font-size: 0.75rem;
+      color: var(--text3);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .links-row {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .links-row a {
+      font-size: 0.8rem;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .links-row a:hover { color: var(--gold); }
+
+    @media (max-width: 480px) {
+      .btns-row { flex-direction: column; align-items: center; }
+      .btn-home, .btn-whatsapp { width: 100%; justify-content: center; }
+      .links-row { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="logo-wrap">
+      <a href="index.html">
+        <img src="images/logo.jpg" alt="Almaya Couture" onerror="this.style.display='none'">
+      </a>
+    </div>
+
+    <div class="error-number">404</div>
+
+    <div class="gold-line"></div>
+
+    <h1 class="error-title">هاد الصفحة ما كاينةش 🧵</h1>
+
+    <p class="error-subtitle">
+      يبدو أن الصفحة اللي بغيتي تشوفيها ما كاينةش أو تحركات لمكان آخر.
+      ما تقلقيش — الميمة هنا تساعدك!
+    </p>
+
+    <div class="btns-row">
+      <a href="index.html" class="btn-home">
+        <i class="fas fa-home"></i>
+        الرجوع للرئيسية
+      </a>
+      <a href="https://wa.me/212601245733" target="_blank" class="btn-whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        تواصلي مع الميمة
+      </a>
+    </div>
+
+    <div class="quick-links">
+      <p>✦ أو زوري إحدى هاد الصفحات ✦</p>
+      <div class="links-row">
+        <a href="collections.html"><i class="fas fa-store"></i> المنتجات</a>
+        <a href="design.html"><i class="fas fa-paint-brush"></i> صممي قطعتك</a>
+        <a href="story.html"><i class="fas fa-heart"></i> حكايتنا</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> تواصل</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="footer.js"></script>
+
+</body>
+</html>
