@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="config.js"></script>
-  <script src="admin.js"></script>
   <script src="auth.js"></script>
   
   <style>
@@ -38,7 +37,6 @@
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    /* ========== WHITE THEME ========== */
     body.white-theme {
       --bg-primary: #F5F0E8;
       --bg-secondary: #FDFCF8;
@@ -51,12 +49,6 @@
       --text-muted: #8B7B68;
       --border: rgba(160,120,64,0.15);
       --border-hover: rgba(160,120,64,0.4);
-      --success: #25D366;
-      --danger: #E74C3C;
-      --warning: #E67E00;
-      --edit: #3B82F6;
-      --shadow: 0 4px 20px rgba(0,0,0,0.08);
-      --shadow-gold: 0 0 20px rgba(160,120,64,0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -75,211 +67,109 @@
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg-secondary); }
     ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
 
     #header-container { position: sticky; top: 0; z-index: 50; }
     .main-content { flex: 1; }
+    .admin-container { max-width: 1300px; margin: 0 auto; padding: 2.5rem 1.5rem; }
 
-    .admin-container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem;
-      transition: margin-right 0.3s ease;
-    }
-
-    .admin-header {
-      text-align: center;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-    .admin-header::after {
-      content: '';
-      position: absolute;
-      bottom: -1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      border-radius: 10px;
-    }
-    .admin-header .icon-circle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, rgba(196,160,106,0.15), rgba(196,160,106,0.05));
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      color: var(--gold);
-    }
-    .admin-header h1 {
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 0.4rem;
-    }
-    .admin-header p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .tabs {
+    /* Stats Bar */
+    .stats-bar {
       display: flex;
-      gap: 0.35rem;
-      margin-bottom: 2.5rem;
-      background: var(--bg-secondary);
-      padding: 0.4rem;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
+      gap: 1rem;
       flex-wrap: wrap;
+      margin-bottom: 2rem;
     }
-    .tab-btn {
-      flex: 1;
-      min-width: 120px;
-      padding: 0.85rem 1.8rem;
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: var(--radius);
-      transition: var(--transition);
-      font-family: inherit;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      white-space: nowrap;
-    }
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(196,160,106,0.2), rgba(196,160,106,0.05));
-      color: var(--gold);
-      box-shadow: 0 2px 10px rgba(196,160,106,0.15);
-    }
-    .tab-btn:hover:not(.active) {
-      color: var(--text-primary);
-      background: rgba(196,160,106,0.05);
-    }
-    .tab-content { display: none; animation: fadeSlideIn 0.4s ease; }
-    .tab-content.active { display: block; }
-
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .form-card {
+    .stat-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 2.5rem;
-      margin-bottom: 2rem;
-      box-shadow: var(--shadow);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.5rem;
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
     }
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
+    .stat-card i { font-size: 1.8rem; color: var(--gold); margin-bottom: 0.5rem; display: block; }
+    .stat-card .stat-number { font-size: 1.8rem; font-weight: 800; color: var(--text-primary); }
+    .stat-card .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* Toast Notifications */
+    .toast-notification {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-card);
+      border-right: 4px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+      animation: slideInRight 0.3s ease;
     }
+    .toast-notification.undo-toast { border-right-color: var(--warning); }
+    .toast-notification button { background: var(--warning); border: none; padding: 0.3rem 0.8rem; border-radius: var(--radius-sm); color: #1A1510; font-weight: bold; cursor: pointer; margin-right: 0.5rem; }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .admin-header { text-align: center; margin-bottom: 3rem; position: relative; }
+    .admin-header::after { content: ''; position: absolute; bottom: -1rem; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); border-radius: 10px; }
+    .admin-header .icon-circle { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; background: linear-gradient(135deg, rgba(196,160,106,0.15), rgba(196,160,106,0.05)); border: 1px solid var(--border); border-radius: 50%; margin-bottom: 1rem; font-size: 1.5rem; color: var(--gold); }
+    .admin-header h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; }
+    .admin-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .tabs { display: flex; gap: 0.35rem; margin-bottom: 2.5rem; background: var(--bg-secondary); padding: 0.4rem; border-radius: var(--radius-lg); border: 1px solid var(--border); flex-wrap: wrap; }
+    .tab-btn { flex: 1; min-width: 120px; padding: 0.85rem 1.8rem; background: transparent; border: none; color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; cursor: pointer; border-radius: var(--radius); transition: var(--transition); font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .tab-btn.active { background: linear-gradient(135deg, rgba(196,160,106,0.2), rgba(196,160,106,0.05)); color: var(--gold); box-shadow: 0 2px 10px rgba(196,160,106,0.15); }
+    .tab-content { display: none; animation: fadeSlideIn 0.4s ease; }
+    .tab-content.active { display: block; }
+    @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    .form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
+    .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
     .section-title i { color: var(--gold); }
-    .section-divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
     .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     .form-grid .full-width { grid-column: 1 / -1; }
-    .form-group label {
-      display: flex; align-items: center; gap: 0.4rem;
-      font-size: 0.85rem; color: var(--text-secondary);
-      margin-bottom: 0.5rem; font-weight: 600;
-    }
-    .form-group label i { color: var(--gold); font-size: 0.8rem; width: 16px; text-align: center; }
-    .form-group label .required-star { color: var(--danger); margin-right: 2px; }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%; padding: 0.85rem 1rem;
-      background: var(--bg-secondary); border: 1.5px solid var(--border);
-      border-radius: var(--radius); color: var(--text-primary);
-      font-family: inherit; font-size: 0.9rem; transition: var(--transition);
-    }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-      outline: none; border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(196,160,106,0.08); background: var(--bg-primary);
-    }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C4A06A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 1rem center; padding-left: 2.5rem; }
-    .form-group select option { background: var(--bg-secondary); color: var(--text-primary); }
+    .form-group label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 600; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.85rem 1rem; background: var(--bg-secondary); border: 1.5px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-family: inherit; font-size: 0.9rem; transition: var(--transition); }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(196,160,106,0.08); }
+    
+    /* Character Counter */
+    .char-counter { text-align: left; font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .char-counter.warning { color: var(--warning); }
+    .char-counter.danger { color: var(--danger); }
 
-    .main-upload-zone {
-      background: linear-gradient(135deg, rgba(196,160,106,0.03), rgba(196,160,106,0.01));
-      border: 2px dashed var(--border); border-radius: var(--radius-lg);
-      padding: 2rem; text-align: center; cursor: pointer;
-      transition: var(--transition); margin-bottom: 1.5rem; position: relative; overflow: hidden;
-    }
-    .main-upload-zone:hover {
-      border-color: var(--gold); background: rgba(196,160,106,0.03);
-      transform: translateY(-2px); box-shadow: var(--shadow-gold);
-    }
-    .main-upload-zone.has-files { border-style: solid; border-color: var(--gold); }
-    .main-upload-zone .upload-icon { font-size: 3rem; color: var(--gold); margin-bottom: 0.75rem; display: block; }
-    .main-upload-zone .upload-title { font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem; font-size: 1rem; }
-    .main-upload-zone .upload-subtitle { color: var(--text-muted); font-size: 0.8rem; }
+    /* Progress Bar */
+    .upload-progress { margin-top: 1rem; display: none; }
+    .progress-bar { height: 4px; background: var(--border); border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); transition: width 0.3s; }
+    .progress-text { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; text-align: center; }
 
+    /* Images Grid with Drag & Drop */
     .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; }
-    .image-card {
-      aspect-ratio: 3/4; background: var(--bg-primary);
-      border: 2px dashed var(--border); border-radius: var(--radius-lg);
-      cursor: pointer; transition: var(--transition); position: relative; overflow: hidden;
-      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.4rem;
-    }
-    .image-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: var(--shadow-gold); }
-    .image-card.has-image { border-style: solid; border-color: var(--success); }
+    .image-card { aspect-ratio: 3/4; background: var(--bg-primary); border: 2px dashed var(--border); border-radius: var(--radius-lg); cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.4rem; }
+    .image-card.dragging { opacity: 0.5; border-color: var(--gold); }
+    .image-card.drag-over { border-color: var(--gold); background: rgba(196,160,106,0.1); transform: scale(1.02); }
+    .image-card.has-image { border-style: solid; }
     .image-card.is-main { border-color: var(--gold) !important; border-width: 2.5px; }
     .image-card img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 1; }
-    .image-card .card-actions {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.6); z-index: 2;
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem; opacity: 0; transition: var(--transition);
-    }
+    .image-card .card-actions { position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 2; display: flex; align-items: center; justify-content: center; gap: 0.5rem; opacity: 0; transition: var(--transition); }
     .image-card.has-image:hover .card-actions { opacity: 1; }
-    .image-card input[type="file"] { display: none; }
-    .main-badge {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      color: #1A1510;
-      font-size: 0.6rem;
-      font-weight: 800;
-      padding: 0.2rem 0.55rem;
-      border-radius: 20px;
-      z-index: 4;
-    }
+    .main-badge { position: absolute; top: 0.5rem; right: 0.5rem; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #1A1510; font-size: 0.6rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 20px; z-index: 4; }
+    .drag-handle { position: absolute; bottom: 0.5rem; left: 0.5rem; background: rgba(0,0,0,0.6); color: white; padding: 0.2rem 0.4rem; border-radius: var(--radius-sm); font-size: 0.6rem; z-index: 4; cursor: grab; }
 
-    .btn {
-      padding: 0.85rem 2rem; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      color: #1A1510; border: none; border-radius: var(--radius);
-      font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--transition);
-      font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    }
+    .main-upload-zone { background: linear-gradient(135deg, rgba(196,160,106,0.03), rgba(196,160,106,0.01)); border: 2px dashed var(--border); border-radius: var(--radius-lg); padding: 2rem; text-align: center; cursor: pointer; transition: var(--transition); margin-bottom: 1.5rem; }
+    .main-upload-zone:hover { border-color: var(--gold); background: rgba(196,160,106,0.03); }
+
+    .btn { padding: 0.85rem 2rem; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #1A1510; border: none; border-radius: var(--radius); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--transition); font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
     .btn:hover { transform: translateY(-2px); }
     .btn-outline { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); }
-    .btn-outline:hover { background: rgba(196,160,106,0.08); }
     .btn-danger { background: linear-gradient(135deg, #FF4757, #e84118); color: white; }
     .btn-edit { background: linear-gradient(135deg, #3B82F6, #2563EB); color: white; }
-    .btn-group { display: flex; gap: 0.75rem; margin-top: 2rem; flex-wrap: wrap; }
-
-    .message {
-      padding: 1rem 1.5rem; border-radius: var(--radius); margin-bottom: 1.5rem;
-      text-align: center; font-weight: 600; font-size: 0.85rem; display: none;
-    }
-    .message.success { background: rgba(37,211,102,0.1); color: var(--success); border: 1px solid rgba(37,211,102,0.3); }
-    .message.error { background: rgba(255,71,87,0.1); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
-    .message.info { background: rgba(196,160,106,0.1); color: var(--gold); border: 1px solid rgba(196,160,106,0.3); }
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
 
     .products-table { width: 100%; border-collapse: collapse; background: var(--bg-card); min-width: 750px; }
     .products-table th { background: var(--bg-secondary); color: var(--gold); padding: 1rem 0.9rem; font-size: 0.75rem; text-align: right; font-weight: 700; border-bottom: 2px solid var(--border); }
@@ -290,545 +180,576 @@
     .status-active { background: rgba(37,211,102,0.15); color: var(--success); }
     .status-inactive { background: rgba(255,71,87,0.15); color: var(--danger); }
 
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-      z-index: 200; display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    }
+    .bulk-actions-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.75rem 1rem; background: var(--bg-secondary); border-radius: var(--radius); border: 1px solid var(--border); }
+    .bulk-checkbox { width: 20px; height: 20px; cursor: pointer; accent-color: var(--gold); }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl);
-      padding: 2.5rem; width: 95%; max-width: 480px; text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto;
-    }
+    .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; width: 95%; max-width: 480px; text-align: center; max-height: 90vh; overflow-y: auto; }
 
-    .loader { width: 40px; height: 40px; border: 3px solid var(--border); border-radius: 50%; border-top-color: var(--gold); animation: spin 0.8s ease-in-out infinite; margin: 2rem auto; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    #footer-container { margin-top: auto; }
-
-    @media (max-width: 768px) {
-      .admin-container { padding: 1rem; }
-      .form-grid { grid-template-columns: 1fr; }
-      .tabs { flex-direction: column; }
-    }
+    @media (max-width: 768px) { .admin-container { padding: 1rem; } .form-grid { grid-template-columns: 1fr; } .tabs { flex-direction: column; } }
   </style>
 </head>
 <body>
 
-  <div id="header-container"></div>
+<div id="header-container"></div>
 
-  <div class="main-content">
-    <div class="admin-container">
-      
-      <div class="admin-header">
-        <div class="icon-circle"><i class="fas fa-cog"></i></div>
-        <h1>إدارة المنتجات</h1>
-        <p>أضف منتجاتك مع صور وفيديو بكل سهولة</p>
+<div class="main-content">
+  <div class="admin-container">
+    
+    <div class="admin-header">
+      <div class="icon-circle"><i class="fas fa-cog"></i></div>
+      <h1>إدارة المنتجات</h1>
+      <p>أضف منتجاتك مع صور وفيديو بكل سهولة</p>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-card"><i class="fas fa-box"></i><div class="stat-number" id="totalProducts">0</div><div class="stat-label">إجمالي المنتجات</div></div>
+      <div class="stat-card"><i class="fas fa-eye"></i><div class="stat-number" id="activeProducts">0</div><div class="stat-label">نشطة</div></div>
+      <div class="stat-card"><i class="fas fa-star"></i><div class="stat-number" id="featuredProducts">0</div><div class="stat-label">مميزة</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('add')"><i class="fas fa-plus-circle"></i> إضافة منتج جديد</button>
+      <button class="tab-btn" onclick="switchTab('list')"><i class="fas fa-list-ul"></i> قائمة المنتجات</button>
+    </div>
+
+    <div class="tab-content active" id="tab-add">
+      <div class="form-card">
+        <form id="productForm" onsubmit="event.preventDefault(); addProduct();">
+          <div class="section-title"><i class="fas fa-info-circle"></i> معلومات المنتج الأساسية</div>
+          <div class="form-grid">
+            <div class="form-group"><label><i class="fas fa-tag"></i> الفئة <span class="required-star">*</span></label><select id="categoryName" required><option value="">اختر الفئة...</option></select></div>
+            <div class="form-group"><label><i class="fas fa-tshirt"></i> اسم المنتج <span class="required-star">*</span></label><input type="text" id="productName" placeholder="مثال: جلابة مغربية فاخرة" required></div>
+            <div class="form-group"><label><i class="fas fa-money-bill-wave"></i> السعر</label><input type="text" id="priceRange" placeholder="مثال: 600-900 درهم"></div>
+            <div class="form-group"><label><i class="fas fa-sort-numeric-down"></i> ترتيب العرض</label><input type="number" id="displayOrder" value="0" min="0"></div>
+            <div class="form-group full-width"><label><i class="fas fa-align-left"></i> وصف المنتج</label><textarea id="productDescription" rows="3" maxlength="500" placeholder="اكتب وصفاً جذاباً للمنتج..."></textarea><div class="char-counter" id="descCounter">0 / 500 حرف</div></div>
+          </div>
+
+          <hr class="section-divider">
+          <div class="section-title"><i class="fas fa-images"></i> صور المنتج <small>(اسحب الصور لإعادة الترتيب)</small></div>
+          <div class="images-grid" id="imagesGrid"></div>
+          <div class="main-upload-zone" id="mainUploadZone" onclick="document.getElementById('bulkImageInput').click()">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <p class="upload-title">اسحب وأفلت الصور هنا للإضافة السريعة</p>
+            <p class="upload-subtitle">أو اضغط للاختيار - PNG, JPG, WEBP (حد أقصى 10MB)</p>
+            <input type="file" id="bulkImageInput" accept="image/*" multiple onchange="handleBulkImages(event)" style="display:none">
+            <div class="upload-progress" id="bulkProgress"><div class="progress-bar"><div class="progress-fill"></div></div><div class="progress-text"></div></div>
+          </div>
+
+          <hr class="section-divider">
+          <div class="section-title"><i class="fas fa-video"></i> فيديو المنتج <small>(اختياري)</small></div>
+          <div class="video-upload-card" id="videoCard" onclick="document.getElementById('videoInput').click()" style="background:var(--bg-secondary);border:2px dashed var(--border);border-radius:var(--radius-lg);padding:2rem;text-align:center;cursor:pointer;">
+            <i class="fas fa-play-circle" style="font-size:2.5rem;color:var(--gold);"></i>
+            <p style="color:var(--text-secondary);">أضف فيديو للمنتج</p>
+            <div id="videoPreview"></div>
+            <input type="file" id="videoInput" accept="video/*" onchange="handleVideo(event)" style="display:none">
+          </div>
+
+          <hr class="section-divider">
+          <div class="section-title"><i class="fas fa-sliders-h"></i> خيارات العرض</div>
+          <div style="display: flex; gap: 2rem; margin-bottom: 1rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox" id="isFeatured"><i class="fas fa-star"></i> منتج مميز</label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="checkbox" id="isActive" checked><i class="fas fa-eye"></i> نشط</label>
+          </div>
+          <input type="hidden" id="editProductId" value="">
+
+          <div class="btn-group" id="formButtons">
+            <button type="submit" class="btn" id="submitBtn"><i class="fas fa-plus-circle"></i> إضافة المنتج</button>
+            <button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-redo"></i> إعادة تعيين</button>
+          </div>
+        </form>
       </div>
+    </div>
 
-      <div class="message" id="message"></div>
-
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('add')"><i class="fas fa-plus-circle"></i> إضافة منتج جديد</button>
-        <button class="tab-btn" onclick="switchTab('list')"><i class="fas fa-list-ul"></i> قائمة المنتجات</button>
-      </div>
-
-      <div class="tab-content active" id="tab-add">
-        <div class="form-card">
-          <form id="productForm" onsubmit="event.preventDefault(); addProduct(event);">
-            
-            <div class="section-title"><i class="fas fa-info-circle"></i> معلومات المنتج الأساسية</div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label><i class="fas fa-tag"></i> الفئة <span class="required-star">*</span></label>
-                <select id="categoryName" required><option value="">اختر الفئة...</option></select>
-              </div>
-              <div class="form-group">
-                <label><i class="fas fa-tshirt"></i> اسم المنتج <span class="required-star">*</span></label>
-                <input type="text" id="productName" placeholder="مثال: جلابة مغربية فاخرة" required>
-              </div>
-              <div class="form-group">
-                <label><i class="fas fa-money-bill-wave"></i> السعر</label>
-                <input type="text" id="priceRange" placeholder="مثال: 600-900 درهم">
-              </div>
-              <div class="form-group">
-                <label><i class="fas fa-sort-numeric-down"></i> ترتيب العرض</label>
-                <input type="number" id="displayOrder" value="0" min="0" placeholder="0">
-              </div>
-              <div class="form-group full-width">
-                <label><i class="fas fa-align-left"></i> وصف المنتج</label>
-                <textarea id="productDescription" rows="3" placeholder="اكتب وصفاً جذاباً للمنتج..."></textarea>
-              </div>
-            </div>
-
-            <hr class="section-divider">
-
-            <div class="section-title"><i class="fas fa-images"></i> صور المنتج</div>
-            <div class="form-group full-width" style="margin-bottom:0;">
-              <label style="margin-bottom:0.75rem;"><span class="required-star">*</span> الصورة الرئيسية مطلوبة - يمكنك رفع حتى 10 صور</label>
-              <div class="main-upload-zone" id="mainUploadZone" onclick="document.getElementById('bulkImageInput').click()">
-                <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                <p class="upload-title">اسحب وأفلت الصور هنا</p>
-                <p class="upload-subtitle">أو اضغط للاختيار - PNG, JPG, WEBP (حد أقصى 10MB للصورة)</p>
-                <input type="file" id="bulkImageInput" accept="image/*" multiple onchange="handleBulkImages(event)" style="display:none">
-              </div>
-              <div class="images-grid" id="imagesGrid"></div>
-            </div>
-
-            <hr class="section-divider">
-
-            <div class="section-title"><i class="fas fa-video"></i> فيديو المنتج <small style="color:var(--text-muted);font-weight:400;">(اختياري)</small></div>
-            <div class="form-group full-width" style="margin-bottom:0;">
-              <div class="video-upload-card" id="videoCard" onclick="document.getElementById('videoInput').click()" style="background:var(--bg-secondary);border:2px dashed var(--border);border-radius:var(--radius-lg);padding:2rem;text-align:center;cursor:pointer;">
-                <i class="fas fa-play-circle" style="font-size:2.5rem;color:var(--gold);"></i>
-                <p style="color:var(--text-secondary);">أضف فيديو للمنتج</p>
-                <div id="videoPreview"></div>
-                <input type="file" id="videoInput" accept="video/*" onchange="handleVideo(event)" style="display:none">
-              </div>
-            </div>
-
-            <hr class="section-divider">
-
-            <div class="section-title"><i class="fas fa-sliders-h"></i> خيارات العرض</div>
-            <div style="display: flex; gap: 2rem; margin-bottom: 1rem;">
-              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                <input type="checkbox" id="isFeatured" style="width: 18px; height: 18px; cursor: pointer;">
-                <i class="fas fa-star"></i> منتج مميز
-              </label>
-              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                <input type="checkbox" id="isActive" checked style="width: 18px; height: 18px; cursor: pointer;">
-                <i class="fas fa-eye"></i> نشط
-              </label>
-            </div>
-            <input type="hidden" id="editProductId" value="">
-
-            <div class="btn-group" id="formButtons">
-              <button type="submit" class="btn" id="submitBtn"><i class="fas fa-plus-circle"></i> إضافة المنتج</button>
-              <button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-redo"></i> إعادة تعيين</button>
-            </div>
-          </form>
+    <div class="tab-content" id="tab-list">
+      <div class="form-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+          <h3 style="font-size:1.15rem;"><i class="fas fa-boxes" style="color:var(--gold);"></i> جميع المنتجات</h3>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <select id="filterCategory" onchange="loadProducts()" style="padding:0.6rem 1rem;background:var(--bg-secondary);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-family:inherit;"><option value="">كل الفئات</option></select>
+            <button class="btn btn-sm btn-outline" onclick="loadProducts()"><i class="fas fa-sync-alt"></i> تحديث</button>
+            <button class="btn btn-sm btn-outline" id="duplicateBtn" style="display:none;" onclick="duplicateSelected()"><i class="fas fa-copy"></i> نسخ المحدد</button>
+            <button class="btn btn-sm btn-danger" id="bulkDeleteBtn" style="display:none;" onclick="bulkDeleteSelected()"><i class="fas fa-trash"></i> حذف المحدد</button>
+          </div>
         </div>
-      </div>
-
-      <div class="tab-content" id="tab-list">
-        <div class="form-card">
-          <div class="table-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-            <h3 style="font-size:1.15rem;color:var(--text-primary);"><i class="fas fa-boxes" style="color:var(--gold);"></i> جميع المنتجات</h3>
-            <div style="display:flex;gap:0.5rem;">
-              <select id="filterCategory" onchange="loadProducts()" style="padding:0.6rem 1rem;background:var(--bg-secondary);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-family:inherit;font-size:0.8rem;"><option value="">كل الفئات</option></select>
-              <button class="btn btn-sm btn-outline" onclick="loadProducts()"><i class="fas fa-sync-alt"></i> تحديث</button>
-            </div>
-          </div>
-          <div style="overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--border);">
-            <table class="products-table">
-              <thead><tr><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></tr>
-              </thead>
-              <tbody id="productsTableBody">
-                <tr><td colspan="6"><div class="loader"></div></td></tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="bulk-actions-bar" id="bulkActionsBar" style="display:none;">
+          <span><i class="fas fa-check-circle"></i> <span id="selectedCount">0</span> منتج محدد</span>
+          <button class="btn btn-sm" onclick="toggleBulkMode(false)">إلغاء التحديد</button>
+        </div>
+        <div style="overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--border);">
+          <table class="products-table">
+            <thead><tr><th><input type="checkbox" id="selectAllCheckbox" style="width:20px;height:20px;cursor:pointer;"></th><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+            <tbody id="productsTableBody"><tr><td colspan="7"><div class="loader"></div></td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div id="footer-container"></div>
+<div id="footer-container"></div>
 
-  <div class="modal-overlay" id="deleteModal">
-    <div class="modal modal-delete">
-      <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:var(--danger);"></i>
-      <h3 style="color:var(--text-primary); margin: 1rem 0;">تأكيد حذف المنتج</h3>
-      <p style="color:var(--text-secondary);">سيتم حذف المنتج من قاعدة البيانات فقط</p>
-      <p style="color:var(--text-muted); font-size:0.8rem; margin-top:0.5rem;">ملاحظة: سيتم الاحتفاظ بالصور في Cloudinary للحفاظ على الأمان. يمكن حذفها يدوياً من لوحة التحكم.</p>
-      <div class="product-name-highlight" id="deleteProductName" style="color:var(--text-primary);background:rgba(255,71,87,0.1);padding:0.4rem 1rem;border-radius:var(--radius-sm);display:inline-block;margin:0.5rem 0;"></div>
-      <div class="btn-group" style="justify-content:center;">
-        <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash-alt"></i> نعم، احذف</button>
-        <button class="btn btn-outline" onclick="closeDeleteModal()"><i class="fas fa-times"></i> إلغاء</button>
-      </div>
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal modal-delete">
+    <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:var(--danger);"></i>
+    <h3 style="margin: 1rem 0;">تأكيد حذف المنتج</h3>
+    <p style="color:var(--text-secondary);">سيتم حذف المنتج من قاعدة البيانات فقط</p>
+    <div id="deleteProductName" style="color:var(--gold);margin:0.5rem 0;"></div>
+    <div class="btn-group" style="justify-content:center;">
+      <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash-alt"></i> نعم، احذف</button>
+      <button class="btn btn-outline" onclick="closeDeleteModal()"><i class="fas fa-times"></i> إلغاء</button>
     </div>
   </div>
+</div>
 
-  <script src="header.js"></script>
-  <script src="footer.js"></script>
+<script src="header.js"></script>
+<script src="footer.js"></script>
 
-  <script>
-    // ==================== VÉRIFICATION DE SESSION ADMIN ====================
-    (function checkAdminSession() {
-      const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true';
-      if (!isLoggedIn) {
-        document.querySelectorAll('.main-upload-zone, .image-card, #videoCard, .tab-btn, #submitBtn').forEach(el => {
-          if (el) el.style.opacity = '0.5';
-        });
-        const msgDiv = document.getElementById('message');
-        if (msgDiv) {
-          msgDiv.textContent = '⚠️ يجب تسجيل الدخول أولاً لإدارة المنتجات';
-          msgDiv.className = 'message error';
-          msgDiv.style.display = 'block';
-        }
-        setTimeout(() => {
-          window.location.href = 'admin-login.html';
-        }, 2500);
-        return;
-      }
-    })();
+<script>
+// ==================== VÉRIFICATION ADMIN ====================
+(function checkAdminSession() {
+  if (sessionStorage.getItem('admin_logged_in') !== 'true') {
+    window.location.href = 'admin-login.html';
+  }
+})();
 
-    // ==================== CONFIGURATION ====================
-    if (typeof CONFIG === 'undefined') { 
-      console.error('❌ CONFIG missing');
-      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js manquant !</div>';
-      throw new Error('CONFIG missing'); 
+// ==================== CONFIG ====================
+if (typeof CONFIG === 'undefined') { document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js manquant</div>'; throw new Error('CONFIG missing'); }
+const CLOUD_NAME = CONFIG.CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = CONFIG.CLOUDINARY_UPLOAD_PRESET;
+const SUPABASE_URL = CONFIG.SUPABASE_URL;
+const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
+const MAX_IMAGES = 10;
+
+let uploadedImages = new Array(MAX_IMAGES).fill(null);
+let uploadedVideoData = null;
+let deleteProductId = null;
+let pendingDelete = null;
+let bulkMode = false;
+let selectedProducts = new Set();
+let hasUnsavedChanges = false;
+
+// ==================== UTILS ====================
+function showMessage(text, type) { alert(text); }
+function showToast(message, undoCallback) {
+  const existing = document.querySelector('.toast-notification');
+  if(existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'toast-notification undo-toast';
+  toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove();${undoCallback}()">تراجع</button>`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 5000);
+}
+function setUnsavedChanges() { hasUnsavedChanges = true; }
+window.addEventListener('beforeunload', (e) => { if(hasUnsavedChanges) { e.preventDefault(); e.returnValue = ''; } });
+function markSaved() { hasUnsavedChanges = false; }
+
+// ==================== CHAR COUNTER ====================
+document.addEventListener('DOMContentLoaded', () => {
+  const desc = document.getElementById('productDescription');
+  if(desc) desc.addEventListener('input', function() {
+    const len = this.value.length;
+    const counter = document.getElementById('descCounter');
+    counter.textContent = `${len} / 500 حرف`;
+    counter.className = 'char-counter' + (len > 450 ? (len > 490 ? ' danger' : ' warning') : '');
+    setUnsavedChanges();
+  });
+  document.querySelectorAll('#productForm input, #productForm select').forEach(el => el.addEventListener('change', setUnsavedChanges));
+});
+
+// ==================== PROGRESS BAR ====================
+function showProgress(containerId, show) {
+  const el = document.getElementById(containerId);
+  if(el) el.style.display = show ? 'block' : 'none';
+}
+function updateProgress(containerId, percent, text) {
+  const container = document.getElementById(containerId);
+  if(container) {
+    container.querySelector('.progress-fill').style.width = `${percent}%`;
+    container.querySelector('.progress-text').textContent = text || `${percent}%`;
+  }
+}
+
+// ==================== CLOUDINARY UPLOAD WITH PROGRESS ====================
+function uploadToCloudinaryWithProgress(file, type, onProgress) {
+  return new Promise((resolve, reject) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', UPLOAD_PRESET);
+    fd.append('folder', type === 'video' ? 'almaya-products/videos' : 'almaya-products/images');
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/upload`);
+    xhr.upload.onprogress = (e) => { if(e.lengthComputable && onProgress) onProgress(Math.round((e.loaded/e.total)*100)); };
+    xhr.onload = () => { if(xhr.status >= 200 && xhr.status < 300) resolve(JSON.parse(xhr.responseText)); else reject(new Error(`Erreur ${xhr.status}`)); };
+    xhr.onerror = () => reject(new Error('Erreur réseau'));
+    xhr.timeout = 300000;
+    xhr.send(fd);
+  });
+}
+
+// ==================== PREVIEW BEFORE UPLOAD ====================
+function previewImage(file, index) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const card = document.getElementById(`imageCard${index}`);
+    if(card) {
+      card.classList.add('has-image');
+      card.innerHTML = `<img src="${e.target.result}" alt="Preview">
+        ${index===0 ? '<span class="main-badge"><i class="fas fa-crown"></i> الرئيسية</span>' : ''}
+        <div class="card-actions">
+          ${index!==0 ? `<button class="action-btn" onclick="event.stopPropagation();setAsMain(${index})" style="background:var(--gold);color:#1A1510;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-crown"></i></button>` : ''}
+          <button class="action-btn" onclick="event.stopPropagation();removeImage(${index})" style="background:var(--danger);color:white;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+        <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">`;
     }
+    setUnsavedChanges();
+  };
+  reader.readAsDataURL(file);
+}
 
-    const CLOUD_NAME = CONFIG.CLOUDINARY_CLOUD_NAME;
-    const UPLOAD_PRESET = CONFIG.CLOUDINARY_UPLOAD_PRESET;
-    const SUPABASE_URL = CONFIG.SUPABASE_URL;
-    const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
-    const MAX_IMAGES = 10;
+window.handleImage = async function(event, index) {
+  const file = event.target.files[0];
+  if(!file || file.size>10*1024*1024 || !file.type.startsWith('image/')) { showMessage('❌ ملف غير صالح', 'error'); return; }
+  previewImage(file, index);
+  const card = document.getElementById(`imageCard${index}`);
+  card.classList.add('uploading');
+  try {
+    const data = await uploadToCloudinaryWithProgress(file, 'image', null);
+    uploadedImages[index] = { url: data.secure_url, public_id: data.public_id };
+    card.classList.remove('uploading');
+    const img = card.querySelector('img');
+    if(img) img.src = data.secure_url;
+    if(index===0) card.classList.add('is-main');
+    showMessage(`✅ تم رفع الصورة ${index+1}`, 'success');
+  } catch(e) { showMessage('❌ فشل رفع الصورة', 'error'); card.classList.remove('uploading'); removeImage(index); }
+};
 
-    let uploadedImages = new Array(MAX_IMAGES).fill(null);
-    let uploadedVideoData = null;
-    let deleteProductId = null;
-
-    // ==================== BUILD IMAGES GRID ====================
-    function buildImagesGrid() {
-      const grid = document.getElementById('imagesGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
-      for (let i = 0; i < MAX_IMAGES; i++) {
-        const card = document.createElement('div');
-        card.className = 'image-card';
-        card.id = `imageCard${i}`;
-        card.setAttribute('data-index', i);
-        updateImageCardHTML(card, i, false);
-        card.addEventListener('click', (e) => {
-          if (!e.target.closest('.card-actions')) document.getElementById(`imageInput${i}`).click();
-        });
-        grid.appendChild(card);
-      }
-    }
-
-    function updateImageCardHTML(card, index, hasImage, imageUrl = null) {
-      const isMain = index === 0;
-      card.className = 'image-card';
-      if (hasImage) {
-        card.classList.add('has-image');
-        if (isMain) card.classList.add('is-main');
-        card.innerHTML = `<img src="${imageUrl}" alt="صورة ${index + 1}">
-          ${isMain ? '<span class="main-badge"><i class="fas fa-crown"></i> الرئيسية</span>' : ''}
-          <div class="card-actions">
-            ${!isMain ? `<button class="action-btn btn-set-main" onclick="event.stopPropagation();setAsMain(${index})" style="background:var(--gold);color:#1A1510;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-crown"></i></button>` : ''}
-            <button class="action-btn btn-delete-img" onclick="event.stopPropagation();removeImage(${index})" style="background:var(--danger);color:white;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
-          </div>
-          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">`;
-      } else {
-        card.innerHTML = `${isMain ? '<span class="main-badge" style="opacity:0.7;"><i class="fas fa-crown"></i> مطلوبة</span>' : ''}
-          <i class="fas fa-image" style="font-size:2rem;color:var(--text-muted);"></i>
-          <span style="font-size:0.65rem;color:var(--text-muted);text-align:center;">${isMain ? 'الصورة الرئيسية *' : 'أضف صورة'}</span>
-          <input type="file" id="imageInput${index}" accept="image/*" onchange="handleImage(event, ${index})" style="display:none">`;
-      }
-    }
-
-    // ==================== CLOUDINARY UPLOAD ====================
-    function uploadToCloudinary(file, type) {
-      return new Promise((resolve, reject) => {
-        const fd = new FormData();
-        fd.append('file', file);
-        fd.append('upload_preset', UPLOAD_PRESET);
-        if (type === 'video') { fd.append('folder', 'almaya-products/videos'); fd.append('resource_type', 'video'); }
-        else { fd.append('folder', 'almaya-products/images'); }
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/upload`);
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300) { resolve(JSON.parse(xhr.responseText)); }
-          else { reject(new Error(`فشل الرفع: ${xhr.status}`)); }
-        };
-        xhr.onerror = () => reject(new Error('خطأ في الاتصال'));
-        xhr.timeout = 300000;
-        xhr.send(fd);
-      });
-    }
-
-    // ==================== HANDLE IMAGES ====================
-    window.handleImage = async function(event, index) {
-      const file = event.target.files[0];
-      if (!file || file.size > 10*1024*1024 || !file.type.startsWith('image/')) { showMessage('❌ ملف غير صالح', 'error'); return; }
-      const card = document.getElementById(`imageCard${index}`);
-      if (!card) return;
-      card.classList.add('uploading');
+window.handleBulkImages = async function(event) {
+  const files = Array.from(event.target.files);
+  showProgress('bulkProgress', true);
+  for(let i=0; i<files.length && i<MAX_IMAGES; i++) {
+    const file = files[i];
+    if(file && file.size<=10*1024*1024 && file.type.startsWith('image/')) {
+      previewImage(file, i);
+      updateProgress('bulkProgress', ((i+1)/Math.min(files.length,MAX_IMAGES))*100, `رفع ${i+1}/${Math.min(files.length,MAX_IMAGES)}`);
       try {
-        const data = await uploadToCloudinary(file, 'image');
-        uploadedImages[index] = { url: data.secure_url, public_id: data.public_id };
-        card.classList.remove('uploading');
-        updateImageCardHTML(card, index, true, data.secure_url);
-        if (index === 0) card.classList.add('is-main');
-        updateMainUploadZone();
-        showMessage(`✅ تم رفع الصورة ${index + 1} بنجاح`, 'success');
-      } catch(e) { showMessage('❌ فشل رفع الصورة', 'error'); card.classList.remove('uploading'); }
-    };
-
-    window.handleBulkImages = async function(event) {
-      const files = Array.from(event.target.files);
-      for (let i = 0; i < files.length && i < MAX_IMAGES; i++) {
-        const file = files[i];
-        if (file && file.size <= 10*1024*1024 && file.type.startsWith('image/')) {
-          const data = await uploadToCloudinary(file, 'image');
-          if (data) {
-            uploadedImages[i] = { url: data.secure_url, public_id: data.public_id };
-            const card = document.getElementById(`imageCard${i}`);
-            if (card) updateImageCardHTML(card, i, true, data.secure_url);
-          }
-        }
-      }
-      rebuildGridFromData();
-      showMessage(`✅ تم رفع ${files.length} صور`, 'success');
-    };
-
-    window.setAsMain = function(index) {
-      if (index === 0) return;
-      [uploadedImages[0], uploadedImages[index]] = [uploadedImages[index], uploadedImages[0]];
-      rebuildGridFromData();
-    };
-
-    function rebuildGridFromData() {
-      document.querySelectorAll('.image-card').forEach((card, i) => {
-        const data = uploadedImages[i];
-        updateImageCardHTML(card, i, data?.url ? true : false, data?.url);
-        if (i === 0 && data?.url) card.classList.add('is-main');
-      });
-      updateMainUploadZone();
+        const data = await uploadToCloudinaryWithProgress(file, 'image', null);
+        uploadedImages[i] = { url: data.secure_url, public_id: data.public_id };
+        const card = document.getElementById(`imageCard${i}`);
+        if(card && card.querySelector('img')) card.querySelector('img').src = data.secure_url;
+      } catch(e) { console.error(e); }
     }
+  }
+  showProgress('bulkProgress', false);
+  showMessage(`✅ تم رفع ${Math.min(files.length,MAX_IMAGES)} صور`, 'success');
+  rebuildGridFromData();
+};
 
-    window.removeImage = async function(index) {
-      uploadedImages[index] = null;
-      const card = document.getElementById(`imageCard${index}`);
-      if (card) { card.classList.remove('has-image', 'is-main', 'uploading'); updateImageCardHTML(card, index, false); }
-      updateMainUploadZone();
-      showMessage('✅ تم إزالة الصورة من النموذج فقط (ستبقى في Cloudinary)', 'info');
-    };
-
-    function updateMainUploadZone() {
-      const zone = document.getElementById('mainUploadZone');
-      if (!zone) return;
-      const count = uploadedImages.filter(img => img?.url).length;
-      if (count) { zone.classList.add('has-files'); }
-      else { zone.classList.remove('has-files'); }
-    }
-
-    // ==================== HANDLE VIDEO ====================
-    window.handleVideo = async function(event) {
-      const file = event.target.files[0];
-      if (!file || file.size > 50*1024*1024 || !file.type.startsWith('video/')) { showMessage('❌ فيديو غير صالح', 'error'); return; }
-      try {
-        const data = await uploadToCloudinary(file, 'video');
-        uploadedVideoData = { url: data.secure_url, public_id: data.public_id };
-        document.getElementById('videoPreview').innerHTML = `<video controls src="${data.secure_url}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:1px solid rgba(255,71,87,0.3);border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف الفيديو</button>`;
-        showMessage('✅ تم رفع الفيديو بنجاح', 'success');
-      } catch(e) { showMessage('❌ فشل رفع الفيديو', 'error'); }
-    };
-
-    window.removeVideo = async function() {
-      uploadedVideoData = null;
-      document.getElementById('videoPreview').innerHTML = '';
-      showMessage('✅ تم إزالة الفيديو من النموذج فقط (سيبقى في Cloudinary)', 'info');
-    };
-
-    // ==================== SUPABASE ====================
-    async function supabaseRequest(endpoint, opts = {}) {
-      const url = `${SUPABASE_URL}${endpoint}`;
-      const res = await fetch(url, {
-        method: opts.method || 'GET',
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-        body: opts.body ? JSON.stringify(opts.body) : undefined
-      });
-      if (res.status === 204) return null;
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
-      return data;
-    }
-
-    // ==================== LOAD ====================
-    async function loadCategories() {
-      try {
-        const cats = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
-        const opts = '<option value="">اختر الفئة...</option>' + (cats||[]).map(c => `<option value="${c.category_name}">${c.category_name}</option>`).join('');
-        document.getElementById('categoryName').innerHTML = opts;
-        document.getElementById('filterCategory').innerHTML = '<option value="">كل الفئات</option>' + (cats||[]).map(c => `<option value="${c.category_name}">${c.category_name}</option>`).join('');
-      } catch(e) { showMessage('❌ فشل تحميل الفئات', 'error'); }
-    }
-
-    async function loadProducts() {
-      const tbody = document.getElementById('productsTableBody');
-      tbody.innerHTML = '<tr><td colspan="6"><div class="loader"></div></td></tr>';
-      try {
-        const cat = document.getElementById('filterCategory')?.value || '';
-        let endpoint = '/rest/v1/products?select=*&order=display_order';
-        if (cat) endpoint += `&category_name=eq.${encodeURIComponent(cat)}`;
-        const prods = await supabaseRequest(endpoint);
-        if (!prods?.length) { tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:3rem;color:var(--text-muted);"><i class="fas fa-box-open" style="font-size:3rem;opacity:0.4;"></i><p>لا توجد منتجات</p></div></td></tr>'; return; }
-        tbody.innerHTML = prods.map(p => {
-          const imgs = [p.product_image_url, ...(p.additional_images||[])].filter(u => u);
-          return `<tr>
-            <td><img src="${p.product_image_url||imgs[0]||'https://placehold.co/55x70/231D15/C4A06A'}" class="product-thumb" onerror="this.src='https://placehold.co/55x70/231D15/C4A06A'"></td>
-            <td style="font-weight:700;color:var(--text-primary);">${escapeHtml(p.product_name)}</td>
-            <td>${escapeHtml(p.category_name)}</td>
-            <td style="color:var(--gold);">${p.price_range||'-'}</td>
-            <td><span class="status-badge ${p.is_active?'status-active':'status-inactive'}">${p.is_active?'نشط':'مخفي'}</span></td>
-            <td style="display: flex; gap: 0.5rem;">
-              <button onclick="openEditModal(${p.id},'${escapeHtml(p.product_name)}','${escapeHtml(p.category_name)}','${escapeHtml(p.price_range||'')}','${escapeHtml(p.product_description||'')}',${p.display_order||0},${p.is_featured||false},${p.is_active},'${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--edit);cursor:pointer;"><i class="fas fa-edit"></i></button>
-              <button onclick="toggleProduct(${p.id},${!p.is_active})" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text-secondary);cursor:pointer;"><i class="fas fa-${p.is_active?'eye-slash':'eye'}"></i></button>
-              <button onclick="openDeleteModal(${p.id},'${escapeHtml(p.product_name)}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--danger);cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
-            </td>
-          </tr>`;
-        }).join('');
-      } catch(e) { tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:3rem;color:var(--text-muted);">خطأ في التحميل</div></td></tr>'; }
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-      });
-    }
-
-    // ==================== ADD/UPDATE ====================
-    async function addProduct(e) {
+// ==================== DRAG & DROP REORDERING ====================
+let draggedIndex = null;
+function initDragDrop() {
+  document.querySelectorAll('.image-card').forEach(card => {
+    card.setAttribute('draggable', 'true');
+    card.addEventListener('dragstart', (e) => { draggedIndex = parseInt(card.getAttribute('data-index')); e.dataTransfer.effectAllowed = 'move'; });
+    card.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; });
+    card.addEventListener('dragenter', (e) => { card.classList.add('drag-over'); });
+    card.addEventListener('dragleave', () => { card.classList.remove('drag-over'); });
+    card.addEventListener('drop', (e) => {
       e.preventDefault();
-      const editId = document.getElementById('editProductId').value;
-      if (!uploadedImages[0] && !editId) { showMessage('❌ الصورة الرئيسية مطلوبة', 'error'); return; }
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
-      
-      const imgs = uploadedImages.filter(u => u?.url).map(u => u.url);
-      const data = {
-        category_name: document.getElementById('categoryName').value,
-        product_name: document.getElementById('productName').value.trim(),
-        product_description: document.getElementById('productDescription').value.trim()||null,
-        price_range: document.getElementById('priceRange').value.trim()||null,
-        display_order: parseInt(document.getElementById('displayOrder').value)||0,
-        is_featured: document.getElementById('isFeatured').checked,
-        is_active: document.getElementById('isActive').checked
-      };
-      if (imgs.length) { data.product_image_url = imgs[0]; data.additional_images = imgs.slice(1); }
-      if (uploadedVideoData) data.product_video_url = uploadedVideoData.url;
-      
-      try {
-        if (editId) { await supabaseRequest(`/rest/v1/products?id=eq.${editId}`, { method:'PATCH', body:data }); }
-        else { await supabaseRequest('/rest/v1/products', { method:'POST', body:data }); }
-        showMessage('✅ تم بنجاح!', 'success');
-        resetForm(); loadProducts(); switchTab('list');
-      } catch(e) { showMessage('❌ فشل: '+e.message, 'error'); }
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-plus-circle"></i> إضافة المنتج';
-      document.getElementById('editProductId').value = '';
-    }
-
-    function resetForm() {
-      document.getElementById('productForm').reset();
-      document.getElementById('isActive').checked = true;
-      uploadedImages = new Array(MAX_IMAGES).fill(null);
-      uploadedVideoData = null;
-      document.getElementById('videoPreview').innerHTML = '';
-      document.getElementById('editProductId').value = '';
-      buildImagesGrid(); updateMainUploadZone();
-    }
-
-    function showMessage(text, type) {
-      const msg = document.getElementById('message');
-      if (!msg) return;
-      msg.textContent = text; msg.className = `message ${type}`; msg.style.display = 'block';
-      setTimeout(() => msg.style.display = 'none', 4000);
-    }
-
-    function switchTab(tab) {
-      document.querySelectorAll('.tab-btn,.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelector(`.tab-btn:nth-child(${tab==='add'?1:2})`).classList.add('active');
-      document.getElementById(`tab-${tab}`).classList.add('active');
-      if (tab === 'list') loadProducts();
-    }
-
-    // ==================== DELETE (Database only) ====================
-    window.openDeleteModal = function(id, name) {
-      deleteProductId = id;
-      document.getElementById('deleteProductName').textContent = name;
-      document.getElementById('deleteModal').classList.add('active');
-    };
-    
-    window.closeDeleteModal = () => { document.getElementById('deleteModal').classList.remove('active'); };
-    
-    window.confirmDelete = async function() {
-      if (!deleteProductId) return;
-      try {
-        await supabaseRequest(`/rest/v1/products?id=eq.${deleteProductId}`, { method:'DELETE' });
-        showMessage('🗑️ تم حذف المنتج من قاعدة البيانات (الملفات تبقى في Cloudinary)', 'success');
-        closeDeleteModal(); loadProducts();
-      } catch(e) { showMessage('❌ فشل الحذف', 'error'); }
-    };
-
-    // ==================== EDIT ====================
-    window.openEditModal = function(id, name, cat, price, desc, order, featured, active, imagesJson, videoUrl) {
-      document.getElementById('editProductId').value = id;
-      document.getElementById('categoryName').value = cat;
-      document.getElementById('productName').value = name;
-      document.getElementById('priceRange').value = price;
-      document.getElementById('productDescription').value = desc;
-      document.getElementById('displayOrder').value = order;
-      document.getElementById('isFeatured').checked = featured;
-      document.getElementById('isActive').checked = active;
-      
-      const imgs = JSON.parse(decodeURIComponent(imagesJson))||[];
-      uploadedImages = new Array(MAX_IMAGES).fill(null);
-      imgs.forEach((url, i) => { if (i < MAX_IMAGES) uploadedImages[i] = { url, public_id: null }; });
-      rebuildGridFromData();
-      
-      if (videoUrl) { uploadedVideoData = { url: videoUrl }; document.getElementById('videoPreview').innerHTML = `<video controls src="${videoUrl}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:1px solid rgba(255,71,87,0.3);border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف الفيديو</button>`; }
-      
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.innerHTML = '<i class="fas fa-save"></i> تحديث المنتج';
-      submitBtn.className = 'btn btn-edit';
-      const formButtons = document.getElementById('formButtons');
-      if (formButtons) {
-        formButtons.innerHTML = `<button type="submit" class="btn btn-edit" id="submitBtn"><i class="fas fa-save"></i> تحديث المنتج</button>
-        <button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-times"></i> إلغاء</button>`;
+      card.classList.remove('drag-over');
+      const targetIndex = parseInt(card.getAttribute('data-index'));
+      if(draggedIndex !== null && draggedIndex !== targetIndex && uploadedImages[draggedIndex] && uploadedImages[targetIndex]) {
+        [uploadedImages[draggedIndex], uploadedImages[targetIndex]] = [uploadedImages[targetIndex], uploadedImages[draggedIndex]];
+        rebuildGridFromData();
+        setUnsavedChanges();
       }
-      switchTab('add');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    window.toggleProduct = async function(id, newStatus) {
-      await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method:'PATCH', body:{ is_active: newStatus } });
-      loadProducts();
-    };
-
-    // ==================== EXPORT ====================
-    window.switchTab = switchTab; 
-    window.loadProducts = loadProducts;
-    window.openDeleteModal = openDeleteModal; 
-    window.closeDeleteModal = closeDeleteModal;
-    window.confirmDelete = confirmDelete; 
-    window.openEditModal = openEditModal;
-    window.toggleProduct = toggleProduct; 
-    window.resetForm = resetForm;
-    window.handleImage = handleImage; 
-    window.removeImage = removeImage;
-    window.setAsMain = setAsMain; 
-    window.handleVideo = handleVideo;
-    window.removeVideo = removeVideo;
-    window.handleBulkImages = handleBulkImages;
-
-    // ==================== INIT ====================
-    document.addEventListener('DOMContentLoaded', () => {
-      buildImagesGrid(); 
-      updateMainUploadZone(); 
-      loadCategories();
-      document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
-      document.getElementById('deleteModal').addEventListener('click', (e) => { if (e.target.id === 'deleteModal') closeDeleteModal(); });
     });
-  </script>
+  });
+}
+
+function rebuildGridFromData() {
+  const grid = document.getElementById('imagesGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  for(let i=0; i<MAX_IMAGES; i++) {
+    const card = document.createElement('div');
+    card.className = 'image-card';
+    card.id = `imageCard${i}`;
+    card.setAttribute('data-index', i);
+    const data = uploadedImages[i];
+    if(data?.url) {
+      card.classList.add('has-image');
+      if(i===0) card.classList.add('is-main');
+      card.innerHTML = `<img src="${data.url}" alt="صورة ${i+1}">
+        ${i===0 ? '<span class="main-badge"><i class="fas fa-crown"></i> الرئيسية</span>' : ''}
+        <div class="card-actions">
+          ${i!==0 ? `<button class="action-btn" onclick="event.stopPropagation();setAsMain(${i})" style="background:var(--gold);color:#1A1510;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-crown"></i></button>` : ''}
+          <button class="action-btn" onclick="event.stopPropagation();removeImage(${i})" style="background:var(--danger);color:white;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>`;
+    } else {
+      card.innerHTML = `${i===0 ? '<span class="main-badge" style="opacity:0.7;"><i class="fas fa-crown"></i> مطلوبة</span>' : ''}
+        <i class="fas fa-image" style="font-size:2rem;color:var(--text-muted);"></i>
+        <span style="font-size:0.65rem;color:var(--text-muted);">${i===0 ? 'الصورة الرئيسية *' : 'أضف صورة'}</span>`;
+    }
+    card.addEventListener('click', (e) => { if(!e.target.closest('.card-actions') && !e.target.closest('.drag-handle')) document.getElementById(`imageInput${i}`)?.click(); });
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.id = `imageInput${i}`;
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    fileInput.onchange = (e) => handleImage(e, i);
+    card.appendChild(fileInput);
+    grid.appendChild(card);
+  }
+  initDragDrop();
+}
+
+window.setAsMain = function(index) {
+  if(index===0) return;
+  [uploadedImages[0], uploadedImages[index]] = [uploadedImages[index], uploadedImages[0]];
+  rebuildGridFromData();
+  setUnsavedChanges();
+};
+
+window.removeImage = function(index) {
+  uploadedImages[index] = null;
+  rebuildGridFromData();
+  setUnsavedChanges();
+};
+
+// ==================== VIDEO ====================
+window.handleVideo = async function(event) {
+  const file = event.target.files[0];
+  if(!file || file.size>50*1024*1024 || !file.type.startsWith('video/')) { showMessage('❌ فيديو غير صالح', 'error'); return; }
+  const previewDiv = document.getElementById('videoPreview');
+  const videoUrl = URL.createObjectURL(file);
+  previewDiv.innerHTML = `<video controls src="${videoUrl}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:none;border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف</button>`;
+  try {
+    const data = await uploadToCloudinaryWithProgress(file, 'video', null);
+    uploadedVideoData = { url: data.secure_url, public_id: data.public_id };
+    previewDiv.querySelector('video').src = data.secure_url;
+    URL.revokeObjectURL(videoUrl);
+    showMessage('✅ تم رفع الفيديو', 'success');
+    setUnsavedChanges();
+  } catch(e) { showMessage('❌ فشل رفع الفيديو', 'error'); removeVideo(); }
+};
+
+window.removeVideo = function() { uploadedVideoData = null; document.getElementById('videoPreview').innerHTML = ''; setUnsavedChanges(); };
+
+// ==================== SUPABASE ====================
+async function supabaseRequest(endpoint, opts = {}) {
+  const url = `${SUPABASE_URL}${endpoint}`;
+  const res = await fetch(url, {
+    method: opts.method || 'GET',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  if(res.status===204) return null;
+  const data = await res.json();
+  if(!res.ok) throw new Error(data.message || `Erreur ${res.status}`);
+  return data;
+}
+
+// ==================== STATS ====================
+async function updateStats() {
+  try {
+    const prods = await supabaseRequest('/rest/v1/products?select=id,is_active,is_featured');
+    if(prods) {
+      document.getElementById('totalProducts').textContent = prods.length;
+      document.getElementById('activeProducts').textContent = prods.filter(p=>p.is_active).length;
+      document.getElementById('featuredProducts').textContent = prods.filter(p=>p.is_featured).length;
+    }
+  } catch(e) { console.error(e); }
+}
+
+// ==================== LOAD ====================
+async function loadCategories() {
+  try {
+    const cats = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
+    const opts = '<option value="">اختر الفئة...</option>' + (cats||[]).map(c=>`<option value="${c.category_name}">${c.category_name}</option>`).join('');
+    document.getElementById('categoryName').innerHTML = opts;
+    document.getElementById('filterCategory').innerHTML = '<option value="">كل الفئات</option>' + (cats||[]).map(c=>`<option value="${c.category_name}">${c.category_name}</option>`).join('');
+  } catch(e) { showMessage('❌ فشل تحميل الفئات', 'error'); }
+}
+
+async function loadProducts() {
+  const tbody = document.getElementById('productsTableBody');
+  tbody.innerHTML = '<table><td colspan="7"><div class="loader"></div></td></tr>';
+  try {
+    const cat = document.getElementById('filterCategory')?.value || '';
+    let endpoint = '/rest/v1/products?select=*&order=display_order';
+    if(cat) endpoint += `&category_name=eq.${encodeURIComponent(cat)}`;
+    const prods = await supabaseRequest(endpoint);
+    if(!prods?.length) { tbody.innerHTML = '<tr><td colspan="7"><div style="text-align:center;padding:3rem;"><i class="fas fa-box-open" style="font-size:3rem;opacity:0.4;"></i><p>لا توجد منتجات</p></div></td></tr>'; return; }
+    tbody.innerHTML = prods.map(p => {
+      const imgs = [p.product_image_url, ...(p.additional_images||[])].filter(u=>u);
+      return `<tr data-product-id="${p.id}">
+        <td><input type="checkbox" class="product-checkbox" value="${p.id}" style="width:20px;height:20px;cursor:pointer;" onclick="event.stopPropagation()"></td>
+        <td><img src="${p.product_image_url||imgs[0]||'https://placehold.co/55x70/231D15/C4A06A'}" class="product-thumb" onerror="this.src='https://placehold.co/55x70/231D15/C4A06A'"></td>
+        <td style="font-weight:700;color:var(--text-primary);"><span class="editable-name" data-id="${p.id}" data-field="product_name" onclick="quickEditInline(${p.id}, 'product_name', '${escapeHtml(p.product_name).replace(/'/g, "\\'")}')">${escapeHtml(p.product_name)}</span></td>
+        <td><span class="editable-cat" data-id="${p.id}" data-field="category_name" onclick="quickEditInline(${p.id}, 'category_name', '${escapeHtml(p.category_name).replace(/'/g, "\\'")}')">${escapeHtml(p.category_name)}</span></td>
+        <td><span class="editable-price" data-id="${p.id}" data-field="price_range" onclick="quickEditInline(${p.id}, 'price_range', '${(p.price_range||'').replace(/'/g, "\\'")}')">${p.price_range||'-'}</span></td>
+        <td><span class="status-badge ${p.is_active?'status-active':'status-inactive'}" onclick="toggleProduct(${p.id},${!p.is_active})" style="cursor:pointer;">${p.is_active?'نشط':'مخفي'}</span></td>
+        <td style="display: flex; gap: 0.5rem;">
+          <button onclick="duplicateProduct(${p.id})" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--gold);cursor:pointer;" title="نسخ المنتج"><i class="fas fa-copy"></i></button>
+          <button onclick="openEditModal(${p.id},'${escapeHtml(p.product_name).replace(/'/g, "\\'")}','${escapeHtml(p.category_name).replace(/'/g, "\\'")}','${(p.price_range||'').replace(/'/g, "\\'")}','${escapeHtml(p.product_description||'').replace(/'/g, "\\'")}',${p.display_order||0},${p.is_featured||false},${p.is_active},'${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--edit);cursor:pointer;"><i class="fas fa-edit"></i></button>
+          <button onclick="openDeleteModal(${p.id},'${escapeHtml(p.product_name).replace(/'/g, "\\'")}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--danger);cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+        </td>
+      </tr>`;
+    }).join('');
+    attachCheckboxEvents();
+    await updateStats();
+  } catch(e) { tbody.innerHTML = '<tr><td colspan="7">خطأ في التحميل</td></tr>'; }
+}
+
+function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
+
+// ==================== QUICK EDIT INLINE ====================
+window.quickEditInline = function(id, field, currentValue) {
+  const newValue = prompt(`تعديل ${field === 'product_name' ? 'اسم المنتج' : (field === 'category_name' ? 'الفئة' : 'السعر')}`, currentValue);
+  if(newValue !== null && newValue !== currentValue) {
+    supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method: 'PATCH', body: { [field]: newValue } }).then(() => { loadProducts(); showMessage('✅ تم التحديث', 'success'); }).catch(e => showMessage('❌ فشل التحديث', 'error'));
+  }
+};
+
+// ==================== DUPLICATE ====================
+window.duplicateProduct = async function(id) {
+  try {
+    const prod = await supabaseRequest(`/rest/v1/products?id=eq.${id}&select=*`);
+    if(prod && prod[0]) {
+      const original = prod[0];
+      const newProduct = { ...original, id: undefined, product_name: original.product_name + ' (نسخة)', display_order: (original.display_order||0)+1 };
+      await supabaseRequest('/rest/v1/products', { method: 'POST', body: newProduct });
+      showMessage('✅ تم نسخ المنتج بنجاح', 'success');
+      loadProducts();
+    }
+  } catch(e) { showMessage('❌ فشل النسخ', 'error'); }
+};
+
+window.duplicateSelected = async function() {
+  for(let id of selectedProducts) await duplicateProduct(parseInt(id));
+  toggleBulkMode(false);
+};
+
+// ==================== BULK ACTIONS ====================
+function attachCheckboxEvents() {
+  document.querySelectorAll('.product-checkbox').forEach(cb => {
+    cb.onclick = (e) => { e.stopPropagation(); toggleProductSelection(cb.value, cb.checked); };
+  });
+  document.getElementById('selectAllCheckbox').onclick = (e) => { document.querySelectorAll('.product-checkbox').forEach(cb => { cb.checked = e.target.checked; toggleProductSelection(cb.value, cb.checked); }); };
+}
+function toggleProductSelection(id, checked) { if(checked) selectedProducts.add(id); else selectedProducts.delete(id); updateBulkUI(); }
+function toggleBulkMode(enable) { bulkMode = enable; document.getElementById('bulkActionsBar').style.display = enable ? 'flex' : 'none'; document.getElementById('duplicateBtn').style.display = enable ? 'inline-flex' : 'none'; document.getElementById('bulkDeleteBtn').style.display = enable ? 'inline-flex' : 'none'; if(!enable) { selectedProducts.clear(); document.querySelectorAll('.product-checkbox').forEach(cb => cb.checked = false); } }
+function updateBulkUI() { document.getElementById('selectedCount').textContent = selectedProducts.size; }
+window.bulkDeleteSelected = async function() { if(selectedProducts.size===0) return; if(confirm(`هل أنت متأكد من حذف ${selectedProducts.size} منتج؟`)) { for(let id of selectedProducts) await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method: 'DELETE' }); showMessage(`✅ تم حذف ${selectedProducts.size} منتج`, 'success'); toggleBulkMode(false); loadProducts(); } };
+
+// ==================== ADD/UPDATE ====================
+async function addProduct() {
+  const editId = document.getElementById('editProductId').value;
+  if(!uploadedImages[0] && !editId) { showMessage('❌ الصورة الرئيسية مطلوبة', 'error'); return; }
+  const imgs = uploadedImages.filter(u=>u?.url).map(u=>u.url);
+  const data = {
+    category_name: document.getElementById('categoryName').value,
+    product_name: document.getElementById('productName').value.trim(),
+    product_description: document.getElementById('productDescription').value.trim()||null,
+    price_range: document.getElementById('priceRange').value.trim()||null,
+    display_order: parseInt(document.getElementById('displayOrder').value)||0,
+    is_featured: document.getElementById('isFeatured').checked,
+    is_active: document.getElementById('isActive').checked,
+    product_image_url: imgs[0]||null,
+    additional_images: imgs.slice(1),
+    product_video_url: uploadedVideoData?.url||null
+  };
+  try {
+    if(editId) await supabaseRequest(`/rest/v1/products?id=eq.${editId}`, { method:'PATCH', body:data });
+    else await supabaseRequest('/rest/v1/products', { method:'POST', body:data });
+    showMessage('✅ تم بنجاح!', 'success');
+    markSaved();
+    resetForm();
+    loadProducts();
+    switchTab('list');
+  } catch(e) { showMessage('❌ فشل: '+e.message, 'error'); }
+}
+
+function resetForm() {
+  document.getElementById('productForm').reset();
+  document.getElementById('isActive').checked = true;
+  uploadedImages = new Array(MAX_IMAGES).fill(null);
+  uploadedVideoData = null;
+  document.getElementById('videoPreview').innerHTML = '';
+  document.getElementById('editProductId').value = '';
+  rebuildGridFromData();
+  markSaved();
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.innerHTML = '<i class="fas fa-plus-circle"></i> إضافة المنتج';
+  submitBtn.className = 'btn';
+  document.getElementById('formButtons').innerHTML = `<button type="submit" class="btn" id="submitBtn"><i class="fas fa-plus-circle"></i> إضافة المنتج</button><button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-redo"></i> إعادة تعيين</button>`;
+}
+
+// ==================== DELETE WITH UNDO ====================
+window.openDeleteModal = function(id, name) {
+  deleteProductId = id;
+  document.getElementById('deleteProductName').textContent = name;
+  document.getElementById('deleteModal').classList.add('active');
+};
+window.closeDeleteModal = () => { document.getElementById('deleteModal').classList.remove('active'); deleteProductId = null; };
+window.confirmDelete = async function() {
+  if(!deleteProductId) return;
+  const id = deleteProductId;
+  const productData = await supabaseRequest(`/rest/v1/products?id=eq.${id}&select=*`);
+  await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method:'DELETE' });
+  closeDeleteModal();
+  showToast(`تم حذف المنتج`, () => restoreProduct(productData[0]));
+  loadProducts();
+};
+async function restoreProduct(product) { if(product) { await supabaseRequest('/rest/v1/products', { method:'POST', body:product }); loadProducts(); showMessage('✅ تم استعادة المنتج', 'success'); } }
+
+// ==================== EDIT MODAL ====================
+window.openEditModal = function(id, name, cat, price, desc, order, featured, active, imagesJson, videoUrl) {
+  document.getElementById('editProductId').value = id;
+  document.getElementById('categoryName').value = cat;
+  document.getElementById('productName').value = name;
+  document.getElementById('priceRange').value = price;
+  document.getElementById('productDescription').value = desc;
+  document.getElementById('displayOrder').value = order;
+  document.getElementById('isFeatured').checked = featured;
+  document.getElementById('isActive').checked = active;
+  const imgs = JSON.parse(decodeURIComponent(imagesJson))||[];
+  uploadedImages = new Array(MAX_IMAGES).fill(null);
+  imgs.forEach((url, i) => { if(i<MAX_IMAGES) uploadedImages[i] = { url, public_id: null }; });
+  rebuildGridFromData();
+  if(videoUrl) { uploadedVideoData = { url: videoUrl }; document.getElementById('videoPreview').innerHTML = `<video controls src="${videoUrl}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:none;border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف</button>`; }
+  document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> تحديث المنتج';
+  document.getElementById('submitBtn').className = 'btn btn-edit';
+  document.getElementById('formButtons').innerHTML = `<button type="submit" class="btn btn-edit" id="submitBtn"><i class="fas fa-save"></i> تحديث المنتج</button><button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-times"></i> إلغاء</button>`;
+  switchTab('add');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.toggleProduct = async function(id, newStatus) { await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method:'PATCH', body:{ is_active: newStatus } }); loadProducts(); };
+
+// ==================== EXPORT ====================
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab-btn,.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.tab-btn:nth-child(${tab==='add'?1:2})`).classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+  if(tab==='list') { loadProducts(); toggleBulkMode(true); }
+  else toggleBulkMode(false);
+};
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+  rebuildGridFromData();
+  loadCategories();
+  loadProducts();
+  document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+  document.getElementById('deleteModal').addEventListener('click', (e) => { if(e.target.id === 'deleteModal') closeDeleteModal(); });
+  toggleBulkMode(false);
+});
+</script>
 </body>
 </html>
