@@ -450,7 +450,8 @@
     <div class="modal modal-delete">
       <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:var(--danger);"></i>
       <h3 style="color:var(--text-primary); margin: 1rem 0;">تأكيد حذف المنتج</h3>
-      <p style="color:var(--text-secondary);">سيتم حذف المنتج وجميع الملفات المرتبطة به</p>
+      <p style="color:var(--text-secondary);">سيتم حذف المنتج من قاعدة البيانات فقط</p>
+      <p style="color:var(--text-muted); font-size:0.8rem; margin-top:0.5rem;">ملاحظة: سيتم الاحتفاظ بالصور في Cloudinary للحفاظ على الأمان. يمكن حذفها يدوياً من لوحة التحكم.</p>
       <div class="product-name-highlight" id="deleteProductName" style="color:var(--text-primary);background:rgba(255,71,87,0.1);padding:0.4rem 1rem;border-radius:var(--radius-sm);display:inline-block;margin:0.5rem 0;"></div>
       <div class="btn-group" style="justify-content:center;">
         <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash-alt"></i> نعم، احذف</button>
@@ -474,8 +475,6 @@
     const UPLOAD_PRESET = CONFIG.CLOUDINARY_UPLOAD_PRESET;
     const SUPABASE_URL = CONFIG.SUPABASE_URL;
     const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
-    const CLOUDINARY_API_KEY = CONFIG.CLOUDINARY_API_KEY;
-    const CLOUDINARY_API_SECRET = CONFIG.CLOUDINARY_API_SECRET;
     const MAX_IMAGES = 10;
 
     let uploadedImages = new Array(MAX_IMAGES).fill(null);
@@ -521,34 +520,9 @@
       }
     }
 
-    // ==================== CLOUDINARY ====================
-    async function cloudinarySignature(publicId) {
-      const ts = Math.floor(Date.now() / 1000);
-      const str = `public_id=${publicId}&timestamp=${ts}${CLOUDINARY_API_SECRET}`;
-      const msgBuffer = new TextEncoder().encode(str);
-      const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return { sig: hashArray.map(b => b.toString(16).padStart(2, '0')).join(''), ts };
-    }
-
-    async function deleteFromCloudinary(publicId, type) {
-      if (!publicId) return false;
-      try {
-        const { sig, ts } = await cloudinarySignature(publicId);
-        const fd = new FormData();
-        fd.append('public_id', publicId);
-        fd.append('signature', sig);
-        fd.append('api_key', CLOUDINARY_API_KEY);
-        fd.append('timestamp', ts);
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/destroy`, { method: 'POST', body: fd });
-        const data = await res.json();
-        return data.result === 'ok';
-      } catch(e) {
-        console.error('Delete error:', e);
-        return false;
-      }
-    }
-
+    // ==================== CLOUDINARY UPLOAD ONLY (NO DELETE) ====================
+    // تم حذف دوال cloudinarySignature() و deleteFromCloudinary() بالكامل
+    
     function uploadToCloudinary(file, type) {
       return new Promise((resolve, reject) => {
         const fd = new FormData();
@@ -577,7 +551,7 @@
       card.classList.add('uploading');
       try {
         const data = await uploadToCloudinary(file, 'image');
-        if (uploadedImages[index]?.public_id) await deleteFromCloudinary(uploadedImages[index].public_id, 'image');
+        // تم حذف سطر deleteFromCloudinary
         uploadedImages[index] = { url: data.secure_url, public_id: data.public_id };
         card.classList.remove('uploading');
         updateImageCardHTML(card, index, true, data.secure_url);
@@ -620,11 +594,12 @@
     }
 
     window.removeImage = async function(index) {
-      if (uploadedImages[index]?.public_id) await deleteFromCloudinary(uploadedImages[index].public_id, 'image');
+      // تم حذف سطر deleteFromCloudinary - الحذف يتم يدوياً أو عبر webhook
       uploadedImages[index] = null;
       const card = document.getElementById(`imageCard${index}`);
       if (card) { card.classList.remove('has-image', 'is-main', 'uploading'); updateImageCardHTML(card, index, false); }
       updateMainUploadZone();
+      showMessage('✅ تم إزالة الصورة من النموذج فقط (ستبقى في Cloudinary)', 'info');
     };
 
     function updateMainUploadZone() {
@@ -640,7 +615,7 @@
       const file = event.target.files[0];
       if (!file || file.size > 50*1024*1024 || !file.type.startsWith('video/')) { showMessage('❌ فيديو غير صالح', 'error'); return; }
       try {
-        if (uploadedVideoData?.public_id) await deleteFromCloudinary(uploadedVideoData.public_id, 'video');
+        // تم حذف سطر deleteFromCloudinary
         const data = await uploadToCloudinary(file, 'video');
         uploadedVideoData = { url: data.secure_url, public_id: data.public_id };
         document.getElementById('videoPreview').innerHTML = `<video controls src="${data.secure_url}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:1px solid rgba(255,71,87,0.3);border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف الفيديو</button>`;
@@ -649,9 +624,10 @@
     };
 
     window.removeVideo = async function() {
-      if (uploadedVideoData?.public_id) await deleteFromCloudinary(uploadedVideoData.public_id, 'video');
+      // تم حذف سطر deleteFromCloudinary - الحذف يتم يدوياً أو عبر webhook
       uploadedVideoData = null;
       document.getElementById('videoPreview').innerHTML = '';
+      showMessage('✅ تم إزالة الفيديو من النموذج فقط (سيبقى في Cloudinary)', 'info');
     };
 
     // ==================== SUPABASE ====================
@@ -698,11 +674,11 @@
             <td style="display: flex; gap: 0.5rem;">
               <button onclick="openEditModal(${p.id},'${escapeHtml(p.product_name)}','${escapeHtml(p.category_name)}','${escapeHtml(p.price_range||'')}','${escapeHtml(p.product_description||'')}',${p.display_order||0},${p.is_featured||false},${p.is_active},'${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--edit);cursor:pointer;"><i class="fas fa-edit"></i></button>
               <button onclick="toggleProduct(${p.id},${!p.is_active})" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text-secondary);cursor:pointer;"><i class="fas fa-${p.is_active?'eye-slash':'eye'}"></i></button>
-              <button onclick="openDeleteModal(${p.id},'${escapeHtml(p.product_name)}','${encodeURIComponent(JSON.stringify(imgs))}','${p.product_video_url||''}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--danger);cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+              <button onclick="openDeleteModal(${p.id},'${escapeHtml(p.product_name)}')" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--danger);cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
             </td>
           </tr>`;
         }).join('');
-      } catch(e) { tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:3rem;color:var(--text-muted);">خطأ في التحميل</div></tr></tr>'; }
+      } catch(e) { tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:3rem;color:var(--text-muted);">خطأ في التحميل</div></td></tr>'; }
     }
 
     function escapeHtml(str) {
@@ -772,28 +748,21 @@
       if (tab === 'list') loadProducts();
     }
 
-    function extractPublicId(url) {
-      if (!url) return null;
-      const m = url.match(/\/upload\/v\d+\/(.+?)\.\w+$/) || url.match(/\/almaya-products\/(.+?)\.\w+$/);
-      return m ? (m[1].includes('almaya-products')?m[1]:`almaya-products/${m[1]}`) : null;
-    }
-
-    // ==================== DELETE ====================
-    window.openDeleteModal = function(id, name, imagesJson, videoUrl) {
+    // ==================== DELETE (Database only) ====================
+    window.openDeleteModal = function(id, name) {
       deleteProductId = id;
       document.getElementById('deleteProductName').textContent = name;
-      window._deleteData = { images: JSON.parse(decodeURIComponent(imagesJson))||[], videoUrl: videoUrl||null };
       document.getElementById('deleteModal').classList.add('active');
     };
+    
     window.closeDeleteModal = () => { document.getElementById('deleteModal').classList.remove('active'); };
+    
     window.confirmDelete = async function() {
       if (!deleteProductId) return;
       try {
         await supabaseRequest(`/rest/v1/products?id=eq.${deleteProductId}`, { method:'DELETE' });
-        const { images, videoUrl } = window._deleteData||{};
-        for (const url of images||[]) { const pid = extractPublicId(url); if (pid) await deleteFromCloudinary(pid, 'image'); }
-        if (videoUrl) { const pid = extractPublicId(videoUrl); if (pid) await deleteFromCloudinary(pid, 'video'); }
-        showMessage('🗑️ تم الحذف', 'success');
+        // تم حذف جميع استدعاءات deleteFromCloudinary للصور والفيديو
+        showMessage('🗑️ تم حذف المنتج من قاعدة البيانات (الملفات تبقى في Cloudinary)', 'success');
         closeDeleteModal(); loadProducts();
       } catch(e) { showMessage('❌ فشل الحذف', 'error'); }
     };
@@ -811,7 +780,7 @@
       
       const imgs = JSON.parse(decodeURIComponent(imagesJson))||[];
       uploadedImages = new Array(MAX_IMAGES).fill(null);
-      imgs.forEach((url, i) => { if (i < MAX_IMAGES) uploadedImages[i] = { url, public_id: extractPublicId(url) }; });
+      imgs.forEach((url, i) => { if (i < MAX_IMAGES) uploadedImages[i] = { url, public_id: null }; }); // public_id غير مطلوب الآن
       rebuildGridFromData();
       
       if (videoUrl) { uploadedVideoData = { url: videoUrl }; document.getElementById('videoPreview').innerHTML = `<video controls src="${videoUrl}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:1px solid rgba(255,71,87,0.3);border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف الفيديو</button>`; }

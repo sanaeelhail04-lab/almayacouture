@@ -4,6 +4,20 @@
   
   console.log('🚀 Header auto-loader start');
 
+  // ========== FONCTION D'ÉCHAPPEMENT HTML (SÉCURITÉ XSS) ==========
+  function escHtml(s) {
+    return (s || '').replace(/[&<>\"']/g, function(m) {
+      var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      };
+      return map[m];
+    });
+  }
+
   // التحقق من حالة تسجيل الدخول
   function isAdminLoggedIn() {
     return sessionStorage.getItem('admin_logged_in') === 'true';
@@ -30,7 +44,7 @@
     toast.className = `almaya-toast almaya-toast-${type}`;
     toast.innerHTML = `
       <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
-      <span>${message}</span>
+      <span>${escHtml(message)}</span>
     `;
     
     // أنماط التوست
@@ -204,6 +218,7 @@
     // التحقق من حالة تسجيل الدخول لإنشاء الروابط المناسبة
     const loggedIn = isAdminLoggedIn();
     const adminName = getAdminName();
+    const escapedAdminName = escHtml(adminName); // <-- ÉCHAPPEMENT APPLIQUÉ ICI
 
     // Injecter HTML avec tous les liens (avec ou sans logout selon l'état)
     var desktopLinks = '';
@@ -211,9 +226,10 @@
 
     if (loggedIn) {
       // إذا كان المسؤول مسجل الدخول → عرض dashboard و logout
+      // === CORRECTION XSS: Utilisation de escapedAdminName au lieu de adminName ===
       desktopLinks = `
         <li><a href="dashbord.html" data-page="dashbord">لوحة التحكم</a></li>
-        <li><div class="almaya-nav__user-info"><i class="fas fa-user-shield"></i> <span>${adminName}</span></div></li>
+        <li><div class="almaya-nav__user-info"><i class="fas fa-user-shield"></i> <span>${escapedAdminName}</span></div></li>
         <li><a href="#" data-page="logout" class="almaya-nav__logout-btn" id="logoutBtnDesktop"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
       `;
       mobileLinks = `

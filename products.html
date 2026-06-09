@@ -266,7 +266,7 @@
       <div class="filters-container">
         <div class="search-box">
           <i class="fas fa-search"></i>
-          <input type="text" id="searchInput" placeholder="ابحث عن منتج..." onkeyup="filterProducts()">
+          <input type="text" id="searchInput" placeholder="ابحث عن منتج..." oninput="filterProducts()">
         </div>
         <div class="filter-group-relative">
           <button class="filter-dropdown-btn" id="filterDropdownBtn" onclick="toggleFilterPanel()">
@@ -405,7 +405,8 @@
       }
     }
 
-    function filterProducts() {
+    // ========== ORIGINAL FILTER FUNCTION ==========
+    function originalFilterProducts() {
       const s = (document.getElementById('searchInput')?.value || '').toLowerCase();
       const c = document.getElementById('categoryFilter')?.value || '';
       const sort = document.getElementById('sortFilter')?.value || 'default';
@@ -428,6 +429,13 @@
       // Refresh AOS
       setTimeout(() => AOS.refresh(), 100);
     }
+
+    // ========== DEBOUNCE WRAPPER ==========
+    let _filterTimeout;
+    window.filterProducts = function() {
+      clearTimeout(_filterTimeout);
+      _filterTimeout = setTimeout(originalFilterProducts, 250);
+    };
 
     function toggleFilterPanel() { document.getElementById('filterPanel')?.classList.toggle('active'); }
     document.addEventListener('click', e => { if (!document.querySelector('.filter-group-relative')?.contains(e.target)) { document.getElementById('filterPanel')?.classList.remove('active'); } });
@@ -518,9 +526,16 @@
       } catch(e) { alert('فشل: '+e.message); btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب'; }
     };
 
-    window.resetFilters = function() { document.getElementById('searchInput').value = ''; document.getElementById('categoryFilter').value = ''; document.getElementById('sortFilter').value = 'default'; filterProducts(); toggleFilterPanel(); };
-    window.filterProducts = filterProducts;
+    window.resetFilters = function() { 
+      document.getElementById('searchInput').value = ''; 
+      document.getElementById('categoryFilter').value = ''; 
+      document.getElementById('sortFilter').value = 'default'; 
+      filterProducts(); 
+      toggleFilterPanel(); 
+    };
+    
     window.toggleFilterPanel = toggleFilterPanel;
+    
     document.addEventListener('keydown', e => { if (e.key==='Escape') { closeModal(); closeZoom(); } });
     document.addEventListener('click', e => { if (e.target.id==='productModal') closeModal(); if (e.target.id==='zoomOverlay') closeZoom(); });
 

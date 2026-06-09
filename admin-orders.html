@@ -97,7 +97,11 @@
 
     .filters-bar { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
     .filters-bar select, .filters-bar input { padding: 0.6rem 1rem; background: var(--bg-secondary); border: 1.5px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-family: inherit; font-size: 0.8rem; }
-    .btn-refresh { padding: 0.6rem 1.2rem; background: var(--gold); color: #1A1510; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+    .btn-refresh { padding: 0.6rem 1.2rem; background: var(--gold); color: #1A1510; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .btn-refresh:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-load-more { padding: 0.8rem 2rem; background: var(--bg-secondary); color: var(--gold); border: 2px solid var(--gold); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--transition); margin: 1.5rem auto; display: block; width: fit-content; }
+    .btn-load-more:hover { background: var(--gold); color: #1A1510; transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+    .btn-load-more:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     .table-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
     .table-wrapper { overflow-x: auto; }
@@ -107,7 +111,7 @@
     .orders-table tr:hover td { background: rgba(196,160,106,0.03); }
     .customer-name { font-weight: 700; color: var(--text-primary) !important; }
     .product-name { color: var(--gold) !important; }
-    .product-thumb { width: 50px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); cursor: pointer; }
+    .product-thumb { width: 50px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); cursor: pointer; transition: var(--transition); }
     .product-thumb:hover { border-color: var(--gold); transform: scale(1.5); z-index: 10; position: relative; }
 
     .status-badge { padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.3rem; }
@@ -116,15 +120,21 @@
     .status-completed { background: rgba(37,211,102,0.15); color: var(--success); }
     .status-cancelled { background: rgba(255,71,87,0.15); color: var(--danger); }
 
+    .action-btn { padding: 0.3rem 0.5rem; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: var(--bg-secondary); color: var(--text-secondary); margin: 0 2px; transition: var(--transition); }
+    .action-btn:hover { border-color: var(--gold); color: var(--gold); transform: scale(1.05); }
+
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
     .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; width: 95%; max-width: 650px; max-height: 90vh; overflow-y: auto; }
-    .btn { padding: 0.6rem 1.2rem; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+    .btn { padding: 0.6rem 1.2rem; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: var(--transition); }
     .btn-danger { background: linear-gradient(135deg, #FF4757, #e84118); color: white; }
     .btn-outline { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); }
+    .btn-outline:hover { background: var(--gold); color: #1A1510; }
 
     .loader { width: 40px; height: 40px; border: 3px solid var(--border); border-radius: 50%; border-top-color: var(--gold); animation: spin 0.8s ease-in-out infinite; margin: 2rem auto; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-small { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 50%; border-top-color: var(--gold); animation: spin 0.6s ease-in-out infinite; margin: 0 10px; vertical-align: middle; }
 
     /* ========== THEME TOGGLE ========== */
     .theme-toggle-btn { position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border); color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 4px 15px rgba(0,0,0,0.15); backdrop-filter: blur(10px); animation: themePulse 2s ease-in-out infinite; }
@@ -143,7 +153,6 @@
   </style>
 </head>
 <body>
-  
 
   <div id="header-container"></div>
 
@@ -178,7 +187,7 @@
         </div>
         <div style="display:flex;gap:1rem;align-items:center;">
           <span class="products-count" id="ordersCount" style="color:var(--gold);">0 طلب</span>
-          <button class="btn-refresh" onclick="loadOrders()"><i class="fas fa-sync-alt"></i> تحديث</button>
+          <button class="btn-refresh" onclick="resetAndLoadOrders()"><i class="fas fa-sync-alt"></i> تحديث</button>
         </div>
       </div>
 
@@ -190,6 +199,12 @@
           </table>
         </div>
       </div>
+      
+      <!-- زر تحميل المزيد -->
+      <button onclick="loadMoreOrders()" id="loadMoreBtn" class="btn-load-more" style="display: none;">
+        <i class="fas fa-plus-circle"></i> تحميل المزيد
+      </button>
+      
     </div>
   </div>
 
@@ -248,6 +263,9 @@
     if (typeof CONFIG === 'undefined') throw new Error('CONFIG missing');
     const SUPABASE_URL = CONFIG.SUPABASE_URL, SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
     let allOrders = [], allProducts = [], deleteOrderId = null;
+    let ordersPage = 0;
+    let hasMoreOrders = true;
+    let isLoadingMore = false;
 
     async function supabaseRequest(endpoint, opts = {}) {
       const res = await fetch(`${SUPABASE_URL}${endpoint}`, {
@@ -270,16 +288,99 @@
       return pn?.product_image_url || null;
     }
 
+    // تحميل البيانات الأولية مع pagination (100 طلب فقط)
     async function loadAllData() {
       try {
         allProducts = (await supabaseRequest('/rest/v1/products?select=*')) || [];
-        const orders = await supabaseRequest('/rest/v1/orders?select=*');
+        
+        // استخدام endpoint محدود بـ 100 طلب ومرتب حسب التاريخ تنازلياً
+        const orders = await supabaseRequest('/rest/v1/orders?select=*&order=created_at.desc&limit=100');
         if (!orders) return;
+        
         allOrders = orders;
+        ordersPage = 0;
+        hasMoreOrders = orders.length === 100; // إذا جاب 100، يعني فيه المزيد
+        updateLoadMoreButton();
+        
         updateStats();
         filterOrders();
-      } catch(e) { console.error(e); }
+      } catch(e) { console.error('خطأ في تحميل البيانات:', e); }
     }
+
+    // دالة تحميل المزيد من الطلبات
+    window.loadMoreOrders = async function() {
+      if (isLoadingMore) return;
+      if (!hasMoreOrders) {
+        const btn = document.getElementById('loadMoreBtn');
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = '<i class="fas fa-check"></i> تم تحميل جميع الطلبات';
+        }
+        return;
+      }
+      
+      isLoadingMore = true;
+      const btn = document.getElementById('loadMoreBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+      }
+      
+      try {
+        ordersPage++;
+        const offset = ordersPage * 100;
+        const more = await supabaseRequest(`/rest/v1/orders?select=*&order=created_at.desc&limit=100&offset=${offset}`);
+        
+        if (more && more.length > 0) {
+          allOrders = [...allOrders, ...more];
+          hasMoreOrders = more.length === 100;
+          updateStats();
+          filterOrders();
+        } else {
+          hasMoreOrders = false;
+        }
+        
+        updateLoadMoreButton();
+      } catch(e) {
+        console.error('خطأ في تحميل المزيد:', e);
+        ordersPage--;
+      } finally {
+        isLoadingMore = false;
+        if (btn && hasMoreOrders) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-plus-circle"></i> تحميل المزيد';
+        } else if (btn && !hasMoreOrders) {
+          btn.disabled = true;
+          btn.innerHTML = '<i class="fas fa-check"></i> تم تحميل جميع الطلبات';
+        }
+      }
+    };
+    
+    function updateLoadMoreButton() {
+      const btn = document.getElementById('loadMoreBtn');
+      if (btn) {
+        if (hasMoreOrders && allOrders.length > 0) {
+          btn.style.display = 'block';
+          if (!isLoadingMore) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-plus-circle"></i> تحميل المزيد';
+          }
+        } else if (!hasMoreOrders && allOrders.length > 0) {
+          btn.style.display = 'block';
+          btn.disabled = true;
+          btn.innerHTML = '<i class="fas fa-check"></i> تم تحميل جميع الطلبات';
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+    }
+
+    // إعادة تعيين وتحميل البيانات من البداية
+    window.resetAndLoadOrders = function() {
+      ordersPage = 0;
+      hasMoreOrders = true;
+      loadAllData();
+    };
 
     function updateStats() {
       const c = { new:0, processing:0, completed:0, cancelled:0 };
@@ -300,11 +401,19 @@
       document.getElementById('ordersTableBody').innerHTML = f.length ? f.map((o, i) => {
         const img = getProductImage(o.product_id, o.product_name);
         const imgHTML = img ? `<img src="${img}" class="product-thumb" onclick="window.open('${img}','_blank')" onerror="this.style.display='none'">` : '<div class="product-thumb-placeholder" style="width:50px;height:60px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);"><i class="fas fa-image"></i></div>';
-        return `<tr><td>${imgHTML}</td><td>${i+1}</td><td class="customer-name">${escapeHtml(o.customer_name)}</td><td>${escapeHtml(o.customer_phone)}</td><td class="product-name">${escapeHtml(o.product_name)}</td><td>${escapeHtml(o.product_category)}</td><td>${escapeHtml(o.product_price)||'-'}</td><td>${o.created_at?new Date(o.created_at).toLocaleDateString('ar-MA'):'-'}</td><td><span class="status-badge status-${o.status||'new'}">${({new:'جديد',processing:'قيد المعالجة',completed:'مكتمل',cancelled:'ملغي'})[o.status||'new']}</span></td><td><button class="action-btn" onclick="viewOrderDetails(${o.id})" style="padding:0.3rem 0.5rem;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:transparent;color:var(--text-secondary);"><i class="fas fa-eye"></i></button> ${o.status==='new'?`<button class="action-btn" onclick="updateStatus(${o.id},'processing')" style="color:var(--warning);"><i class="fas fa-play"></i></button>`:''} ${o.status==='processing'?`<button class="action-btn" onclick="updateStatus(${o.id},'completed')" style="color:var(--success);"><i class="fas fa-check"></i></button>`:''} <button class="action-btn" onclick="openDeleteModal(${o.id})" style="color:var(--danger);"><i class="fas fa-trash-alt"></i></button></td></tr>`;
+        return `<tr><td>${imgHTML}</td><td>${i+1}</td><td class="customer-name">${escapeHtml(o.customer_name)}</td><td>${escapeHtml(o.customer_phone)}</td><td class="product-name">${escapeHtml(o.product_name)}</td><td>${escapeHtml(o.product_category)}</td><td>${escapeHtml(o.product_price)||'-'}</td><td>${o.created_at?new Date(o.created_at).toLocaleDateString('ar-MA'):'-'}</td><td><span class="status-badge status-${o.status||'new'}">${({new:'جديد',processing:'قيد المعالجة',completed:'مكتمل',cancelled:'ملغي'})[o.status||'new']}</span></td><td><button class="action-btn" onclick="viewOrderDetails(${o.id})"><i class="fas fa-eye"></i></button> ${o.status==='new'?`<button class="action-btn" onclick="updateStatus(${o.id},'processing')"><i class="fas fa-play"></i></button>`:''} ${o.status==='processing'?`<button class="action-btn" onclick="updateStatus(${o.id},'completed')"><i class="fas fa-check"></i></button>`:''} <button class="action-btn" onclick="openDeleteModal(${o.id})"><i class="fas fa-trash-alt"></i></button></td></tr>`;
       }).join('') : '<tr><td colspan="10"><div class="empty-state" style="text-align:center;padding:3rem;color:var(--text-muted);"><i class="fas fa-inbox" style="font-size:2.5rem;opacity:0.4;"></i><p>لا توجد طلبات</p></div></td></tr>';
     }
 
-    window.updateStatus = async function(id, s) { await supabaseRequest(`/rest/v1/orders?id=eq.${id}`, { method:'PATCH', body:{ status:s } }); loadAllData(); };
+    window.updateStatus = async function(id, s) { 
+      await supabaseRequest(`/rest/v1/orders?id=eq.${id}`, { method:'PATCH', body:{ status:s } }); 
+      // تحديث محلياً دون إعادة تحميل كل البيانات
+      const order = allOrders.find(o => o.id === id);
+      if (order) order.status = s;
+      updateStats();
+      filterOrders();
+    };
+    
     window.viewOrderDetails = function(id) {
       const o = allOrders.find(x => x.id === id);
       if (!o) return;
@@ -312,13 +421,20 @@
       document.getElementById('orderDetailsContent').innerHTML = `<p><strong style="color:var(--gold);">📦 المنتج:</strong> ${escapeHtml(o.product_name)}</p><p><strong style="color:var(--gold);">👤 العميل:</strong> ${escapeHtml(o.customer_name)}</p><p><strong style="color:var(--gold);">📞 الهاتف:</strong> ${escapeHtml(o.customer_phone)}</p><p><strong style="color:var(--gold);">📅 التاريخ:</strong> ${o.created_at?new Date(o.created_at).toLocaleString('ar-MA'):'-'}</p>`;
       document.getElementById('detailsModal').classList.add('active');
     };
+    
     window.openDeleteModal = function(id) { deleteOrderId = id; document.getElementById('deleteModal').classList.add('active'); };
+    
     window.confirmDelete = async function() {
       if (!deleteOrderId) return;
       await supabaseRequest(`/rest/v1/orders?id=eq.${deleteOrderId}`, { method:'DELETE' });
       document.getElementById('deleteModal').classList.remove('active');
-      loadAllData();
+      // إزالة الطلب من القائمة المحلية
+      allOrders = allOrders.filter(o => o.id !== deleteOrderId);
+      updateStats();
+      filterOrders();
+      deleteOrderId = null;
     };
+    
     window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); };
     window.filterOrders = filterOrders;
     window.loadOrders = loadAllData;
@@ -326,6 +442,8 @@
     document.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active')); });
     document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+    
+    // تحميل البيانات عند بدء التشغيل
     loadAllData();
   </script>
 </body>

@@ -1073,6 +1073,14 @@
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         feedback.className = 'form-feedback';
+        
+        // ========== RATE LIMITING - CLIENT SIDE ==========
+        const lastSent = localStorage.getItem('almaya_last_contact');
+        if (lastSent && Date.now() - parseInt(lastSent) < 60000) {
+          showFeedback('error', 'يرجى الانتظار دقيقة قبل إرسال رسالة أخرى');
+          return;
+        }
+        // ================================================
 
         if (!validateAll()) {
           showFeedback('error', 'يُرجى ملء جميع الحقول المطلوبة بشكل صحيح.');
@@ -1092,6 +1100,9 @@
 
         try {
           await handleSubmit(payload);
+          // ========== UPDATE LAST SENT TIMESTAMP ==========
+          localStorage.setItem('almaya_last_contact', Date.now().toString());
+          // =================================================
           showFeedback('success', 'شكراً لك! تم إرسال رسالتك بنجاح. سنرد عليك في أقرب وقت ممكن ✨');
           form.reset();
           Object.keys(fields).forEach(id => {

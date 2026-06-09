@@ -261,7 +261,8 @@
                     <label class="form-label">البريد الإلكتروني</label>
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" class="form-input" placeholder="almayacouture@gmail.com" required autocomplete="email" value="almayacouture@gmail.com">
+                        <!-- تم حذف value='almayacouture@gmail.com' -->
+                        <input type="email" id="email" class="form-input" placeholder="البريد الإلكتروني" required autocomplete="email">
                     </div>
                 </div>
 
@@ -269,7 +270,8 @@
                     <label class="form-label">كلمة المرور</label>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password" value="admin123">
+                        <!-- تم حذف value='admin123' -->
+                        <input type="password" id="password" class="form-input" placeholder="كلمة المرور" required autocomplete="current-password">
                         <button type="button" class="password-toggle" id="togglePassword">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -395,21 +397,16 @@
         // ========== دالة تسجيل الدخول ==========
         async function login(email, password) {
             try {
-                console.log('🔍 جاري البحث عن:', email);
-                
                 // البحث عن المسؤول
                 const admins = await supabaseRequest(
                     `/rest/v1/admins?email=eq.${encodeURIComponent(email)}&select=id,username,email,password_hash,full_name,role,is_active`
                 );
-                
-                console.log('📊 نتيجة البحث:', admins);
                 
                 if (!admins || admins.length === 0) {
                     return { success: false, error: 'البريد الإلكتروني غير مسجل' };
                 }
 
                 const admin = admins[0];
-                console.log('👤 تم العثور على المسؤول:', admin.username);
                 
                 if (!admin.is_active) {
                     return { success: false, error: 'الحساب معطل. يرجى التواصل مع الدعم الفني' };
@@ -417,13 +414,9 @@
 
                 // تشفير كلمة المرور المدخلة
                 const hashedPassword = await hashPassword(password);
-                console.log('🔐 تشفير المدخل:', hashedPassword);
-                console.log('💾 التشفير المخزن:', admin.password_hash);
                 
                 // مقارنة التشفير
                 if (hashedPassword === admin.password_hash) {
-                    console.log('✅ تم التحقق بنجاح');
-                    
                     // تحديث آخر تسجيل دخول
                     await supabaseRequest(`/rest/v1/admins?id=eq.${admin.id}`, {
                         method: 'PATCH',
@@ -439,7 +432,6 @@
                     
                     return { success: true, admin };
                 } else {
-                    console.log('❌ كلمة المرور غير متطابقة');
                     return { success: false, error: 'كلمة المرور غير صحيحة' };
                 }
             } catch(e) {
@@ -513,9 +505,7 @@
         // التحقق من الجلسة عند التحميل
         checkSession();
         
-        console.log('✅ صفحة تسجيل الدخول جاهزة');
-        console.log('📧 جرب: almayacouture@gmail.com');
-        console.log('🔑 كلمة المرور: admin123');
+       
     </script>
 </body>
 </html>

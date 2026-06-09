@@ -275,8 +275,16 @@
         '</div>' +
       '</footer>';
 
-    document.body.insertAdjacentHTML('beforeend', footerHTML);
-    console.log('📝 Footer HTML injecté');
+    // 🟢 التعديل المطلوب: منع الـ CLS باستخدام الحاوية الموجودة مسبقاً
+    const footerContainer = document.getElementById('footer-container');
+    if (footerContainer) {
+      footerContainer.outerHTML = footerHTML;
+      console.log('📝 Footer injecté dans #footer-container (CLS évité)');
+    } else {
+      document.body.insertAdjacentHTML('beforeend', footerHTML);
+      console.log('📝 Footer injecté en fin de body (fallback)');
+    }
+    
     console.log('✅ Footer + Theme chargés avec succès');
   });
 

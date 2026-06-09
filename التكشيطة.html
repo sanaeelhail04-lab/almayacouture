@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -708,6 +708,55 @@
     let textsStore = { logo: "", mainTitle: "", mainSubtitle: "", logoText: "", whatsapp: "" };
     let colorsStore = {};
 
+    // ========== DEFAULT DATA (FALLBACK) ==========
+    function loadDefaults() {
+      console.log('📦 Chargement des données par défaut (fallback)');
+      dataStore = {
+        underFabrics: [
+          { id: 'under_satin_duchesse', title: 'ساتان دوشيس', desc: 'لمعة ملكية ناعمة', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Satin+Duchesse' },
+          { id: 'under_crepe_sicilien', title: 'كريب حرير صقلي', desc: 'خفيف ومنسدل مثالي', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Crepe+Sicilien' },
+          { id: 'under_soie_sauvage', title: 'حرير بري طبيعي', desc: 'فخامة وتهوية', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Soie+Sauvage' }
+        ],
+        underCuts: [
+          { id: 'under_coupe_ajustee', title: 'قصّة مضبوطة (Ajustée)', desc: 'تحديد الجسم بأناقة', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Coupe+Ajustee' },
+          { id: 'under_coupe_evasee', title: 'قصّة واسعة (Évasée)', desc: 'حرية وانسيابية', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Coupe+Evasee' },
+          { id: 'under_coupe_droite', title: 'قصّة مستقيمة (Droite)', desc: 'كلاسيكية أنيقة', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Coupe+Droite' }
+        ],
+        topFabrics: [
+          { id: 'top_velours', title: 'مخمل فاخر', desc: 'وزن ثقيل · أناقة ملكية', weight: 'heavy', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Velours' },
+          { id: 'top_soie', title: 'حرير طبيعي', desc: 'وزن خفيف · لمعان طبيعي', weight: 'light', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Soie' },
+          { id: 'top_brocart', title: 'بروكار مغربي', desc: 'وزن متوسط · تطريز مدمج', weight: 'medium', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Brocart' }
+        ],
+        embroidery: [
+          { id: 'emb_fassi', title: 'تطريز فاسي أصيل', desc: 'خيوط ذهبية وفضية', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Fassi' },
+          { id: 'emb_rbati', title: 'تطريز رباطي أنيق', desc: 'لمسة عصرية', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Rbati' },
+          { id: 'emb_tetouani', title: 'تطريز تطواني دقيق', desc: 'صنعة يدوية متقنة', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Tetouani' }
+        ],
+        sleeves: [
+          { id: 'sleeve_longue', title: 'كم طويل (Manche Longue)', desc: 'كلاسيكي محتشم', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Manche+Longue' },
+          { id: 'sleeve_courte', title: 'كم قصير (Manche Courte)', desc: 'عصري صيفي', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Manche+Courte' },
+          { id: 'sleeve_3_4', title: 'كم 3/4', desc: 'أناقة متوازنة', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=3/4' }
+        ],
+        sfifa: [
+          { id: 'sfifa_classique', title: 'سفيفة كلاسيكية ذهبية', desc: 'عقاد تقليدي', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Sfifa' },
+          { id: 'sfifa_moderne', title: 'سفيفة عصرية فضية', desc: 'لمسة معاصرة', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Sfifa+Moderne' }
+        ],
+        mdomma: [
+          { id: 'mdomma_large', title: 'مضمة واسعة (Ceinture Large)', desc: 'حزام بارز', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Mdomma+Large' },
+          { id: 'mdomma_fine', title: 'مضمة رفيعة (Ceinture Fine)', desc: 'لطيفة ومريحة', image: 'https://placehold.co/400x400/2A2218/C4A06A?text=Mdomma+Fine' }
+        ]
+      };
+      textsStore = {
+        mainTitle: "Almaya Couture",
+        mainSubtitle: "تصميم تكشيطة فاخرة",
+        whatsapp: "212601245733"
+      };
+      colorsStore = {};
+      renderAllOptions();
+      updateDesignSheet();
+      bindClicks();
+    }
+
     function applyStyles() {
       if (colorsStore.bgColor) document.body.style.background = colorsStore.bgColor;
       if (colorsStore.titleColor) {
@@ -738,15 +787,31 @@
       }
     }
 
+    // ========== MODIFIED loadData() WITH FALLBACK ==========
     function loadData() {
       const stored = localStorage.getItem('almaya_takchita_data');
       if (stored) {
-        const data = JSON.parse(stored);
-        dataStore = data.items || dataStore;
-        textsStore = data.texts || textsStore;
-        colorsStore = data.colors || {};
-        applyStyles();
+        try {
+          const data = JSON.parse(stored);
+          if (data.items && Object.keys(data.items).length > 0) {
+            dataStore = data.items;
+          } else {
+            loadDefaults();
+            return;
+          }
+          textsStore = data.texts || textsStore;
+          colorsStore = data.colors || {};
+          applyStyles();
+        } catch(e) {
+          console.warn('⚠️ Erreur parsing localStorage, fallback vers defaults');
+          loadDefaults();
+          return;
+        }
+      } else {
+        loadDefaults();
+        return;
       }
+      
       document.getElementById('main-title').innerText = textsStore.mainTitle || "Almaya Couture";
       document.getElementById('main-subtitle').innerText = textsStore.mainSubtitle || "خياطة المعلم المغربية الأصيلة · تكشيطة راقية بلمسات يدوية فريدة";
       renderAllOptions();
