@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="config.js"></script>
+  
+  <!-- EmailJS Library - يتم تحميله أولاً -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,7 +41,6 @@
       --overlay-bg: rgba(0,0,0,0.5);
     }
     
-    /* ========== WHITE THEME ========== */
     body.white-theme {
       --bg: #FDFCF8;
       --bg2: #F5F0E8;
@@ -81,7 +82,6 @@
     #header-container { position: sticky; top: 0; z-index: 100; }
     .main-content { flex: 1; }
 
-    /* Hero Section */
     .hero-section {
       background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-mid) 50%, var(--hero-start) 100%);
       padding: clamp(1rem, 3vw, 1.5rem) clamp(1rem, 3vw, 2rem);
@@ -103,7 +103,6 @@
     .hero-text h1 { font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 800; color: var(--text-title); margin-bottom: 0.2rem; font-family: 'Cormorant Garamond', serif; }
     .hero-text p { color: var(--text2); font-size: clamp(0.7rem, 1.5vw, 0.85rem); }
 
-    /* Filters */
     .filters-section {
       background: var(--filter-bg);
       padding: clamp(0.6rem, 1.5vw, 0.9rem) clamp(1rem, 2.5vw, 1.8rem);
@@ -150,7 +149,6 @@
     }
     .products-count { color: var(--gold); font-size: clamp(0.7rem, 1.5vw, 0.85rem); font-weight: 500; white-space: nowrap; }
 
-    /* Products Grid */
     .products-container { max-width: 1200px; margin: 0 auto; padding: clamp(1rem, 3vw, 2rem); }
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: clamp(1rem, 2.5vw, 1.8rem); }
     .product-card {
@@ -170,7 +168,6 @@
     .product-title { font-size: clamp(0.9rem, 2vw, 1.1rem); font-weight: 700; color: var(--text-title); margin-bottom: 0.5rem; line-height: 1.4; }
     .product-price { color: var(--gold); font-size: clamp(0.8rem, 1.8vw, 0.95rem); font-weight: 600; }
    
-    /* Modal */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
     .product-modal { background: var(--modal-bg); border-radius: 20px; max-width: 1000px; width: 95%; max-height: 90vh; overflow-y: auto; position: relative; }
@@ -182,9 +179,7 @@
     .modal-details h2 { color: var(--text-title); font-size: clamp(1.2rem, 2.5vw, 1.6rem); margin-bottom: 0.5rem; }
     .modal-category { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; }
     .modal-price { font-size: 1.3rem; font-weight: 700; color: var(--gold); margin-bottom: 1rem; }
-    .modal-description { color: var(--text2); line-height: 1.6; margin-bottom: 1.5rem; }
 
-    /* Order */
     .order-section { background: var(--order-bg); border-radius: 12px; padding: clamp(1rem, 2vw, 1.4rem); margin-top: 1rem; border: 1px solid var(--border2); }
     .order-section h4 { color: var(--gold); font-size: clamp(0.8rem, 1.8vw, 1rem); margin-bottom: 1rem; }
     .order-form input, .order-form textarea {
@@ -192,16 +187,13 @@
       border: 1px solid var(--border2); border-radius: 8px; color: var(--text);
       font-family: inherit; font-size: clamp(0.7rem, 1.5vw, 0.85rem); transition: all 0.3s; margin-bottom: 0.5rem;
     }
-    .order-form input::placeholder, .order-form textarea::placeholder { color: var(--text3); }
     .btn-whatsapp { background: #25D366; color: white; }
     .btn-submit-order { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #1A1510; width: 100%; }
 
-    /* Zoom */
     .zoom-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; cursor: zoom-out; }
     .zoom-overlay.active { opacity: 1; pointer-events: all; }
     .zoom-overlay img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 8px; }
 
-    /* WhatsApp Float */
     .whatsapp-float {
       position: fixed;
       bottom: 120px;
@@ -223,7 +215,6 @@
 
     @media (max-width: 768px) {
       .modal-content { grid-template-columns: 1fr; }
-     
       .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 100px; left: 20px; }
     }
     @media (max-width: 480px) {
@@ -301,15 +292,69 @@
 
   <script src="header.js"></script>
   <script src="footer.js"></script>
+  <script src="config.js"></script>
 
   <script>
+    // ========== EMAILJS CONFIGURATION ==========
+    const EMAILJS_PUBLIC_KEY = "-gFMhMq11ZQZt_4fh";
+    const EMAILJS_SERVICE_ID = "service_skq2dgg";
+    const EMAILJS_TEMPLATE_ID = "template_g4sxw9y";
+    const YOUR_EMAIL = "mohamedhm568@gmail.com";
+    
+    // انتظر تحميل EmailJS بالكامل قبل التهيئة
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+        console.log("✅ EmailJS initialized with key:", EMAILJS_PUBLIC_KEY);
+      } else {
+        console.error("❌ EmailJS not loaded!");
+      }
+    });
+    
+    // Fonction pour envoyer l'email de notification
+    async function sendEmailNotification(orderData) {
+      console.log("📧 Attempting to send email with data:", orderData);
+      
+      // التأكد من تحميل EmailJS
+      if (typeof emailjs === 'undefined') {
+        console.error("❌ EmailJS not available!");
+        return false;
+      }
+      
+      try {
+        const templateParams = {
+          to_email: YOUR_EMAIL,
+          product_name: orderData.product_name || 'غير محدد',
+          product_price: orderData.product_price || 'غير محدد',
+          product_category: orderData.product_category || 'غير محدد',
+          customer_name: orderData.customer_name || 'غير مدخل',
+          customer_phone: orderData.customer_phone || 'غير مدخل',
+          customer_email: orderData.customer_email || 'غير مدخل',
+          customer_address: orderData.customer_address || 'غير مدخل',
+          order_note: orderData.order_note || 'لا توجد ملاحظات',
+          order_method: orderData.order_method || 'نموذج الطلب'
+        };
+        
+        console.log("📧 Sending with params:", templateParams);
+        
+        const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        console.log("✅ Email notification sent!", response);
+        return true;
+      } catch (error) {
+        console.error("❌ Failed to send email:", error);
+        return false;
+      }
+    }
+    
     // ========== AOS INIT ==========
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
 
-   
     // ========== SUPABASE ==========
-    if (typeof CONFIG === 'undefined') throw new Error('CONFIG missing');
-    const SUPABASE_URL = CONFIG.SUPABASE_URL, SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
+    if (typeof CONFIG === 'undefined') {
+      console.error('❌ CONFIG missing!');
+    }
+    const SUPABASE_URL = CONFIG?.SUPABASE_URL;
+    const SUPABASE_KEY = CONFIG?.SUPABASE_ANON_KEY;
     let allProducts = [], categories = [];
 
     async function supabaseRequest(endpoint, opts = {}) {
@@ -322,12 +367,10 @@
       
       const res = await fetch(url, fetchOpts);
       
-      // CORRECTION ICI : gérer les réponses vides (204 No Content)
       if (res.status === 204) return null;
       
       const text = await res.text();
       
-      // Si le corps est vide, retourner null
       if (!text || text.trim() === '') {
         if (res.ok) return null;
         throw new Error(`Erreur ${res.status}: réponse vide`);
@@ -373,7 +416,6 @@
       }
     }
 
-    // ========== ORIGINAL FILTER FUNCTION ==========
     function originalFilterProducts() {
       const s = (document.getElementById('searchInput')?.value || '').toLowerCase();
       const c = document.getElementById('categoryFilter')?.value || '';
@@ -394,11 +436,9 @@
         return `<div class="product-card" data-aos="fade-up" onclick="openModal(${p.id})"><div class="product-image"><img src="${img}" alt="${escapeHtml(p.product_name)}" loading="lazy" onerror="this.src='https://placehold.co/400x500/2A2218/C4A06A'">${p.is_featured?'<div class="product-badge"><i class="fas fa-star"></i> مميز</div>':''}<div class="product-overlay"><button class="quick-view"><i class="fas fa-eye"></i> عرض التفاصيل</button></div></div><div class="product-info"><div class="product-category">${escapeHtml(p.category_name)}</div><div class="product-title">${escapeHtml(p.product_name)}</div><div class="product-price">${escapeHtml(p.price_range)||'اتصل بنا للسعر'}</div></div></div>`;
       }).join('') : '<div style="grid-column:1/-1;text-align:center;padding:4rem;"><i class="fas fa-box-open" style="font-size:3rem;color:var(--gold);opacity:0.5;"></i><p>لا توجد منتجات</p></div>';
       
-      // Refresh AOS
       setTimeout(() => AOS.refresh(), 100);
     }
 
-    // ========== DEBOUNCE WRAPPER ==========
     let _filterTimeout;
     window.filterProducts = function() {
       clearTimeout(_filterTimeout);
@@ -465,33 +505,106 @@
     };
     window.closeModal = function() { document.getElementById('productModal').classList.remove('active'); document.body.style.overflow = ''; };
 
-    window.sendWhatsApp = function(pid) {
+    // ========== MODIFIED: Send WhatsApp + Email Notification ==========
+    window.sendWhatsApp = async function(pid) {
       const p = allProducts.find(x => x.id === pid);
       const name = document.getElementById('orderName')?.value || '';
       const phone = document.getElementById('orderPhone')?.value || '';
-      if (!name || !phone) { alert('الاسم والهاتف مطلوبان'); return; }
-      window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER||'212601245733'}?text=${encodeURIComponent(`*طلب جديد*\n\n*المنتج:* ${p?.product_name}\n*العميل:* ${name}\n${phone}`)}`, '_blank');
+      const email = document.getElementById('orderEmail')?.value || '';
+      const address = document.getElementById('orderAddress')?.value || '';
+      const note = document.getElementById('orderNote')?.value || '';
+      
+      if (!name || !phone) { 
+        alert('الاسم والهاتف مطلوبان'); 
+        return; 
+      }
+      
+      console.log("📤 Sending WhatsApp order for product:", p?.product_name);
+      
+      // Envoyer l'email de notification
+      const emailSent = await sendEmailNotification({
+        product_name: p?.product_name || 'غير محدد',
+        product_price: p?.price_range || 'غير محدد',
+        product_category: p?.category_name || 'غير محدد',
+        customer_name: name,
+        customer_phone: phone,
+        customer_email: email,
+        customer_address: address,
+        order_note: note,
+        order_method: 'واتساب'
+      });
+      
+      if (emailSent) {
+        alert('تم إرسال الطلب وسيتم التواصل معك قريباً ✅');
+      } else {
+        alert('تم إرسال الطلب لكن حدث مشكلة في الإشعار، سيتم التواصل معك ✅');
+      }
+      
+      // Ouvrir WhatsApp
+      window.open(`https://wa.me/${CONFIG?.WHATSAPP_NUMBER || '212601245733'}?text=${encodeURIComponent(`*طلب جديد*\n\n*المنتج:* ${p?.product_name}\n*العميل:* ${name}\n*الهاتف:* ${phone}\n${email ? `*البريد:* ${email}\n` : ''}${address ? `*العنوان:* ${address}\n` : ''}${note ? `*ملاحظة:* ${note}\n` : ''}`)}`, '_blank');
     };
 
+    // ========== MODIFIED: Submit Order + Email Notification ==========
     window.submitOrder = async function(pid) {
       const p = allProducts.find(x => x.id === pid);
       const name = document.getElementById('orderName')?.value?.trim();
       const phone = document.getElementById('orderPhone')?.value?.trim();
-      if (!name || !phone) { alert('الاسم والهاتف مطلوبان'); return; }
+      const email = document.getElementById('orderEmail')?.value?.trim();
+      const address = document.getElementById('orderAddress')?.value?.trim();
+      const note = document.getElementById('orderNote')?.value?.trim();
+      
+      if (!name || !phone) { 
+        alert('الاسم والهاتف مطلوبان'); 
+        return; 
+      }
+      
       const btn = document.getElementById('submitOrderBtn');
-      btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+      btn.disabled = true; 
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+      
       try {
-        await supabaseRequest('/rest/v1/orders', { method:'POST', body: {
-          product_id: pid, product_name: p?.product_name||'', product_price: p?.price_range||'', product_category: p?.category_name||'',
-          customer_name: name, customer_phone: phone,
-          customer_email: document.getElementById('orderEmail')?.value||null,
-          customer_address: document.getElementById('orderAddress')?.value||null,
-          order_note: document.getElementById('orderNote')?.value||null,
-          status: 'new', created_at: new Date().toISOString()
-        }});
+        console.log("📤 Submitting order for product:", p?.product_name);
+        
+        // 1. Sauvegarder dans Supabase
+        if (SUPABASE_URL && SUPABASE_KEY) {
+          await supabaseRequest('/rest/v1/orders', { method:'POST', body: {
+            product_id: pid, 
+            product_name: p?.product_name||'', 
+            product_price: p?.price_range||'', 
+            product_category: p?.category_name||'',
+            customer_name: name, 
+            customer_phone: phone,
+            customer_email: email || null,
+            customer_address: address || null,
+            order_note: note || null,
+            status: 'new', 
+            created_at: new Date().toISOString()
+          }});
+        }
+        
+        // 2. Envoyer l'email de notification
+        const emailSent = await sendEmailNotification({
+          product_name: p?.product_name || 'غير محدد',
+          product_price: p?.price_range || 'غير محدد',
+          product_category: p?.category_name || 'غير محدد',
+          customer_name: name,
+          customer_phone: phone,
+          customer_email: email || 'غير مدخل',
+          customer_address: address || 'غير مدخل',
+          order_note: note || 'لا توجد ملاحظات',
+          order_method: 'نموذج الطلب'
+        });
+        
+        // 3. Afficher le message de succès
         btn.style.display = 'none';
-        document.querySelector('.order-form').innerHTML = '<div style="text-align:center;padding:1.5rem;color:#25D366;"><i class="fas fa-check-circle" style="font-size:2.5rem;"></i><p>تم إرسال طلبك بنجاح!</p></div>';
-      } catch(e) { alert('فشل: '+e.message); btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب'; }
+        document.querySelector('.order-form').innerHTML = '<div style="text-align:center;padding:1.5rem;color:#25D366;"><i class="fas fa-check-circle" style="font-size:2.5rem;"></i><p>تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.</p></div>';
+        
+      } catch(e) { 
+        console.error("❌ Error:", e);
+        alert('فشل إرسال الطلب: '+e.message); 
+        btn.disabled = false; 
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب'; 
+      }
     };
 
     window.resetFilters = function() { 
