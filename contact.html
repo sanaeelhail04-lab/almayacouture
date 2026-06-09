@@ -628,13 +628,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       animation: themePulse 2s ease-in-out infinite;
     }
-    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
-    body.white-theme .theme-toggle-btn { background: #FFF; border-color: rgba(160,120,64,0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-
-    @keyframes themePulse {
-      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
-      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
-    }
+   
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 1024px) {
@@ -651,7 +645,7 @@
       .info-sidebar { order: 2; }
       .form-card { order: 1; }
       .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
-      .theme-toggle-btn { bottom: 80px; right: 20px; width: 42px; height: 42px; }
+     
     }
 
     @media (max-width: 480px) {
@@ -928,35 +922,7 @@
     // ========== AOS ==========
     AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-quad' });
 
-    // ========== THEME TOGGLE ==========
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.setAttribute('aria-label', 'تغيير السمة');
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
-          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
-          updateIcon();
-        });
-        document.body.appendChild(btn);
-        updateIcon();
-      }
-      function updateIcon() {
-        const btn = document.querySelector('.theme-toggle-btn');
-        if (!btn) return;
-        btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      }
-      function applySaved() {
-        const s = localStorage.getItem('almaya-theme');
-        if (s === 'white') document.body.classList.add('white-theme');
-        else if (s === 'dark') document.body.classList.remove('white-theme');
-      }
-      applySaved(); createToggleButton();
-    })();
+    
 
     // ========== CONNECTION TO SUPABASE ==========
     if (typeof CONFIG === 'undefined') {

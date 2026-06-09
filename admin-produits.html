@@ -80,7 +80,6 @@
     #header-container { position: sticky; top: 0; z-index: 50; }
     .main-content { flex: 1; }
 
-    /* تعديل الـ admin container لإفساح مساحة للقائمة الجانبية */
     .admin-container {
       max-width: 1300px;
       margin: 0 auto;
@@ -88,7 +87,6 @@
       transition: margin-right 0.3s ease;
     }
 
-    /* ===== HEADER ===== */
     .admin-header {
       text-align: center;
       margin-bottom: 3rem;
@@ -129,7 +127,6 @@
       font-size: 0.9rem;
     }
 
-    /* ===== TABS ===== */
     .tabs {
       display: flex;
       gap: 0.35rem;
@@ -176,7 +173,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== FORM CARD ===== */
     .form-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -219,7 +215,6 @@
     .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C4A06A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 1rem center; padding-left: 2.5rem; }
     .form-group select option { background: var(--bg-secondary); color: var(--text-primary); }
 
-    /* ===== IMAGES UPLOAD ===== */
     .main-upload-zone {
       background: linear-gradient(135deg, rgba(196,160,106,0.03), rgba(196,160,106,0.01));
       border: 2px dashed var(--border); border-radius: var(--radius-lg);
@@ -265,7 +260,6 @@
       z-index: 4;
     }
 
-    /* ===== BUTTONS ===== */
     .btn {
       padding: 0.85rem 2rem; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       color: #1A1510; border: none; border-radius: var(--radius);
@@ -279,7 +273,6 @@
     .btn-edit { background: linear-gradient(135deg, #3B82F6, #2563EB); color: white; }
     .btn-group { display: flex; gap: 0.75rem; margin-top: 2rem; flex-wrap: wrap; }
 
-    /* ===== MESSAGE ===== */
     .message {
       padding: 1rem 1.5rem; border-radius: var(--radius); margin-bottom: 1.5rem;
       text-align: center; font-weight: 600; font-size: 0.85rem; display: none;
@@ -288,7 +281,6 @@
     .message.error { background: rgba(255,71,87,0.1); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
     .message.info { background: rgba(196,160,106,0.1); color: var(--gold); border: 1px solid rgba(196,160,106,0.3); }
 
-    /* ===== TABLE ===== */
     .products-table { width: 100%; border-collapse: collapse; background: var(--bg-card); min-width: 750px; }
     .products-table th { background: var(--bg-secondary); color: var(--gold); padding: 1rem 0.9rem; font-size: 0.75rem; text-align: right; font-weight: 700; border-bottom: 2px solid var(--border); }
     .products-table td { padding: 0.85rem 0.9rem; border-bottom: 1px solid var(--border); font-size: 0.82rem; color: var(--text-secondary); }
@@ -298,7 +290,6 @@
     .status-active { background: rgba(37,211,102,0.15); color: var(--success); }
     .status-inactive { background: rgba(255,71,87,0.15); color: var(--danger); }
 
-    /* ===== MODAL ===== */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
       z-index: 200; display: flex; align-items: center; justify-content: center;
@@ -445,7 +436,6 @@
 
   <div id="footer-container"></div>
 
-  <!-- Modal Suppression -->
   <div class="modal-overlay" id="deleteModal">
     <div class="modal modal-delete">
       <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:var(--danger);"></i>
@@ -464,6 +454,26 @@
   <script src="footer.js"></script>
 
   <script>
+    // ==================== VÉRIFICATION DE SESSION ADMIN ====================
+    (function checkAdminSession() {
+      const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true';
+      if (!isLoggedIn) {
+        document.querySelectorAll('.main-upload-zone, .image-card, #videoCard, .tab-btn, #submitBtn').forEach(el => {
+          if (el) el.style.opacity = '0.5';
+        });
+        const msgDiv = document.getElementById('message');
+        if (msgDiv) {
+          msgDiv.textContent = '⚠️ يجب تسجيل الدخول أولاً لإدارة المنتجات';
+          msgDiv.className = 'message error';
+          msgDiv.style.display = 'block';
+        }
+        setTimeout(() => {
+          window.location.href = 'admin-login.html';
+        }, 2500);
+        return;
+      }
+    })();
+
     // ==================== CONFIGURATION ====================
     if (typeof CONFIG === 'undefined') { 
       console.error('❌ CONFIG missing');
@@ -520,9 +530,7 @@
       }
     }
 
-    // ==================== CLOUDINARY UPLOAD ONLY (NO DELETE) ====================
-    // تم حذف دوال cloudinarySignature() و deleteFromCloudinary() بالكامل
-    
+    // ==================== CLOUDINARY UPLOAD ====================
     function uploadToCloudinary(file, type) {
       return new Promise((resolve, reject) => {
         const fd = new FormData();
@@ -551,7 +559,6 @@
       card.classList.add('uploading');
       try {
         const data = await uploadToCloudinary(file, 'image');
-        // تم حذف سطر deleteFromCloudinary
         uploadedImages[index] = { url: data.secure_url, public_id: data.public_id };
         card.classList.remove('uploading');
         updateImageCardHTML(card, index, true, data.secure_url);
@@ -594,7 +601,6 @@
     }
 
     window.removeImage = async function(index) {
-      // تم حذف سطر deleteFromCloudinary - الحذف يتم يدوياً أو عبر webhook
       uploadedImages[index] = null;
       const card = document.getElementById(`imageCard${index}`);
       if (card) { card.classList.remove('has-image', 'is-main', 'uploading'); updateImageCardHTML(card, index, false); }
@@ -615,7 +621,6 @@
       const file = event.target.files[0];
       if (!file || file.size > 50*1024*1024 || !file.type.startsWith('video/')) { showMessage('❌ فيديو غير صالح', 'error'); return; }
       try {
-        // تم حذف سطر deleteFromCloudinary
         const data = await uploadToCloudinary(file, 'video');
         uploadedVideoData = { url: data.secure_url, public_id: data.public_id };
         document.getElementById('videoPreview').innerHTML = `<video controls src="${data.secure_url}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:1px solid rgba(255,71,87,0.3);border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف الفيديو</button>`;
@@ -624,7 +629,6 @@
     };
 
     window.removeVideo = async function() {
-      // تم حذف سطر deleteFromCloudinary - الحذف يتم يدوياً أو عبر webhook
       uploadedVideoData = null;
       document.getElementById('videoPreview').innerHTML = '';
       showMessage('✅ تم إزالة الفيديو من النموذج فقط (سيبقى في Cloudinary)', 'info');
@@ -761,7 +765,6 @@
       if (!deleteProductId) return;
       try {
         await supabaseRequest(`/rest/v1/products?id=eq.${deleteProductId}`, { method:'DELETE' });
-        // تم حذف جميع استدعاءات deleteFromCloudinary للصور والفيديو
         showMessage('🗑️ تم حذف المنتج من قاعدة البيانات (الملفات تبقى في Cloudinary)', 'success');
         closeDeleteModal(); loadProducts();
       } catch(e) { showMessage('❌ فشل الحذف', 'error'); }
@@ -780,7 +783,7 @@
       
       const imgs = JSON.parse(decodeURIComponent(imagesJson))||[];
       uploadedImages = new Array(MAX_IMAGES).fill(null);
-      imgs.forEach((url, i) => { if (i < MAX_IMAGES) uploadedImages[i] = { url, public_id: null }; }); // public_id غير مطلوب الآن
+      imgs.forEach((url, i) => { if (i < MAX_IMAGES) uploadedImages[i] = { url, public_id: null }; });
       rebuildGridFromData();
       
       if (videoUrl) { uploadedVideoData = { url: videoUrl }; document.getElementById('videoPreview').innerHTML = `<video controls src="${videoUrl}" style="width:100%;max-height:250px;border-radius:12px;margin-top:0.75rem;"></video><button onclick="event.stopPropagation();removeVideo()" style="background:rgba(255,71,87,0.1);color:var(--danger);border:1px solid rgba(255,71,87,0.3);border-radius:var(--radius-sm);cursor:pointer;padding:0.5rem 1rem;margin-top:0.5rem;"><i class="fas fa-trash-alt"></i> حذف الفيديو</button>`; }

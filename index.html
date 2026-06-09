@@ -295,44 +295,7 @@
     .review-message.error { background: rgba(255,71,87,0.1); color: #FF4757; border: 1px solid rgba(255,71,87,0.3); }
     .review-message.info { background: rgba(196,160,106,0.1); color: var(--gold); border: 1px solid rgba(196,160,106,0.3); }
     
-    /* ========== THEME TOGGLE BUTTON ========== */
-    .theme-toggle-btn {
-      position: fixed;
-      bottom: 100px;
-      right: 30px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--bg2);
-      border: 2px solid var(--border2);
-      color: var(--gold);
-      font-size: 1.2rem;
-      cursor: pointer;
-      z-index: 99;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      backdrop-filter: blur(10px);
-      animation: themePulse 2s ease-in-out infinite;
-    }
-    .theme-toggle-btn:hover {
-      transform: scale(1.1) rotate(15deg);
-      border-color: var(--gold);
-      box-shadow: 0 6px 25px rgba(196,160,106,0.2);
-    }
-    .theme-toggle-btn:active { transform: scale(0.95); }
-    
-    body.white-theme .theme-toggle-btn {
-      background: #FFFFFF;
-      border-color: rgba(160, 120, 64, 0.3);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-    body.white-theme .theme-toggle-btn:hover {
-      border-color: #A07840;
-      box-shadow: 0 6px 25px rgba(160, 120, 64, 0.2);
-    }
+   
     
     @keyframes themePulse {
       0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
@@ -359,13 +322,7 @@
       .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
       .review-form-card { padding: 1.5rem; }
       .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
-      .theme-toggle-btn {
-        bottom: 80px;
-        right: 20px;
-        width: 42px;
-        height: 42px;
-        font-size: 1rem;
-      }
+      
     }
     
     @media (min-width: 1024px) {

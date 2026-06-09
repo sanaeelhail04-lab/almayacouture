@@ -222,20 +222,9 @@
     }
     .whatsapp-float:hover { transform: scale(1.08); }
 
-    /* Theme Toggle */
-    .theme-toggle-btn { position: fixed; bottom: 180px; right: 30px; width: 48px; height: 48px; border-radius: 50%; background: var(--card); border: 2px solid var(--border2); color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99; display: flex; align-items: center; justify-content: center; transition: all 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.15); animation: themePulse 2s ease-in-out infinite; }
-    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
-    body.white-theme .theme-toggle-btn { background: #FFFFFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-    @keyframes themePulse { 0%,100%{ box-shadow:0 4px 15px rgba(196,160,106,0.15); } 50%{ box-shadow:0 4px 25px rgba(196,160,106,0.3); } }
-
-    .loader { width: 50px; height: 50px; border: 3px solid var(--border2); border-radius: 50%; border-top-color: var(--gold); animation: spin 1s ease-in-out infinite; margin: auto; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    #footer-container { margin-top: auto; }
-
     @media (max-width: 768px) {
       .modal-content { grid-template-columns: 1fr; }
-      .theme-toggle-btn { bottom: 160px; right: 20px; width: 42px; height: 42px; }
+     
       .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 100px; left: 20px; }
     }
     @media (max-width: 480px) {
@@ -318,27 +307,7 @@
     // ========== AOS INIT ==========
     AOS.init({ duration: 800, once: true, offset: 80, easing: 'ease-out-quad' });
 
-    // ========== THEME TOGGLE ==========
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) { document.body.classList.remove('white-theme'); localStorage.setItem('almaya-theme', 'dark'); }
-          else { document.body.classList.add('white-theme'); localStorage.setItem('almaya-theme', 'white'); }
-          updateIcon();
-        });
-        document.body.appendChild(btn);
-        updateIcon();
-      }
-      function updateIcon() { const btn = document.querySelector('.theme-toggle-btn'); if (btn) btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
-      function applySaved() { const s = localStorage.getItem('almaya-theme'); if (s === 'white') document.body.classList.add('white-theme'); }
-      applySaved(); createToggleButton();
-    })();
-
+   
     // ========== SUPABASE ==========
     if (typeof CONFIG === 'undefined') throw new Error('CONFIG missing');
     const SUPABASE_URL = CONFIG.SUPABASE_URL, SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;

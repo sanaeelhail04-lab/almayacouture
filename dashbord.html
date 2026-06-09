@@ -278,38 +278,11 @@
       transform: translateY(-2px);
     }
 
-    /* Theme Toggle */
-    .theme-toggle-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--card);
-      border: 2px solid var(--border);
-      color: var(--gold);
-      font-size: 1.2rem;
-      cursor: pointer;
-      z-index: 99;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .theme-toggle-btn:hover {
-      transform: scale(1.1) rotate(15deg);
-      border-color: var(--gold);
-    }
-
-    #footer-container { margin-top: 2rem; }
-
     @media (max-width: 768px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .charts-row { grid-template-columns: 1fr; }
       .main-content { padding: 1rem; }
-      .theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+     
     }
   </style>
 </head>
@@ -430,41 +403,7 @@
   <script src="footer.js"></script>
 
   <script>
-    // ========== THEME TOGGLE ==========
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) {
-            document.body.classList.remove('white-theme');
-            localStorage.setItem('almaya-theme', 'dark');
-          } else {
-            document.body.classList.add('white-theme');
-            localStorage.setItem('almaya-theme', 'white');
-          }
-          updateButtonIcon();
-        });
-        document.body.appendChild(btn);
-        updateButtonIcon();
-      }
-
-      function updateButtonIcon() {
-        const btn = document.querySelector('.theme-toggle-btn');
-        if (!btn) return;
-        btn.innerHTML = document.body.classList.contains('white-theme') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      }
-
-      function applySavedTheme() {
-        const saved = localStorage.getItem('almaya-theme');
-        if (saved === 'white') document.body.classList.add('white-theme');
-      }
-      applySavedTheme();
-      createToggleButton();
-    })();
+    
 
     // ========== التحقق من CONFIG ==========
     if (typeof CONFIG === 'undefined') {

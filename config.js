@@ -7,7 +7,6 @@ const CONFIG = {
   // Cloudinary
   CLOUDINARY_CLOUD_NAME: 'dclli15vh',
   CLOUDINARY_API_KEY: '969916973571517',
-  CLOUDINARY_API_SECRET: 'xjQHZiOVgM8_l7ql6vUkiyCz8IU',
   CLOUDINARY_UPLOAD_PRESET: 'almaya_products'
 };
 

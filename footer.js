@@ -50,33 +50,60 @@
     }
 
     function _createButtonIfMissing() {
-      if (document.querySelector(BTN_SELECTOR)) return;
-      var btn = document.createElement('button');
-      btn.className = BTN_CLASS;
-      btn.setAttribute('aria-label', 'تغيير السمة');
-      btn.setAttribute('title', 'تغيير السمة');
-      btn.innerHTML = '<i class="fas fa-moon"></i>';
-      document.body.appendChild(btn);
+      setTimeout(function() {
+        if (document.querySelector(BTN_SELECTOR)) return;
+        
+        const footer = document.getElementById('almayaFooter') || document.querySelector('.almaya-footer');
+        
+        if (footer) {
+          // تحويل الزر إلى رابط <a>
+          const themeLink = document.createElement('a');
+          themeLink.className = BTN_CLASS;
+          themeLink.setAttribute('aria-label', 'تغيير السمة');
+          themeLink.setAttribute('title', 'تغيير السمة');
+          themeLink.setAttribute('href', 'javascript:void(0);');
+          themeLink.setAttribute('role', 'button');
+          themeLink.innerHTML = '<i class="fas fa-moon"></i>';
+          
+          // نضيف الرابط لقسم socials
+          const socialsDiv = footer.querySelector('.almaya-footer__socials');
+          if (socialsDiv) {
+            socialsDiv.appendChild(themeLink);
+            console.log('✅ Theme link added to socials section');
+          } else {
+            const bottomDiv = footer.querySelector('.almaya-footer__bottom');
+            if (bottomDiv) {
+              bottomDiv.appendChild(themeLink);
+              console.log('✅ Theme link added to footer bottom (fallback)');
+            } else {
+              footer.appendChild(themeLink);
+            }
+          }
+          
+          _updateButtons();
+        } else {
+          console.log('⚠️ Footer not found yet, retrying...');
+          setTimeout(_createButtonIfMissing, 100);
+        }
+      }, 50);
     }
 
     function _bindDelegatedClick() {
       document.addEventListener('click', function (e) {
-        if (e.target.closest(BTN_SELECTOR)) {
+        const target = e.target.closest(BTN_SELECTOR);
+        if (target) {
+          e.preventDefault(); // منع السلوك الافتراضي للرابط
           toggle();
         }
       });
     }
 
     function init() {
-      // 1. طبق الثيم قبل أي render — يمنع الوميض
       loadSaved();
+      _bindDelegatedClick();
 
-      // 2. عند جهوز DOM أنشئ الزر وربط events
       function onReady() {
         _createButtonIfMissing();
-        _bindDelegatedClick();
-        _updateButtons();
-        console.log('🎨 AlmayaTheme ready');
       }
 
       if (document.readyState === 'loading') {
@@ -89,7 +116,6 @@
     return { init: init, toggle: toggle, applyTheme: applyTheme };
   })();
 
-  // شغّل Theme Manager مباشرة — قبل أي شيء آخر
   AlmayaTheme.init();
 
   // ==========================================
@@ -135,6 +161,8 @@
       'body.white-theme .almaya-footer__contact-link:hover{color:#A07840!important}' +
       'body.white-theme .almaya-footer__social{border-color:rgba(160,120,64,0.2)!important;color:#5A4E3C!important}' +
       'body.white-theme .almaya-footer__social:hover{background:rgba(160,120,64,0.08)!important;border-color:rgba(160,120,64,0.4)!important}' +
+      'body.white-theme .almaya-footer .theme-toggle-btn{border-color:rgba(160,120,64,0.2)!important;color:#5A4E3C!important}' +
+      'body.white-theme .almaya-footer .theme-toggle-btn:hover{background:rgba(160,120,64,0.08)!important;border-color:rgba(160,120,64,0.4)!important;color:#A07840!important}' +
 
       // Divider
       '.almaya-footer__divider{display:flex;align-items:center;justify-content:center;padding:0;position:relative}' +
@@ -166,28 +194,45 @@
       '.almaya-footer__icon--whatsapp{color:#25D366}' +
       '.almaya-footer__icon--mail{color:var(--gold)}' +
 
-      // Socials
-      '.almaya-footer__socials{display:flex;gap:0.6rem;align-items:center}' +
-      '.almaya-footer__social{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid rgba(196,160,106,0.18);background:rgba(255,255,255,0.03);color:var(--text-dim);font-size:0.9rem;text-decoration:none;transition:color 0.3s,border-color 0.3s,background 0.3s,transform 0.3s}' +
-      '.almaya-footer__social:hover{color:var(--gold);border-color:rgba(196,160,106,0.45);background:var(--gold-dim);transform:translateY(-3px)}' +
+      // Socials - avec theme link comme <a>
+      '.almaya-footer__socials{display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap}' +
+      '.almaya-footer__social,.almaya-footer .theme-toggle-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid rgba(196,160,106,0.18);background:rgba(255,255,255,0.03);color:var(--text-dim);font-size:0.9rem;text-decoration:none;transition:all 0.3s ease;cursor:pointer}' +
+      '.almaya-footer__social:hover,.almaya-footer .theme-toggle-btn:hover{color:var(--gold);border-color:rgba(196,160,106,0.45);background:var(--gold-dim);transform:translateY(-3px)}' +
       '.almaya-footer__social--yt:hover{color:#FF0000;border-color:rgba(255,0,0,0.35);background:rgba(255,0,0,0.08)}' +
+      
+      // Style spécifique pour le theme link
+      '.almaya-footer .theme-toggle-btn{margin:0;padding:0;font-size:1rem}' +
+      '.almaya-footer .theme-toggle-btn:hover{transform:translateY(-3px)}' +
 
-      // Bottom
+      // Bottom bar
       '.almaya-footer__bottom{max-width:1200px;margin:0 auto;padding:1.25rem 2rem;border-top:1px solid rgba(196,160,106,0.08);display:flex;align-items:center;justify-content:center;gap:0.75rem;font-family:"Tajawal",sans-serif;font-size:0.55rem;font-weight:300;letter-spacing:1px;color:var(--text-dim);flex-wrap:wrap;text-align:center}' +
       '.almaya-footer__bottom-sep{color:var(--gold);opacity:0.5;font-size:0.45rem}' +
 
-      // Theme Toggle Button
-      '.theme-toggle-btn{position:fixed;bottom:30px;right:30px;width:50px;height:50px;border-radius:50%;background:rgba(34,28,20,0.85);border:2px solid rgba(196,160,106,0.3);color:#C4A06A;font-size:1.2rem;cursor:pointer;z-index:9999;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 4px 15px rgba(0,0,0,0.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:almaya-theme-pulse 2s ease-in-out infinite}' +
-      '.theme-toggle-btn:hover{transform:scale(1.1) rotate(15deg);border-color:#C4A06A;box-shadow:0 6px 25px rgba(196,160,106,0.25)}' +
-      '.theme-toggle-btn:active{transform:scale(0.95)}' +
-      'body.white-theme .theme-toggle-btn{background:rgba(255,255,255,0.92);border-color:rgba(160,120,64,0.3);color:#A07840;box-shadow:0 4px 15px rgba(0,0,0,0.1)}' +
-      'body.white-theme .theme-toggle-btn:hover{border-color:#A07840;box-shadow:0 6px 25px rgba(160,120,64,0.2)}' +
-      '@keyframes almaya-theme-pulse{0%,100%{box-shadow:0 4px 15px rgba(196,160,106,0.2)}50%{box-shadow:0 4px 25px rgba(196,160,106,0.4)}}' +
-
       // Responsive
-      '@media(max-width:1000px){.almaya-footer__inner{grid-template-columns:1fr 1fr;gap:2rem}.almaya-footer__brand{grid-column:1/-1}.almaya-footer__about{max-width:100%}}' +
-      '@media(max-width:600px){.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}.theme-toggle-btn{bottom:20px;right:20px;width:44px;height:44px;font-size:1.1rem}}' +
-      '@media(max-width:400px){.almaya-footer__inner{padding:1.5rem 1rem 1.25rem;gap:1.5rem}.almaya-footer__logo img{height:42px}.almaya-footer__social{width:30px;height:30px;font-size:0.8rem}}';
+      '@media(max-width:1000px){' +
+        '.almaya-footer__inner{grid-template-columns:1fr 1fr;gap:2rem}' +
+        '.almaya-footer__brand{grid-column:1/-1}' +
+        '.almaya-footer__about{max-width:100%}' +
+      '}' +
+      
+      '@media(max-width:768px){' +
+        '.almaya-footer__socials{gap:0.5rem}' +
+        '.almaya-footer__social,.almaya-footer .theme-toggle-btn{width:32px;height:32px;font-size:0.85rem}' +
+      '}' +
+      
+      '@media(max-width:600px){' +
+        '.almaya-footer__inner{grid-template-columns:1fr;padding:2rem 1.25rem 1.5rem;gap:1.75rem}' +
+        '.almaya-footer__bottom{padding:1rem 1.25rem;font-size:0.5rem}' +
+        '.almaya-footer__socials{gap:0.45rem}' +
+        '.almaya-footer__social,.almaya-footer .theme-toggle-btn{width:30px;height:30px;font-size:0.8rem}' +
+      '}' +
+      
+      '@media(max-width:400px){' +
+        '.almaya-footer__inner{padding:1.5rem 1rem 1.25rem;gap:1.5rem}' +
+        '.almaya-footer__logo img{height:42px}' +
+        '.almaya-footer__socials{gap:0.4rem}' +
+        '.almaya-footer__social,.almaya-footer .theme-toggle-btn{width:28px;height:28px;font-size:0.75rem}' +
+      '}';
 
     document.head.appendChild(style);
     console.log('🎨 Footer CSS injecté');
@@ -262,6 +307,7 @@
               '<a href="https://www.youtube.com/@InnovatorEssence" target="_blank" rel="noopener" class="almaya-footer__social almaya-footer__social--yt" aria-label="YouTube">' +
                 '<i class="fab fa-youtube"></i>' +
               '</a>' +
+              '<!-- Theme link will be added here dynamically -->' +
             '</div>' +
           '</div>' +
 
@@ -275,20 +321,19 @@
         '</div>' +
       '</footer>';
 
-    // 🟢 التعديل المطلوب: منع الـ CLS باستخدام الحاوية الموجودة مسبقاً
+    // إضافة الفوتر
     const footerContainer = document.getElementById('footer-container');
     if (footerContainer) {
       footerContainer.outerHTML = footerHTML;
-      console.log('📝 Footer injecté dans #footer-container (CLS évité)');
+      console.log('📝 Footer injecté dans #footer-container');
     } else {
       document.body.insertAdjacentHTML('beforeend', footerHTML);
       console.log('📝 Footer injecté en fin de body (fallback)');
     }
     
-    console.log('✅ Footer + Theme chargés avec succès');
+    console.log('✅ Footer chargé avec succès');
   });
 
-  // API عامة — للاستخدام من أي صفحة
   window.AlmayaTheme = AlmayaTheme;
 
 })();

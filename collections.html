@@ -313,49 +313,9 @@
       color: var(--text-title);
     }
 
-    /* ========== THEME TOGGLE BUTTON ========== */
-    .theme-toggle-btn {
-      position: fixed;
-      bottom: 100px;
-      right: 30px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--bg2);
-      border: 2px solid var(--border2);
-      color: var(--gold);
-      font-size: 1.2rem;
-      cursor: pointer;
-      z-index: 99;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      backdrop-filter: blur(10px);
-      animation: themePulse 2s ease-in-out infinite;
-    }
-    .theme-toggle-btn:hover {
-      transform: scale(1.1) rotate(15deg);
-      border-color: var(--gold);
-      box-shadow: 0 6px 25px rgba(196,160,106,0.2);
-    }
-    .theme-toggle-btn:active { transform: scale(0.95); }
     
-    body.white-theme .theme-toggle-btn {
-      background: #FFFFFF;
-      border-color: rgba(160, 120, 64, 0.3);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-    body.white-theme .theme-toggle-btn:hover {
-      border-color: #A07840;
-      box-shadow: 0 6px 25px rgba(160, 120, 64, 0.2);
-    }
     
-    @keyframes themePulse {
-      0%, 100% { box-shadow: 0 4px 15px rgba(196,160,106,0.15); }
-      50% { box-shadow: 0 4px 25px rgba(196,160,106,0.3); }
-    }
+  
 
     /* Cat Card */
     .cat-card {
@@ -497,13 +457,7 @@
       .divider { gap: 1rem; margin: 2.5rem auto 1.5rem; padding: 0 1rem; }
       .divider-text { font-size: 0.55rem; letter-spacing: 0.4em; }
       .logo-img { height: 42px; }
-      .theme-toggle-btn {
-        bottom: 80px;
-        right: 20px;
-        width: 42px;
-        height: 42px;
-        font-size: 1rem;
-      }
+     
     }
 
     @media (max-width: 480px) {
@@ -574,59 +528,7 @@
   <script src="footer.js"></script>
 
   <script>
-    // ========== THEME TOGGLE ==========
-    (function() {
-      function createToggleButton() {
-        if (document.querySelector('.theme-toggle-btn')) return;
-        
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle-btn';
-        btn.setAttribute('aria-label', 'تغيير السمة');
-        btn.setAttribute('title', 'تغيير السمة (أبيض / أسود)');
-        btn.innerHTML = '<i class="fas fa-moon"></i>';
-        
-        btn.addEventListener('click', function() {
-          const isWhite = document.body.classList.contains('white-theme');
-          if (isWhite) {
-            document.body.classList.remove('white-theme');
-            localStorage.setItem('almaya-theme', 'dark');
-          } else {
-            document.body.classList.add('white-theme');
-            localStorage.setItem('almaya-theme', 'white');
-          }
-          updateButtonIcon();
-        });
-        
-        document.body.appendChild(btn);
-        updateButtonIcon();
-      }
-
-      function updateButtonIcon() {
-        const btn = document.querySelector('.theme-toggle-btn');
-        if (!btn) return;
-        if (document.body.classList.contains('white-theme')) {
-          btn.innerHTML = '<i class="fas fa-sun"></i>';
-          btn.setAttribute('title', 'الوضع الداكن');
-        } else {
-          btn.innerHTML = '<i class="fas fa-moon"></i>';
-          btn.setAttribute('title', 'الوضع الفاتح');
-        }
-      }
-
-      function applySavedTheme() {
-        const saved = localStorage.getItem('almaya-theme');
-        if (saved === 'white') {
-          document.body.classList.add('white-theme');
-        } else if (saved === 'dark') {
-          document.body.classList.remove('white-theme');
-        }
-      }
-
-      applySavedTheme();
-      createToggleButton();
-      console.log('🎨 Theme toggle ready');
-    })();
-
+    
     // ========== التطبيق الرئيسي (باستعمال CONFIG) ==========
     (function() {
       'use strict';

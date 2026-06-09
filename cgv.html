@@ -87,17 +87,11 @@
     .whatsapp-float { position: fixed; bottom: 30px; left: 30px; z-index: 100; background: #25D366; color: white; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.5rem; text-decoration: none; }
     .whatsapp-float:hover { transform: scale(1.08); }
 
-    /* THEME TOGGLE */
-    .theme-toggle-btn { position: fixed; bottom: 100px; right: 30px; width: 48px; height: 48px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--border2); color: var(--gold); font-size: 1.2rem; cursor: pointer; z-index: 99; display: flex; align-items: center; justify-content: center; transition: all 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: themePulse 2s ease-in-out infinite; }
-    .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); border-color: var(--gold); }
-    body.white-theme .theme-toggle-btn { background: #FFF; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-color: rgba(160,120,64,0.3); }
-    @keyframes themePulse { 0%,100%{ box-shadow:0 4px 15px rgba(196,160,106,0.15); } 50%{ box-shadow:0 4px 25px rgba(196,160,106,0.3); } }
-
+   
     @media (max-width: 768px) {
       .toc-list { grid-template-columns: 1fr; }
       .whatsapp-float { width: 45px; height: 45px; font-size: 1.3rem; bottom: 20px; left: 20px; }
-      .theme-toggle-btn { bottom: 80px; right: 20px; width: 42px; height: 42px; }
-    }
+      }
   </style>
 </head>
 <body>
