@@ -34,7 +34,6 @@
     .admin-container{max-width:1300px;margin:0 auto;padding:2rem 1.5rem}
     #footer-container{margin-top:auto}
     
-    /* Quick Stats */
     .quick-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
     .qs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;display:flex;align-items:center;gap:0.8rem;transition:var(--transition)}
     .qs-card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
@@ -42,14 +41,12 @@
     .qs-val{font-size:1.6rem;font-weight:800;color:var(--text-primary);line-height:1}
     .qs-lbl{font-size:0.7rem;color:var(--text-muted);margin-top:2px}
     
-    /* Header */
     .admin-header{text-align:center;margin-bottom:2.5rem;position:relative}
     .admin-header::after{content:'';position:absolute;bottom:-1rem;left:50%;transform:translateX(-50%);width:80px;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:10px}
     .icon-circle{display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;background:linear-gradient(135deg,rgba(196,160,106,0.15),rgba(196,160,106,0.05));border:1px solid var(--border);border-radius:50%;margin-bottom:1rem;font-size:1.5rem;color:var(--gold)}
     .admin-header h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800}
     .admin-header p{color:var(--text-muted);font-size:0.9rem}
     
-    /* Tabs */
     .tabs{display:flex;gap:0.35rem;margin-bottom:2.5rem;background:var(--bg-secondary);padding:0.4rem;border-radius:var(--radius-lg);border:1px solid var(--border)}
     .tab-btn{flex:1;padding:0.85rem 1.8rem;background:transparent;border:none;color:var(--text-secondary);font-size:0.9rem;font-weight:600;cursor:pointer;border-radius:var(--radius);transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:0.5rem}
     .tab-btn.active{background:linear-gradient(135deg,rgba(196,160,106,0.2),rgba(196,160,106,0.05));color:var(--gold)}
@@ -58,7 +55,6 @@
     @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
     .dirty-dot{display:none;width:8px;height:8px;background:var(--warning);border-radius:50%;margin-right:5px}
     
-    /* Form */
     .form-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;margin-bottom:2rem;box-shadow:var(--shadow)}
     .sec-title{font-size:1rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
     .sec-title i{color:var(--gold)}
@@ -73,7 +69,6 @@
     .char-counter{font-size:0.7rem;color:var(--text-muted);text-align:left;margin-top:0.2rem}
     .sep{border:none;border-top:1px solid var(--border);margin:1.5rem 0}
     
-    /* Upload */
     .upload-zone{background:rgba(196,160,106,0.02);border:2px dashed var(--border);border-radius:var(--radius-lg);padding:1.5rem;text-align:center;cursor:pointer;transition:var(--transition);margin-bottom:1rem}
     .upload-zone:hover{border-color:var(--gold);background:rgba(196,160,106,0.04)}
     .imgs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.8rem}
@@ -89,7 +84,6 @@
     .prog-track{width:60%;background:rgba(255,255,255,0.2);border-radius:10px;height:4px}
     .prog-bar{height:100%;background:var(--gold);border-radius:10px;width:0%}
     
-    /* Buttons */
     .btn{padding:0.7rem 1.5rem;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#1A1510;border:none;border-radius:var(--radius);font-size:0.9rem;font-weight:700;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:0.5rem}
     .btn-outline{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
     .btn-danger{background:linear-gradient(135deg,#FF4757,#e84118);color:white}
@@ -98,18 +92,15 @@
     .act-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:transparent;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;justify-content:center}
     .act-btn:hover{background:rgba(196,160,106,0.1)}
     
-    /* Messages */
-    .message{padding:0.8rem 1.2rem;border-radius:var(--radius);margin-bottom:1.5rem;font-size:0.85rem;display:none;position:fixed;top:20px;right:20px;z-index:1000;animation:slideIn 0.3s ease}
+    .message{position:fixed;top:20px;right:20px;padding:0.8rem 1.2rem;border-radius:var(--radius);font-size:0.85rem;z-index:1000;animation:slideIn 0.3s ease;display:none}
     @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
     .message.success{background:rgba(37,211,102,0.95);color:white;border-right:4px solid var(--success)}
     .message.error{background:rgba(255,71,87,0.95);color:white;border-right:4px solid var(--danger)}
     .message.info{background:rgba(196,160,106,0.95);color:#1A1510;border-right:4px solid var(--gold)}
     
-    /* Auto-save indicator */
     .auto-save-indicator{position:fixed;bottom:20px;left:20px;background:var(--bg-card);border:1px solid var(--gold);border-radius:20px;padding:0.3rem 0.8rem;font-size:0.7rem;display:none;align-items:center;gap:0.3rem;z-index:99}
     .auto-save-indicator.show{display:flex}
     
-    /* Table */
     .tbl-wrap{overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--border)}
     .ptable{width:100%;border-collapse:collapse;min-width:700px}
     .ptable th{background:var(--bg-secondary);color:var(--gold);padding:0.8rem 0.6rem;font-size:0.7rem;text-align:right}
@@ -123,37 +114,29 @@
     .s-inactive{background:rgba(255,71,87,0.15);color:var(--danger)}
     .feat-badge{background:rgba(196,160,106,0.15);color:var(--gold);padding:0.1rem 0.4rem;border-radius:20px;font-size:0.6rem}
     
-    /* Filters */
     .tbl-filters{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
     .search-wrap{position:relative;flex:1;min-width:160px}
     .search-wrap i{position:absolute;right:0.7rem;top:50%;transform:translateY(-50%);color:var(--gold)}
     .search-wrap input{width:100%;padding:0.5rem 2rem 0.5rem 0.5rem;background:var(--bg-secondary);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary)}
     .filt-sel{padding:0.5rem;background:var(--bg-secondary);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary)}
     
-    /* Bulk */
     .bulk-bar{display:none;align-items:center;gap:0.5rem;flex-wrap:wrap;background:rgba(196,160,106,0.08);border-radius:var(--radius);padding:0.5rem 1rem;margin-bottom:0.5rem}
     .bulk-bar.show{display:flex}
     
-    /* Modal */
     .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s}
     .modal-ov.active{opacity:1;pointer-events:all}
     .modal{background:var(--bg-card);border-radius:var(--radius-xl);padding:2rem;width:90%;max-width:400px;text-align:center}
     
-    /* Undo Toast */
     .undo-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-card);border-radius:50px;padding:0.6rem 1.2rem;display:flex;align-items:center;gap:1rem;z-index:9999;box-shadow:0 8px 25px rgba(0,0,0,0.3);opacity:0;pointer-events:none;transition:all 0.3s}
     .undo-toast.show{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
     
-    /* Image Modal */
     .img-modal{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:1000;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;visibility:hidden;transition:0.2s}
     .img-modal.active{opacity:1;visibility:visible}
     .img-modal img{max-width:90vw;max-height:90vh;border-radius:20px;box-shadow:0 0 20px rgba(0,0,0,0.5)}
     
-    /* Skeleton */
-    .skeleton-row{background:linear-gradient(90deg,var(--bg-secondary) 25%,var(--border) 50%,var(--bg-secondary) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+    .skeleton-row{background:linear-gradient(90deg,var(--bg-secondary) 25%,var(--border) 50%,var(--bg-secondary) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;height:60px;margin:5px 0;border-radius:8px}
     @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-    .skeleton-cell{height:56px;margin:2px 0;border-radius:8px}
     
-    /* Keyboard shortcut hint */
     .shortcut-hint{position:fixed;bottom:20px;left:20px;background:rgba(0,0,0,0.6);padding:0.3rem 0.8rem;border-radius:20px;font-size:0.65rem;color:var(--gold);font-family:monospace;z-index:98}
     
     @media(max-width:768px){.admin-container{padding:1rem}.form-grid{grid-template-columns:1fr}.quick-stats{grid-template-columns:repeat(2,1fr)}.shortcut-hint{display:none}}
@@ -165,7 +148,6 @@
 
   <div class="main-content">
     <div class="admin-container">
-      <!-- Quick Stats -->
       <div class="quick-stats">
         <div class="qs-card"><div class="qs-icon"><i class="fas fa-boxes"></i></div><div><div class="qs-val" id="statTotal">—</div><div class="qs-lbl">الإجمالي</div></div></div>
         <div class="qs-card"><div class="qs-icon"><i class="fas fa-eye"></i></div><div><div class="qs-val" id="statActive">—</div><div class="qs-lbl">نشطة</div></div></div>
@@ -173,16 +155,13 @@
         <div class="qs-card"><div class="qs-icon"><i class="fas fa-star"></i></div><div><div class="qs-val" id="statFeatured">—</div><div class="qs-lbl">مميزة</div></div></div>
       </div>
       
-      <!-- Header -->
       <div class="admin-header"><div class="icon-circle"><i class="fas fa-store"></i></div><h1>إدارة المنتجات</h1><p>إضافة / تعديل / ترتيب سريع</p></div>
       
-      <!-- Tabs -->
       <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('add')"><i class="fas fa-plus-circle"></i> إضافة منتج <span class="dirty-dot" id="dirtyDot"></span></button>
         <button class="tab-btn" onclick="switchTab('list')"><i class="fas fa-list-ul"></i> قائمة المنتجات</button>
       </div>
 
-      <!-- TAB ADD -->
       <div class="tab-content active" id="tab-add">
         <div class="form-card">
           <form id="productForm" onsubmit="addProduct(event)">
@@ -209,7 +188,6 @@
         </div>
       </div>
 
-      <!-- TAB LIST -->
       <div class="tab-content" id="tab-list">
         <div class="form-card">
           <div class="tbl-filters">
@@ -220,7 +198,7 @@
             <button class="btn btn-sm btn-outline" onclick="exportCSV()"><i class="fas fa-file-csv"></i> تصدير</button>
           </div>
           <div class="bulk-bar" id="bulkBar"><span id="selCount">0</span> محدد <button class="btn btn-sm btn-danger" onclick="bulkDel()">حذف</button><button class="btn btn-sm" onclick="bulkToggle(true)">تفعيل</button><button class="btn btn-sm" onclick="bulkToggle(false)">إخفاء</button><button class="btn btn-sm btn-outline" onclick="clearSel()">إلغاء</button></div>
-          <div class="tbl-wrap"><table class="ptable" id="productTable"><thead><tr><th style="width:30px"><input type="checkbox" id="selAllChk" onchange="toggleSelAll(this)"></th><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></thead><tbody id="prodsBody"><tr><td colspan="7"><div class="skeleton-row" style="height:60px;margin:5px 0"></div><div class="skeleton-row" style="height:60px;margin:5px 0"></div><div class="skeleton-row" style="height:60px;margin:5px 0"></div></tr></tbody>}</div>
+          <div class="tbl-wrap"><table class="ptable" id="productTable"><thead><tr><th style="width:30px"><input type="checkbox" id="selAllChk" onchange="toggleSelAll(this)"></th><th>صورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراءات</th></thead><tbody id="prodsBody"><tr><td colspan="7"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></td></tr></tbody>}</div>
         </div>
       </div>
     </div>
@@ -236,7 +214,6 @@
   <div class="shortcut-hint"><i class="fas fa-keyboard"></i> Ctrl+S للحفظ | Esc للإلغاء</div>
 
   <script src="header.js"></script>
-  <script src="footer.js"></script>
   
   <script>
     // ==================== CHECK CONFIG ====================
@@ -308,8 +285,8 @@
         let xhr=new XMLHttpRequest(); 
         xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLOUD}/${type}/upload`); 
         if(onProg) xhr.upload.onprogress=e=>{if(e.lengthComputable) onProg(Math.round(e.loaded/e.total*100));}; 
-        xhr.onload=()=>xhr.status<300?resolve(JSON.parse(xhr.responseText)):reject(); 
-        xhr.onerror=()=>reject(); 
+        xhr.onload=()=>xhr.status<300?resolve(JSON.parse(xhr.responseText)):reject(new Error('Upload failed')); 
+        xhr.onerror=()=>reject(new Error('Network error')); 
         xhr.send(fd);
       });
     }
@@ -321,7 +298,7 @@
         div.id='message'; 
         div.className=`message ${type}`; 
         div.textContent=t; 
-        document.querySelector('.admin-container').prepend(div); 
+        document.body.appendChild(div); 
         setTimeout(()=>div.remove(),4000); 
       }else{ 
         el.textContent=t; 
@@ -379,7 +356,7 @@
         document.getElementById('displayOrder').value=data.displayOrder||0; 
         document.getElementById('isFeatured').checked=!!data.isFeatured; 
         document.getElementById('isActive').checked=data.isActive!==false; 
-        if(data.imgs){ 
+        if(data.imgs && data.imgs.length){ 
           imgs=new Array(MAX_IMG).fill(null); 
           data.imgs.forEach((img,i)=>{if(i<MAX_IMG) imgs[i]=img;}); 
           rebuildCards(); 
@@ -443,6 +420,7 @@
         c.addEventListener('dragover',e=>{e.preventDefault(); if(dragSrcRow!==null && dragSrcRow!==i) c.classList.add('drag-over');}); 
         c.addEventListener('dragleave',()=>c.classList.remove('drag-over')); 
         c.addEventListener('drop',e=>{e.preventDefault(); if(dragSrcRow!==null && dragSrcRow!==i){ [imgs[dragSrcRow],imgs[i]]=[imgs[i],imgs[dragSrcRow]]; rebuildCards(); markDirty(); } dragSrcRow=null; document.querySelectorAll('.img-card').forEach(x=>x.classList.remove('drag-over'));}); 
+        c.addEventListener('click',(function(idx){ return function(e){ if(!e.target.closest('.img-actions') && !e.target.closest('.drag-handle')){ document.getElementById(`fi${idx}`)?.click(); } }; })(i));
         g.appendChild(c);
       } 
     }
@@ -452,9 +430,19 @@
       if(hasImg){ 
         c.classList.add('has-img'); 
         if(i===0) c.classList.add('is-main'); 
-        c.innerHTML=`${url?`<img src="${url}" alt="">` : ''}${i===0?'<span class="main-badge">★ رئيسية</span>':''}<div class="img-actions">${i!==0?'<button onclick="event.stopPropagation();setMain('+i+')" style="background:var(--gold);border:none;border-radius:6px;padding:4px 8px;cursor:pointer"><i class="fas fa-crown"></i></button>':''}<button onclick="event.stopPropagation();delImg('+i+')" style="background:var(--danger);border:none;border-radius:6px;padding:4px 8px;cursor:pointer;color:white"><i class="fas fa-trash"></i></button></div><div class="drag-handle"><i class="fas fa-grip-vertical"></i></div><input type="file" id="fi${i}" accept="image/*" onchange="handleImg(event,${i})" style="display:none">`; 
+        c.innerHTML=`${url?`<img src="${url}" alt="">` : ''}${i===0?'<span class="main-badge">★ رئيسية</span>':''}<div class="img-actions">${i!==0?'<button class="set-main-btn" data-idx="'+i+'" style="background:var(--gold);border:none;border-radius:6px;padding:4px 8px;cursor:pointer"><i class="fas fa-crown"></i></button>':''}<button class="del-img-btn" data-idx="'+i+'" style="background:var(--danger);border:none;border-radius:6px;padding:4px 8px;cursor:pointer;color:white"><i class="fas fa-trash"></i></button></div><div class="drag-handle"><i class="fas fa-grip-vertical"></i></div><input type="file" id="fi${i}" accept="image/*" style="display:none">`; 
+        
+        let setMainBtn=c.querySelector('.set-main-btn');
+        let delImgBtn=c.querySelector('.del-img-btn');
+        if(setMainBtn) setMainBtn.onclick=(e)=>{e.stopPropagation(); setMain(i);};
+        if(delImgBtn) delImgBtn.onclick=(e)=>{e.stopPropagation(); delImg(i);};
+        
+        let fileInput=c.querySelector(`#fi${i}`);
+        if(fileInput) fileInput.onchange=(e)=>handleImg(e,i);
       }else{ 
-        c.innerHTML=`<i class="fas fa-plus" style="font-size:1.2rem"></i><span style="font-size:0.6rem">${i===0?'رئيسية':i+1}</span><input type="file" id="fi${i}" accept="image/*" onchange="handleImg(event,${i})" style="display:none">`; 
+        c.innerHTML=`<i class="fas fa-plus" style="font-size:1.2rem"></i><span style="font-size:0.6rem">${i===0?'رئيسية':i+1}</span><input type="file" id="fi${i}" accept="image/*" style="display:none">`;
+        let fileInput=c.querySelector(`#fi${i}`);
+        if(fileInput) fileInput.onchange=(e)=>handleImg(e,i);
       } 
     }
 
@@ -472,7 +460,7 @@
       if(zone) zone.style.borderColor=cnt?`var(--gold)`:`var(--border)`; 
     }
 
-    window.handleImg=async function(e,i){ 
+    async function handleImg(e,i){ 
       let file=e.target.files[0]; 
       e.target.value=''; 
       if(!file||file.size>10*1024*1024||!file.type.startsWith('image/')){ showMsg('صورة غير صالحة (حد 10MB)','error'); return; } 
@@ -491,9 +479,9 @@
         showMsg('فشل الرفع','error'); 
       } 
       updateZone(); 
-    };
+    }
 
-    window.handleBulk=async function(e){ 
+    async function handleBulk(e){ 
       let files=Array.from(e.target.files); 
       e.target.value=''; 
       for(let f of files){ 
@@ -508,12 +496,23 @@
         }catch{} 
       } 
       updateZone(); 
-    };
+    }
 
-    window.setMain=function(i){ [imgs[0],imgs[i]]=[imgs[i],imgs[0]]; rebuildCards(); markDirty(); };
-    window.delImg=async function(i){ if(imgs[i]?.public_id) await clDel(imgs[i].public_id,'image'); imgs[i]=null; renderCard(document.getElementById(`ic${i}`),i,false); updateZone(); markDirty(); };
+    function setMain(i){ 
+      [imgs[0],imgs[i]]=[imgs[i],imgs[0]]; 
+      rebuildCards(); 
+      markDirty(); 
+    }
 
-    window.handleVideo=async function(e){ 
+    async function delImg(i){ 
+      if(imgs[i]?.public_id) await clDel(imgs[i].public_id,'image'); 
+      imgs[i]=null; 
+      renderCard(document.getElementById(`ic${i}`),i,false); 
+      updateZone(); 
+      markDirty(); 
+    }
+
+    async function handleVideo(e){ 
       let f=e.target.files[0]; 
       e.target.value=''; 
       if(!f||f.size>50*1024*1024||!f.type.startsWith('video/')){ showMsg('فيديو غير صالح','error'); return; } 
@@ -530,9 +529,9 @@
       }catch{ 
         showMsg('فشل رفع الفيديو','error'); 
       } 
-    };
+    }
 
-    window.removeVid=async function(){ 
+    async function removeVid(){ 
       if(vid?.public_id) await clDel(vid.public_id,'video'); 
       vid=null; 
       let preview=document.getElementById('videoPreview'); 
@@ -540,18 +539,19 @@
       let vc=document.getElementById('videoCard'); 
       if(vc) vc.style.borderColor='var(--border)'; 
       markDirty(); 
-    };
+    }
 
     // ==================== PRODUCTS CRUD ====================
     async function loadProds(){ 
       let tbody=document.getElementById('prodsBody'); 
-      if(tbody) tbody.innerHTML='<tr><td colspan="7"><div class="skeleton-row" style="height:60px;margin:5px 0"></div><div class="skeleton-row" style="height:60px;margin:5px 0"></div><div class="skeleton-row" style="height:60px;margin:5px 0"></div></td></tr>'; 
+      if(tbody) tbody.innerHTML='<tr><td colspan="7"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></td></tr>'; 
       try{ 
         allProds=await supa('/products?select=*&order=display_order')||[]; 
         filterProds(); 
         loadStats(); 
-      }catch{ 
-        if(tbody) tbody.innerHTML='<tr><td colspan="7">خطأ في التحميل</td></tr>'; 
+      }catch(err){ 
+        console.error(err);
+        if(tbody) tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--danger)">خطأ في تحميل المنتجات: '+err.message+'</td></tr>'; 
       } 
     }
 
@@ -574,11 +574,12 @@
         let imgsArr=[p.product_image_url,...(p.additional_images||[])].filter(u=>u); 
         return `<tr id="r${p.id}" data-id="${p.id}" draggable="true" style="cursor:grab">
           <td><input type="checkbox" class="pchk" data-id="${p.id}" onchange="toggleSel(${p.id},this)" ${selProds.has(p.id)?'checked':''}></td>
-          <td><img class="p-thumb" src="${esc(imgsArr[0])||'https://placehold.co/45x56'}" onclick="openImgModal('${esc(imgsArr[0])}')"></td>
-          <td><div style="font-weight:700">${esc(p.product_name)}</div>${p.is_featured?'<span class="feat-badge">★ مميز</span>':''}</td>
-          <td>${esc(p.category_name)}</td><td>${esc(p.price_range)||'—'}</td>
-          <td><span class="s-badge ${p.is_active?'s-active':'s-inactive'}">${p.is_active?'نشط':'مخفي'}</span></td>
-          <td><div style="display:flex;gap:3px"><button class="act-btn" onclick="editProd(${p.id})" title="تعديل كامل"><i class="fas fa-edit"></i></button><button class="act-btn" onclick="quickEditInline(${p.id})" title="تعديل سريع"><i class="fas fa-pen"></i></button><button class="act-btn" onclick="toggleProd(${p.id},${!p.is_active})" title="${p.is_active?'إخفاء':'إظهار'}"><i class="fas fa-${p.is_active?'eye-slash':'eye'}"></i></button><button class="act-btn" onclick="openDel(${p.id})" title="حذف"><i class="fas fa-trash-alt"></i></button></div></td>
+          <td><img class="p-thumb" src="${esc(imgsArr[0])||'https://placehold.co/45x56'}" onclick="openImgModal('${esc(imgsArr[0])}')" onerror="this.src='https://placehold.co/45x56'"></td>
+          <td><div style="font-weight:700">${esc(p.product_name)}</div>${p.is_featured?'<span class="feat-badge">★ مميز</span>':''}</div></td>
+          <td>${esc(p.category_name)}</div></td>
+          <td>${esc(p.price_range)||'—'}</div></td>
+          <td><span class="s-badge ${p.is_active?'s-active':'s-inactive'}">${p.is_active?'نشط':'مخفي'}</span></div></td>
+          <td><div style="display:flex;gap:3px;flex-wrap:wrap"><button class="act-btn" onclick="editProd(${p.id})" title="تعديل كامل"><i class="fas fa-edit"></i></button><button class="act-btn" onclick="quickEditInline(${p.id})" title="تعديل سريع"><i class="fas fa-pen"></i></button><button class="act-btn" onclick="toggleProd(${p.id},${!p.is_active})" title="${p.is_active?'إخفاء':'إظهار'}"><i class="fas fa-${p.is_active?'eye-slash':'eye'}"></i></button><button class="act-btn" onclick="openDel(${p.id})" title="حذف"><i class="fas fa-trash-alt"></i></button></div></div></td>
         </tr>`; 
       }).join(''); 
       
@@ -642,10 +643,10 @@
       updateBulkBar(); 
     }
 
-    window.toggleSelAll=function(chk){ 
+    function toggleSelAll(chk){ 
       document.querySelectorAll('.pchk').forEach(c=>{c.checked=chk.checked; let id=parseInt(c.dataset.id); if(chk.checked) selProds.add(id); else selProds.delete(id); let row=document.getElementById(`r${id}`); if(row) row.classList.toggle('sel-row',chk.checked);}); 
       updateBulkBar(); 
-    };
+    }
 
     function updateBulkBar(){ 
       let bar=document.getElementById('bulkBar'); 
@@ -708,7 +709,9 @@
         if(activeSpan) activeSpan.textContent=act?.length||0; 
         if(hiddenSpan) hiddenSpan.textContent=(all?.length||0)-(act?.length||0); 
         if(featuredSpan) featuredSpan.textContent=feat?.length||0; 
-      }catch{} 
+      }catch(err){ 
+        console.error('Stats error:', err);
+      } 
     }
 
     async function loadCats(){ 
@@ -719,7 +722,9 @@
         let catFilter=document.getElementById('catFilter'); 
         if(catSelect) catSelect.innerHTML=opts; 
         if(catFilter) catFilter.innerHTML='<option value="">كل الفئات</option>'+cats.map(c=>`<option value="${esc(c.category_name)}">${esc(c.category_name)}</option>`).join(''); 
-      }catch{} 
+      }catch(err){ 
+        console.error('Categories error:', err);
+      } 
     }
 
     // ==================== ADD / EDIT ====================
@@ -907,20 +912,7 @@
       } 
     });
 
-    // ==================== INIT ====================
-    document.addEventListener('DOMContentLoaded',()=>{ 
-      buildGrid(); 
-      loadCats(); 
-      loadStats(); 
-      loadDraft(); 
-      let confirmBtn=document.getElementById('confirmDelBtn'); 
-      if(confirmBtn) confirmBtn.addEventListener('click',confirmDel); 
-      let inputs=['productName','categoryName','priceRange','productDescription','displayOrder','isFeatured','isActive']; 
-      inputs.forEach(id=>{ let el=document.getElementById(id); if(el) el.addEventListener('input',markDirty); if(el && id==='productDescription') el.addEventListener('input',updateCounter); }); 
-      window.addEventListener('beforeunload',e=>{ if(isDirty){ e.preventDefault(); e.returnValue=''; } }); 
-    });
-
-    // Make functions globally available
+    // ==================== EXPORT GLOBALLY ====================
     window.switchTab = switchTab;
     window.addProduct = addProduct;
     window.resetForm = resetForm;
@@ -947,6 +939,22 @@
     window.setMain = setMain;
     window.delImg = delImg;
     window.handleVideo = handleVideo;
+
+    // ==================== INIT ====================
+    document.addEventListener('DOMContentLoaded',()=>{ 
+      console.log('DOM loaded, initializing...');
+      buildGrid(); 
+      loadCats(); 
+      loadStats(); 
+      loadDraft(); 
+      let confirmBtn=document.getElementById('confirmDelBtn'); 
+      if(confirmBtn) confirmBtn.addEventListener('click',confirmDel); 
+      let inputs=['productName','categoryName','priceRange','productDescription','displayOrder','isFeatured','isActive']; 
+      inputs.forEach(id=>{ let el=document.getElementById(id); if(el) el.addEventListener('input',markDirty); if(el && id==='productDescription') el.addEventListener('input',updateCounter); }); 
+      window.addEventListener('beforeunload',e=>{ if(isDirty){ e.preventDefault(); e.returnValue=''; } }); 
+    });
   </script>
+  
+  <script src="footer.js"></script>
 </body>
 </html>
