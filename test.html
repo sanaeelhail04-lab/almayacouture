@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>إضافة منتج | Almaya Couture</title>
+  <title>إضافة منتج | لوحة التحكم</title>
   <meta name="robots" content="noindex, nofollow">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <style>
@@ -37,7 +37,7 @@
       --radius-xl: 20px;
       --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: all 0.3s ease;
     }
 
     body {
@@ -45,31 +45,22 @@
       font-family: 'Tajawal', sans-serif;
       color: var(--text-primary);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    #header-placeholder, #footer-placeholder {
-      width: 100%;
-    }
-
-    .admin-main-content {
-      flex: 1;
-      padding: 1.5rem;
     }
 
     .admin-container {
       max-width: 1400px;
       margin: 0 auto;
+      padding: 1.5rem;
     }
 
     /* رأس الصفحة */
     .page-header {
-      background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
       margin-bottom: 1.5rem;
-      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .page-header h1 {
@@ -80,137 +71,129 @@
       gap: 0.5rem;
     }
 
-    .page-header p {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-top: 0.3rem;
-    }
-
-    /* تبويبات */
-    .tabs {
+    .header-actions {
       display: flex;
-      gap: 0.3rem;
-      margin-bottom: 1.5rem;
-      background: var(--bg-secondary);
-      padding: 0.5rem;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border);
-      flex-wrap: wrap;
-      position: sticky;
-      top: 60px;
-      z-index: 100;
-      backdrop-filter: blur(10px);
+      gap: 0.8rem;
     }
 
-    .tab-btn {
-      padding: 0.7rem 1.2rem;
-      background: transparent;
+    /* أزرار */
+    .btn {
+      padding: 0.6rem 1.2rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #1A1510;
       border: none;
-      color: var(--text-secondary);
+      border-radius: var(--radius);
       font-family: inherit;
-      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      border-radius: var(--radius-lg);
       transition: var(--transition);
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-    }
-
-    .tab-btn i {
-      font-size: 1rem;
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(196, 160, 106, 0.2), rgba(196, 160, 106, 0.05));
-      color: var(--gold);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* بطاقات النماذج */
-    .form-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 1.8rem;
-      box-shadow: var(--shadow);
-    }
-
-    .form-section {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .form-section:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .form-section h3 {
-      color: var(--gold);
-      font-size: 1.1rem;
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .full-width {
-      grid-column: 1 / -1;
-    }
-
-    .f-label {
-      display: flex;
-      align-items: center;
       gap: 0.5rem;
       font-size: 0.85rem;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-outline:hover {
+      background: rgba(196, 160, 106, 0.1);
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, var(--success), #1da15f);
+      color: white;
+    }
+
+    /* الحاوية الرئيسية */
+    .product-form {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* العمود الرئيسي */
+    .main-column {
+      flex: 2;
+      min-width: 250px;
+    }
+
+    /* العمود الجانبي */
+    .sidebar-column {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    /* البطاقات */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .card-header h3 {
+      font-size: 1rem;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-header i.fa-chevron-down {
+      transition: transform 0.3s;
+      color: var(--text-muted);
+    }
+
+    .card-header.collapsed i.fa-chevron-down {
+      transform: rotate(-90deg);
+    }
+
+    .card-body {
+      padding: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .card-body.collapsed {
+      display: none;
+    }
+
+    /* الحقول */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--text-secondary);
     }
 
-    .f-label i {
+    .form-group label i {
       color: var(--gold);
-      width: 20px;
+      margin-left: 0.3rem;
     }
 
-    .req {
-      color: var(--danger);
-    }
-
-    .f-input, .f-textarea, .f-select {
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 0.7rem 1rem;
       background: var(--bg-secondary);
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
@@ -220,41 +203,50 @@
       transition: var(--transition);
     }
 
-    .f-input:focus, .f-textarea:focus, .f-select:focus {
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
       outline: none;
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(196, 160, 106, 0.1);
     }
 
-    /* ========== نظام المتغيرات المحسن ========== */
-    .variants-builder {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
+    /* مجموعة السعر */
+    .price-group {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .price-group .form-group {
+      flex: 1;
+    }
+
+    /* المتغيرات */
+    .variants-section {
+      margin-top: 1rem;
     }
 
     .variant-options {
       display: flex;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       flex-wrap: wrap;
     }
 
-    .variant-option-card {
-      flex: 1;
-      background: var(--bg-card);
+    .variant-option {
+      background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1rem;
+      padding: 0.8rem;
+      flex: 1;
     }
 
-    .variant-option-card h4 {
+    .variant-option h4 {
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
       color: var(--gold);
-      margin-bottom: 0.8rem;
-      font-size: 0.9rem;
     }
 
-    .variant-values {
+    .variant-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
@@ -262,21 +254,20 @@
     }
 
     .variant-tag {
-      background: var(--bg-secondary);
+      background: var(--bg-primary);
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 0.3rem 0.8rem;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: var(--transition);
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      cursor: pointer;
-      transition: var(--transition);
     }
 
     .variant-tag:hover {
       border-color: var(--gold);
-      background: rgba(196, 160, 106, 0.1);
     }
 
     .variant-tag.selected {
@@ -285,22 +276,23 @@
       color: var(--gold);
     }
 
-    .add-value-input {
+    .add-value {
       display: flex;
       gap: 0.5rem;
       margin-top: 0.5rem;
     }
 
-    .add-value-input input {
+    .add-value input {
       flex: 1;
       padding: 0.4rem 0.6rem;
-      background: var(--bg-secondary);
+      background: var(--bg-primary);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text-primary);
+      font-size: 0.8rem;
     }
 
-    .add-value-input button {
+    .add-value button {
       padding: 0.4rem 0.8rem;
       background: var(--gold);
       border: none;
@@ -308,35 +300,33 @@
       cursor: pointer;
     }
 
-    /* جدول المتغيرات الناتجة */
-    .variants-table-container {
-      margin-top: 1.5rem;
+    /* جدول المتغيرات */
+    .variants-table-wrapper {
       overflow-x: auto;
+      margin-top: 1rem;
     }
 
     .variants-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
     .variants-table th,
     .variants-table td {
-      padding: 0.8rem 0.5rem;
+      padding: 0.6rem;
       border: 1px solid var(--border);
       text-align: center;
-      vertical-align: middle;
     }
 
     .variants-table th {
-      background: var(--bg-card);
+      background: var(--bg-secondary);
       color: var(--gold);
-      font-weight: 600;
     }
 
     .variants-table input {
       width: 100%;
-      padding: 0.4rem;
+      padding: 0.3rem;
       background: var(--bg-primary);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
@@ -344,72 +334,52 @@
       text-align: center;
     }
 
-    .variants-table .variant-sku-input {
-      min-width: 100px;
-    }
-
-    .variant-image-preview {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-    }
-
-    .generate-variants-btn {
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    .generate-btn {
+      background: var(--gold);
       color: #1A1510;
       border: none;
       border-radius: var(--radius);
-      padding: 0.6rem 1.2rem;
-      font-weight: 600;
+      padding: 0.5rem 1rem;
       cursor: pointer;
+      margin-bottom: 1rem;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 1rem;
     }
 
-    /* شبكة الصور */
-    .imgs-grid {
+    /* معرض الصور */
+    .images-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
       gap: 0.8rem;
-      margin-top: 1rem;
     }
 
-    .img-card {
-      aspect-ratio: 3/4;
+    .image-card {
+      aspect-ratio: 1;
       background: var(--bg-secondary);
       border: 2px dashed var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius);
       position: relative;
       cursor: pointer;
       overflow: hidden;
-      transition: var(--transition);
     }
 
-    .img-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-3px);
-    }
-
-    .img-card.has-img {
+    .image-card.has-image {
       border-style: solid;
     }
 
-    .img-card.is-main {
+    .image-card.main-image {
       border-color: var(--gold);
-      border-width: 2.5px;
     }
 
-    .img-card img {
+    .image-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .upload-placeholder {
+    .image-placeholder {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -420,7 +390,7 @@
       font-size: 0.7rem;
     }
 
-    .img-actions {
+    .image-actions {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -434,17 +404,17 @@
       transition: opacity 0.2s;
     }
 
-    .img-card:hover .img-actions {
+    .image-card:hover .image-actions {
       opacity: 1;
     }
 
-    .img-actions button {
+    .image-actions button {
       background: rgba(0,0,0,0.7);
       border: none;
       color: white;
-      width: 25px;
-      height: 25px;
-      border-radius: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
       cursor: pointer;
     }
 
@@ -456,64 +426,78 @@
       color: #1A1510;
       font-size: 0.55rem;
       padding: 0.15rem 0.4rem;
-      border-radius: 15px;
+      border-radius: 12px;
     }
 
-    /* أزرار */
-    .btn {
-      padding: 0.7rem 1.5rem;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      color: #1A1510;
-      border: none;
-      border-radius: var(--radius);
-      font-family: inherit;
-      font-weight: 700;
+    /* المنتجات ذات الصلة */
+    .related-products {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .related-product-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem;
+      border-bottom: 1px solid var(--border);
       cursor: pointer;
       transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.9rem;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(196, 160, 106, 0.3);
+    .related-product-item:hover {
+      background: rgba(196, 160, 106, 0.05);
     }
 
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid var(--gold);
+    .related-product-item img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+
+    .related-product-item .info {
+      flex: 1;
+    }
+
+    .related-product-item .name {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .related-product-item .price {
+      font-size: 0.7rem;
       color: var(--gold);
     }
 
-    .btn-outline:hover {
+    .related-product-item.selected {
       background: rgba(196, 160, 106, 0.1);
+      border-color: var(--gold);
     }
 
-    .btn-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
+    /* خيارات متقدمة */
+    .advanced-options {
+      display: none;
+    }
+
+    .advanced-options.show {
+      display: block;
     }
 
     /* رسائل */
     .message {
       position: fixed;
-      top: 90px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 0.8rem 1.5rem;
+      padding: 0.6rem 1.2rem;
       z-index: 1000;
       display: none;
-      animation: slideDown 0.3s ease;
-      box-shadow: var(--shadow);
+      animation: slideUp 0.3s ease;
+      font-size: 0.85rem;
     }
 
     .message.success {
@@ -528,13 +512,18 @@
       color: var(--danger);
     }
 
-    .message.info {
-      background: rgba(196, 160, 106, 0.15);
-      border-color: var(--gold);
-      color: var(--gold);
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
     }
 
-    /* مؤشر التحميل */
+    /* تحميل */
     .loading-overlay {
       position: fixed;
       inset: 0;
@@ -557,9 +546,9 @@
     }
 
     .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid var(--border);
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
       border-top-color: var(--gold);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -569,361 +558,370 @@
       to { transform: rotate(360deg); }
     }
 
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-
-    .helper-text {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.3rem;
-    }
-
     /* استجابة */
     @media (max-width: 992px) {
-      .admin-main-content {
+      .admin-container {
         padding: 1rem;
       }
-      .form-card {
-        padding: 1.2rem;
+      .product-form {
+        flex-direction: column;
       }
     }
 
     @media (max-width: 768px) {
-      .admin-main-content {
-        padding: 0.8rem;
-      }
-      .tabs {
+      .price-group {
         flex-direction: column;
-        position: static;
-      }
-      .tab-btn {
-        justify-content: center;
-      }
-      .form-grid {
-        grid-template-columns: 1fr;
       }
       .variant-options {
         flex-direction: column;
       }
-      .variants-table {
-        font-size: 0.7rem;
-      }
-      .variants-table input {
-        font-size: 0.7rem;
-        padding: 0.2rem;
-      }
-      .btn-group {
+      .page-header {
         flex-direction: column;
-      }
-      .btn {
-        width: 100%;
-        justify-content: center;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 <body>
 
-<div id="header-placeholder"></div>
-
-<div class="admin-main-content">
-  <div class="admin-container">
-    <div class="page-header">
-      <h1><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h1>
-      <p>أضف منتجك بكل سهولة - نظام متغيرات ذكي ومتطور</p>
+<div class="admin-container">
+  <!-- رأس الصفحة -->
+  <div class="page-header">
+    <h1><i class="fas fa-plus-circle"></i> إضافة منتج</h1>
+    <div class="header-actions">
+      <button class="btn btn-outline" onclick="resetForm()"><i class="fas fa-times"></i> إلغاء</button>
+      <button class="btn btn-save" onclick="saveProduct()"><i class="fas fa-save"></i> حفظ</button>
     </div>
+  </div>
 
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('basic')"><i class="fas fa-info-circle"></i> أساسيات</button>
-      <button class="tab-btn" onclick="switchTab('pricing')"><i class="fas fa-tag"></i> التسعير</button>
-      <button class="tab-btn" onclick="switchTab('inventory')"><i class="fas fa-boxes"></i> المخزون</button>
-      <button class="tab-btn" onclick="switchTab('variants')"><i class="fas fa-palette"></i> المتغيرات</button>
-      <button class="tab-btn" onclick="switchTab('media')"><i class="fas fa-images"></i> الوسائط</button>
-      <button class="tab-btn" onclick="switchTab('seo')"><i class="fab fa-searchengin"></i> SEO</button>
-    </div>
+  <div class="product-form">
+    <!-- العمود الرئيسي -->
+    <div class="main-column">
+      
+      <!-- المعلومات الأساسية -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-info-circle"></i> المعلومات الأساسية</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label><i class="fas fa-heading"></i> اسم المنتج</label>
+            <input type="text" id="productName" placeholder="مثال: حذاء رياضي احترافي">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-align-left"></i> الوصف</label>
+            <textarea id="description" rows="4" placeholder="وصف المنتج بالتفصيل..."></textarea>
+          </div>
+        </div>
+      </div>
 
-    <div class="form-card">
-      <form id="productForm">
-        
-        <!-- تبويب الأساسيات -->
-        <div class="tab-content active" id="tab-basic">
-          <div class="form-section">
-            <h3><i class="fas fa-info-circle"></i> المعلومات الأساسية</h3>
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label class="f-label"><i class="fas fa-heading"></i> اسم المنتج <span class="req">*</span></label>
-                <input type="text" class="f-input" id="productName" required placeholder="مثال: حذاء رياضي AirMax Pro 2024">
-              </div>
-              <div class="form-group full-width">
-                <label class="f-label"><i class="fas fa-align-left"></i> الوصف الكامل</label>
-                <textarea class="f-textarea" id="fullDescription" rows="4" placeholder="وصف مفصل للمنتج..."></textarea>
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-tag"></i> الفئة <span class="req">*</span></label>
-                <select class="f-select" id="categoryName" required>
-                  <option value="">اختر الفئة...</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-building"></i> الماركة</label>
-                <input type="text" class="f-input" id="brand" placeholder="مثال: Nike, Apple">
-              </div>
+      <!-- التسعير -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-tag"></i> التسعير</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="price-group">
+            <div class="form-group">
+              <label><i class="fas fa-dollar-sign"></i> السعر</label>
+              <input type="number" id="price" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-chart-line"></i> مقارنة السعر</label>
+              <input type="number" id="comparePrice" placeholder="السعر الأصلي">
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- تبويب التسعير -->
-        <div class="tab-content" id="tab-pricing">
-          <div class="form-section">
-            <h3><i class="fas fa-money-bill-wave"></i> التسعير</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-dollar-sign"></i> السعر العادي</label>
-                <input type="number" step="0.01" class="f-input" id="regularPrice" placeholder="0.00">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-percent"></i> سعر التخفيض</label>
-                <input type="number" step="0.01" class="f-input" id="salePrice" placeholder="0.00">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-calendar-alt"></i> بداية التخفيض</label>
-                <input type="date" class="f-input" id="saleStartDate">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-calendar-alt"></i> نهاية التخفيض</label>
-                <input type="date" class="f-input" id="saleEndDate">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-chart-line"></i> تكلفة المنتج</label>
-                <input type="number" step="0.01" class="f-input" id="costPerItem" placeholder="0.00">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-star"></i> منتج مميز</label>
-                <select class="f-select" id="isFeatured">
-                  <option value="false">لا</option>
-                  <option value="true">نعم</option>
-                </select>
-              </div>
-            </div>
-          </div>
+      <!-- الصور -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-images"></i> الصور</h3>
+          <i class="fas fa-chevron-down"></i>
         </div>
-
-        <!-- تبويب المخزون -->
-        <div class="tab-content" id="tab-inventory">
-          <div class="form-section">
-            <h3><i class="fas fa-boxes"></i> المخزون والأرقام العالمية</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-barcode"></i> SKU</label>
-                <input type="text" class="f-input" id="sku" placeholder="رمز المنتج الداخلي">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-globe"></i> GTIN / UPC (الرقم العالمي)</label>
-                <input type="text" class="f-input" id="gtin" placeholder="12-14 رقم">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-database"></i> الكمية المتوفرة</label>
-                <input type="number" class="f-input" id="stockQuantity" value="0">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-bell"></i> تنبيه عند النفاد</label>
-                <input type="number" class="f-input" id="lowStockThreshold" value="5">
-              </div>
-              <div class="form-group">
-                <label class="f-label"><i class="fas fa-info-circle"></i> حالة المخزون</label>
-                <select class="f-select" id="stockStatus">
-                  <option value="in_stock">متوفر</option>
-                  <option value="out_of_stock">غير متوفر</option>
-                  <option value="pre_order">طلب مسبق</option>
-                </select>
-              </div>
-            </div>
-          </div>
+        <div class="card-body">
+          <div class="images-grid" id="imagesGrid"></div>
+          <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="document.getElementById('bulkImages').click()">
+            <i class="fas fa-cloud-upload-alt"></i> رفع صور
+          </button>
+          <input type="file" id="bulkImages" accept="image/*" multiple style="display: none" onchange="handleBulkImages(event)">
         </div>
+      </div>
 
-        <!-- تبويب المتغيرات - نظام ذكي ومطور -->
-        <div class="tab-content" id="tab-variants">
-          <div class="form-section">
-            <h3><i class="fas fa-palette"></i> المتغيرات (الألوان، المقاسات، الخيارات)</h3>
-            
-            <div class="variants-builder">
-              <!-- خيارات المتغيرات -->
-              <div class="variant-options">
-                <div class="variant-option-card">
-                  <h4><i class="fas fa-palette"></i> الألوان</h4>
-                  <div class="variant-values" id="colorsContainer">
-                    <div class="variant-tag" data-value="أحمر" onclick="selectVariantValue(this)">أحمر</div>
-                    <div class="variant-tag" data-value="أزرق" onclick="selectVariantValue(this)">أزرق</div>
-                    <div class="variant-tag" data-value="أسود" onclick="selectVariantValue(this)">أسود</div>
-                    <div class="variant-tag" data-value="أبيض" onclick="selectVariantValue(this)">أبيض</div>
-                  </div>
-                  <div class="add-value-input">
-                    <input type="text" id="newColor" placeholder="لون جديد...">
-                    <button type="button" onclick="addVariantValue('color')"><i class="fas fa-plus"></i></button>
-                  </div>
+      <!-- المتغيرات -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-palette"></i> المتغيرات</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="variants-section">
+            <div class="variant-options">
+              <div class="variant-option">
+                <h4><i class="fas fa-palette"></i> الألوان</h4>
+                <div class="variant-tags" id="colorsContainer">
+                  <span class="variant-tag" data-value="أحمر" onclick="toggleVariantTag(this)">أحمر</span>
+                  <span class="variant-tag" data-value="أزرق" onclick="toggleVariantTag(this)">أزرق</span>
+                  <span class="variant-tag" data-value="أسود" onclick="toggleVariantTag(this)">أسود</span>
+                  <span class="variant-tag" data-value="أبيض" onclick="toggleVariantTag(this)">أبيض</span>
                 </div>
-                
-                <div class="variant-option-card">
-                  <h4><i class="fas fa-ruler"></i> المقاسات</h4>
-                  <div class="variant-values" id="sizesContainer">
-                    <div class="variant-tag" data-value="XS" onclick="selectVariantValue(this)">XS</div>
-                    <div class="variant-tag" data-value="S" onclick="selectVariantValue(this)">S</div>
-                    <div class="variant-tag" data-value="M" onclick="selectVariantValue(this)">M</div>
-                    <div class="variant-tag" data-value="L" onclick="selectVariantValue(this)">L</div>
-                    <div class="variant-tag" data-value="XL" onclick="selectVariantValue(this)">XL</div>
-                  </div>
-                  <div class="add-value-input">
-                    <input type="text" id="newSize" placeholder="مقاس جديد...">
-                    <button type="button" onclick="addVariantValue('size')"><i class="fas fa-plus"></i></button>
-                  </div>
+                <div class="add-value">
+                  <input type="text" id="newColor" placeholder="لون جديد...">
+                  <button onclick="addVariantValue('color')"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
-              
-              <!-- زر إنشاء المتغيرات -->
-              <button type="button" class="generate-variants-btn" onclick="generateVariants()">
-                <i class="fas fa-magic"></i> إنشاء جميع المتغيرات
-              </button>
-              
-              <!-- جدول المتغيرات الناتجة -->
-              <div class="variants-table-container" id="variantsTableContainer" style="display: none;">
-                <h4 style="color: var(--gold); margin-bottom: 1rem;"><i class="fas fa-table"></i> قائمة المتغيرات</h4>
+              <div class="variant-option">
+                <h4><i class="fas fa-ruler"></i> المقاسات</h4>
+                <div class="variant-tags" id="sizesContainer">
+                  <span class="variant-tag" data-value="XS" onclick="toggleVariantTag(this)">XS</span>
+                  <span class="variant-tag" data-value="S" onclick="toggleVariantTag(this)">S</span>
+                  <span class="variant-tag" data-value="M" onclick="toggleVariantTag(this)">M</span>
+                  <span class="variant-tag" data-value="L" onclick="toggleVariantTag(this)">L</span>
+                  <span class="variant-tag" data-value="XL" onclick="toggleVariantTag(this)">XL</span>
+                </div>
+                <div class="add-value">
+                  <input type="text" id="newSize" placeholder="مقاس جديد...">
+                  <button onclick="addVariantValue('size')"><i class="fas fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+            <button class="generate-btn" onclick="generateVariants()">
+              <i class="fas fa-magic"></i> إشعاع المتغيرات
+            </button>
+            <div id="variantsContainer" style="display: none;">
+              <div class="variants-table-wrapper">
                 <table class="variants-table" id="variantsTable">
                   <thead>
-                    <tr>
-                      <th>المتغير</th>
-                      <th>SKU</th>
-                      <th>GTIN</th>
-                      <th>سعر إضافي</th>
-                      <th>الكمية</th>
-                      <th>الصورة</th>
-                      <th></th>
-                    </tr>
+                    <tr><th>المتغير</th><th>السعر</th><th>الكمية</th><th>SKU</th><th></th></tr>
                   </thead>
-                  <tbody id="variantsTableBody"></tbody>
+                  <tbody id="variantsBody"></tbody>
                 </table>
               </div>
-              
-              <div class="helper-text" style="margin-top: 1rem;">
-                <i class="fas fa-info-circle"></i> اختر الألوان والمقاسات التي تريدها، ثم اضغط "إنشاء جميع المتغيرات" لتوليد جميع التركيبات الممكنة تلقائياً
-              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- تبويب الوسائط -->
-        <div class="tab-content" id="tab-media">
-          <div class="form-section">
-            <h3><i class="fas fa-images"></i> صور المنتج</h3>
-            <div class="imgs-grid" id="imagesGrid"></div>
-            <button type="button" class="btn btn-outline" onclick="document.getElementById('bulkImages').click()" style="margin-top: 1rem; width: 100%;">
-              <i class="fas fa-cloud-upload-alt"></i> رفع صور متعددة
-            </button>
-            <input type="file" id="bulkImages" accept="image/*" multiple style="display: none" onchange="handleBulkImages(event)">
-            
-            <div style="margin-top: 1.5rem;">
-              <label class="f-label"><i class="fab fa-youtube"></i> فيديو YouTube</label>
-              <input type="url" class="f-input" id="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
+    <!-- العمود الجانبي -->
+    <div class="sidebar-column">
+      
+      <!-- إشعاع (حالة المنتج) -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-eye"></i> إشعاع</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>حالة المنتج</label>
+            <select id="visibility">
+              <option value="active">منشور</option>
+              <option value="draft">مسودة</option>
+              <option value="hidden">مخفي</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>منتج مميز</label>
+            <select id="featured">
+              <option value="false">لا</option>
+              <option value="true">نعم</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- المنتجات ذات الصلة -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-link"></i> المنتجات ذات الصلة</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <input type="text" id="searchProducts" placeholder="البحث عن المنتجات..." onkeyup="searchProducts()">
+          </div>
+          <div class="related-products" id="relatedProductsList">
+            <!-- سيتم تحميل المنتجات هنا -->
+            <div style="text-align: center; padding: 1rem; color: var(--text-muted);">
+              <i class="fas fa-spinner fa-spin"></i> جاري التحميل...
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- تبويب SEO -->
-        <div class="tab-content" id="tab-seo">
-          <div class="form-section">
-            <h3><i class="fab fa-searchengin"></i> تحسين محركات البحث</h3>
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <label class="f-label"><i class="fab fa-google"></i> عنوان SEO</label>
-                <input type="text" class="f-input" id="metaTitle" placeholder="العنوان في Google">
-              </div>
-              <div class="form-group full-width">
-                <label class="f-label"><i class="fas fa-align-left"></i> وصف SEO</label>
-                <textarea class="f-textarea" id="metaDescription" rows="2" placeholder="الوصف في Google"></textarea>
-              </div>
-              <div class="form-group full-width">
-                <label class="f-label"><i class="fas fa-link"></i> الرابط الدائم</label>
-                <input type="text" class="f-input" id="slug" placeholder="product-url-slug">
-              </div>
-            </div>
+      <!-- خيارات متقدمة -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-cog"></i> خيارات متقدمة</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label><i class="fas fa-barcode"></i> SKU</label>
+            <input type="text" id="sku" placeholder="رمز المنتج">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-globe"></i> GTIN (الرقم العالمي)</label>
+            <input type="text" id="gtin" placeholder="12-14 رقم">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-weight-hanging"></i> الوزن (كغ)</label>
+            <input type="number" step="0.01" id="weight" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-truck"></i> فئة الشحن</label>
+            <select id="shippingClass">
+              <option value="standard">شحن عادي</option>
+              <option value="express">شحن سريع</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><i class="fab fa-searchengin"></i> عنوان SEO</label>
+            <input type="text" id="metaTitle" placeholder="عنوان محسن لمحركات البحث">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-align-left"></i> وصف SEO</label>
+            <textarea id="metaDescription" rows="2" placeholder="وصف محسن لمحركات البحث"></textarea>
           </div>
         </div>
-
-        <input type="hidden" id="editId" value="">
-
-        <div class="btn-group">
-          <button type="submit" class="btn" id="submitBtn">
-            <i class="fas fa-save"></i> حفظ المنتج
-          </button>
-          <button type="button" class="btn btn-outline" onclick="resetForm()">
-            <i class="fas fa-redo"></i> إعادة تعيين
-          </button>
-          <button type="button" class="btn btn-outline" onclick="window.location.href='admin-products.html'">
-            <i class="fas fa-arrow-left"></i> العودة للقائمة
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
 
-<div id="footer-placeholder"></div>
 <div id="message" class="message"></div>
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
   <div style="color: var(--gold);">جاري حفظ المنتج...</div>
 </div>
 
-<script src="header.js"></script>
-<script src="footer.js"></script>
 <script src="config.js"></script>
 <script>
+  // المتغيرات العامة
   let currentImages = [];
-  let currentEditId = null;
   let selectedColors = new Set();
   let selectedSizes = new Set();
+  let allProducts = [];
+  let selectedRelatedProducts = [];
 
-  function showMessage(text, type = 'info') {
-    const msgDiv = document.getElementById('message');
-    msgDiv.textContent = text;
-    msgDiv.className = `message ${type}`;
-    msgDiv.style.display = 'block';
+  // عرض الرسائل
+  function showMessage(text, type) {
+    const msg = document.getElementById('message');
+    msg.textContent = text;
+    msg.className = `message ${type}`;
+    msg.style.display = 'block';
     setTimeout(() => {
-      msgDiv.style.display = 'none';
+      msg.style.display = 'none';
     }, 3000);
   }
 
-  function showLoading(show) {
-    const overlay = document.getElementById('loadingOverlay');
-    if (show) {
-      overlay.classList.add('active');
-    } else {
-      overlay.classList.remove('active');
+  // فتح/غلق البطاقة
+  function toggleCard(header) {
+    const card = header.parentElement;
+    const body = card.querySelector('.card-body');
+    header.classList.toggle('collapsed');
+    body.classList.toggle('collapsed');
+  }
+
+  // ========== الصور ==========
+  function renderImagesGrid() {
+    const grid = document.getElementById('imagesGrid');
+    grid.innerHTML = '';
+    
+    for (let i = 0; i < 8; i++) {
+      const img = currentImages[i];
+      const card = document.createElement('div');
+      card.className = 'image-card';
+      if (img?.url) card.classList.add('has-image');
+      if (i === 0 && img?.url) card.classList.add('main-image');
+      
+      if (img?.url) {
+        card.innerHTML = `
+          <img src="${img.url}">
+          <div class="main-badge">${i === 0 ? 'رئيسية' : ''}</div>
+          <div class="image-actions">
+            ${i !== 0 ? '<button onclick="setMainImage(' + i + ')"><i class="fas fa-crown"></i></button>' : ''}
+            <button onclick="removeImage(${i})"><i class="fas fa-trash"></i></button>
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="image-placeholder" onclick="document.getElementById('imageInput${i}').click()">
+            <i class="fas fa-plus-circle"></i>
+            <span>صورة ${i + 1}</span>
+          </div>
+          <input type="file" id="imageInput${i}" accept="image/*" style="display: none" onchange="uploadImage(${i}, this.files[0])">
+        `;
+      }
+      grid.appendChild(card);
     }
   }
 
-  function switchTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`tab-${tabName}`).classList.add('active');
-    event.target.classList.add('active');
+  async function uploadImage(index, file) {
+    if (!file) return;
+    showMessage('جاري رفع الصورة...', 'info');
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', window.CONFIG.CLOUDINARY_UPLOAD_PRESET);
+    formData.append('folder', 'products');
+
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${window.CONFIG.CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      currentImages[index] = { url: data.secure_url };
+      renderImagesGrid();
+      showMessage('تم رفع الصورة بنجاح', 'success');
+    } catch (error) {
+      showMessage('فشل رفع الصورة', 'error');
+    }
   }
 
-  // نظام المتغيرات الذكي
-  function selectVariantValue(element) {
-    element.classList.toggle('selected');
-    const value = element.dataset.value;
-    const parent = element.parentElement;
+  async function handleBulkImages(event) {
+    const files = Array.from(event.target.files);
+    for (const file of files) {
+      const emptyIndex = currentImages.findIndex(img => !img);
+      if (emptyIndex === -1) break;
+      await uploadImage(emptyIndex, file);
+    }
+    event.target.value = '';
+  }
+
+  function setMainImage(index) {
+    if (index === 0) return;
+    const temp = currentImages[0];
+    currentImages[0] = currentImages[index];
+    currentImages[index] = temp;
+    renderImagesGrid();
+    showMessage('تم تعيين الصورة الرئيسية', 'success');
+  }
+
+  function removeImage(index) {
+    currentImages[index] = null;
+    renderImagesGrid();
+  }
+
+  // ========== المتغيرات ==========
+  function toggleVariantTag(tag) {
+    tag.classList.toggle('selected');
+    const value = tag.dataset.value;
+    const parent = tag.parentElement.parentElement;
     
-    if (parent.id === 'colorsContainer') {
-      if (element.classList.contains('selected')) {
+    if (parent.querySelector('h4').textContent.includes('الألوان')) {
+      if (tag.classList.contains('selected')) {
         selectedColors.add(value);
       } else {
         selectedColors.delete(value);
       }
-    } else if (parent.id === 'sizesContainer') {
-      if (element.classList.contains('selected')) {
+    } else {
+      if (tag.classList.contains('selected')) {
         selectedSizes.add(value);
       } else {
         selectedSizes.delete(value);
@@ -942,15 +940,15 @@
     }
     
     const value = input.value.trim();
-    if (value && ![...container.querySelectorAll('.variant-tag')].some(tag => tag.dataset.value === value)) {
-      const tag = document.createElement('div');
+    if (value && ![...container.querySelectorAll('.variant-tag')].some(t => t.dataset.value === value)) {
+      const tag = document.createElement('span');
       tag.className = 'variant-tag';
       tag.dataset.value = value;
       tag.textContent = value;
-      tag.onclick = () => selectVariantValue(tag);
+      tag.onclick = () => toggleVariantTag(tag);
       container.appendChild(tag);
       input.value = '';
-      showMessage(`✅ تم إضافة ${value}`, 'success');
+      showMessage(`تم إضافة ${value}`, 'success');
     }
   }
 
@@ -959,324 +957,184 @@
     const sizes = [...selectedSizes];
     
     if (colors.length === 0 && sizes.length === 0) {
-      showMessage('⚠️ الرجاء اختيار لون أو مقاس واحد على الأقل', 'error');
+      showMessage('الرجاء اختيار لون أو مقاس على الأقل', 'error');
       return;
     }
     
     const variants = [];
-    
     if (colors.length > 0 && sizes.length > 0) {
-      // توليد جميع التركيبات (لون × مقاس)
       for (const color of colors) {
         for (const size of sizes) {
-          variants.push({
-            name: `${size} - ${color}`,
-            sku: '',
-            gtin: '',
-            price: 0,
-            stock: 0,
-            image: ''
-          });
+          variants.push({ name: `${size} - ${color}`, price: 0, stock: 0, sku: '' });
         }
       }
     } else if (colors.length > 0) {
-      // فقط ألوان
       for (const color of colors) {
-        variants.push({
-          name: color,
-          sku: '',
-          gtin: '',
-          price: 0,
-          stock: 0,
-          image: ''
-        });
+        variants.push({ name: color, price: 0, stock: 0, sku: '' });
       }
-    } else if (sizes.length > 0) {
-      // فقط مقاسات
+    } else {
       for (const size of sizes) {
-        variants.push({
-          name: size,
-          sku: '',
-          gtin: '',
-          price: 0,
-          stock: 0,
-          image: ''
-        });
+        variants.push({ name: size, price: 0, stock: 0, sku: '' });
       }
     }
     
-    displayVariantsTable(variants);
-    showMessage(`✅ تم إنشاء ${variants.length} متغير بنجاح`, 'success');
+    displayVariants(variants);
+    showMessage(`تم إنشاء ${variants.length} متغير`, 'success');
   }
 
-  function displayVariantsTable(variants) {
-    const container = document.getElementById('variantsTableContainer');
-    const tbody = document.getElementById('variantsTableBody');
-    
+  function displayVariants(variants) {
+    const container = document.getElementById('variantsContainer');
+    const tbody = document.getElementById('variantsBody');
     tbody.innerHTML = '';
-    variants.forEach((variant, index) => {
+    
+    variants.forEach((v, i) => {
       const row = tbody.insertRow();
       row.innerHTML = `
-        <td><strong>${escapeHtml(variant.name)}</strong><input type="hidden" class="variant-name" value="${escapeHtml(variant.name)}"></td>
-        <td><input type="text" class="variant-sku" placeholder="SKU" value="${escapeHtml(variant.sku)}"></td>
-        <td><input type="text" class="variant-gtin" placeholder="GTIN" value="${escapeHtml(variant.gtin)}"></td>
-        <td><input type="number" class="variant-price" placeholder="0.00" step="0.01" value="${variant.price}"></td>
-        <td><input type="number" class="variant-stock" placeholder="0" value="${variant.stock}"></td>
-        <td><button type="button" class="btn-outline" onclick="uploadVariantImage(this)" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;"><i class="fas fa-image"></i> رفع</button><input type="hidden" class="variant-image"></td>
-        <td><button type="button" onclick="this.closest('tr').remove()" style="background: var(--danger); color: white; border: none; border-radius: 5px; padding: 0.3rem 0.6rem;"><i class="fas fa-trash"></i></button></td>
+        <td>${v.name}<input type="hidden" class="variant-name" value="${v.name}"></td>
+        <td><input type="number" class="variant-price" placeholder="0.00" step="0.01" value="${v.price}"></td>
+        <td><input type="number" class="variant-stock" placeholder="0" value="${v.stock}"></td>
+        <td><input type="text" class="variant-sku" placeholder="SKU" value="${v.sku}"></td>
+        <td><button onclick="this.closest('tr').remove()" style="background: var(--danger); color: white; border: none; border-radius: 5px; padding: 0.3rem 0.5rem;"><i class="fas fa-trash"></i></button></td>
       `;
     });
     
     container.style.display = 'block';
   }
 
-  async function uploadVariantImage(btn) {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = async (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        showLoading(true);
-        try {
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('upload_preset', window.CONFIG.CLOUDINARY_UPLOAD_PRESET);
-          formData.append('folder', 'almaya-products/variants');
-
-          const response = await fetch(`https://api.cloudinary.com/v1_1/${window.CONFIG.CLOUDINARY_CLOUD_NAME}/image/upload`, {
-            method: 'POST',
-            body: formData
-          });
-          const result = await response.json();
-          
-          btn.parentElement.querySelector('.variant-image').value = result.secure_url;
-          btn.innerHTML = '<i class="fas fa-check"></i> تم';
-          showMessage('✅ تم رفع الصورة', 'success');
-        } catch (error) {
-          showMessage('❌ فشل رفع الصورة', 'error');
-        }
-        showLoading(false);
-      }
-    };
-    input.click();
-  }
-
-  async function supabaseRequest(endpoint, options = {}) {
-    const url = `${window.CONFIG.SUPABASE_URL}${endpoint}`;
-    const headers = {
-      'apikey': window.CONFIG.SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${window.CONFIG.SUPABASE_ANON_KEY}`,
-      'Content-Type': 'application/json'
-    };
-
-    const config = {
-      method: options.method || 'GET',
-      headers: headers,
-      body: options.body ? JSON.stringify(options.body) : undefined
-    };
-
-    const response = await fetch(url, config);
-    if (response.status === 204) return null;
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || `خطأ ${response.status}`);
-    return data;
-  }
-
-  async function loadCategories() {
+  // ========== المنتجات ذات الصلة ==========
+  async function loadRelatedProducts() {
     try {
-      const categories = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
-      const select = document.getElementById('categoryName');
-      select.innerHTML = '<option value="">اختر الفئة...</option>';
-      if (categories) {
-        categories.forEach(cat => {
-          select.innerHTML += `<option value="${escapeHtml(cat.category_name)}">${escapeHtml(cat.category_name)}</option>`;
-        });
-      }
+      const res = await fetch(`${window.CONFIG.SUPABASE_URL}/rest/v1/products?select=id,product_name,regular_price,product_image_url&order=display_order`, {
+        headers: {
+          'apikey': window.CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${window.CONFIG.SUPABASE_ANON_KEY}`
+        }
+      });
+      allProducts = await res.json();
+      renderRelatedProducts();
     } catch (error) {
-      showMessage('❌ فشل تحميل الفئات', 'error');
+      document.getElementById('relatedProductsList').innerHTML = '<div style="text-align: center; padding: 1rem;">لا توجد منتجات</div>';
     }
   }
 
-  function renderImagesGrid() {
-    const grid = document.getElementById('imagesGrid');
-    grid.innerHTML = '';
+  function renderRelatedProducts(searchTerm = '') {
+    const container = document.getElementById('relatedProductsList');
+    let filtered = allProducts;
+    if (searchTerm) {
+      filtered = allProducts.filter(p => p.product_name?.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
     
-    for (let i = 0; i < 10; i++) {
-      const imageData = currentImages[i];
-      const card = document.createElement('div');
-      card.className = 'img-card';
-      if (imageData?.url) card.classList.add('has-img');
-      if (i === 0 && imageData?.url) card.classList.add('is-main');
-      
-      if (imageData?.url) {
-        card.innerHTML = `
-          <img src="${imageData.url}" alt="صورة ${i + 1}">
-          <div class="main-badge">${i === 0 ? 'رئيسية' : ''}</div>
-          <div class="img-actions">
-            ${i !== 0 ? `<button onclick="setMainImage(${i})"><i class="fas fa-crown"></i></button>` : ''}
-            <button onclick="removeImage(${i})"><i class="fas fa-trash"></i></button>
-          </div>
-        `;
-      } else {
-        card.innerHTML = `
-          <div class="upload-placeholder" onclick="document.getElementById('imageInput${i}').click()">
-            <i class="fas fa-plus-circle"></i>
-            <span>صورة ${i + 1}</span>
-          </div>
-          <input type="file" id="imageInput${i}" accept="image/*" style="display: none" onchange="uploadImage(${i}, this.files[0])">
-        `;
-      }
-      grid.appendChild(card);
-    }
-  }
-
-  async function uploadImage(index, file) {
-    if (!file) return;
-    if (file.size > 10 * 1024 * 1024) {
-      showMessage('❌ حجم الصورة يتجاوز 10 ميجابايت', 'error');
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="text-align: center; padding: 1rem; color: var(--text-muted);">لا توجد نتائج</div>';
       return;
     }
     
-    showLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', window.CONFIG.CLOUDINARY_UPLOAD_PRESET);
-      formData.append('folder', 'almaya-products/images');
+    container.innerHTML = filtered.map(p => `
+      <div class="related-product-item ${selectedRelatedProducts.includes(p.id) ? 'selected' : ''}" onclick="toggleRelatedProduct(${p.id})">
+        <img src="${p.product_image_url || 'https://placehold.co/40x40'}" onerror="this.src='https://placehold.co/40x40'">
+        <div class="info">
+          <div class="name">${escapeHtml(p.product_name)}</div>
+          <div class="price">${p.regular_price || 0} درهم</div>
+        </div>
+      </div>
+    `).join('');
+  }
 
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${window.CONFIG.CLOUDINARY_CLOUD_NAME}/image/upload`, {
-        method: 'POST',
-        body: formData
-      });
-      const result = await response.json();
-      
-      currentImages[index] = { url: result.secure_url, publicId: result.public_id };
-      renderImagesGrid();
-      showMessage(`✅ تم رفع الصورة ${index + 1}`, 'success');
-    } catch (error) {
-      showMessage(`❌ فشل رفع الصورة`, 'error');
+  function searchProducts() {
+    const term = document.getElementById('searchProducts').value;
+    renderRelatedProducts(term);
+  }
+
+  function toggleRelatedProduct(id) {
+    const index = selectedRelatedProducts.indexOf(id);
+    if (index === -1) {
+      selectedRelatedProducts.push(id);
+    } else {
+      selectedRelatedProducts.splice(index, 1);
     }
-    showLoading(false);
+    renderRelatedProducts(document.getElementById('searchProducts').value);
   }
 
-  async function handleBulkImages(event) {
-    const files = Array.from(event.target.files);
-    event.target.value = '';
-    
-    for (const file of files) {
-      const emptyIndex = currentImages.findIndex(img => !img || !img.url);
-      if (emptyIndex === -1) {
-        showMessage('⚠️ الحد الأقصى 10 صور', 'warning');
-        break;
-      }
-      await uploadImage(emptyIndex, file);
-    }
-  }
-
-  function setMainImage(index) {
-    if (index === 0 || !currentImages[index]?.url) return;
-    const temp = currentImages[0];
-    currentImages[0] = currentImages[index];
-    currentImages[index] = temp;
-    renderImagesGrid();
-    showMessage('✅ تم تعيين الصورة الرئيسية', 'success');
-  }
-
-  function removeImage(index) {
-    currentImages[index] = null;
-    renderImagesGrid();
-  }
-
-  async function addOrUpdateProduct(event) {
-    event.preventDefault();
-    
-    const productName = document.getElementById('productName').value.trim();
-    if (!productName) {
-      showMessage('❌ الرجاء إدخال اسم المنتج', 'error');
+  // ========== حفظ المنتج ==========
+  async function saveProduct() {
+    const name = document.getElementById('productName').value.trim();
+    if (!name) {
+      showMessage('الرجاء إدخال اسم المنتج', 'error');
       document.getElementById('productName').focus();
       return;
     }
     
-    const variantsData = [];
-    document.querySelectorAll('#variantsTableBody tr').forEach(row => {
-      variantsData.push({
-        name: row.querySelector('.variant-name')?.value || '',
-        sku: row.querySelector('.variant-sku')?.value || '',
-        gtin: row.querySelector('.variant-gtin')?.value || '',
+    // جمع المتغيرات
+    const variants = [];
+    document.querySelectorAll('#variantsBody tr').forEach(row => {
+      variants.push({
+        name: row.querySelector('.variant-name')?.value,
         price: parseFloat(row.querySelector('.variant-price')?.value) || 0,
         stock: parseInt(row.querySelector('.variant-stock')?.value) || 0,
-        image: row.querySelector('.variant-image')?.value || ''
+        sku: row.querySelector('.variant-sku')?.value || ''
       });
     });
     
     const productData = {
-      product_name: productName,
-      full_description: document.getElementById('fullDescription').value,
-      category_name: document.getElementById('categoryName').value,
-      brand: document.getElementById('brand').value,
-      regular_price: parseFloat(document.getElementById('regularPrice').value) || 0,
-      sale_price: parseFloat(document.getElementById('salePrice').value) || null,
-      sale_start_date: document.getElementById('saleStartDate').value || null,
-      sale_end_date: document.getElementById('saleEndDate').value || null,
-      cost_per_item: parseFloat(document.getElementById('costPerItem').value) || 0,
-      is_featured: document.getElementById('isFeatured').value === 'true',
-      sku: document.getElementById('sku').value,
-      gtin: document.getElementById('gtin').value,
-      stock_quantity: parseInt(document.getElementById('stockQuantity').value) || 0,
-      low_stock_threshold: parseInt(document.getElementById('lowStockThreshold').value) || 5,
-      stock_status: document.getElementById('stockStatus').value,
-      variants: JSON.stringify(variantsData),
+      product_name: name,
+      description: document.getElementById('description').value,
+      regular_price: parseFloat(document.getElementById('price').value) || 0,
+      compare_price: parseFloat(document.getElementById('comparePrice').value) || null,
+      visibility: document.getElementById('visibility').value,
+      is_featured: document.getElementById('featured').value === 'true',
       product_image_url: currentImages[0]?.url || null,
       additional_images: currentImages.slice(1).filter(img => img?.url).map(img => img.url),
-      video_url: document.getElementById('videoUrl').value || null,
+      variants: JSON.stringify(variants),
+      related_products: selectedRelatedProducts,
+      sku: document.getElementById('sku').value,
+      gtin: document.getElementById('gtin').value,
+      weight: parseFloat(document.getElementById('weight').value) || 0,
+      shipping_class: document.getElementById('shippingClass').value,
       meta_title: document.getElementById('metaTitle').value,
       meta_description: document.getElementById('metaDescription').value,
-      slug: document.getElementById('slug').value,
-      is_active: true
+      is_active: document.getElementById('visibility').value === 'active'
     };
     
     showLoading(true);
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
     
     try {
-      if (currentEditId) {
-        await supabaseRequest(`/rest/v1/products?id=eq.${currentEditId}`, {
-          method: 'PATCH',
-          body: productData
-        });
-        showMessage('✅ تم تحديث المنتج بنجاح', 'success');
-      } else {
-        await supabaseRequest('/rest/v1/products', {
-          method: 'POST',
-          body: productData
-        });
-        showMessage('✅ تم إضافة المنتج بنجاح', 'success');
-      }
+      const res = await fetch(`${window.CONFIG.SUPABASE_URL}/rest/v1/products`, {
+        method: 'POST',
+        headers: {
+          'apikey': window.CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${window.CONFIG.SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productData)
+      });
       
-      setTimeout(() => {
-        window.location.href = 'admin-products.html';
-      }, 1500);
+      if (res.ok) {
+        showMessage('تم حفظ المنتج بنجاح', 'success');
+        setTimeout(() => {
+          window.location.href = 'admin-products.html';
+        }, 1500);
+      } else {
+        throw new Error('فشل الحفظ');
+      }
     } catch (error) {
-      showMessage(`❌ فشل الحفظ: ${error.message}`, 'error');
-      submitBtn.disabled = false;
+      showMessage('فشل حفظ المنتج', 'error');
     }
+    
     showLoading(false);
   }
 
+  function showLoading(show) {
+    const overlay = document.getElementById('loadingOverlay');
+    if (show) {
+      overlay.classList.add('active');
+    } else {
+      overlay.classList.remove('active');
+    }
+  }
+
   function resetForm() {
-    if (confirm('هل أنت متأكد من إعادة تعيين جميع البيانات؟')) {
-      document.getElementById('productForm').reset();
-      currentEditId = null;
-      currentImages = [];
-      renderImagesGrid();
-      document.getElementById('variantsTableBody').innerHTML = '';
-      document.getElementById('variantsTableContainer').style.display = 'none';
-      selectedColors.clear();
-      selectedSizes.clear();
-      document.querySelectorAll('.variant-tag.selected').forEach(tag => tag.classList.remove('selected'));
-      showMessage('🔄 تم إعادة تعيين النموذج', 'info');
+    if (confirm('هل أنت متأكد من إلغاء جميع التغييرات؟')) {
+      window.location.reload();
     }
   }
 
@@ -1290,25 +1148,23 @@
     });
   }
 
-  document.getElementById('productForm').addEventListener('submit', addOrUpdateProduct);
+  // التهيئة
+  renderImagesGrid();
+  loadRelatedProducts();
   
-  if (typeof window.CONFIG !== 'undefined') {
-    loadCategories();
-    renderImagesGrid();
-  } else {
-    showMessage('❌ ملف config.js مفقود', 'error');
-  }
-
-  window.switchTab = switchTab;
-  window.selectVariantValue = selectVariantValue;
+  // جعل الدوال عامة
+  window.toggleCard = toggleCard;
+  window.toggleVariantTag = toggleVariantTag;
   window.addVariantValue = addVariantValue;
   window.generateVariants = generateVariants;
-  window.uploadVariantImage = uploadVariantImage;
   window.setMainImage = setMainImage;
   window.removeImage = removeImage;
   window.uploadImage = uploadImage;
   window.handleBulkImages = handleBulkImages;
+  window.saveProduct = saveProduct;
   window.resetForm = resetForm;
+  window.searchProducts = searchProducts;
+  window.toggleRelatedProduct = toggleRelatedProduct;
 </script>
 </body>
 </html>
