@@ -213,12 +213,13 @@
         navbar.id = 'admin-navbar';
         navbar.innerHTML = `
             <div class="admin-navbar-container">
-                <div class="admin-logo" onclick="window.location.href='dashbord.html'">
+                <div class="admin-logo" onclick="window.location.href='dashboard.html'">
                     <i class="fas fa-crown"></i>
                     <span>لوحة التحكم</span>
                 </div>
                 <div class="admin-links">
-                    <div class="admin-link" data-page="admin-produits.html"><i class="fas fa-tshirt"></i><span>المنتجات</span></div>
+                    <div class="admin-link" data-page="admin-products.html"><i class="fas fa-tshirt"></i><span>المنتجات</span></div>
+                    <div class="admin-link" data-page="admin-add-product.html"><i class="fas fa-plus-circle"></i><span>إضافة منتج</span></div>
                     <div class="admin-link" data-page="admin-collections.html"><i class="fas fa-layer-group"></i><span>المجموعات</span></div>
                     <div class="admin-link" data-page="admin-orders.html"><i class="fas fa-clipboard-list"></i><span>الطلبات</span></div>
                     <div class="admin-link" data-page="admin-reviews.html"><i class="fas fa-star"></i><span>الآراء</span></div>
@@ -240,7 +241,8 @@
                 <button class="admin-sidebar-close" id="admin-sidebar-close"><i class="fas fa-times"></i></button>
             </div>
             <div class="admin-sidebar-links">
-                <div class="admin-sidebar-link" data-page="admin-produits.html"><i class="fas fa-tshirt"></i><span>المنتجات</span></div>
+                <div class="admin-sidebar-link" data-page="admin-products.html"><i class="fas fa-tshirt"></i><span>المنتجات</span></div>
+                <div class="admin-sidebar-link" data-page="admin-add-product.html"><i class="fas fa-plus-circle"></i><span>إضافة منتج</span></div>
                 <div class="admin-sidebar-link" data-page="admin-collections.html"><i class="fas fa-layer-group"></i><span>المجموعات</span></div>
                 <div class="admin-sidebar-link" data-page="admin-orders.html"><i class="fas fa-clipboard-list"></i><span>الطلبات</span></div>
                 <div class="admin-sidebar-link" data-page="admin-reviews.html"><i class="fas fa-star"></i><span>الآراء</span></div>
