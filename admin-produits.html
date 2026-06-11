@@ -4,12 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إدارة المنتجات | Almaya Couture</title>
-  <meta name="description" content="لوحة تحكم إدارة منتجات Almaya Couture">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#C4A06A">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   
   <style>
     * {
@@ -24,36 +21,16 @@
       --bg-card: #231D15;
       --gold: #C4A06A;
       --gold-light: #D4B896;
-      --gold-dark: #A07840;
       --text-primary: #F5EDD8;
       --text-secondary: #A89880;
       --text-muted: #6B5F52;
       --border: rgba(196, 160, 106, 0.15);
-      --border-hover: rgba(196, 160, 106, 0.4);
       --success: #25D366;
       --danger: #FF4757;
-      --warning: #FFA502;
-      --info: #3B82F6;
-      --radius-sm: 10px;
       --radius: 16px;
       --radius-lg: 20px;
-      --radius-xl: 24px;
       --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    body.white-theme {
-      --bg-primary: #F5F0E8;
-      --bg-secondary: #FDFCF8;
-      --bg-card: #FFFFFF;
-      --gold: #A07840;
-      --gold-light: #C4A06A;
-      --gold-dark: #8B6330;
-      --text-primary: #2A2218;
-      --text-secondary: #6B5F52;
-      --text-muted: #8B7B68;
-      --border: rgba(160, 120, 64, 0.15);
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
     body {
@@ -61,25 +38,56 @@
       font-family: 'Tajawal', sans-serif;
       color: var(--text-primary);
       min-height: 100vh;
-      transition: all 0.3s;
     }
 
-    /* تنسيقات عامة */
     .admin-container {
       max-width: 1300px;
       margin: 0 auto;
       padding: 2rem 1.5rem;
     }
 
-    /* إحصائيات سريعة */
-    .quick-stats {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-link {
+      padding: 0.5rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover, .nav-link.active {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin-bottom: 2rem;
     }
 
-    .qs-card {
+    .stat-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -87,15 +95,9 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      transition: var(--transition);
     }
 
-    .qs-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--gold);
-    }
-
-    .qs-icon {
+    .stat-icon {
       width: 48px;
       height: 48px;
       background: rgba(196, 160, 106, 0.1);
@@ -107,297 +109,48 @@
       color: var(--gold);
     }
 
-    .qs-val {
+    .stat-value {
       font-size: 1.6rem;
       font-weight: 800;
-      line-height: 1;
     }
 
-    .qs-lbl {
+    .stat-label {
       font-size: 0.7rem;
       color: var(--text-muted);
-      margin-top: 4px;
     }
 
-    /* تبويبات */
-    .tabs {
+    .actions-bar {
       display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      background: var(--bg-secondary);
-      padding: 0.5rem;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
 
-    .tab-btn {
+    .search-box {
       flex: 1;
-      padding: 0.8rem 1.5rem;
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: var(--radius);
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
+      position: relative;
     }
 
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(196, 160, 106, 0.2), rgba(196, 160, 106, 0.05));
-      color: var(--gold);
-    }
-
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* نموذج الإضافة */
-    .form-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 2rem;
-      box-shadow: var(--shadow);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .full {
-      grid-column: 1 / -1;
-    }
-
-    .f-label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-
-    .f-label i {
-      color: var(--gold);
-    }
-
-    .req {
-      color: var(--danger);
-    }
-
-    .f-input, .f-textarea, .f-select {
+    .search-box input {
       width: 100%;
-      padding: 0.8rem 1rem;
+      padding: 0.6rem 2rem 0.6rem 1rem;
       background: var(--bg-secondary);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       color: var(--text-primary);
-      font-family: inherit;
-      font-size: 0.9rem;
-      transition: var(--transition);
     }
 
-    .f-input:focus, .f-textarea:focus, .f-select:focus {
-      outline: none;
-      border-color: var(--gold);
-    }
-
-    .f-textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .sep {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 1.5rem 0;
-    }
-
-    /* شبكة الصور */
-    .imgs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .img-card {
-      aspect-ratio: 3/4;
-      background: var(--bg-secondary);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius-lg);
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
-      transition: var(--transition);
-    }
-
-    .img-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-3px);
-    }
-
-    .img-card.has-img {
-      border-style: solid;
-      border-color: var(--border-hover);
-    }
-
-    .img-card.is-main {
-      border-color: var(--gold);
-      border-width: 2.5px;
-    }
-
-    .img-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .upload-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      gap: 0.5rem;
-      color: var(--text-muted);
-    }
-
-    .upload-placeholder i {
-      font-size: 2rem;
-    }
-
-    .img-actions {
+    .search-box i {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-      padding: 0.5rem;
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      opacity: 0;
-      transition: opacity 0.2s;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
     }
 
-    .img-card:hover .img-actions {
-      opacity: 1;
-    }
-
-    .img-actions button {
-      background: rgba(0,0,0,0.7);
-      border: none;
-      color: white;
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .img-actions button:hover {
-      background: var(--gold);
-      color: #1A1510;
-    }
-
-    .progress-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      z-index: 10;
-    }
-
-    .progress-bar {
-      width: 80%;
-      height: 4px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--gold);
-      width: 0%;
-      transition: width 0.2s;
-    }
-
-    .progress-text {
-      color: white;
-      font-size: 0.7rem;
-    }
-
-    .cancel-upload {
-      background: var(--danger);
-      border: none;
-      color: white;
-      padding: 0.2rem 0.8rem;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.7rem;
-    }
-
-    .main-badge {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: var(--gold);
-      color: #1A1510;
-      font-size: 0.6rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 20px;
-      z-index: 5;
-    }
-
-    /* فيديو */
-    .video-upload-area {
-      background: var(--bg-secondary);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      text-align: center;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .video-upload-area:hover {
-      border-color: var(--gold);
-    }
-
-    /* أزرار */
     .btn {
-      padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      padding: 0.6rem 1.2rem;
+      background: linear-gradient(135deg, var(--gold), #A07840);
       color: #1A1510;
       border: none;
       border-radius: var(--radius);
@@ -410,20 +163,10 @@
       gap: 0.5rem;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(196, 160, 106, 0.3);
-    }
-
     .btn-outline {
       background: transparent;
       border: 1.5px solid var(--gold);
       color: var(--gold);
-    }
-
-    .btn-outline:hover {
-      background: rgba(196, 160, 106, 0.1);
-      transform: translateY(-2px);
     }
 
     .btn-danger {
@@ -432,63 +175,22 @@
     }
 
     .btn-sm {
-      padding: 0.5rem 1rem;
+      padding: 0.3rem 0.8rem;
       font-size: 0.8rem;
     }
 
-    .btn-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
-    /* رسائل */
-    .message {
-      padding: 1rem;
-      border-radius: var(--radius);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      display: none;
-      animation: slideDown 0.3s ease;
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .message.success {
-      background: rgba(37, 211, 102, 0.1);
-      border: 1px solid rgba(37, 211, 102, 0.3);
-      color: var(--success);
-    }
-
-    .message.error {
-      background: rgba(255, 71, 87, 0.1);
-      border: 1px solid rgba(255, 71, 87, 0.3);
-      color: var(--danger);
-    }
-
-    .message.info {
-      background: rgba(196, 160, 106, 0.1);
-      border: 1px solid rgba(196, 160, 106, 0.3);
-      color: var(--gold);
-    }
-
-    /* جدول المنتجات */
-    .tbl-wrap {
+    .table-wrapper {
       overflow-x: auto;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
     }
 
-    .ptable {
+    table {
       width: 100%;
       border-collapse: collapse;
     }
 
-    .ptable th {
+    th {
       background: var(--bg-secondary);
       color: var(--gold);
       padding: 1rem;
@@ -497,24 +199,53 @@
       font-weight: 700;
     }
 
-    .ptable td {
+    td {
       padding: 0.8rem 1rem;
       border-bottom: 1px solid var(--border);
       color: var(--text-secondary);
     }
 
-    .ptable tr:hover {
+    tr:hover {
       background: rgba(196, 160, 106, 0.02);
     }
 
-    .p-thumb {
+    .product-thumb {
       width: 50px;
       height: 63px;
       object-fit: cover;
       border-radius: 8px;
     }
 
-    /* مودال */
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      display: inline-block;
+    }
+
+    .status-active {
+      background: rgba(37, 211, 102, 0.1);
+      color: var(--success);
+    }
+
+    .status-hidden {
+      background: rgba(255, 71, 87, 0.1);
+      color: var(--danger);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-buttons button {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.7rem;
+      cursor: pointer;
+      border-radius: 6px;
+      border: none;
+    }
+
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -537,14 +268,13 @@
     .modal {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-lg);
       padding: 2rem;
       max-width: 400px;
       width: 90%;
       text-align: center;
     }
 
-    /* إشعار التراجع */
     .undo-toast {
       position: fixed;
       bottom: 30px;
@@ -558,7 +288,6 @@
       align-items: center;
       gap: 1rem;
       z-index: 1001;
-      box-shadow: var(--shadow);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s;
@@ -569,7 +298,6 @@
       pointer-events: all;
     }
 
-    /* تحميل */
     .loader {
       width: 40px;
       height: 40px;
@@ -584,19 +312,16 @@
       to { transform: rotate(360deg); }
     }
 
-    /* استجابة */
     @media (max-width: 768px) {
       .admin-container {
         padding: 1rem;
       }
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-      .quick-stats {
+      .stats-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-      .tabs {
+      .header {
         flex-direction: column;
+        gap: 1rem;
       }
     }
   </style>
@@ -604,163 +329,71 @@
 <body>
 
 <div class="admin-container">
-  
-  <!-- إحصائيات سريعة -->
-  <div class="quick-stats">
-    <div class="qs-card">
-      <div class="qs-icon"><i class="fas fa-boxes"></i></div>
+  <div class="header">
+    <h1><i class="fas fa-boxes"></i> إدارة المنتجات</h1>
+    <div class="nav-links">
+      <a href="admin-add-product.html" class="nav-link"><i class="fas fa-plus-circle"></i> إضافة منتج</a>
+    </div>
+  </div>
+
+  <!-- إحصائيات -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-boxes"></i></div>
       <div>
-        <div class="qs-val" id="statTotal">0</div>
-        <div class="qs-lbl">إجمالي المنتجات</div>
+        <div class="stat-value" id="totalProducts">0</div>
+        <div class="stat-label">إجمالي المنتجات</div>
       </div>
     </div>
-    <div class="qs-card">
-      <div class="qs-icon"><i class="fas fa-eye"></i></div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-eye"></i></div>
       <div>
-        <div class="qs-val" id="statActive">0</div>
-        <div class="qs-lbl">منتجات نشطة</div>
+        <div class="stat-value" id="activeProducts">0</div>
+        <div class="stat-label">منتجات نشطة</div>
       </div>
     </div>
-    <div class="qs-card">
-      <div class="qs-icon"><i class="fas fa-star"></i></div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-star"></i></div>
       <div>
-        <div class="qs-val" id="statFeatured">0</div>
-        <div class="qs-lbl">منتجات مميزة</div>
+        <div class="stat-value" id="featuredProducts">0</div>
+        <div class="stat-label">منتجات مميزة</div>
       </div>
     </div>
-    <div class="qs-card">
-      <div class="qs-icon"><i class="fas fa-image"></i></div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-image"></i></div>
       <div>
-        <div class="qs-val" id="statImages">0</div>
-        <div class="qs-lbl">إجمالي الصور</div>
+        <div class="stat-value" id="totalImages">0</div>
+        <div class="stat-label">إجمالي الصور</div>
       </div>
     </div>
   </div>
 
-  <!-- رسالة -->
-  <div class="message" id="message"></div>
-
-  <!-- تبويبات -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('add')">
-      <i class="fas fa-plus-circle"></i> إضافة منتج
+  <!-- شريط الإجراءات -->
+  <div class="actions-bar">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="بحث عن منتج...">
+    </div>
+    <button class="btn btn-outline" onclick="exportProducts()">
+      <i class="fas fa-download"></i> تصدير JSON
     </button>
-    <button class="tab-btn" onclick="switchTab('list')">
-      <i class="fas fa-list-ul"></i> قائمة المنتجات
-    </button>
+    <label class="btn btn-outline">
+      <i class="fas fa-upload"></i> استيراد JSON
+      <input type="file" accept=".json" onchange="importProducts(this.files[0])" style="display: none">
+    </label>
   </div>
 
-  <!-- تبويب الإضافة -->
-  <div class="tab-content active" id="tab-add">
-    <div class="form-card">
-      <form id="productForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="f-label"><i class="fas fa-tag"></i> الفئة <span class="req">*</span></label>
-            <select class="f-select" id="categoryName" required>
-              <option value="">اختر الفئة...</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="f-label"><i class="fas fa-tshirt"></i> اسم المنتج <span class="req">*</span></label>
-            <input type="text" class="f-input" id="productName" required placeholder="مثال: جلابة مغربية فاخرة">
-          </div>
-          <div class="form-group">
-            <label class="f-label"><i class="fas fa-money-bill-wave"></i> السعر</label>
-            <input type="text" class="f-input" id="priceRange" placeholder="مثال: 600-900 درهم">
-          </div>
-          <div class="form-group">
-            <label class="f-label"><i class="fas fa-sort-numeric-down"></i> ترتيب العرض</label>
-            <input type="number" class="f-input" id="displayOrder" value="0">
-          </div>
-          <div class="form-group full">
-            <label class="f-label"><i class="fas fa-align-left"></i> وصف المنتج</label>
-            <textarea class="f-textarea" id="productDescription" rows="3" maxlength="500" placeholder="وصف جذاب للمنتج..."></textarea>
-          </div>
-        </div>
-
-        <hr class="sep">
-
-        <!-- صور المنتج -->
-        <div class="form-group full">
-          <label class="f-label"><i class="fas fa-images"></i> صور المنتج <span class="req">*</span></label>
-          <div class="imgs-grid" id="imagesGrid"></div>
-          <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('bulkImages').click()" style="margin-top: 1rem; width: 100%;">
-            <i class="fas fa-cloud-upload-alt"></i> إضافة صور (حد أقصى 10)
-          </button>
-          <input type="file" id="bulkImages" accept="image/*" multiple style="display: none" onchange="handleBulkImages(event)">
-        </div>
-
-        <hr class="sep">
-
-        <!-- فيديو المنتج -->
-        <div class="form-group full">
-          <label class="f-label"><i class="fas fa-video"></i> فيديو المنتج (اختياري)</label>
-          <div class="video-upload-area" id="videoUploadArea" onclick="document.getElementById('videoInput').click()">
-            <i class="fas fa-play-circle" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem; display: block;"></i>
-            <p style="color: var(--text-muted); font-size: 0.8rem;">اضغط لإضافة فيديو (حد أقصى 50MB)</p>
-            <div id="videoPreview"></div>
-          </div>
-          <input type="file" id="videoInput" accept="video/*" style="display: none" onchange="handleVideo(event)">
-        </div>
-
-        <hr class="sep">
-
-        <!-- خيارات إضافية -->
-        <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-            <input type="checkbox" id="isFeatured"> <i class="fas fa-star" style="color: var(--gold);"></i> منتج مميز
-          </label>
-          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-            <input type="checkbox" id="isActive" checked> <i class="fas fa-eye" style="color: var(--success);"></i> نشط
-          </label>
-        </div>
-
-        <input type="hidden" id="editId" value="">
-
-        <div class="btn-group">
-          <button type="submit" class="btn" id="submitBtn">
-            <i class="fas fa-plus-circle"></i> إضافة المنتج
-          </button>
-          <button type="button" class="btn btn-outline" onclick="resetForm()">
-            <i class="fas fa-redo"></i> إعادة تعيين
-          </button>
-        </div>
-      </form>
-    </div>
+  <!-- جدول المنتجات -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>الصورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>الإجراءات</th></tr>
+      </thead>
+      <tbody id="productsTableBody">
+        <tr><td colspan="6"><div class="loader"></div></td></tr>
+      </tbody>
+    </table>
   </div>
-
-  <!-- تبويب القائمة -->
-  <div class="tab-content" id="tab-list">
-    <div class="form-card">
-      <div style="margin-bottom: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn btn-outline btn-sm" onclick="exportProducts()">
-          <i class="fas fa-download"></i> تصدير JSON
-        </button>
-        <label class="btn btn-outline btn-sm">
-          <i class="fas fa-upload"></i> استيراد JSON
-          <input type="file" accept=".json" onchange="importProducts(this.files[0])" style="display: none">
-        </label>
-        <div style="flex: 1;"></div>
-        <div style="position: relative;">
-          <i class="fas fa-search" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--gold);"></i>
-          <input type="text" id="searchInput" placeholder="بحث..." style="padding: 0.6rem 2rem 0.6rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); width: 200px;">
-        </div>
-      </div>
-
-      <div class="tbl-wrap">
-        <table class="ptable">
-          <thead>
-            <tr><th>الصورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>الإجراءات</th></tr>
-          </thead>
-          <tbody id="productsTableBody">
-            <tr><td colspan="6"><div class="loader"></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <!-- مودال حذف -->
@@ -783,99 +416,18 @@
   <button class="btn btn-outline btn-sm" onclick="undoDelete()">تراجع</button>
 </div>
 
+<script src="config.js"></script>
 <script>
-  // ==================== التهيئة والإعدادات ====================
-  // تأكد من وجود ملف config.js بنفس المجلد يحتوي على:
-  // window.CONFIG = {
-  //   SUPABASE_URL: "https://xxx.supabase.co",
-  //   SUPABASE_ANON_KEY: "eyJ...",
-  //   CLOUDINARY_CLOUD_NAME: "your-cloud-name",
-  //   CLOUDINARY_UPLOAD_PRESET: "your-preset"
-  // }
-
   let allProducts = [];
-  let currentImages = [];
-  let currentVideo = null;
-  let currentEditId = null;
   let pendingDeletions = [];
   let undoTimeout = null;
-  let activeUploads = new Map(); // تخزين طلبات الرفع لإمكانية الإلغاء
+  let deleteId = null;
 
-  // عرض الرسائل
   function showMessage(text, type = 'info') {
-    const msgDiv = document.getElementById('message');
-    msgDiv.textContent = text;
-    msgDiv.className = `message ${type}`;
-    msgDiv.style.display = 'block';
-    setTimeout(() => {
-      msgDiv.style.display = 'none';
-    }, 4000);
+    // يمكن إضافة رسالة منبثقة بسيطة
+    console.log(text);
   }
 
-  // ==================== دوال Cloudinary ====================
-  async function uploadToCloudinary(file, type, onProgress) {
-    return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', CONFIG.CLOUDINARY_UPLOAD_PRESET);
-      formData.append('folder', type === 'video' ? 'almaya-products/videos' : 'almaya-products/images');
-
-      const xhr = new XMLHttpRequest();
-      const abortController = new AbortController();
-      const uploadId = Date.now() + Math.random();
-      
-      xhr.open('POST', `https://api.cloudinary.com/v1_1/${CONFIG.CLOUDINARY_CLOUD_NAME}/${type}/upload`);
-      
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable && onProgress) {
-          onProgress(Math.round((e.loaded / e.total) * 100));
-        }
-      };
-      
-      xhr.onload = () => {
-        activeUploads.delete(uploadId);
-        if (xhr.status === 200) {
-          resolve(JSON.parse(xhr.responseText));
-        } else {
-          reject(new Error(`فشل الرفع: ${xhr.status}`));
-        }
-      };
-      
-      xhr.onerror = () => {
-        activeUploads.delete(uploadId);
-        reject(new Error('خطأ في الاتصال'));
-      };
-      
-      xhr.ontimeout = () => {
-        activeUploads.delete(uploadId);
-        reject(new Error('انتهى وقت الرفع'));
-      };
-      
-      xhr.timeout = 120000; // دقيقتين مهلة
-      xhr.send(formData);
-      activeUploads.set(uploadId, { xhr, abortController });
-    });
-  }
-
-  // حذف من Cloudinary
-  async function deleteFromCloudinary(publicId, type) {
-    if (!publicId) return;
-    try {
-      // ملاحظة: الحذف يتطلب توقيع في الإنتاج، هنا تبسيط
-      console.log(`حذف ${type}: ${publicId}`);
-    } catch (error) {
-      console.error('خطأ في الحذف من Cloudinary:', error);
-    }
-  }
-
-  // استخراج public_id من رابط Cloudinary
-  function extractPublicId(url) {
-    if (!url) return null;
-    const match = url.match(/\/upload\/v\d+\/(.+?)\.\w+$/);
-    return match ? match[1] : null;
-  }
-
-  // ==================== دوال Supabase ====================
   async function supabaseRequest(endpoint, options = {}) {
     const url = `${CONFIG.SUPABASE_URL}${endpoint}`;
     const headers = {
@@ -890,70 +442,38 @@
       body: options.body ? JSON.stringify(options.body) : undefined
     };
 
-    try {
-      const response = await fetch(url, config);
-      if (response.status === 204) return null;
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || `خطأ ${response.status}`);
-      return data;
-    } catch (error) {
-      console.error('Supabase error:', error);
-      throw error;
-    }
+    const response = await fetch(url, config);
+    if (response.status === 204) return null;
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || `خطأ ${response.status}`);
+    return data;
   }
 
-  // تحميل الفئات
-  async function loadCategories() {
-    try {
-      const categories = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
-      const select = document.getElementById('categoryName');
-      select.innerHTML = '<option value="">اختر الفئة...</option>';
-      if (categories) {
-        categories.forEach(cat => {
-          select.innerHTML += `<option value="${escapeHtml(cat.category_name)}">${escapeHtml(cat.category_name)}</option>`;
-        });
-      }
-    } catch (error) {
-      showMessage('❌ فشل تحميل الفئات', 'error');
-    }
-  }
-
-  // تحميل المنتجات
   async function loadProducts() {
     try {
       allProducts = await supabaseRequest('/rest/v1/products?select=*&order=display_order') || [];
       updateStats();
       renderProductsTable();
     } catch (error) {
-      showMessage('❌ فشل تحميل المنتجات', 'error');
-      document.getElementById('productsTableBody').innerHTML = '<tr><td colspan="6"><div class="empty-state">خطأ في التحميل</div></td></tr>';
+      document.getElementById('productsTableBody').innerHTML = '<tr><td colspan="6">❌ فشل تحميل المنتجات</td></tr>';
     }
   }
 
-  // تحديث الإحصائيات
-  async function updateStats() {
-    try {
-      const all = await supabaseRequest('/rest/v1/products?select=id') || [];
-      const active = await supabaseRequest('/rest/v1/products?select=id&is_active=eq.true') || [];
-      const featured = await supabaseRequest('/rest/v1/products?select=id&is_featured=eq.true') || [];
-      
-      // حساب عدد الصور
-      let totalImages = 0;
-      allProducts.forEach(p => {
-        totalImages++; // الصورة الرئيسية
-        if (p.additional_images) totalImages += p.additional_images.length;
-      });
-      
-      document.getElementById('statTotal').textContent = all.length;
-      document.getElementById('statActive').textContent = active.length;
-      document.getElementById('statFeatured').textContent = featured.length;
-      document.getElementById('statImages').textContent = totalImages;
-    } catch (error) {
-      console.error('خطأ في تحديث الإحصائيات:', error);
-    }
+  function updateStats() {
+    const active = allProducts.filter(p => p.is_active === true).length;
+    const featured = allProducts.filter(p => p.is_featured === true).length;
+    let totalImages = 0;
+    allProducts.forEach(p => {
+      totalImages++;
+      if (p.additional_images) totalImages += p.additional_images.length;
+    });
+    
+    document.getElementById('totalProducts').textContent = allProducts.length;
+    document.getElementById('activeProducts').textContent = active;
+    document.getElementById('featuredProducts').textContent = featured;
+    document.getElementById('totalImages').textContent = totalImages;
   }
 
-  // عرض جدول المنتجات
   function renderProductsTable() {
     const tbody = document.getElementById('productsTableBody');
     const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
@@ -967,377 +487,77 @@
     }
     
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">لا توجد منتجات</div></td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6"><div style="text-align: center; padding: 2rem;">لا توجد منتجات</div></td></tr>';
       return;
     }
     
     tbody.innerHTML = filtered.map(product => `
       <tr>
-        <td><img src="${escapeHtml(product.product_image_url || 'https://placehold.co/50x63')}" class="p-thumb" onerror="this.src='https://placehold.co/50x63'" alt=""></td>
-        <td><strong style="color: var(--text-primary);">${escapeHtml(product.product_name)}</strong><br><small style="color: var(--text-muted);">${product.is_featured ? '⭐ مميز' : ''}</small></td>
+        <td><img src="${product.product_image_url || 'https://placehold.co/50x63'}" class="product-thumb" onerror="this.src='https://placehold.co/50x63'" alt=""></td>
+        <td><strong style="color: var(--text-primary);">${escapeHtml(product.product_name)}</strong><br><small>${product.is_featured ? '⭐ مميز' : ''}</small></td>
         <td>${escapeHtml(product.category_name)}</td>
         <td style="color: var(--gold);">${escapeHtml(product.price_range || '—')}</td>
-        <td><span class="s-badge" style="background: ${product.is_active ? 'rgba(37,211,102,0.1)' : 'rgba(255,71,87,0.1)'}; color: ${product.is_active ? 'var(--success)' : 'var(--danger)'}; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.7rem;">
-          ${product.is_active ? 'نشط' : 'مخفي'}
-        </span></td>
-        <td style="display: flex; gap: 0.5rem;">
-          <button class="btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;" onclick="editProduct(${product.id})"><i class="fas fa-edit"></i></button>
-          <button class="btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;" onclick="duplicateProduct(${product.id})"><i class="fas fa-copy"></i></button>
-          <button class="btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;" onclick="openDeleteModal(${product.id}, '${escapeHtml(product.product_name)}')"><i class="fas fa-trash"></i></button>
+        <td><span class="status-badge ${product.is_active ? 'status-active' : 'status-hidden'}">${product.is_active ? 'نشط' : 'مخفي'}</span></td>
+        <td class="action-buttons">
+          <button class="btn-outline btn-sm" onclick="toggleStatus(${product.id})" title="${product.is_active ? 'إخفاء' : 'إظهار'}">
+            <i class="fas fa-${product.is_active ? 'eye-slash' : 'eye'}"></i>
+          </button>
+          <button class="btn-outline btn-sm" onclick="editProduct(${product.id})" title="تعديل">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn-outline btn-sm" onclick="duplicateProduct(${product.id})" title="نسخ">
+            <i class="fas fa-copy"></i>
+          </button>
+          <button class="btn-danger btn-sm" onclick="openDeleteModal(${product.id}, '${escapeHtml(product.product_name)}')" title="حذف">
+            <i class="fas fa-trash"></i>
+          </button>
         </td>
       </tr>
     `).join('');
   }
 
-  // ==================== إدارة الصور ====================
-  let imageUploadsInProgress = new Map();
-
-  function renderImagesGrid() {
-    const grid = document.getElementById('imagesGrid');
-    grid.innerHTML = '';
-    
-    for (let i = 0; i < 10; i++) {
-      const imageData = currentImages[i];
-      const card = document.createElement('div');
-      card.className = 'img-card';
-      if (imageData?.url) card.classList.add('has-img');
-      if (i === 0 && imageData?.url) card.classList.add('is-main');
-      
-      if (imageData?.uploading) {
-        // عرض شريط تقدم
-        card.innerHTML = `
-          <div class="progress-overlay">
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: ${imageData.progress || 0}%"></div>
-            </div>
-            <div class="progress-text">${imageData.progress || 0}%</div>
-            <button class="cancel-upload" onclick="cancelImageUpload(${i})">إلغاء</button>
-          </div>
-        `;
-      } else if (imageData?.url) {
-        // عرض الصورة
-        card.innerHTML = `
-          <img src="${imageData.url}" alt="صورة ${i + 1}">
-          <div class="main-badge">${i === 0 ? 'رئيسية' : ''}</div>
-          <div class="img-actions">
-            ${i !== 0 ? `<button onclick="setMainImage(${i})" title="تعيين كرئيسية"><i class="fas fa-crown"></i></button>` : ''}
-            <button onclick="removeImage(${i})" title="حذف"><i class="fas fa-trash"></i></button>
-          </div>
-        `;
-      } else {
-        // مكان فارغ
-        card.innerHTML = `
-          <div class="upload-placeholder" onclick="document.getElementById('imageInput${i}').click()">
-            <i class="fas fa-plus-circle"></i>
-            <span style="font-size: 0.7rem;">صورة ${i + 1}</span>
-          </div>
-          <input type="file" id="imageInput${i}" accept="image/*" style="display: none" onchange="uploadImage(${i}, this.files[0])">
-        `;
-      }
-      
-      grid.appendChild(card);
-    }
-  }
-
-  async function uploadImage(index, file) {
-    if (!file) return;
-    
-    // التحقق من الحجم والنوع
-    if (file.size > 10 * 1024 * 1024) {
-      showMessage('❌ حجم الصورة يتجاوز 10 ميجابايت', 'error');
-      return;
-    }
-    if (!file.type.startsWith('image/')) {
-      showMessage('❌ الملف ليس صورة', 'error');
-      return;
-    }
-    
-    // عرض حالة الرفع
-    currentImages[index] = { uploading: true, progress: 0, file: file };
-    renderImagesGrid();
-    
-    try {
-      const result = await uploadToCloudinary(file, 'image', (progress) => {
-        if (currentImages[index]?.uploading) {
-          currentImages[index].progress = progress;
-          renderImagesGrid();
-        }
-      });
-      
-      currentImages[index] = { url: result.secure_url, publicId: result.public_id };
-      showMessage(`✅ تم رفع الصورة ${index + 1}`, 'success');
-    } catch (error) {
-      console.error('خطأ في رفع الصورة:', error);
-      currentImages[index] = null;
-      showMessage(`❌ فشل رفع الصورة ${index + 1}: ${error.message}`, 'error');
-    }
-    
-    renderImagesGrid();
-  }
-
-  async function handleBulkImages(event) {
-    const files = Array.from(event.target.files);
-    event.target.value = '';
-    
-    for (const file of files) {
-      // البحث عن أول فهرس فارغ
-      const emptyIndex = currentImages.findIndex(img => !img || !img.url);
-      if (emptyIndex === -1) {
-        showMessage('⚠️ الحد الأقصى 10 صور', 'warning');
-        break;
-      }
-      await uploadImage(emptyIndex, file);
-    }
-  }
-
-  function cancelImageUpload(index) {
-    // يمكن إضافة منطق إلغاء الرفع هنا
-    if (currentImages[index]?.uploading) {
-      currentImages[index] = null;
-      renderImagesGrid();
-      showMessage('تم إلغاء رفع الصورة', 'info');
-    }
-  }
-
-  function setMainImage(index) {
-    if (index === 0 || !currentImages[index]?.url) return;
-    const temp = currentImages[0];
-    currentImages[0] = currentImages[index];
-    currentImages[index] = temp;
-    renderImagesGrid();
-    showMessage('✅ تم تعيين الصورة الرئيسية', 'success');
-  }
-
-  async function removeImage(index) {
-    if (currentImages[index]?.publicId) {
-      await deleteFromCloudinary(currentImages[index].publicId, 'image');
-    }
-    currentImages[index] = null;
-    renderImagesGrid();
-    showMessage('🗑️ تم حذف الصورة', 'info');
-  }
-
-  // ==================== إدارة الفيديو ====================
-  async function handleVideo(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    if (file.size > 50 * 1024 * 1024) {
-      showMessage('❌ حجم الفيديو يتجاوز 50 ميجابايت', 'error');
-      return;
-    }
-    if (!file.type.startsWith('video/')) {
-      showMessage('❌ الملف ليس فيديو', 'error');
-      return;
-    }
-    
-    const area = document.getElementById('videoUploadArea');
-    area.style.borderColor = 'var(--warning)';
-    area.innerHTML = `
-      <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--gold);"></i>
-      <p style="color: var(--text-secondary);">جاري رفع الفيديو...</p>
-    `;
-    
-    try {
-      const result = await uploadToCloudinary(file, 'video');
-      currentVideo = { url: result.secure_url, publicId: result.public_id };
-      
-      area.innerHTML = `
-        <video controls style="width: 100%; max-height: 200px; border-radius: 12px;">
-          <source src="${result.secure_url}" type="video/mp4">
-        </video>
-        <button class="btn btn-outline btn-sm" onclick="removeVideo()" style="margin-top: 0.5rem;">
-          <i class="fas fa-trash"></i> حذف الفيديو
-        </button>
-      `;
-      showMessage('✅ تم رفع الفيديو بنجاح', 'success');
-    } catch (error) {
-      area.innerHTML = `
-        <i class="fas fa-play-circle" style="font-size: 2.5rem; color: var(--gold);"></i>
-        <p>اضغط لإضافة فيديو (حد أقصى 50MB)</p>
-      `;
-      showMessage(`❌ فشل رفع الفيديو: ${error.message}`, 'error');
-    }
-  }
-
-  async function removeVideo() {
-    if (currentVideo?.publicId) {
-      await deleteFromCloudinary(currentVideo.publicId, 'video');
-    }
-    currentVideo = null;
-    
-    const area = document.getElementById('videoUploadArea');
-    area.innerHTML = `
-      <i class="fas fa-play-circle" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem; display: block;"></i>
-      <p style="color: var(--text-muted); font-size: 0.8rem;">اضغط لإضافة فيديو (حد أقصى 50MB)</p>
-      <div id="videoPreview"></div>
-    `;
-    showMessage('🗑️ تم حذف الفيديو', 'info');
-  }
-
-  // ==================== CRUD العمليات ====================
-  async function addOrUpdateProduct(event) {
-    event.preventDefault();
-    
-    const category = document.getElementById('categoryName').value;
-    const name = document.getElementById('productName').value.trim();
-    const description = document.getElementById('productDescription').value;
-    const price = document.getElementById('priceRange').value;
-    const displayOrder = parseInt(document.getElementById('displayOrder').value) || 0;
-    const isFeatured = document.getElementById('isFeatured').checked;
-    const isActive = document.getElementById('isActive').checked;
-    
-    if (!category || !name) {
-      showMessage('❌ الرجاء تعبئة الفئة واسم المنتج', 'error');
-      return;
-    }
-    
-    const mainImage = currentImages[0]?.url;
-    if (!mainImage && !currentEditId) {
-      showMessage('❌ الصورة الرئيسية مطلوبة', 'error');
-      return;
-    }
-    
-    const additionalImages = currentImages.slice(1).filter(img => img?.url).map(img => img.url);
-    
-    const productData = {
-      category_name: category,
-      product_name: name,
-      product_description: description || null,
-      price_range: price || null,
-      display_order: displayOrder,
-      is_featured: isFeatured,
-      is_active: isActive,
-      product_image_url: mainImage,
-      additional_images: additionalImages,
-      product_video_url: currentVideo?.url || null,
-      colors: '[]',
-      sizes: '[]',
-      tags: '[]'
-    };
-    
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
-    
-    try {
-      if (currentEditId) {
-        await supabaseRequest(`/rest/v1/products?id=eq.${currentEditId}`, {
-          method: 'PATCH',
-          body: productData
-        });
-        showMessage('✅ تم تحديث المنتج بنجاح', 'success');
-      } else {
-        await supabaseRequest('/rest/v1/products', {
-          method: 'POST',
-          body: productData
-        });
-        showMessage('✅ تم إضافة المنتج بنجاح', 'success');
-      }
-      
-      resetForm();
-      loadProducts();
-      switchTab('list');
-    } catch (error) {
-      showMessage(`❌ فشل الحفظ: ${error.message}`, 'error');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<i class="fas fa-plus-circle"></i> إضافة المنتج';
-    }
-  }
-
-  function resetForm() {
-    document.getElementById('productForm').reset();
-    document.getElementById('isActive').checked = true;
-    document.getElementById('editId').value = '';
-    currentEditId = null;
-    currentImages = [];
-    currentVideo = null;
-    renderImagesGrid();
-    
-    const area = document.getElementById('videoUploadArea');
-    area.innerHTML = `
-      <i class="fas fa-play-circle" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem; display: block;"></i>
-      <p style="color: var(--text-muted); font-size: 0.8rem;">اضغط لإضافة فيديو (حد أقصى 50MB)</p>
-      <div id="videoPreview"></div>
-    `;
-    
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerHTML = '<i class="fas fa-plus-circle"></i> إضافة المنتج';
-  }
-
-  async function editProduct(id) {
+  async function toggleStatus(id) {
     const product = allProducts.find(p => p.id === id);
     if (!product) return;
     
-    currentEditId = id;
-    document.getElementById('editId').value = id;
-    document.getElementById('categoryName').value = product.category_name || '';
-    document.getElementById('productName').value = product.product_name || '';
-    document.getElementById('productDescription').value = product.product_description || '';
-    document.getElementById('priceRange').value = product.price_range || '';
-    document.getElementById('displayOrder').value = product.display_order || 0;
-    document.getElementById('isFeatured').checked = product.is_featured || false;
-    document.getElementById('isActive').checked = product.is_active !== false;
-    
-    // تحميل الصور
-    currentImages = [];
-    if (product.product_image_url) {
-      currentImages[0] = { url: product.product_image_url, publicId: extractPublicId(product.product_image_url) };
-    }
-    if (product.additional_images) {
-      product.additional_images.forEach((url, idx) => {
-        if (idx + 1 < 10) {
-          currentImages[idx + 1] = { url: url, publicId: extractPublicId(url) };
-        }
+    try {
+      await supabaseRequest(`/rest/v1/products?id=eq.${id}`, {
+        method: 'PATCH',
+        body: { is_active: !product.is_active }
       });
+      await loadProducts();
+      showMessage(`✅ تم ${product.is_active ? 'إخفاء' : 'إظهار'} المنتج`, 'success');
+    } catch (error) {
+      showMessage('❌ فشل تغيير الحالة', 'error');
     }
-    renderImagesGrid();
-    
-    // تحميل الفيديو
-    if (product.product_video_url) {
-      currentVideo = { url: product.product_video_url, publicId: extractPublicId(product.product_video_url) };
-      const area = document.getElementById('videoUploadArea');
-      area.innerHTML = `
-        <video controls style="width: 100%; max-height: 200px; border-radius: 12px;">
-          <source src="${product.product_video_url}" type="video/mp4">
-        </video>
-        <button class="btn btn-outline btn-sm" onclick="removeVideo()" style="margin-top: 0.5rem;">
-          <i class="fas fa-trash"></i> حذف الفيديو
-        </button>
-      `;
-    }
-    
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerHTML = '<i class="fas fa-save"></i> تحديث المنتج';
-    
-    switchTab('add');
-    showMessage('✏️ جارٍ تعديل المنتج', 'info');
+  }
+
+  function editProduct(id) {
+    window.location.href = `admin-add-product.html?edit=${id}`;
   }
 
   async function duplicateProduct(id) {
     const product = allProducts.find(p => p.id === id);
     if (!product) return;
     
-    resetForm();
-    document.getElementById('categoryName').value = product.category_name || '';
-    document.getElementById('productName').value = `${product.product_name} (نسخة)`;
-    document.getElementById('productDescription').value = product.product_description || '';
-    document.getElementById('priceRange').value = product.price_range || '';
-    document.getElementById('displayOrder').value = (product.display_order || 0) + 1;
-    document.getElementById('isFeatured').checked = product.is_featured || false;
-    document.getElementById('isActive').checked = product.is_active !== false;
+    const { id: _, created_at, updated_at, ...productData } = product;
+    productData.product_name = `${product.product_name} (نسخة)`;
+    productData.display_order = (product.display_order || 0) + 1;
     
-    showMessage('📋 تم نسخ المنتج، راجع البيانات قبل الحفظ', 'info');
-    switchTab('add');
+    try {
+      await supabaseRequest('/rest/v1/products', {
+        method: 'POST',
+        body: productData
+      });
+      await loadProducts();
+      showMessage('✅ تم نسخ المنتج', 'success');
+    } catch (error) {
+      showMessage('❌ فشل نسخ المنتج', 'error');
+    }
   }
 
-  let deleteId = null;
-  let deleteName = '';
-  
   function openDeleteModal(id, name) {
     deleteId = id;
-    deleteName = name;
     document.getElementById('deleteProductName').textContent = name;
     document.getElementById('deleteModal').classList.add('active');
   }
@@ -1356,14 +576,11 @@
       const product = allProducts.find(p => p.id === deleteId);
       await supabaseRequest(`/rest/v1/products?id=eq.${deleteId}`, { method: 'DELETE' });
       
-      // حفظ للتراجع
       pendingDeletions.push({ id: deleteId, product: product });
-      showUndoMessage(deleteName);
-      
-      loadProducts();
-      showMessage('🗑️ تم حذف المنتج', 'success');
+      showUndoMessage(product.product_name);
+      await loadProducts();
     } catch (error) {
-      showMessage(`❌ فشل الحذف: ${error.message}`, 'error');
+      showMessage('❌ فشل الحذف', 'error');
     }
     
     deleteId = null;
@@ -1388,13 +605,11 @@
     if (pendingDeletions.length > 0) {
       const lastDeleted = pendingDeletions.pop();
       if (lastDeleted && lastDeleted.product) {
-        const { id, product } = lastDeleted;
-        const { id: _, created_at, updated_at, ...productData } = product;
+        const { id: _, created_at, updated_at, ...productData } = lastDeleted.product;
         
         try {
           await supabaseRequest('/rest/v1/products', { method: 'POST', body: productData });
-          showMessage('✅ تم استعادة المنتج', 'success');
-          loadProducts();
+          await loadProducts();
         } catch (error) {
           showMessage('❌ فشل استعادة المنتج', 'error');
         }
@@ -1404,7 +619,6 @@
     if (undoTimeout) clearTimeout(undoTimeout);
   }
   
-  // ==================== تصدير واستيراد ====================
   function exportProducts() {
     const dataStr = JSON.stringify(allProducts, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
@@ -1414,7 +628,6 @@
     a.download = `products_${new Date().toISOString().slice(0, 19)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    showMessage('✅ تم تصدير المنتجات', 'success');
   }
   
   async function importProducts(file) {
@@ -1433,14 +646,13 @@
         }
       }
       
-      showMessage(`✅ تم استيراد ${imported} منتج`, 'success');
-      loadProducts();
+      await loadProducts();
+      alert(`✅ تم استيراد ${imported} منتج`);
     } catch (error) {
-      showMessage(`❌ فشل الاستيراد: ${error.message}`, 'error');
+      alert('❌ فشل الاستيراد');
     }
   }
   
-  // ==================== دوال مساعدة ====================
   function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
@@ -1451,44 +663,19 @@
     });
   }
   
-  function switchTab(tab) {
-    const addTab = document.getElementById('tab-add');
-    const listTab = document.getElementById('tab-list');
-    const btns = document.querySelectorAll('.tab-btn');
-    
-    if (tab === 'add') {
-      addTab.classList.add('active');
-      listTab.classList.remove('active');
-      btns[0].classList.add('active');
-      btns[1].classList.remove('active');
-    } else {
-      addTab.classList.remove('active');
-      listTab.classList.add('active');
-      btns[0].classList.remove('active');
-      btns[1].classList.add('active');
-      loadProducts();
-    }
-  }
-  
   function filterProducts() {
     renderProductsTable();
   }
   
-  // ==================== تهيئة الصفحة ====================
-  document.getElementById('productForm').addEventListener('submit', addOrUpdateProduct);
   document.getElementById('searchInput')?.addEventListener('input', filterProducts);
   
-  // التحقق من وجود CONFIG
-  if (typeof CONFIG === 'undefined') {
-    document.body.innerHTML = '<div style="color: red; text-align: center; padding: 2rem;">❌ ملف config.js مفقود. الرجاء إنشاؤه.</div>';
-  } else {
-    loadCategories();
+  if (typeof CONFIG !== 'undefined') {
     loadProducts();
-    renderImagesGrid();
+  } else {
+    document.body.innerHTML = '<div style="color: red; text-align: center; padding: 2rem;">❌ ملف config.js مفقود</div>';
   }
   
-  // جعل الدوال عامة
-  window.switchTab = switchTab;
+  window.toggleStatus = toggleStatus;
   window.editProduct = editProduct;
   window.duplicateProduct = duplicateProduct;
   window.openDeleteModal = openDeleteModal;
@@ -1497,15 +684,6 @@
   window.undoDelete = undoDelete;
   window.exportProducts = exportProducts;
   window.importProducts = importProducts;
-  window.removeImage = removeImage;
-  window.setMainImage = setMainImage;
-  window.cancelImageUpload = cancelImageUpload;
-  window.removeVideo = removeVideo;
-  window.resetForm = resetForm;
-  window.uploadImage = uploadImage;
-  window.handleBulkImages = handleBulkImages;
-  window.handleVideo = handleVideo;
 </script>
-
 </body>
 </html>
