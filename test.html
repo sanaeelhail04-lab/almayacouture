@@ -4,39 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>إضافة منتج | لوحة التحكم</title>
-  <meta name="robots" content="noindex, nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg-primary: #0F0B08;
       --bg-secondary: #1A1510;
       --bg-card: #231D15;
       --gold: #C4A06A;
-      --gold-light: #D4B896;
       --gold-dark: #A07840;
       --text-primary: #F5EDD8;
       --text-secondary: #A89880;
       --text-muted: #6B5F52;
       --border: rgba(196, 160, 106, 0.15);
-      --border-hover: rgba(196, 160, 106, 0.4);
       --success: #25D366;
       --danger: #FF4757;
       --warning: #FFA502;
       --info: #3B82F6;
-      --radius-sm: 8px;
       --radius: 12px;
       --radius-lg: 16px;
-      --radius-xl: 20px;
       --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
       --transition: all 0.3s ease;
     }
 
@@ -44,7 +34,6 @@
       background: var(--bg-primary);
       font-family: 'Tajawal', sans-serif;
       color: var(--text-primary);
-      min-height: 100vh;
     }
 
     .admin-container {
@@ -69,11 +58,6 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 0.8rem;
     }
 
     /* أزرار */
@@ -115,17 +99,8 @@
       flex-wrap: wrap;
     }
 
-    /* العمود الرئيسي */
-    .main-column {
-      flex: 2;
-      min-width: 250px;
-    }
-
-    /* العمود الجانبي */
-    .sidebar-column {
-      flex: 1;
-      min-width: 280px;
-    }
+    .main-column { flex: 2; min-width: 250px; }
+    .sidebar-column { flex: 1; min-width: 280px; }
 
     /* البطاقات */
     .card {
@@ -167,14 +142,12 @@
       transition: all 0.3s;
     }
 
-    .card-body.collapsed {
-      display: none;
-    }
+    .card-body.collapsed { display: none; }
 
     /* الحقول */
-    .form-group {
-      margin-bottom: 1rem;
-    }
+    .form-group { margin-bottom: 1rem; }
+    .form-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .form-row .form-group { flex: 1; margin-bottom: 0; }
 
     .form-group label {
       display: block;
@@ -210,145 +183,32 @@
       border-color: var(--gold);
     }
 
-    /* مجموعة السعر */
-    .price-group {
+    /* نوع المنتج */
+    .product-type-selector {
       display: flex;
-      gap: 1rem;
-    }
-
-    .price-group .form-group {
-      flex: 1;
-    }
-
-    /* المتغيرات */
-    .variants-section {
-      margin-top: 1rem;
-    }
-
-    .variant-options {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
+      margin-bottom: 1rem;
     }
 
-    .variant-option {
+    .type-badge {
+      padding: 0.5rem 1rem;
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 0.8rem;
-      flex: 1;
-    }
-
-    .variant-option h4 {
-      font-size: 0.85rem;
-      margin-bottom: 0.5rem;
-      color: var(--gold);
-    }
-
-    .variant-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .variant-tag {
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.3rem 0.8rem;
-      font-size: 0.75rem;
       cursor: pointer;
       transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .variant-tag:hover {
-      border-color: var(--gold);
-    }
-
-    .variant-tag.selected {
-      background: rgba(196, 160, 106, 0.2);
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-
-    .add-value {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .add-value input {
-      flex: 1;
-      padding: 0.4rem 0.6rem;
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text-primary);
       font-size: 0.8rem;
     }
 
-    .add-value button {
-      padding: 0.4rem 0.8rem;
-      background: var(--gold);
-      border: none;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-    }
+    .type-badge:hover { border-color: var(--gold); }
+    .type-badge.active { background: var(--gold); color: #1A1510; border-color: var(--gold); }
 
-    /* جدول المتغيرات */
-    .variants-table-wrapper {
-      overflow-x: auto;
-      margin-top: 1rem;
-    }
+    /* حقول ديناميكية */
+    .dynamic-field { display: none; }
+    .dynamic-field.show { display: block; }
 
-    .variants-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-    }
-
-    .variants-table th,
-    .variants-table td {
-      padding: 0.6rem;
-      border: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .variants-table th {
-      background: var(--bg-secondary);
-      color: var(--gold);
-    }
-
-    .variants-table input {
-      width: 100%;
-      padding: 0.3rem;
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text-primary);
-      text-align: center;
-    }
-
-    .generate-btn {
-      background: var(--gold);
-      color: #1A1510;
-      border: none;
-      border-radius: var(--radius);
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* معرض الصور */
+    /* الصور */
     .images-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -365,13 +225,8 @@
       overflow: hidden;
     }
 
-    .image-card.has-image {
-      border-style: solid;
-    }
-
-    .image-card.main-image {
-      border-color: var(--gold);
-    }
+    .image-card.has-image { border-style: solid; }
+    .image-card.main-image { border-color: var(--gold); }
 
     .image-card img {
       width: 100%;
@@ -404,10 +259,7 @@
       transition: opacity 0.2s;
     }
 
-    .image-card:hover .image-actions {
-      opacity: 1;
-    }
-
+    .image-card:hover .image-actions { opacity: 1; }
     .image-actions button {
       background: rgba(0,0,0,0.7);
       border: none;
@@ -429,12 +281,51 @@
       border-radius: 12px;
     }
 
-    /* المنتجات ذات الصلة */
-    .related-products {
-      max-height: 300px;
-      overflow-y: auto;
+    /* المتغيرات العامة */
+    .variants-section { margin-top: 1rem; }
+    .variant-options { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .variant-option { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.8rem; flex: 1; }
+    .variant-option h4 { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--gold); }
+
+    .variant-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+    .variant-tag {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .variant-tag:hover { border-color: var(--gold); }
+    .variant-tag.selected { background: rgba(196, 160, 106, 0.2); border-color: var(--gold); color: var(--gold); }
+
+    .add-value { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .add-value input { flex: 1; padding: 0.4rem 0.6rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); }
+    .add-value button { padding: 0.4rem 0.8rem; background: var(--gold); border: none; border-radius: 8px; cursor: pointer; }
+
+    .generate-btn {
+      background: var(--gold);
+      color: #1A1510;
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
+    .variants-table-wrapper { overflow-x: auto; margin-top: 1rem; }
+    .variants-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .variants-table th, .variants-table td { padding: 0.6rem; border: 1px solid var(--border); text-align: center; }
+    .variants-table th { background: var(--bg-secondary); color: var(--gold); }
+    .variants-table input { width: 100%; padding: 0.3rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); text-align: center; }
+
+    /* المنتجات ذات الصلة */
+    .related-products { max-height: 300px; overflow-y: auto; }
     .related-product-item {
       display: flex;
       align-items: center;
@@ -444,45 +335,12 @@
       cursor: pointer;
       transition: var(--transition);
     }
-
-    .related-product-item:hover {
-      background: rgba(196, 160, 106, 0.05);
-    }
-
-    .related-product-item img {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-    }
-
-    .related-product-item .info {
-      flex: 1;
-    }
-
-    .related-product-item .name {
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .related-product-item .price {
-      font-size: 0.7rem;
-      color: var(--gold);
-    }
-
-    .related-product-item.selected {
-      background: rgba(196, 160, 106, 0.1);
-      border-color: var(--gold);
-    }
-
-    /* خيارات متقدمة */
-    .advanced-options {
-      display: none;
-    }
-
-    .advanced-options.show {
-      display: block;
-    }
+    .related-product-item:hover { background: rgba(196, 160, 106, 0.05); }
+    .related-product-item img { width: 40px; height: 40px; object-fit: cover; border-radius: 8px; }
+    .related-product-item .info { flex: 1; }
+    .related-product-item .name { font-size: 0.8rem; font-weight: 600; }
+    .related-product-item .price { font-size: 0.7rem; color: var(--gold); }
+    .related-product-item.selected { background: rgba(196, 160, 106, 0.1); border-color: var(--gold); }
 
     /* رسائل */
     .message {
@@ -497,33 +355,15 @@
       z-index: 1000;
       display: none;
       animation: slideUp 0.3s ease;
-      font-size: 0.85rem;
     }
-
-    .message.success {
-      background: rgba(37, 211, 102, 0.15);
-      border-color: var(--success);
-      color: var(--success);
-    }
-
-    .message.error {
-      background: rgba(255, 71, 87, 0.15);
-      border-color: var(--danger);
-      color: var(--danger);
-    }
+    .message.success { background: rgba(37, 211, 102, 0.15); border-color: var(--success); color: var(--success); }
+    .message.error { background: rgba(255, 71, 87, 0.15); border-color: var(--danger); color: var(--danger); }
 
     @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
 
-    /* تحميل */
     .loading-overlay {
       position: fixed;
       inset: 0;
@@ -539,53 +379,17 @@
       visibility: hidden;
       transition: all 0.3s;
     }
+    .loading-overlay.active { opacity: 1; visibility: visible; }
+    .loading-spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .loading-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid var(--border);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* استجابة */
-    @media (max-width: 992px) {
-      .admin-container {
-        padding: 1rem;
-      }
-      .product-form {
-        flex-direction: column;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .price-group {
-        flex-direction: column;
-      }
-      .variant-options {
-        flex-direction: column;
-      }
-      .page-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
+    @media (max-width: 992px) { .admin-container { padding: 1rem; } .product-form { flex-direction: column; } }
+    @media (max-width: 768px) { .form-row { flex-direction: column; } .variant-options { flex-direction: column; } }
   </style>
 </head>
 <body>
 
 <div class="admin-container">
-  <!-- رأس الصفحة -->
   <div class="page-header">
     <h1><i class="fas fa-plus-circle"></i> إضافة منتج</h1>
     <div class="header-actions">
@@ -595,9 +399,26 @@
   </div>
 
   <div class="product-form">
-    <!-- العمود الرئيسي -->
     <div class="main-column">
       
+      <!-- نوع المنتج -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-box"></i> نوع المنتج</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="product-type-selector" id="productTypeSelector">
+            <div class="type-badge active" data-type="physical" onclick="selectProductType('physical')"><i class="fas fa-tshirt"></i> منتج مادي</div>
+            <div class="type-badge" data-type="digital" onclick="selectProductType('digital')"><i class="fas fa-download"></i> منتج رقمي</div>
+            <div class="type-badge" data-type="service" onclick="selectProductType('service')"><i class="fas fa-concierge-bell"></i> خدمة</div>
+            <div class="type-badge" data-type="food" onclick="selectProductType('food')"><i class="fas fa-utensils"></i> منتج غذائي</div>
+            <div class="type-badge" data-type="book" onclick="selectProductType('book')"><i class="fas fa-book"></i> كتاب</div>
+            <div class="type-badge" data-type="electronic" onclick="selectProductType('electronic')"><i class="fas fa-microchip"></i> إلكترونيات</div>
+          </div>
+        </div>
+      </div>
+
       <!-- المعلومات الأساسية -->
       <div class="card">
         <div class="card-header" onclick="toggleCard(this)">
@@ -606,12 +427,81 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <label><i class="fas fa-heading"></i> اسم المنتج</label>
-            <input type="text" id="productName" placeholder="مثال: حذاء رياضي احترافي">
+            <label><i class="fas fa-heading"></i> اسم المنتج <span style="color: var(--danger);">*</span></label>
+            <input type="text" id="productName" placeholder="مثال: حذاء رياضي / كتاب تنمية بشرية / قالب ووردبريس">
           </div>
           <div class="form-group">
             <label><i class="fas fa-align-left"></i> الوصف</label>
             <textarea id="description" rows="4" placeholder="وصف المنتج بالتفصيل..."></textarea>
+          </div>
+          
+          <!-- حقول ديناميكية حسب نوع المنتج -->
+          <div id="dynamicFields">
+            <!-- حقل المؤلف - للكتب -->
+            <div class="form-group dynamic-field" data-for="book">
+              <label><i class="fas fa-user-edit"></i> المؤلف</label>
+              <input type="text" id="author" placeholder="اسم المؤلف">
+            </div>
+            
+            <!-- حقل الناشر - للكتب -->
+            <div class="form-group dynamic-field" data-for="book">
+              <label><i class="fas fa-building"></i> الناشر</label>
+              <input type="text" id="publisher" placeholder="دار النشر">
+            </div>
+            
+            <!-- حقل عدد الصفحات - للكتب -->
+            <div class="form-group dynamic-field" data-for="book">
+              <label><i class="fas fa-file-alt"></i> عدد الصفحات</label>
+              <input type="number" id="pages" placeholder="عدد الصفحات">
+            </div>
+            
+            <!-- حقل الماركة - للمنتجات المادية والإلكترونيات -->
+            <div class="form-group dynamic-field" data-for="physical,electronic">
+              <label><i class="fas fa-building"></i> الماركة / الشركة المصنعة</label>
+              <input type="text" id="brand" placeholder="مثال: Nike, Apple, Samsung">
+            </div>
+            
+            <!-- حقل الموديل - للإلكترونيات -->
+            <div class="form-group dynamic-field" data-for="electronic">
+              <label><i class="fas fa-microchip"></i> الموديل</label>
+              <input type="text" id="model" placeholder="رقم الموديل">
+            </div>
+            
+            <!-- حقل تاريخ الصلاحية - للأغذية -->
+            <div class="form-group dynamic-field" data-for="food">
+              <label><i class="fas fa-calendar-alt"></i> تاريخ الصلاحية</label>
+              <input type="date" id="expiryDate">
+            </div>
+            
+            <!-- حقل بلد المنشأ - للأغذية -->
+            <div class="form-group dynamic-field" data-for="food">
+              <label><i class="fas fa-map-marker-alt"></i> بلد المنشأ</label>
+              <input type="text" id="originCountry" placeholder="مثال: المغرب، فرنسا">
+            </div>
+            
+            <!-- حقل المكونات - للأغذية -->
+            <div class="form-group dynamic-field" data-for="food">
+              <label><i class="fas fa-list"></i> المكونات</label>
+              <textarea id="ingredients" rows="2" placeholder="قائمة المكونات"></textarea>
+            </div>
+            
+            <!-- حقل مدة الخدمة - للخدمات -->
+            <div class="form-group dynamic-field" data-for="service">
+              <label><i class="fas fa-clock"></i> مدة الخدمة</label>
+              <input type="text" id="serviceDuration" placeholder="مثال: ساعة واحدة، يوم كامل">
+            </div>
+            
+            <!-- حقل الملف الرقمي - للمنتجات الرقمية -->
+            <div class="form-group dynamic-field" data-for="digital">
+              <label><i class="fas fa-cloud-upload-alt"></i> رابط الملف الرقمي</label>
+              <input type="url" id="digitalFileUrl" placeholder="رابط التحميل (Google Drive, Dropbox, etc.)">
+            </div>
+            
+            <!-- حقل حجم الملف - للمنتجات الرقمية -->
+            <div class="form-group dynamic-field" data-for="digital">
+              <label><i class="fas fa-database"></i> حجم الملف</label>
+              <input type="text" id="fileSize" placeholder="مثال: 2.5 MB, 1 GB">
+            </div>
           </div>
         </div>
       </div>
@@ -623,14 +513,24 @@
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="card-body">
-          <div class="price-group">
+          <div class="form-row">
             <div class="form-group">
               <label><i class="fas fa-dollar-sign"></i> السعر</label>
-              <input type="number" id="price" placeholder="0.00">
+              <input type="number" id="price" placeholder="0.00" step="0.01">
             </div>
             <div class="form-group">
-              <label><i class="fas fa-chart-line"></i> مقارنة السعر</label>
-              <input type="number" id="comparePrice" placeholder="السعر الأصلي">
+              <label><i class="fas fa-chart-line"></i> سعر المقارنة</label>
+              <input type="number" id="comparePrice" placeholder="السعر الأصلي" step="0.01">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label><i class="fas fa-percent"></i> نسبة الخصم</label>
+              <input type="number" id="discountPercent" placeholder="0" readonly>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-chart-simple"></i> التوفير</label>
+              <input type="text" id="savingAmount" placeholder="0.00" readonly>
             </div>
           </div>
         </div>
@@ -651,45 +551,38 @@
         </div>
       </div>
 
-      <!-- المتغيرات -->
-      <div class="card">
+      <!-- المتغيرات (للمنتجات التي لها خيارات) -->
+      <div class="card" id="variantsCard">
         <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-palette"></i> المتغيرات</h3>
+          <h3><i class="fas fa-palette"></i> المتغيرات (الألوان، المقاسات، الإصدارات...)</h3>
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="card-body">
           <div class="variants-section">
             <div class="variant-options">
               <div class="variant-option">
-                <h4><i class="fas fa-palette"></i> الألوان</h4>
-                <div class="variant-tags" id="colorsContainer">
-                  <span class="variant-tag" data-value="أحمر" onclick="toggleVariantTag(this)">أحمر</span>
-                  <span class="variant-tag" data-value="أزرق" onclick="toggleVariantTag(this)">أزرق</span>
-                  <span class="variant-tag" data-value="أسود" onclick="toggleVariantTag(this)">أسود</span>
-                  <span class="variant-tag" data-value="أبيض" onclick="toggleVariantTag(this)">أبيض</span>
+                <h4><i class="fas fa-palette"></i> الخيار 1 (لون / إصدار / نوع)</h4>
+                <div class="variant-tags" id="option1Container">
+                  <span class="variant-tag" data-value="افتراضي" onclick="toggleVariantTag(this)">افتراضي</span>
                 </div>
                 <div class="add-value">
-                  <input type="text" id="newColor" placeholder="لون جديد...">
-                  <button onclick="addVariantValue('color')"><i class="fas fa-plus"></i></button>
+                  <input type="text" id="newOption1" placeholder="قيمة جديدة...">
+                  <button onclick="addVariantValue('option1')"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
               <div class="variant-option">
-                <h4><i class="fas fa-ruler"></i> المقاسات</h4>
-                <div class="variant-tags" id="sizesContainer">
-                  <span class="variant-tag" data-value="XS" onclick="toggleVariantTag(this)">XS</span>
-                  <span class="variant-tag" data-value="S" onclick="toggleVariantTag(this)">S</span>
-                  <span class="variant-tag" data-value="M" onclick="toggleVariantTag(this)">M</span>
-                  <span class="variant-tag" data-value="L" onclick="toggleVariantTag(this)">L</span>
-                  <span class="variant-tag" data-value="XL" onclick="toggleVariantTag(this)">XL</span>
+                <h4><i class="fas fa-ruler"></i> الخيار 2 (مقاس / سعة / كمية)</h4>
+                <div class="variant-tags" id="option2Container">
+                  <span class="variant-tag" data-value="واحد" onclick="toggleVariantTag(this)">واحد</span>
                 </div>
                 <div class="add-value">
-                  <input type="text" id="newSize" placeholder="مقاس جديد...">
-                  <button onclick="addVariantValue('size')"><i class="fas fa-plus"></i></button>
+                  <input type="text" id="newOption2" placeholder="قيمة جديدة...">
+                  <button onclick="addVariantValue('option2')"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
             </div>
             <button class="generate-btn" onclick="generateVariants()">
-              <i class="fas fa-magic"></i> إشعاع المتغيرات
+              <i class="fas fa-magic"></i> إنشاء جميع المتغيرات
             </button>
             <div id="variantsContainer" style="display: none;">
               <div class="variants-table-wrapper">
@@ -701,23 +594,25 @@
                 </table>
               </div>
             </div>
+            <div class="helper-text" style="margin-top: 0.8rem; font-size: 0.7rem; color: var(--text-muted);">
+              <i class="fas fa-info-circle"></i> مناسب للمنتجات التي لها خيارات مثل: الملابس (مقاسات/ألوان)، الإلكترونيات (سعة/لون)، الكتب (غلاف عادي/مجلد)
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- العمود الجانبي -->
     <div class="sidebar-column">
       
-      <!-- إشعاع (حالة المنتج) -->
+      <!-- حالة المنتج -->
       <div class="card">
         <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-eye"></i> إشعاع</h3>
+          <h3><i class="fas fa-eye"></i> حالة المنتج</h3>
           <i class="fas fa-chevron-down"></i>
         </div>
         <div class="card-body">
           <div class="form-group">
-            <label>حالة المنتج</label>
+            <label>حالة النشر</label>
             <select id="visibility">
               <option value="active">منشور</option>
               <option value="draft">مسودة</option>
@@ -730,6 +625,66 @@
               <option value="false">لا</option>
               <option value="true">نعم</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label>الكمية المتوفرة</label>
+            <input type="number" id="stockQuantity" value="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- الشحن (للمنتجات المادية) -->
+      <div class="card" id="shippingCard">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-truck"></i> الشحن</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label><i class="fas fa-weight-hanging"></i> الوزن (كغ)</label>
+              <input type="number" step="0.01" id="weight" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-box"></i> فئة الشحن</label>
+              <select id="shippingClass">
+                <option value="standard">شحن عادي</option>
+                <option value="express">شحن سريع</option>
+                <option value="heavy">شحن ثقيل</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label><i class="fas fa-arrows-alt-h"></i> الأبعاد (سم)</label>
+              <input type="text" id="dimensions" placeholder="طول × عرض × ارتفاع">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- الأرقام العالمية -->
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3><i class="fas fa-barcode"></i> الأرقام التعريفية</h3>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label><i class="fas fa-barcode"></i> SKU</label>
+            <input type="text" id="sku" placeholder="رمز المنتج الداخلي">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-globe"></i> GTIN / UPC / EAN</label>
+            <input type="text" id="gtin" placeholder="الرقم العالمي للمنتج">
+          </div>
+          <div class="form-group" id="isbnField">
+            <label><i class="fas fa-book"></i> ISBN (للكتب)</label>
+            <input type="text" id="isbn" placeholder="رقم ISBN">
+          </div>
+          <div class="form-group" id="mpnField">
+            <label><i class="fas fa-microchip"></i> MPN</label>
+            <input type="text" id="mpn" placeholder="رقم القطعة من المصنع">
           </div>
         </div>
       </div>
@@ -745,10 +700,7 @@
             <input type="text" id="searchProducts" placeholder="البحث عن المنتجات..." onkeyup="searchProducts()">
           </div>
           <div class="related-products" id="relatedProductsList">
-            <!-- سيتم تحميل المنتجات هنا -->
-            <div style="text-align: center; padding: 1rem; color: var(--text-muted);">
-              <i class="fas fa-spinner fa-spin"></i> جاري التحميل...
-            </div>
+            <div style="text-align: center; padding: 1rem; color: var(--text-muted);"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</div>
           </div>
         </div>
       </div>
@@ -761,31 +713,16 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <label><i class="fas fa-barcode"></i> SKU</label>
-            <input type="text" id="sku" placeholder="رمز المنتج">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-globe"></i> GTIN (الرقم العالمي)</label>
-            <input type="text" id="gtin" placeholder="12-14 رقم">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-weight-hanging"></i> الوزن (كغ)</label>
-            <input type="number" step="0.01" id="weight" placeholder="0.00">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-truck"></i> فئة الشحن</label>
-            <select id="shippingClass">
-              <option value="standard">شحن عادي</option>
-              <option value="express">شحن سريع</option>
-            </select>
-          </div>
-          <div class="form-group">
             <label><i class="fab fa-searchengin"></i> عنوان SEO</label>
             <input type="text" id="metaTitle" placeholder="عنوان محسن لمحركات البحث">
           </div>
           <div class="form-group">
             <label><i class="fas fa-align-left"></i> وصف SEO</label>
             <textarea id="metaDescription" rows="2" placeholder="وصف محسن لمحركات البحث"></textarea>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-tags"></i> الكلمات المفتاحية</label>
+            <input type="text" id="tags" placeholder="كلمات مفتاحية، مفصولة بفاصلة">
           </div>
         </div>
       </div>
@@ -796,17 +733,18 @@
 <div id="message" class="message"></div>
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
-  <div style="color: var(--gold);">جاري حفظ المنتج...</div>
+  <div>جاري حفظ المنتج...</div>
 </div>
 
 <script src="config.js"></script>
 <script>
   // المتغيرات العامة
   let currentImages = [];
-  let selectedColors = new Set();
-  let selectedSizes = new Set();
+  let selectedOption1 = new Set();
+  let selectedOption2 = new Set();
   let allProducts = [];
   let selectedRelatedProducts = [];
+  let currentProductType = 'physical';
 
   // عرض الرسائل
   function showMessage(text, type) {
@@ -814,9 +752,7 @@
     msg.textContent = text;
     msg.className = `message ${type}`;
     msg.style.display = 'block';
-    setTimeout(() => {
-      msg.style.display = 'none';
-    }, 3000);
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
   }
 
   // فتح/غلق البطاقة
@@ -825,6 +761,67 @@
     const body = card.querySelector('.card-body');
     header.classList.toggle('collapsed');
     body.classList.toggle('collapsed');
+  }
+
+  // اختيار نوع المنتج
+  function selectProductType(type) {
+    currentProductType = type;
+    
+    // تحديث الـ badges
+    document.querySelectorAll('.type-badge').forEach(badge => {
+      badge.classList.remove('active');
+      if (badge.dataset.type === type) badge.classList.add('active');
+    });
+    
+    // إظهار/إخفاء الحقول الديناميكية
+    document.querySelectorAll('.dynamic-field').forEach(field => {
+      const types = field.dataset.for.split(',');
+      if (types.includes(type)) {
+        field.classList.add('show');
+      } else {
+        field.classList.remove('show');
+      }
+    });
+    
+    // إظهار/إخفاء بطاقة الشحن (للمنتجات المادية فقط)
+    const shippingCard = document.getElementById('shippingCard');
+    if (type === 'physical' || type === 'food' || type === 'electronic' || type === 'book') {
+      shippingCard.style.display = 'block';
+    } else {
+      shippingCard.style.display = 'none';
+    }
+    
+    // إظهار/إخفاء حقل ISBN (للكتب فقط)
+    const isbnField = document.getElementById('isbnField');
+    if (type === 'book') {
+      isbnField.style.display = 'block';
+    } else {
+      isbnField.style.display = 'none';
+    }
+    
+    // إظهار/إخفاء بطاقة المتغيرات (للمنتجات التي تحتاج متغيرات)
+    const variantsCard = document.getElementById('variantsCard');
+    if (type === 'physical' || type === 'electronic') {
+      variantsCard.style.display = 'block';
+    } else {
+      variantsCard.style.display = 'none';
+    }
+  }
+
+  // حساب الخصم تلقائياً
+  function calculateDiscount() {
+    const price = parseFloat(document.getElementById('price').value) || 0;
+    const comparePrice = parseFloat(document.getElementById('comparePrice').value) || 0;
+    
+    if (comparePrice > price && price > 0) {
+      const discount = ((comparePrice - price) / comparePrice) * 100;
+      const saving = comparePrice - price;
+      document.getElementById('discountPercent').value = discount.toFixed(0);
+      document.getElementById('savingAmount').value = saving.toFixed(2);
+    } else {
+      document.getElementById('discountPercent').value = '';
+      document.getElementById('savingAmount').value = '';
+    }
   }
 
   // ========== الصور ==========
@@ -912,31 +909,32 @@
   function toggleVariantTag(tag) {
     tag.classList.toggle('selected');
     const value = tag.dataset.value;
-    const parent = tag.parentElement.parentElement;
+    const container = tag.parentElement.parentElement;
+    const isOption1 = container.querySelector('h4').textContent.includes('الخيار 1');
     
-    if (parent.querySelector('h4').textContent.includes('الألوان')) {
+    if (isOption1) {
       if (tag.classList.contains('selected')) {
-        selectedColors.add(value);
+        selectedOption1.add(value);
       } else {
-        selectedColors.delete(value);
+        selectedOption1.delete(value);
       }
     } else {
       if (tag.classList.contains('selected')) {
-        selectedSizes.add(value);
+        selectedOption2.add(value);
       } else {
-        selectedSizes.delete(value);
+        selectedOption2.delete(value);
       }
     }
   }
 
-  function addVariantValue(type) {
+  function addVariantValue(option) {
     let input, container;
-    if (type === 'color') {
-      input = document.getElementById('newColor');
-      container = document.getElementById('colorsContainer');
+    if (option === 'option1') {
+      input = document.getElementById('newOption1');
+      container = document.getElementById('option1Container');
     } else {
-      input = document.getElementById('newSize');
-      container = document.getElementById('sizesContainer');
+      input = document.getElementById('newOption2');
+      container = document.getElementById('option2Container');
     }
     
     const value = input.value.trim();
@@ -953,28 +951,28 @@
   }
 
   function generateVariants() {
-    const colors = [...selectedColors];
-    const sizes = [...selectedSizes];
+    const options1 = [...selectedOption1];
+    const options2 = [...selectedOption2];
     
-    if (colors.length === 0 && sizes.length === 0) {
-      showMessage('الرجاء اختيار لون أو مقاس على الأقل', 'error');
+    if (options1.length === 0 && options2.length === 0) {
+      showMessage('الرجاء اختيار قيمة واحدة على الأقل', 'error');
       return;
     }
     
     const variants = [];
-    if (colors.length > 0 && sizes.length > 0) {
-      for (const color of colors) {
-        for (const size of sizes) {
-          variants.push({ name: `${size} - ${color}`, price: 0, stock: 0, sku: '' });
+    if (options1.length > 0 && options2.length > 0) {
+      for (const opt1 of options1) {
+        for (const opt2 of options2) {
+          variants.push({ name: `${opt1} / ${opt2}`, price: 0, stock: 0, sku: '' });
         }
       }
-    } else if (colors.length > 0) {
-      for (const color of colors) {
-        variants.push({ name: color, price: 0, stock: 0, sku: '' });
+    } else if (options1.length > 0) {
+      for (const opt1 of options1) {
+        variants.push({ name: opt1, price: 0, stock: 0, sku: '' });
       }
     } else {
-      for (const size of sizes) {
-        variants.push({ name: size, price: 0, stock: 0, sku: '' });
+      for (const opt2 of options2) {
+        variants.push({ name: opt2, price: 0, stock: 0, sku: '' });
       }
     }
     
@@ -1004,7 +1002,7 @@
   // ========== المنتجات ذات الصلة ==========
   async function loadRelatedProducts() {
     try {
-      const res = await fetch(`${window.CONFIG.SUPABASE_URL}/rest/v1/products?select=id,product_name,regular_price,product_image_url&order=display_order`, {
+      const res = await fetch(`${window.CONFIG.SUPABASE_URL}/rest/v1/products?select=id,product_name,regular_price,product_image_url`, {
         headers: {
           'apikey': window.CONFIG.SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${window.CONFIG.SUPABASE_ANON_KEY}`
@@ -1076,22 +1074,42 @@
     });
     
     const productData = {
+      product_type: currentProductType,
       product_name: name,
       description: document.getElementById('description').value,
       regular_price: parseFloat(document.getElementById('price').value) || 0,
       compare_price: parseFloat(document.getElementById('comparePrice').value) || null,
       visibility: document.getElementById('visibility').value,
       is_featured: document.getElementById('featured').value === 'true',
+      stock_quantity: parseInt(document.getElementById('stockQuantity').value) || 0,
       product_image_url: currentImages[0]?.url || null,
       additional_images: currentImages.slice(1).filter(img => img?.url).map(img => img.url),
       variants: JSON.stringify(variants),
       related_products: selectedRelatedProducts,
       sku: document.getElementById('sku').value,
       gtin: document.getElementById('gtin').value,
+      isbn: document.getElementById('isbn').value,
+      mpn: document.getElementById('mpn').value,
       weight: parseFloat(document.getElementById('weight').value) || 0,
       shipping_class: document.getElementById('shippingClass').value,
+      dimensions: document.getElementById('dimensions').value,
       meta_title: document.getElementById('metaTitle').value,
       meta_description: document.getElementById('metaDescription').value,
+      tags: document.getElementById('tags').value,
+      
+      // حقول ديناميكية حسب نوع المنتج
+      brand: document.getElementById('brand')?.value,
+      model: document.getElementById('model')?.value,
+      author: document.getElementById('author')?.value,
+      publisher: document.getElementById('publisher')?.value,
+      pages: parseInt(document.getElementById('pages')?.value) || 0,
+      expiry_date: document.getElementById('expiryDate')?.value,
+      origin_country: document.getElementById('originCountry')?.value,
+      ingredients: document.getElementById('ingredients')?.value,
+      service_duration: document.getElementById('serviceDuration')?.value,
+      digital_file_url: document.getElementById('digitalFileUrl')?.value,
+      file_size: document.getElementById('fileSize')?.value,
+      
       is_active: document.getElementById('visibility').value === 'active'
     };
     
@@ -1148,12 +1166,18 @@
     });
   }
 
+  // ربط الأحداث
+  document.getElementById('price').addEventListener('input', calculateDiscount);
+  document.getElementById('comparePrice').addEventListener('input', calculateDiscount);
+  
   // التهيئة
   renderImagesGrid();
   loadRelatedProducts();
+  selectProductType('physical');
   
   // جعل الدوال عامة
   window.toggleCard = toggleCard;
+  window.selectProductType = selectProductType;
   window.toggleVariantTag = toggleVariantTag;
   window.addVariantValue = addVariantValue;
   window.generateVariants = generateVariants;
