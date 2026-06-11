@@ -40,13 +40,20 @@
       font-family: 'Tajawal', sans-serif;
       color: var(--text-primary);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* حاوية رئيسية متجاوبة */
+    /* محتوى الصفحة الرئيسي */
+    .admin-main-content {
+      flex: 1;
+      padding: 1rem;
+    }
+
+    /* حاوية متجاوبة */
     .admin-container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 1rem;
     }
 
     /* رأس الصفحة */
@@ -57,7 +64,7 @@
     }
 
     .page-header h1 {
-      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      font-size: clamp(1.2rem, 5vw, 1.8rem);
       color: var(--gold);
       display: flex;
       align-items: center;
@@ -67,8 +74,8 @@
     /* شبكة الإحصائيات - متجاوبة */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.8rem;
       margin-bottom: 1.5rem;
     }
 
@@ -76,10 +83,10 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1rem;
+      padding: 0.8rem;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.6rem;
       transition: var(--transition);
     }
 
@@ -89,31 +96,36 @@
     }
 
     .stat-icon {
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       background: rgba(196, 160, 106, 0.1);
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: var(--gold);
+      flex-shrink: 0;
     }
 
     .stat-info {
       flex: 1;
+      min-width: 0;
     }
 
     .stat-value {
-      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
       font-weight: 800;
       line-height: 1;
     }
 
     .stat-label {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
       margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* شريط الإجراءات - متجاوب */
@@ -127,7 +139,7 @@
 
     .search-box {
       flex: 1;
-      min-width: 180px;
+      min-width: 160px;
       position: relative;
     }
 
@@ -137,18 +149,18 @@
       top: 50%;
       transform: translateY(-50%);
       color: var(--gold);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .search-box input {
       width: 100%;
-      padding: 0.7rem 2rem 0.7rem 1rem;
+      padding: 0.65rem 2rem 0.65rem 1rem;
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text-primary);
       font-family: inherit;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       transition: var(--transition);
     }
 
@@ -165,7 +177,7 @@
     }
 
     .btn {
-      padding: 0.6rem 1.2rem;
+      padding: 0.55rem 1rem;
       background: linear-gradient(135deg, var(--gold), #A07840);
       color: #1A1510;
       border: none;
@@ -176,8 +188,8 @@
       transition: var(--transition);
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
+      gap: 0.4rem;
+      font-size: 0.8rem;
       white-space: nowrap;
     }
 
@@ -196,12 +208,7 @@
       color: white;
     }
 
-    .btn-sm {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.75rem;
-    }
-
-    /* حاوية الجدول - تمرير أفقي للشاشات الصغيرة */
+    /* حاوية الجدول - تمرير أفقي */
     .table-wrapper {
       overflow-x: auto;
       border-radius: var(--radius-lg);
@@ -214,24 +221,24 @@
     .products-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 600px;
+      min-width: 550px;
     }
 
     .products-table th {
       background: var(--bg-secondary);
       color: var(--gold);
-      padding: 1rem 0.8rem;
+      padding: 0.8rem 0.6rem;
       text-align: right;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
       white-space: nowrap;
     }
 
     .products-table td {
-      padding: 0.8rem;
+      padding: 0.6rem;
       border-bottom: 1px solid var(--border);
       color: var(--text-secondary);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
     .products-table tr:hover {
@@ -240,8 +247,8 @@
 
     /* صورة المنتج */
     .product-thumb {
-      width: 45px;
-      height: 56px;
+      width: 40px;
+      height: 50px;
       object-fit: cover;
       border-radius: var(--radius-sm);
       display: block;
@@ -251,20 +258,21 @@
     .product-name {
       color: var(--text-primary);
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      word-break: break-word;
     }
 
     .product-featured {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--gold);
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     /* حالة المنتج */
     .status-badge {
-      padding: 0.25rem 0.6rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 20px;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       display: inline-block;
       white-space: nowrap;
     }
@@ -282,13 +290,13 @@
     /* أزرار الإجراءات */
     .action-buttons {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.3rem;
       flex-wrap: wrap;
     }
 
     .action-btn {
-      padding: 0.35rem 0.6rem;
-      font-size: 0.7rem;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.65rem;
       cursor: pointer;
       border-radius: var(--radius-sm);
       border: none;
@@ -324,13 +332,13 @@
     /* رسالة فارغة */
     .empty-state {
       text-align: center;
-      padding: 3rem;
+      padding: 2rem;
       color: var(--text-muted);
     }
 
     .loader {
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       border: 3px solid var(--border);
       border-top-color: var(--gold);
       border-radius: 50%;
@@ -367,8 +375,8 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      max-width: 380px;
+      padding: 1.2rem;
+      max-width: 350px;
       width: 90%;
       text-align: center;
     }
@@ -382,16 +390,15 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 50px;
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.6rem;
       z-index: 1001;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s;
-      font-size: 0.85rem;
-      white-space: nowrap;
+      font-size: 0.8rem;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -401,25 +408,25 @@
       pointer-events: all;
     }
 
-    /* ========== تحسينات للشاشات الصغيرة ========== */
+    /* ========== تحسينات للشاشات الصغيرة (هواتف) ========== */
     @media (max-width: 768px) {
-      .admin-container {
-        padding: 0.8rem;
+      .admin-main-content {
+        padding: 0.6rem;
       }
 
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
+        gap: 0.6rem;
       }
 
       .stat-card {
-        padding: 0.8rem;
+        padding: 0.6rem;
       }
 
       .stat-icon {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
       }
 
       .actions-bar {
@@ -436,211 +443,218 @@
       }
 
       .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
+        padding: 0.45rem 0.9rem;
+        font-size: 0.75rem;
       }
 
       .products-table th,
       .products-table td {
-        padding: 0.6rem;
+        padding: 0.5rem;
       }
 
       .product-thumb {
-        width: 38px;
-        height: 48px;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        gap: 0.3rem;
-      }
-
-      .action-btn {
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .admin-container {
-        padding: 0.6rem;
-      }
-
-      .page-header h1 {
-        font-size: 1.2rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.6rem;
-      }
-
-      .stat-card {
-        padding: 0.6rem;
-      }
-
-      .stat-value {
-        font-size: 1.1rem;
-      }
-
-      .stat-label {
-        font-size: 0.6rem;
-      }
-
-      .products-table th {
-        font-size: 0.7rem;
-        padding: 0.5rem;
-      }
-
-      .products-table td {
-        font-size: 0.75rem;
-        padding: 0.5rem;
+        width: 35px;
+        height: 44px;
       }
 
       .product-name {
         font-size: 0.75rem;
       }
 
+      .action-buttons {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
       .action-btn {
-        padding: 0.25rem 0.5rem;
+        padding: 0.25rem 0.4rem;
+        font-size: 0.6rem;
+        text-align: center;
+      }
+
+      .status-badge {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.4rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .admin-main-content {
+        padding: 0.4rem;
+      }
+
+      .page-header h1 {
+        font-size: 1.1rem;
+      }
+
+      .stats-grid {
+        gap: 0.5rem;
+      }
+
+      .stat-card {
+        padding: 0.5rem;
+      }
+
+      .stat-value {
+        font-size: 1rem;
+      }
+
+      .stat-label {
+        font-size: 0.55rem;
+        white-space: normal;
+        line-height: 1.2;
+      }
+
+      .products-table th {
         font-size: 0.65rem;
+        padding: 0.4rem;
+      }
+
+      .products-table td {
+        font-size: 0.7rem;
+        padding: 0.4rem;
+      }
+
+      .product-name {
+        font-size: 0.7rem;
+      }
+
+      .product-featured {
+        font-size: 0.55rem;
+      }
+
+      .action-btn {
+        padding: 0.2rem 0.35rem;
+        font-size: 0.55rem;
       }
 
       .undo-toast {
-        font-size: 0.7rem;
-        padding: 0.4rem 0.8rem;
+        font-size: 0.65rem;
+        padding: 0.4rem 0.6rem;
         bottom: 10px;
-        white-space: normal;
         width: 90%;
-        justify-content: center;
+        white-space: normal;
       }
     }
 
     /* تحسينات للشاشات المتوسطة (تابلت) */
     @media (min-width: 769px) and (max-width: 1024px) {
-      .admin-container {
-        padding: 1.2rem;
+      .admin-main-content {
+        padding: 0.8rem;
       }
 
       .stats-grid {
         grid-template-columns: repeat(4, 1fr);
-      }
-
-      .products-table {
-        min-width: 700px;
+        gap: 0.8rem;
       }
     }
 
     /* تحسينات للشاشات الكبيرة */
     @media (min-width: 1400px) {
-      .admin-container {
-        padding: 2rem;
+      .admin-main-content {
+        padding: 1.5rem;
       }
 
       .stats-grid {
-        gap: 1.5rem;
-      }
-    }
-
-    /* دعم الوضع المظلم/الفاتح */
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg-primary: #F5F0E8;
-        --bg-secondary: #FDFCF8;
-        --bg-card: #FFFFFF;
-        --gold: #A07840;
-        --text-primary: #2A2218;
-        --text-secondary: #6B5F52;
-        --text-muted: #8B7B68;
-        --border: rgba(160, 120, 64, 0.15);
+        gap: 1.2rem;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="admin-container">
-  <div class="page-header">
-    <h1><i class="fas fa-boxes"></i> إدارة المنتجات</h1>
-  </div>
+<!-- header.js سيضيف الهيدر هنا -->
+<div id="header-placeholder"></div>
 
-  <!-- إحصائيات متجاوبة -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-icon"><i class="fas fa-boxes"></i></div>
-      <div class="stat-info">
-        <div class="stat-value" id="totalProducts">0</div>
-        <div class="stat-label">إجمالي المنتجات</div>
-      </div>
+<!-- المحتوى الرئيسي -->
+<div class="admin-main-content">
+  <div class="admin-container">
+    <div class="page-header">
+      <h1><i class="fas fa-boxes"></i> إدارة المنتجات</h1>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon"><i class="fas fa-eye"></i></div>
-      <div class="stat-info">
-        <div class="stat-value" id="activeProducts">0</div>
-        <div class="stat-label">منتجات نشطة</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon"><i class="fas fa-star"></i></div>
-      <div class="stat-info">
-        <div class="stat-value" id="featuredProducts">0</div>
-        <div class="stat-label">منتجات مميزة</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon"><i class="fas fa-image"></i></div>
-      <div class="stat-info">
-        <div class="stat-value" id="totalImages">0</div>
-        <div class="stat-label">إجمالي الصور</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- شريط الإجراءات المتجاوب -->
-  <div class="actions-bar">
-    <div class="search-box">
-      <i class="fas fa-search"></i>
-      <input type="text" id="searchInput" placeholder="بحث عن منتج...">
+    <!-- إحصائيات متجاوبة -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-boxes"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalProducts">0</div>
+          <div class="stat-label">إجمالي المنتجات</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-eye"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="activeProducts">0</div>
+          <div class="stat-label">منتجات نشطة</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-star"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="featuredProducts">0</div>
+          <div class="stat-label">منتجات مميزة</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-image"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalImages">0</div>
+          <div class="stat-label">إجمالي الصور</div>
+        </div>
+      </div>
     </div>
-    <div class="btn-group-actions">
-      <button class="btn btn-outline" onclick="exportProducts()">
-        <i class="fas fa-download"></i> <span>تصدير</span>
-      </button>
-      <label class="btn btn-outline">
-        <i class="fas fa-upload"></i> <span>استيراد</span>
-        <input type="file" accept=".json" onchange="importProducts(this.files[0])" style="display: none">
-      </label>
-    </div>
-  </div>
 
-  <!-- جدول المنتجات المتجاوب -->
-  <div class="table-wrapper">
-    <table class="products-table">
-      <thead>
-        <tr>
-          <th>الصورة</th>
-          <th>المنتج</th>
-          <th>الفئة</th>
-          <th>السعر</th>
-          <th>الحالة</th>
-          <th>الإجراءات</th>
-        </tr>
-      </thead>
-      <tbody id="productsTableBody">
-        <tr><td colspan="6"><div class="loader"></div></td></tr>
-      </tbody>
-    </table>
+    <!-- شريط الإجراءات المتجاوب -->
+    <div class="actions-bar">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="بحث عن منتج...">
+      </div>
+      <div class="btn-group-actions">
+        <button class="btn btn-outline" onclick="exportProducts()">
+          <i class="fas fa-download"></i> <span>تصدير</span>
+        </button>
+        <label class="btn btn-outline">
+          <i class="fas fa-upload"></i> <span>استيراد</span>
+          <input type="file" accept=".json" onchange="importProducts(this.files[0])" style="display: none">
+        </label>
+      </div>
+    </div>
+
+    <!-- جدول المنتجات المتجاوب -->
+    <div class="table-wrapper">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>الصورة</th>
+            <th>المنتج</th>
+            <th>الفئة</th>
+            <th>السعر</th>
+            <th>الحالة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="productsTableBody">
+          <tr><td colspan="6"><div class="loader"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+
+<!-- footer.js سيضيف الفوتر هنا -->
+<div id="footer-placeholder"></div>
 
 <!-- مودال حذف -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
-    <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; color: var(--danger);"></i>
-    <h3 style="margin: 1rem 0; font-size: 1.2rem;">حذف المنتج</h3>
-    <p id="deleteProductName" style="color: var(--gold); margin-bottom: 1rem;"></p>
-    <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
-      <button class="btn btn-danger" onclick="confirmDelete()">نعم، احذف</button>
-      <button class="btn btn-outline" onclick="closeDeleteModal()">إلغاء</button>
+    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: var(--danger);"></i>
+    <h3 style="margin: 0.8rem 0; font-size: 1.1rem;">حذف المنتج</h3>
+    <p id="deleteProductName" style="color: var(--gold); margin-bottom: 0.8rem; font-size: 0.9rem;"></p>
+    <div style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap;">
+      <button class="btn btn-danger" onclick="confirmDelete()" style="padding: 0.4rem 1rem; font-size: 0.8rem;">نعم، احذف</button>
+      <button class="btn btn-outline" onclick="closeDeleteModal()" style="padding: 0.4rem 1rem; font-size: 0.8rem;">إلغاء</button>
     </div>
   </div>
 </div>
@@ -649,11 +663,13 @@
 <div class="undo-toast" id="undoToast">
   <i class="fas fa-undo-alt" style="color: var(--gold);"></i>
   <span id="undoMessage">تم حذف المنتج</span>
-  <button class="btn btn-outline" onclick="undoDelete()" style="padding: 0.3rem 0.8rem; font-size: 0.7rem;">تراجع</button>
+  <button class="btn btn-outline" onclick="undoDelete()" style="padding: 0.25rem 0.6rem; font-size: 0.65rem;">تراجع</button>
 </div>
 
+<!-- تضمين الملفات -->
+<script src="header.js"></script>
+<script src="footer.js"></script>
 <script src="config.js"></script>
-<script src="admin.js"></script>
 <script>
   let allProducts = [];
   let pendingDeletions = [];
@@ -823,7 +839,7 @@
   
   function showUndoMessage(productName) {
     const toast = document.getElementById('undoToast');
-    document.getElementById('undoMessage').innerHTML = `تم حذف "${productName.substring(0, 30)}"`;
+    document.getElementById('undoMessage').innerHTML = `تم حذف "${productName.substring(0, 25)}"`;
     toast.classList.add('show');
     
     if (undoTimeout) clearTimeout(undoTimeout);
