@@ -42,12 +42,15 @@
       font-family: 'Tajawal', sans-serif;
       color: var(--text-primary);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .admin-container {
       max-width: 1300px;
       margin: 0 auto;
       padding: 2rem 1.5rem;
+      flex: 1;
     }
 
     .header {
@@ -153,7 +156,6 @@
       margin: 1.5rem 0;
     }
 
-    /* شبكة الصور */
     .imgs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -280,7 +282,6 @@
       z-index: 5;
     }
 
-    /* فيديو */
     .video-upload-area {
       background: var(--bg-secondary);
       border: 2px dashed var(--border);
@@ -295,7 +296,6 @@
       border-color: var(--gold);
     }
 
-    /* أزرار */
     .btn {
       padding: 0.75rem 1.5rem;
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -369,6 +369,9 @@
 </head>
 <body>
 
+<!-- Header -->
+<div id="header-placeholder"></div>
+
 <div class="admin-container">
   <div class="header">
     <h1><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h1>
@@ -408,7 +411,6 @@
 
       <hr class="sep">
 
-      <!-- صور المنتج -->
       <div class="form-group full">
         <label class="f-label"><i class="fas fa-images"></i> صور المنتج <span class="req">*</span></label>
         <div class="imgs-grid" id="imagesGrid"></div>
@@ -420,7 +422,6 @@
 
       <hr class="sep">
 
-      <!-- فيديو المنتج -->
       <div class="form-group full">
         <label class="f-label"><i class="fas fa-video"></i> فيديو المنتج (اختياري)</label>
         <div class="video-upload-area" id="videoUploadArea" onclick="document.getElementById('videoInput').click()">
@@ -433,7 +434,6 @@
 
       <hr class="sep">
 
-      <!-- خيارات إضافية -->
       <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
         <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
           <input type="checkbox" id="isFeatured"> <i class="fas fa-star" style="color: var(--gold);"></i> منتج مميز
@@ -457,6 +457,11 @@
   </div>
 </div>
 
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<script src="header.js"></script>
+<script src="footer.js"></script>
 <script src="config.js"></script>
 <script>
   let currentImages = [];
@@ -477,11 +482,11 @@
     return new Promise((resolve, reject) => {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('upload_preset', CONFIG.CLOUDINARY_UPLOAD_PRESET);
+      formData.append('upload_preset', window.CONFIG.CLOUDINARY_UPLOAD_PRESET);
       formData.append('folder', type === 'video' ? 'almaya-products/videos' : 'almaya-products/images');
 
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', `https://api.cloudinary.com/v1_1/${CONFIG.CLOUDINARY_CLOUD_NAME}/${type}/upload`);
+      xhr.open('POST', `https://api.cloudinary.com/v1_1/${window.CONFIG.CLOUDINARY_CLOUD_NAME}/${type}/upload`);
       
       xhr.upload.onprogress = (e) => {
         if (e.lengthComputable && onProgress) {
@@ -504,10 +509,10 @@
   }
 
   async function supabaseRequest(endpoint, options = {}) {
-    const url = `${CONFIG.SUPABASE_URL}${endpoint}`;
+    const url = `${window.CONFIG.SUPABASE_URL}${endpoint}`;
     const headers = {
-      'apikey': CONFIG.SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+      'apikey': window.CONFIG.SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${window.CONFIG.SUPABASE_ANON_KEY}`,
       'Content-Type': 'application/json'
     };
 
@@ -764,9 +769,17 @@
     });
   }
 
+  // التحقق من وجود edit parameter في الرابط
+  const urlParams = new URLSearchParams(window.location.search);
+  const editId = urlParams.get('edit');
+  if (editId) {
+    // سيتم تحميل بيانات المنتج للتعديل
+    currentEditId = editId;
+  }
+
   document.getElementById('productForm').addEventListener('submit', addOrUpdateProduct);
   
-  if (typeof CONFIG !== 'undefined') {
+  if (typeof window.CONFIG !== 'undefined') {
     loadCategories();
     renderImagesGrid();
   } else {
