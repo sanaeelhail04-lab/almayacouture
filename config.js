@@ -1,5 +1,5 @@
 // config.js
-const CONFIG = {
+window.CONFIG = {
   // Supabase
   SUPABASE_URL: 'https://ieiujnrgrfsqajcgdiys.supabase.co',
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllaXVqbnJncmZzcWFqY2dkaXlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNDc5MTEsImV4cCI6MjA5NDcyMzkxMX0.ad0ui5P37W-kNaiQk2EYxQv3iA3tWOzHICSNW_VTdvE',
@@ -11,4 +11,4 @@ const CONFIG = {
 };
 
 // منع التعديل
-Object.freeze(CONFIG);
+Object.freeze(window.CONFIG);
