@@ -358,7 +358,7 @@
     const pageLabelMap = {
       'dashbord.html': 'لوحة التحكم',
       'admin-orders.html': 'الطلبيات',
-      'admin-produits.html': 'المنتجات',
+      'admin-products.html': 'المنتجات',
       'admin-collections.html': 'التصنيفات',
       'admin-reviews.html': 'المراجعات',
       'admin-contact.html': 'الرسائل',
@@ -442,7 +442,7 @@
         </div>
 
         <div class="adn-submenu ${isProductSub ? 'open' : ''}" id="productsSubmenu">
-          ${subItem('admin-produits.html', 'fas fa-list', 'جميع المنتجات', currentPage === 'admin-produits.html')}
+          ${subItem('admin-products.html', 'fas fa-list', 'جميع المنتجات', currentPage === 'admin-produits.html')}
           ${subItem('admin-collections.html', 'fas fa-layer-group', 'التصنيفات', currentPage === 'admin-collections.html')}
           ${subItem('admin-reviews.html', 'fas fa-star', 'المراجعات', currentPage === 'admin-reviews.html')}
         </div>
