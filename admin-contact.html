@@ -8,20 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="config.js"></script>
-    <script src="auth.js"></script>
     <script src="admin.js"></script>
     
     <style>
+        /* ========== ألوان متوافقة مع header.js و footer.js ========== */
         :root {
             --gold: #C4A06A;
             --gold-light: #D4B896;
+            --gold-dim: rgba(196,160,106,0.15);
             --bg: #1A1510;
-            --bg2: #0F0C09;
+            --bg2: #221C14;
             --card: #2A2218;
-            --text: #F5EDD8;
+            --text: #E8DDD0;
             --text-secondary: #A89880;
-            --border: rgba(196,160,106,0.15);
-            --border-hover: rgba(196,160,106,0.3);
+            --text-muted: #6B5F52;
+            --border: rgba(196,160,106,0.12);
+            --border-hover: rgba(196,160,106,0.25);
             --success: #25D366;
             --danger: #FF4757;
             --warning: #FFA502;
@@ -35,18 +37,25 @@
             --card: #FFFFFF;
             --text: #2A2218;
             --text-secondary: #6B5F52;
-            --border: rgba(160,120,64,0.15);
+            --text-muted: #8B7B68;
+            --border: rgba(160,120,64,0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            background: var(--bg);
             font-family: 'Tajawal', sans-serif;
             color: var(--text);
             min-height: 100vh;
-            transition: all 0.3s ease;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg2); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+        .main-content { flex: 1; }
 
         .container {
             max-width: 1400px;
@@ -60,7 +69,7 @@
         }
         .page-header .badge {
             display: inline-block;
-            background: rgba(196,160,106,0.15);
+            background: var(--gold-dim);
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -70,7 +79,7 @@
         }
         .page-header h1 {
             font-size: 1.8rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text);
         }
         .page-header p {
@@ -95,11 +104,12 @@
         }
         .stat-box:hover {
             transform: translateY(-3px);
-            border-color: var(--border-hover);
+            border-color: var(--gold);
+            background: var(--gold-dim);
         }
         .stat-box.active {
             border-color: var(--gold);
-            background: rgba(196,160,106,0.05);
+            background: var(--gold-dim);
         }
         .stat-box i {
             font-size: 1.5rem;
@@ -109,6 +119,7 @@
         .stat-box .number {
             font-size: 1.8rem;
             font-weight: 800;
+            color: var(--gold);
         }
         .stat-box .label {
             font-size: 0.7rem;
@@ -129,8 +140,12 @@
             gap: 0.5rem;
         }
         .btn-primary {
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            background: var(--gold);
             color: #1A1510;
+        }
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
         }
         .btn-outline {
             background: transparent;
@@ -140,21 +155,34 @@
         .btn-outline:hover {
             border-color: var(--gold);
             color: var(--gold);
+            background: var(--gold-dim);
         }
         .btn-danger {
-            background: rgba(255,71,87,0.15);
+            background: rgba(255,71,87,0.12);
             color: var(--danger);
-            border: 1px solid rgba(255,71,87,0.3);
+            border: 1px solid rgba(255,71,87,0.2);
+        }
+        .btn-danger:hover {
+            background: rgba(255,71,87,0.2);
+            transform: translateY(-1px);
         }
         .btn-success {
-            background: rgba(37,211,102,0.15);
+            background: rgba(37,211,102,0.12);
             color: var(--success);
-            border: 1px solid rgba(37,211,102,0.3);
+            border: 1px solid rgba(37,211,102,0.2);
+        }
+        .btn-success:hover {
+            background: rgba(37,211,102,0.2);
+            transform: translateY(-1px);
         }
         .btn-info {
-            background: rgba(59,130,246,0.15);
+            background: rgba(59,130,246,0.12);
             color: var(--info);
-            border: 1px solid rgba(59,130,246,0.3);
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+        .btn-info:hover {
+            background: rgba(59,130,246,0.2);
+            transform: translateY(-1px);
         }
 
         .table-container {
@@ -184,13 +212,13 @@
             font-size: 0.85rem;
         }
         tr:hover td {
-            background: rgba(196,160,106,0.03);
+            background: var(--gold-dim);
         }
         .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            padding: 0.2rem 0.6rem;
+            padding: 0.25rem 0.7rem;
             border-radius: 20px;
             font-size: 0.7rem;
             font-weight: 600;
@@ -255,6 +283,10 @@
             font-size: 1.3rem;
             cursor: pointer;
             color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: var(--gold);
         }
         .detail-row {
             margin-bottom: 1rem;
@@ -272,6 +304,7 @@
             padding: 0.7rem;
             border-radius: 10px;
             line-height: 1.6;
+            word-break: break-word;
         }
 
         .loader {
@@ -312,64 +345,75 @@
         }
         .message.success { border-right: 3px solid var(--success); color: var(--success); }
         .message.error { border-right: 3px solid var(--danger); color: var(--danger); }
+        .message.info { border-right: 3px solid var(--gold); color: var(--gold); }
         @keyframes slideIn {
             from { transform: translateX(100px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
 
-       
-
         @media (max-width: 768px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
             .container { padding: 1rem; }
-          }
+            .stat-box { padding: 0.8rem; }
+            .stat-box .number { font-size: 1.4rem; }
+        }
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .page-header h1 { font-size: 1.4rem; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <div class="page-header">
-            <div class="badge"><i class="fas fa-envelope"></i> إدارة الرسائل</div>
-            <h1>رسائل التواصل</h1>
-            <p>عرض وإدارة الرسائل الواردة من العملاء</p>
-        </div>
+    <div id="header-container"></div>
 
-        <div class="stats-row">
-            <div class="stat-box" onclick="setFilter('all')">
-                <i class="fas fa-envelope"></i>
-                <div class="number" id="totalCount">0</div>
-                <div class="label">كل الرسائل</div>
+    <div class="main-content">
+        <div class="container">
+            
+            <div class="page-header">
+                <div class="badge"><i class="fas fa-envelope"></i> إدارة الرسائل</div>
+                <h1>رسائل التواصل</h1>
+                <p>عرض وإدارة الرسائل الواردة من العملاء</p>
             </div>
-            <div class="stat-box" onclick="setFilter('pending')">
-                <i class="fas fa-clock"></i>
-                <div class="number" id="pendingCount">0</div>
-                <div class="label">قيد الانتظار</div>
-            </div>
-            <div class="stat-box" onclick="setFilter('read')">
-                <i class="fas fa-check-circle"></i>
-                <div class="number" id="readCount">0</div>
-                <div class="label">مقروءة</div>
-            </div>
-            <div class="stat-box" onclick="setFilter('replied')">
-                <i class="fas fa-reply-all"></i>
-                <div class="number" id="repliedCount">0</div>
-                <div class="label">تم الرد</div>
-            </div>
-        </div>
 
-        <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
-            <button class="btn btn-primary" onclick="loadMessages()">
-                <i class="fas fa-sync-alt"></i> تحديث
-            </button>
-        </div>
+            <div class="stats-row">
+                <div class="stat-box" data-filter="all" onclick="setFilter('all')">
+                    <i class="fas fa-envelope"></i>
+                    <div class="number" id="totalCount">0</div>
+                    <div class="label">كل الرسائل</div>
+                </div>
+                <div class="stat-box" data-filter="pending" onclick="setFilter('pending')">
+                    <i class="fas fa-clock"></i>
+                    <div class="number" id="pendingCount">0</div>
+                    <div class="label">قيد الانتظار</div>
+                </div>
+                <div class="stat-box" data-filter="read" onclick="setFilter('read')">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="number" id="readCount">0</div>
+                    <div class="label">مقروءة</div>
+                </div>
+                <div class="stat-box" data-filter="replied" onclick="setFilter('replied')">
+                    <i class="fas fa-reply-all"></i>
+                    <div class="number" id="repliedCount">0</div>
+                    <div class="label">تم الرد</div>
+                </div>
+            </div>
 
-        <div class="table-container" id="tableContainer">
-            <div id="messagesTable">
-                <div class="loader"></div>
+            <div style="margin-bottom: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="loadMessages()">
+                    <i class="fas fa-sync-alt"></i> تحديث
+                </button>
+            </div>
+
+            <div class="table-container">
+                <div id="messagesTable">
+                    <div class="loader"></div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div id="footer-container"></div>
 
     <!-- Modal عرض التفاصيل -->
     <div class="modal-overlay" id="detailsModal">
@@ -384,17 +428,18 @@
 
     <div class="message" id="message"></div>
 
-   
-
     <script src="header.js"></script>
     <script src="footer.js"></script>
 
     <script>
-      
+        // التحقق من تسجيل الدخول
+        if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('admin_logged_in') !== 'true') {
+            window.location.href = 'login.html';
+        }
 
         // ========== CONFIG ==========
         if (typeof CONFIG === 'undefined') {
-            document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ CONFIG.js مفقود</div>';
+            showMessage('❌ CONFIG.js مفقود', 'error');
             throw new Error('CONFIG missing');
         }
 
@@ -405,17 +450,18 @@
 
         function showMessage(text, type) {
             const msg = document.getElementById('message');
+            if (!msg) return;
             msg.textContent = text;
             msg.className = `message ${type}`;
             msg.style.display = 'block';
-            setTimeout(() => msg.style.display = 'none', 3000);
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 4000);
         }
 
         async function supabaseRequest(endpoint, opts = {}) {
             try {
                 const url = `${SUPABASE_URL}${endpoint}`;
-                console.log('📡 طلب:', url);
-                
                 const res = await fetch(url, {
                     method: opts.method || 'GET',
                     headers: {
@@ -426,14 +472,10 @@
                     body: opts.body ? JSON.stringify(opts.body) : undefined
                 });
                 
-                console.log('📊 حالة الاستجابة:', res.status);
-                
                 if (res.status === 204) return null;
                 if (res.status === 404) return [];
                 
                 const data = await res.json();
-                console.log('📦 البيانات المستلمة:', data);
-                
                 if (!res.ok) {
                     throw new Error(data.message || `خطأ ${res.status}`);
                 }
@@ -446,41 +488,30 @@
 
         async function loadMessages() {
             const container = document.getElementById('messagesTable');
+            if (!container) return;
+            
             container.innerHTML = '<div class="loader"></div>';
             
             try {
-                console.log('🚀 جاري تحميل الرسائل...');
-                
                 // محاولة جلب البيانات من جدول contact_messages
                 let messages = await supabaseRequest('/rest/v1/contact_messages?select=*&order=created_at.desc');
                 
-                // إذا لم يجد الجدول، جرب بأسماء أخرى
                 if (!messages || messages.length === 0) {
-                    console.log('⚠️ لا توجد رسائل في contact_messages، جاري التحقق من جداول أخرى...');
-                    
-                    // جرب اسم آخر للجدول
-                    messages = await supabaseRequest('/rest/v1/contact_messages?select=*');
-                    
-                    if (!messages || messages.length === 0) {
-                        console.log('⚠️ لا توجد رسائل في قاعدة البيانات');
-                        container.innerHTML = `
-                            <div class="empty-state">
-                                <i class="fas fa-inbox"></i>
-                                <p>لا توجد رسائل</p>
-                                <p style="font-size:0.7rem; margin-top:0.5rem;">تأكد من إنشاء جدول contact_messages في Supabase</p>
-                                <button class="btn btn-primary" style="margin-top:1rem;" onclick="loadMessages()">
-                                    <i class="fas fa-sync-alt"></i> إعادة المحاولة
-                                </button>
-                            </div>
-                        `;
-                        updateStats([]);
-                        return;
-                    }
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>لا توجد رسائل</p>
+                            <p style="font-size:0.7rem; margin-top:0.5rem;">سيتم عرض الرسائل الواردة من العملاء هنا</p>
+                            <button class="btn btn-primary" style="margin-top:1rem;" onclick="loadMessages()">
+                                <i class="fas fa-sync-alt"></i> إعادة المحاولة
+                            </button>
+                        </div>
+                    `;
+                    updateStats([]);
+                    return;
                 }
                 
                 allMessages = messages;
-                console.log('✅ تم تحميل', allMessages.length, 'رسالة');
-                
                 updateStats(allMessages);
                 renderMessages();
                 
@@ -506,30 +537,50 @@
             const read = messages.filter(m => m.status === 'read' || (m.is_read === true && m.status !== 'replied')).length;
             const replied = messages.filter(m => m.status === 'replied').length;
             
-            document.getElementById('totalCount').textContent = total;
-            document.getElementById('pendingCount').textContent = pending;
-            document.getElementById('readCount').textContent = read;
-            document.getElementById('repliedCount').textContent = replied;
+            const elements = {
+                totalCount: total,
+                pendingCount: pending,
+                readCount: read,
+                repliedCount: replied
+            };
+            
+            for (const [id, val] of Object.entries(elements)) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = val;
+            }
         }
 
-        function getStatusText(status) {
-            const statusMap = {
-                'pending': 'قيد الانتظار',
-                'read': 'مقروءة',
-                'replied': 'تم الرد'
-            };
-            return statusMap[status] || 'قيد الانتظار';
+        function getStatusText(message) {
+            if (message.status === 'replied') return 'تم الرد';
+            if (message.status === 'read' || message.is_read === true) return 'مقروءة';
+            return 'قيد الانتظار';
+        }
+
+        function getStatusClass(message) {
+            if (message.status === 'replied') return 'replied';
+            if (message.status === 'read' || message.is_read === true) return 'read';
+            return 'pending';
         }
 
         function formatDate(dateString) {
             if (!dateString) return '-';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('ar-MA', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('ar-MA', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch(e) {
+                return dateString;
+            }
         }
 
         function escapeHtml(str) {
             if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
+            return String(str).replace(/[&<>]/g, function(m) {
                 if (m === '&') return '&amp;';
                 if (m === '<') return '&lt;';
                 if (m === '>') return '&gt;';
@@ -574,31 +625,53 @@
                                 <td>${index + 1}</td>
                                 <td><strong>${escapeHtml(msg.name)}</strong></td>
                                 <td>${escapeHtml(msg.email)}</td>
-                                <td>${escapeHtml(msg.subject)}</td>
-                                <td><span class="status-badge status-${msg.status || 'pending'}">${getStatusText(msg.status)}</span></td>
+                                <td>${escapeHtml(msg.subject || 'بدون موضوع')}</td>
+                                <td><span class="status-badge status-${getStatusClass(msg)}">${getStatusText(msg)}</span></td>
                                 <td>${formatDate(msg.created_at)}</td>
-                                <td>
-                                    <button class="btn btn-info" onclick="viewDetails(${msg.id})" style="padding:0.3rem 0.6rem;"><i class="fas fa-eye"></i></button>
-                                    <button class="btn btn-danger" onclick="deleteMessage(${msg.id})" style="padding:0.3rem 0.6rem;"><i class="fas fa-trash-alt"></i></button>
+                                <td style="white-space: nowrap;">
+                                    <button class="btn btn-info" onclick="viewDetails(${msg.id})" style="padding:0.3rem 0.6rem;" title="عرض التفاصيل">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-danger" onclick="deleteMessage(${msg.id})" style="padding:0.3rem 0.6rem;" title="حذف">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </td>
-                             </tr>
+                            </tr>
                         `).join('')}
                     </tbody>
                 </table>
             `;
+            
+            // تحديث الفلتر النشط في الإحصائيات
+            document.querySelectorAll('.stat-box').forEach(box => {
+                if (box.dataset.filter === currentFilter) {
+                    box.classList.add('active');
+                } else {
+                    box.classList.remove('active');
+                }
+            });
         }
 
         // عرض التفاصيل
-        window.viewDetails = function(id) {
+        window.viewDetails = async function(id) {
             const message = allMessages.find(m => m.id === id);
             if (!message) return;
             
-            // تحديث حالة القراءة
-            if (!message.is_read && message.status !== 'replied') {
-                supabaseRequest(`/rest/v1/contact_messages?id=eq.${id}`, {
-                    method: 'PATCH',
-                    body: { is_read: true, status: 'read' }
-                }).catch(e => console.log(e));
+            // تحديث حالة القراءة إذا كانت قيد الانتظار
+            if ((!message.is_read || message.status === 'pending') && message.status !== 'replied') {
+                try {
+                    await supabaseRequest(`/rest/v1/contact_messages?id=eq.${id}`, {
+                        method: 'PATCH',
+                        body: { is_read: true, status: 'read' }
+                    });
+                    // تحديث البيانات المحلية
+                    message.is_read = true;
+                    message.status = 'read';
+                    updateStats(allMessages);
+                    renderMessages();
+                } catch(e) {
+                    console.log('خطأ في تحديث حالة القراءة:', e);
+                }
             }
             
             const modal = document.getElementById('detailsModal');
@@ -606,7 +679,7 @@
             
             content.innerHTML = `
                 <div class="detail-row">
-                    <div class="detail-label"><i class="fas fa-user"></i> الاسم</div>
+                    <div class="detail-label"><i class="fas fa-user"></i> الاسم الكامل</div>
                     <div class="detail-value">${escapeHtml(message.name)}</div>
                 </div>
                 <div class="detail-row">
@@ -619,23 +692,23 @@
                 </div>
                 <div class="detail-row">
                     <div class="detail-label"><i class="fas fa-tag"></i> الموضوع</div>
-                    <div class="detail-value">${escapeHtml(message.subject)}</div>
+                    <div class="detail-value">${escapeHtml(message.subject) || 'بدون موضوع'}</div>
                 </div>
                 <div class="detail-row">
-                    <div class="detail-label"><i class="fas fa-calendar"></i> التاريخ</div>
+                    <div class="detail-label"><i class="fas fa-calendar"></i> تاريخ الإرسال</div>
                     <div class="detail-value">${formatDate(message.created_at)}</div>
                 </div>
                 <div class="detail-row">
-                    <div class="detail-label"><i class="fas fa-comment"></i> الرسالة</div>
-                    <div class="detail-value" style="white-space: pre-wrap;">${escapeHtml(message.message)}</div>
+                    <div class="detail-label"><i class="fas fa-comment"></i> نص الرسالة</div>
+                    <div class="detail-value" style="white-space: pre-wrap; max-height: 200px; overflow-y: auto;">${escapeHtml(message.message)}</div>
                 </div>
                 <div class="detail-row">
-                    <div class="detail-label"><i class="fas fa-info-circle"></i> الحالة</div>
-                    <div class="detail-value"><span class="status-badge status-${message.status || 'pending'}">${getStatusText(message.status)}</span></div>
+                    <div class="detail-label"><i class="fas fa-info-circle"></i> الحالة الحالية</div>
+                    <div class="detail-value"><span class="status-badge status-${getStatusClass(message)}">${getStatusText(message)}</span></div>
                 </div>
-                <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1rem;">
-                    <button class="btn btn-outline" onclick="closeDetailsModal()">إغلاق</button>
-                    <button class="btn btn-success" onclick="markAsReplied(${message.id})"><i class="fas fa-check"></i> تم الرد</button>
+                <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-outline" onclick="closeDetailsModal()"><i class="fas fa-times"></i> إغلاق</button>
+                    ${message.status !== 'replied' ? `<button class="btn btn-success" onclick="markAsReplied(${message.id})"><i class="fas fa-check"></i> تم الرد</button>` : ''}
                 </div>
             `;
             
@@ -653,43 +726,39 @@
                     method: 'PATCH',
                     body: { status: 'replied', is_read: true }
                 });
-                showMessage('تم تحديث حالة الرسالة إلى "تم الرد"', 'success');
+                showMessage('✅ تم تحديث حالة الرسالة إلى "تم الرد"', 'success');
                 closeDetailsModal();
-                loadMessages();
+                await loadMessages();
             } catch(e) {
-                showMessage('خطأ: ' + e.message, 'error');
+                showMessage('❌ خطأ: ' + e.message, 'error');
             }
         };
         
         // حذف رسالة
         window.deleteMessage = async function(id) {
-            if (!confirm('هل أنت متأكد من حذف هذه الرسالة؟')) return;
+            if (!confirm('⚠️ هل أنت متأكد من حذف هذه الرسالة نهائياً؟')) return;
             
             try {
                 await supabaseRequest(`/rest/v1/contact_messages?id=eq.${id}`, { method: 'DELETE' });
-                showMessage('تم حذف الرسالة بنجاح', 'success');
-                loadMessages();
+                showMessage('🗑 تم حذف الرسالة بنجاح', 'success');
+                await loadMessages();
             } catch(e) {
-                showMessage('خطأ في الحذف: ' + e.message, 'error');
+                showMessage('❌ خطأ في الحذف: ' + e.message, 'error');
             }
         };
         
         // تصفية
-        function setFilter(filter) {
+        window.setFilter = function(filter) {
             currentFilter = filter;
             renderMessages();
-        }
+        };
         
-        window.setFilter = setFilter;
         window.loadMessages = loadMessages;
         
-        // التحقق من الجلسة
-        if (sessionStorage.getItem('admin_logged_in') !== 'true') {
-            window.location.href = 'login.html';
-        }
-        
-        // تحميل البيانات
-        loadMessages();
+        // تحميل البيانات عند بدء التشغيل
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMessages();
+        });
     </script>
 </body>
 </html>
