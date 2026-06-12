@@ -1,45 +1,87 @@
 // admin.js - Sidebar Drawer Navigation | Almaya Couture Admin
+// متوافق تماماً مع نظام ألوان footer.js
 (function () {
   function createAdminMenu() {
     if (document.getElementById('admin-navbar')) return;
 
-    // استخدام نظام الثيم من AlmayaTheme إذا كان موجوداً
+    // ==========================================
+    //  دالة تطبيق الثيم بناءً على AlmayaTheme
+    // ==========================================
     function applyThemeToAdmin() {
       const isWhiteTheme = document.body.classList.contains('white-theme');
       const topbar = document.getElementById('admin-navbar');
       const drawer = document.getElementById('adminDrawer');
       const overlay = document.getElementById('adminOverlay');
       
+      // ألوان متطابقة مع footer.js
+      const darkBg = '#1A1510';      // --bg من الفوتر
+      const darkBg2 = '#221C14';     // --bg2 من الفوتر
+      const lightBg = '#FDFCF8';     // --bg (الأبيض)
+      const lightBg2 = '#F5F0E8';    // --bg2 (الأبيض)
+      const gold = '#C4A06A';
+      const goldLight = '#D4B896';
+      const darkText = '#E8DDD0';
+      const lightText = '#2A2218';
+      const darkTextMuted = '#A89880';
+      const lightTextMuted = '#6B5F52';
+
       if (topbar) {
-        if (isWhiteTheme) {
-          topbar.style.background = '#f5f0e8';
-          topbar.style.borderBottom = '1px solid rgba(160,120,64,0.15)';
-          topbar.querySelector('.admin-topbar-brand')?.style.setProperty('color', '#5A4E3C', 'important');
-        } else {
-          topbar.style.background = '#1e2a3a';
-          topbar.style.borderBottom = '1px solid rgba(255,255,255,0.08)';
-          topbar.querySelector('.admin-topbar-brand')?.style.setProperty('color', 'var(--gold, #C4A06A)', 'important');
-        }
+        topbar.style.background = isWhiteTheme ? lightBg2 : darkBg;
+        topbar.style.borderBottom = `1px solid ${isWhiteTheme ? 'rgba(196,160,106,0.12)' : 'rgba(196,160,106,0.08)'}`;
+        const brand = topbar.querySelector('.admin-topbar-brand');
+        if (brand) brand.style.color = isWhiteTheme ? lightText : darkText;
+        const pageLabel = topbar.querySelector('.admin-page-label');
+        if (pageLabel) pageLabel.style.color = isWhiteTheme ? lightTextMuted : darkTextMuted;
       }
       
       if (drawer) {
-        drawer.style.background = isWhiteTheme ? '#FDFCF8' : '#253045';
+        drawer.style.background = isWhiteTheme ? lightBg : darkBg;
         const header = drawer.querySelector('.admin-drawer-header');
         if (header) {
-          header.style.borderBottomColor = isWhiteTheme ? 'rgba(160,120,64,0.12)' : 'rgba(255,255,255,0.08)';
+          header.style.borderBottomColor = isWhiteTheme ? 'rgba(196,160,106,0.12)' : 'rgba(196,160,106,0.08)';
         }
         const footer = drawer.querySelector('.admin-drawer-footer');
         if (footer) {
-          footer.style.borderTopColor = isWhiteTheme ? 'rgba(160,120,64,0.12)' : 'rgba(255,255,255,0.07)';
+          footer.style.borderTopColor = isWhiteTheme ? 'rgba(196,160,106,0.12)' : 'rgba(196,160,106,0.08)';
         }
       }
     }
 
     /* ============================================================
-       CSS
+       CSS - ألوان متناسقة مع footer.js
     ============================================================ */
     const style = document.createElement('style');
     style.textContent = `
+      /* ===== المتغيرات العامة (متوافقة مع footer) ===== */
+      :root {
+        --admin-gold: #C4A06A;
+        --admin-gold-light: #D4B896;
+        --admin-gold-dim: rgba(196,160,106,0.15);
+        --admin-bg-dark: #1A1510;
+        --admin-bg2-dark: #221C14;
+        --admin-text-dark: #E8DDD0;
+        --admin-text-muted-dark: #A89880;
+        --admin-bg-light: #FDFCF8;
+        --admin-bg2-light: #F5F0E8;
+        --admin-text-light: #2A2218;
+        --admin-text-muted-light: #6B5F52;
+      }
+
+      body.white-theme {
+        --admin-bg: var(--admin-bg-light);
+        --admin-bg2: var(--admin-bg2-light);
+        --admin-text: var(--admin-text-light);
+        --admin-text-muted: var(--admin-text-muted-light);
+        --admin-border: rgba(196,160,106,0.12);
+      }
+      body:not(.white-theme) {
+        --admin-bg: var(--admin-bg-dark);
+        --admin-bg2: var(--admin-bg2-dark);
+        --admin-text: var(--admin-text-dark);
+        --admin-text-muted: var(--admin-text-muted-dark);
+        --admin-border: rgba(196,160,106,0.08);
+      }
+
       /* ===== TOP BAR ===== */
       .admin-topbar {
         position: sticky;
@@ -49,61 +91,62 @@
         align-items: center;
         justify-content: space-between;
         direction: rtl;
-        padding: 0.55rem 1rem;
+        padding: 0.55rem 1.5rem;
         transition: all 0.3s ease;
+        background: var(--admin-bg2);
+        border-bottom: 1px solid var(--admin-border);
       }
       .admin-topbar-brand {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        font-weight: 700;
+        gap: 0.6rem;
+        font-weight: 600;
         font-size: 0.95rem;
         text-decoration: none;
         font-family: 'Tajawal', sans-serif;
+        color: var(--admin-text);
+        letter-spacing: 0.5px;
+      }
+      .admin-topbar-brand i {
+        color: var(--admin-gold);
+        font-size: 1.1rem;
       }
       .admin-topbar-actions {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
+      }
+      .admin-page-label {
+        font-size: 0.75rem;
+        font-family: 'Tajawal', sans-serif;
+        color: var(--admin-text-muted);
       }
       .admin-hamburger {
-        background: none;
-        border: 1px solid rgba(255,255,255,0.18);
-        border-radius: 8px;
-        padding: 0.35rem 0.6rem;
+        background: transparent;
+        border: 1px solid var(--admin-border);
+        border-radius: 10px;
+        padding: 0.4rem 0.7rem;
         cursor: pointer;
-        color: rgba(255,255,255,0.8);
+        color: var(--admin-text-muted);
         font-size: 1rem;
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        transition: all 0.2s;
-      }
-      body.white-theme .admin-hamburger {
-        border-color: rgba(160,120,64,0.25);
-        color: #5A4E3C;
+        transition: all 0.25s ease;
       }
       .admin-hamburger:hover {
-        border-color: var(--gold, #C4A06A);
-        color: var(--gold, #C4A06A);
-      }
-      
-      /* Current page indicator */
-      .admin-page-label {
-        color: rgba(255,255,255,0.45);
-        font-size: 0.75rem;
-        font-family: 'Tajawal', sans-serif;
-      }
-      body.white-theme .admin-page-label {
-        color: #8B7B68;
+        border-color: var(--admin-gold);
+        color: var(--admin-gold);
+        background: var(--admin-gold-dim);
+        transform: translateY(-1px);
       }
 
       /* ===== OVERLAY ===== */
       .admin-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.65);
-        backdrop-filter: blur(2px);
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(3px);
         z-index: 290;
         opacity: 0;
         visibility: hidden;
@@ -120,248 +163,195 @@
         top: 0;
         right: -320px;
         width: 295px;
-        max-width: 88vw;
+        max-width: 85vw;
         height: 100%;
+        background: var(--admin-bg);
         z-index: 300;
-        transition: right 0.38s cubic-bezier(0.23, 1, 0.32, 1);
+        transition: right 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1), background 0.3s ease;
         display: flex;
         flex-direction: column;
         direction: rtl;
         overflow-y: auto;
         overflow-x: hidden;
-        transition: background 0.3s ease, right 0.38s cubic-bezier(0.23, 1, 0.32, 1);
+        box-shadow: -5px 0 25px rgba(0,0,0,0.15);
       }
       .admin-drawer::-webkit-scrollbar { width: 3px; }
-      .admin-drawer::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-      body.white-theme .admin-drawer::-webkit-scrollbar-thumb { background: rgba(160,120,64,0.2); }
+      .admin-drawer::-webkit-scrollbar-track { background: transparent; }
+      .admin-drawer::-webkit-scrollbar-thumb { background: var(--admin-gold-dim); border-radius: 4px; }
       .admin-drawer.open { right: 0; }
 
       /* ===== DRAWER HEADER ===== */
       .admin-drawer-header {
-        padding: 1rem 1.1rem;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 1.25rem 1.2rem;
+        border-bottom: 1px solid var(--admin-border);
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex-shrink: 0;
-        transition: border-color 0.3s ease;
       }
       .admin-drawer-brand {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.6rem;
         font-weight: 700;
         font-size: 1rem;
         font-family: 'Tajawal', sans-serif;
         text-decoration: none;
-        color: #fff;
-      }
-      body.white-theme .admin-drawer-brand {
-        color: #2A2218;
+        color: var(--admin-text);
       }
       .admin-drawer-brand i {
-        color: var(--gold, #C4A06A);
-        font-size: 1.1rem;
+        color: var(--admin-gold);
+        font-size: 1.2rem;
       }
       .admin-drawer-close {
         background: none;
         border: none;
-        color: rgba(255,255,255,0.4);
-        font-size: 1.15rem;
+        color: var(--admin-text-muted);
+        font-size: 1.1rem;
         cursor: pointer;
-        padding: 0.2rem;
+        padding: 0.3rem;
         line-height: 1;
-        transition: color 0.2s;
+        transition: all 0.2s;
+        border-radius: 8px;
       }
-      body.white-theme .admin-drawer-close {
-        color: rgba(90,78,60,0.5);
+      .admin-drawer-close:hover {
+        color: var(--admin-gold);
+        background: var(--admin-gold-dim);
       }
-      .admin-drawer-close:hover { color: #fff; }
-      body.white-theme .admin-drawer-close:hover { color: #A07840; }
 
-      /* ===== NAV ===== */
+      /* ===== NAVIGATION ===== */
       .admin-drawer-nav {
         flex: 1;
-        padding: 0.4rem 0;
+        padding: 0.5rem 0;
       }
 
-      /* Nav Item */
       .adn-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.95rem 1.1rem;
-        font-size: 1rem;
+        padding: 0.85rem 1.2rem;
+        font-size: 0.95rem;
         font-family: 'Tajawal', sans-serif;
         font-weight: 500;
         cursor: pointer;
-        border-bottom: 1px solid rgba(255,255,255,0.055);
-        transition: background 0.18s, color 0.18s, border-right 0.18s;
+        border-bottom: 1px solid var(--admin-border);
+        transition: all 0.2s ease;
         text-decoration: none;
-        position: relative;
-        user-select: none;
-        color: rgba(255,255,255,0.72);
-      }
-      body.white-theme .adn-item {
-        color: rgba(42,34,24,0.7);
-        border-bottom-color: rgba(160,120,64,0.08);
+        color: var(--admin-text-muted);
       }
       .adn-item:hover {
-        background: rgba(255,255,255,0.06);
-        color: #fff;
-      }
-      body.white-theme .adn-item:hover {
-        background: rgba(160,120,64,0.06);
-        color: #A07840;
+        background: var(--admin-gold-dim);
+        color: var(--admin-gold);
+        padding-right: 1.4rem;
       }
       .adn-item.active {
-        background: rgba(255,255,255,0.07);
-        color: #fff;
-        border-right: 3px solid var(--gold, #C4A06A);
-      }
-      body.white-theme .adn-item.active {
-        background: rgba(160,120,64,0.08);
-        color: #A07840;
+        background: var(--admin-gold-dim);
+        color: var(--admin-gold);
+        border-right: 3px solid var(--admin-gold);
       }
       .adn-item-right {
         display: flex;
         align-items: center;
-        gap: 0.55rem;
-        flex-shrink: 0;
+        gap: 0.6rem;
       }
       .adn-icon {
-        font-size: 1.15rem;
-        color: rgba(255,255,255,0.38);
+        font-size: 1.1rem;
+        color: var(--admin-text-muted);
         width: 22px;
         text-align: center;
+        transition: color 0.2s;
       }
-      body.white-theme .adn-icon {
-        color: rgba(90,78,60,0.4);
-      }
-      .adn-item.active .adn-icon,
-      .adn-item:hover .adn-icon {
-        color: rgba(255,255,255,0.7);
-      }
-      body.white-theme .adn-item.active .adn-icon,
-      body.white-theme .adn-item:hover .adn-icon {
-        color: #A07840;
+      .adn-item:hover .adn-icon,
+      .adn-item.active .adn-icon {
+        color: var(--admin-gold);
       }
       .adn-chevron {
         font-size: 0.65rem;
-        color: rgba(255,255,255,0.3);
-        transition: transform 0.28s ease;
-        margin-left: 2px;
-      }
-      body.white-theme .adn-chevron {
-        color: rgba(90,78,60,0.3);
+        color: var(--admin-text-muted);
+        transition: transform 0.25s ease;
       }
       .adn-item.expanded .adn-chevron {
         transform: rotate(180deg);
+        color: var(--admin-gold);
       }
-
-      /* Badge */
-      .adn-badge {
-        background: #3b9eff;
-        color: #fff;
-        font-size: 0.58rem;
-        font-weight: 700;
-        padding: 0.12rem 0.55rem;
-        border-radius: 30px;
-        letter-spacing: 0.3px;
-        font-family: 'Tajawal', sans-serif;
-      }
-      .adn-badge.gold { background: var(--gold, #C4A06A); color: #1a1510; }
-      .adn-badge.red { background: #ff4757; }
 
       /* ===== SUBMENU ===== */
       .adn-submenu {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.38s ease;
-        background: rgba(0,0,0,0.18);
+        transition: max-height 0.35s ease;
+        background: rgba(0,0,0,0.12);
       }
       body.white-theme .adn-submenu {
-        background: rgba(160,120,64,0.05);
+        background: rgba(196,160,106,0.05);
       }
-      .adn-submenu.open { max-height: 500px; }
+      .adn-submenu.open { max-height: 450px; }
 
       .adn-sub-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.7rem 1.4rem 0.7rem 1rem;
-        font-size: 0.88rem;
+        padding: 0.65rem 1.8rem 0.65rem 1.2rem;
+        font-size: 0.85rem;
         font-family: 'Tajawal', sans-serif;
         cursor: pointer;
         text-decoration: none;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
-        transition: background 0.15s, color 0.15s;
-        gap: 0.5rem;
-        color: rgba(255,255,255,0.55);
-      }
-      body.white-theme .adn-sub-item {
-        color: rgba(42,34,24,0.6);
-        border-bottom-color: rgba(160,120,64,0.05);
+        color: var(--admin-text-muted);
+        transition: all 0.2s;
+        border-bottom: 1px solid var(--admin-border);
       }
       .adn-sub-item:hover {
-        background: rgba(255,255,255,0.05);
-        color: rgba(255,255,255,0.9);
-      }
-      body.white-theme .adn-sub-item:hover {
-        background: rgba(160,120,64,0.05);
-        color: #A07840;
+        background: var(--admin-gold-dim);
+        color: var(--admin-gold);
+        padding-right: 2rem;
       }
       .adn-sub-item.active {
-        color: var(--gold, #C4A06A);
+        color: var(--admin-gold);
         font-weight: 600;
       }
       .adn-sub-icon {
         font-size: 0.7rem;
-        color: rgba(255,255,255,0.2);
-        flex-shrink: 0;
+        color: var(--admin-text-muted);
       }
-      body.white-theme .adn-sub-icon {
-        color: rgba(90,78,60,0.3);
+      .adn-sub-item:hover .adn-sub-icon,
+      .adn-sub-item.active .adn-sub-icon {
+        color: var(--admin-gold);
       }
-      .adn-sub-item.active .adn-sub-icon { color: var(--gold, #C4A06A); }
 
       /* ===== DRAWER FOOTER ===== */
       .admin-drawer-footer {
-        border-top: 1px solid rgba(255,255,255,0.07);
-        padding: 0.8rem 1.1rem;
-        display: flex;
-        gap: 0.5rem;
+        border-top: 1px solid var(--admin-border);
+        padding: 1rem 1.2rem;
         flex-shrink: 0;
-        transition: border-color 0.3s ease;
       }
 
       /* ===== ANIMATION ===== */
       @keyframes slideInItem {
-        from { opacity: 0; transform: translateX(12px); }
-        to   { opacity: 1; transform: translateX(0); }
+        from { opacity: 0; transform: translateX(15px); }
+        to { opacity: 1; transform: translateX(0); }
       }
       .admin-drawer.open .adn-item,
       .admin-drawer.open .admin-drawer-header {
-        animation: slideInItem 0.3s ease both;
+        animation: slideInItem 0.3s ease forwards;
       }
-      .admin-drawer.open .adn-item:nth-child(1) { animation-delay: 0.04s; }
-      .admin-drawer.open .adn-item:nth-child(2) { animation-delay: 0.08s; }
-      .admin-drawer.open .adn-item:nth-child(3) { animation-delay: 0.12s; }
-      .admin-drawer.open .adn-item:nth-child(4) { animation-delay: 0.16s; }
-      .admin-drawer.open .adn-item:nth-child(5) { animation-delay: 0.20s; }
+      .admin-drawer.open .adn-item:nth-child(1) { animation-delay: 0.03s; }
+      .admin-drawer.open .adn-item:nth-child(2) { animation-delay: 0.06s; }
+      .admin-drawer.open .adn-item:nth-child(3) { animation-delay: 0.09s; }
+      .admin-drawer.open .adn-item:nth-child(4) { animation-delay: 0.12s; }
+      .admin-drawer.open .adn-item:nth-child(5) { animation-delay: 0.15s; }
 
-      /* ===== DESKTOP: keep topbar compact ===== */
-      @media (min-width: 1024px) {
-        .admin-page-label { display: inline; }
-      }
-      @media (max-width: 1023px) {
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 768px) {
+        .admin-topbar { padding: 0.5rem 1rem; }
         .admin-page-label { display: none; }
+        .admin-hamburger span { display: none; }
+        .admin-hamburger { padding: 0.4rem 0.6rem; }
       }
     `;
     document.head.appendChild(style);
 
     /* ============================================================
-       Determine current page
+       تحديد الصفحة الحالية
     ============================================================ */
     const currentPage = window.location.pathname.split('/').pop() || 'dashbord.html';
     const productPages = ['admin-produits.html', 'admin-collections.html', 'admin-reviews.html'];
@@ -379,7 +369,7 @@
     const pageLabel = pageLabelMap[currentPage] || 'الإدارة';
 
     /* ============================================================
-       TOP BAR
+       الشريط العلوي
     ============================================================ */
     const topbar = document.createElement('div');
     topbar.id = 'admin-navbar';
@@ -393,49 +383,44 @@
         <span class="admin-page-label">${pageLabel}</span>
         <button class="admin-hamburger" id="adminHamburger" aria-label="القائمة" aria-expanded="false">
           <i class="fas fa-bars"></i>
+          <span>القائمة</span>
         </button>
       </div>
     `;
 
     /* ============================================================
-       OVERLAY
+       الخلفية المعتمة
     ============================================================ */
     const overlay = document.createElement('div');
     overlay.id = 'adminOverlay';
     overlay.className = 'admin-overlay';
 
     /* ============================================================
-       DRAWER
+       القائمة الجانبية
     ============================================================ */
     const drawer = document.createElement('div');
     drawer.id = 'adminDrawer';
     drawer.className = 'admin-drawer';
 
-    function navItem(href, icon, label, isActive, extra = '') {
+    function navItem(href, icon, label, isActive) {
       return `
         <a href="${href}" class="adn-item ${isActive ? 'active' : ''}" data-page="${href}">
           <span>${label}</span>
           <div class="adn-item-right">
-            ${extra}
             <i class="${icon} adn-icon"></i>
           </div>
         </a>`;
     }
 
-    function subItem(href, icon, label, isActive, badge = '') {
-      const badgeHtml = badge ? `<span class="adn-badge">${badge}</span>` : '';
+    function subItem(href, icon, label, isActive) {
       return `
         <a href="${href}" class="adn-sub-item ${isActive ? 'active' : ''}">
           <span>${label}</span>
-          <div style="display:flex;align-items:center;gap:0.4rem;">
-            ${badgeHtml}
-            <i class="${icon} adn-sub-icon"></i>
-          </div>
+          <i class="${icon} adn-sub-icon"></i>
         </a>`;
     }
 
     drawer.innerHTML = `
-      <!-- Header -->
       <div class="admin-drawer-header">
         <a href="dashbord.html" class="admin-drawer-brand">
           <i class="fas fa-crown"></i>
@@ -446,14 +431,10 @@
         </button>
       </div>
 
-      <!-- Nav -->
       <nav class="admin-drawer-nav">
-
         ${navItem('dashbord.html', 'fas fa-home', 'لوحة التحكم', currentPage === 'dashbord.html')}
-
         ${navItem('admin-orders.html', 'fas fa-cube', 'الطلبيات', currentPage === 'admin-orders.html')}
 
-        <!-- المنتجات - expandable -->
         <div class="adn-item ${isProductSub ? 'active expanded' : ''}" id="productsParent">
           <span>المنتجات</span>
           <div class="adn-item-right">
@@ -469,44 +450,36 @@
         </div>
 
         ${navItem('admin-contact.html', 'fas fa-envelope', 'الرسائل', currentPage === 'admin-contact.html')}
-
         ${navItem('admin-login.html', 'fas fa-users', 'المسؤولين', currentPage === 'admin-login.html')}
-
       </nav>
 
-      <!-- Footer - removed buttons (update & logout) -->
-      <div class="admin-drawer-footer">
-      </div>
+      <div class="admin-drawer-footer"></div>
     `;
 
     /* ============================================================
-       Inject into DOM
+       إضافة العناصر للصفحة
     ============================================================ */
-    const firstChild = document.body.firstChild;
-    document.body.insertBefore(topbar, firstChild);
+    document.body.insertBefore(topbar, document.body.firstChild);
     document.body.appendChild(overlay);
     document.body.appendChild(drawer);
 
     /* ============================================================
-       مراقبة تغييرات الثيم من AlmayaTheme
+       تطبيق الثيم ومراقبة تغييراته
     ============================================================ */
-    if (window.AlmayaTheme) {
-      // تطبيق الثيم عند التحميل
+    function initThemeObserver() {
       applyThemeToAdmin();
-      
-      // مراقبة تغييرات الثيم عبر MutationObserver
-      const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.attributeName === 'class') {
-            applyThemeToAdmin();
-          }
-        });
-      });
-      observer.observe(document.body, { attributes: true });
+      const observer = new MutationObserver(() => applyThemeToAdmin());
+      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initThemeObserver);
+    } else {
+      initThemeObserver();
     }
 
     /* ============================================================
-       EVENTS
+       الأحداث (Events)
     ============================================================ */
     const hamburger = document.getElementById('adminHamburger');
     const drawerClose = document.getElementById('adminDrawerClose');
@@ -517,19 +490,18 @@
       drawer.classList.add('open');
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
-      hamburger.setAttribute('aria-expanded', 'true');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
     }
 
     function closeDrawer() {
       drawer.classList.remove('open');
       overlay.classList.remove('active');
       document.body.style.overflow = '';
-      hamburger.setAttribute('aria-expanded', 'false');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
     }
 
     function toggleSubmenu(parent, submenu) {
       const isOpen = submenu.classList.contains('open');
-      // close all submenus
       document.querySelectorAll('.adn-submenu.open').forEach(s => s.classList.remove('open'));
       document.querySelectorAll('.adn-item.expanded').forEach(i => i.classList.remove('expanded'));
       if (!isOpen) {
@@ -538,30 +510,30 @@
       }
     }
 
-    if (hamburger)       hamburger.addEventListener('click', openDrawer);
-    if (drawerClose)     drawerClose.addEventListener('click', closeDrawer);
-    overlay.addEventListener('click', closeDrawer);
-
-    if (productsParent) {
-      productsParent.addEventListener('click', () => toggleSubmenu(productsParent, productsSubmenu));
+    if (hamburger) hamburger.addEventListener('click', openDrawer);
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+    
+    if (productsParent && productsSubmenu) {
+      productsParent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSubmenu(productsParent, productsSubmenu);
+      });
     }
 
-    // Close drawer on nav link click (mobile)
     drawer.querySelectorAll('a.adn-item, a.adn-sub-item').forEach(el => {
-      el.addEventListener('click', () => setTimeout(closeDrawer, 80));
+      el.addEventListener('click', () => setTimeout(closeDrawer, 100));
     });
 
-    // Keyboard: Escape
-    document.addEventListener('keydown', e => {
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
     });
 
-    // Highlight current active link
     drawer.querySelectorAll('[data-page]').forEach(el => {
       if (el.dataset.page === currentPage) el.classList.add('active');
     });
 
-    console.log('✅ Admin Drawer ready | page:', currentPage);
+    console.log('✅ Admin Drawer ready | متناسق مع footer.js | page:', currentPage);
   }
 
   if (document.readyState === 'loading') {
