@@ -1,25 +1,23 @@
 // admin.js - Sidebar Drawer Navigation | Almaya Couture Admin
-// متوافق تماماً مع نظام ألوان footer.js
+// متوافق تماماً مع header.js و footer.js
 (function () {
   function createAdminMenu() {
     if (document.getElementById('admin-navbar')) return;
 
     // ==========================================
-    //  دالة تطبيق الثيم بناءً على AlmayaTheme
+    //  دالة تطبيق الثيم بناءً على نظام الموقع الموحد
     // ==========================================
     function applyThemeToAdmin() {
       const isWhiteTheme = document.body.classList.contains('white-theme');
       const topbar = document.getElementById('admin-navbar');
       const drawer = document.getElementById('adminDrawer');
-      const overlay = document.getElementById('adminOverlay');
       
-      // ألوان متطابقة مع footer.js
-      const darkBg = '#1A1510';      // --bg من الفوتر
-      const darkBg2 = '#221C14';     // --bg2 من الفوتر
-      const lightBg = '#FDFCF8';     // --bg (الأبيض)
-      const lightBg2 = '#F5F0E8';    // --bg2 (الأبيض)
+      // ألوان متطابقة مع header.js و footer.js
+      const darkBg = '#1A1510';      // --bg
+      const darkBg2 = '#221C14';     // --bg2 (footer)
+      const lightBg = '#FDFCF8';     // --bg (white)
+      const lightBg2 = '#F5F0E8';    // --bg2 (footer white)
       const gold = '#C4A06A';
-      const goldLight = '#D4B896';
       const darkText = '#E8DDD0';
       const lightText = '#2A2218';
       const darkTextMuted = '#A89880';
@@ -27,32 +25,33 @@
 
       if (topbar) {
         topbar.style.background = isWhiteTheme ? lightBg2 : darkBg;
-        topbar.style.borderBottom = `1px solid ${isWhiteTheme ? 'rgba(196,160,106,0.12)' : 'rgba(196,160,106,0.08)'}`;
+        topbar.style.borderBottom = `1px solid ${isWhiteTheme ? 'rgba(160,120,64,0.12)' : 'rgba(196,160,106,0.15)'}`;
         const brand = topbar.querySelector('.admin-topbar-brand');
         if (brand) brand.style.color = isWhiteTheme ? lightText : darkText;
         const pageLabel = topbar.querySelector('.admin-page-label');
         if (pageLabel) pageLabel.style.color = isWhiteTheme ? lightTextMuted : darkTextMuted;
+        const hamburger = topbar.querySelector('.admin-hamburger');
+        if (hamburger) {
+          hamburger.style.color = isWhiteTheme ? lightTextMuted : darkTextMuted;
+          hamburger.style.borderColor = isWhiteTheme ? 'rgba(160,120,64,0.2)' : 'rgba(196,160,106,0.2)';
+        }
       }
       
       if (drawer) {
         drawer.style.background = isWhiteTheme ? lightBg : darkBg;
         const header = drawer.querySelector('.admin-drawer-header');
         if (header) {
-          header.style.borderBottomColor = isWhiteTheme ? 'rgba(196,160,106,0.12)' : 'rgba(196,160,106,0.08)';
-        }
-        const footer = drawer.querySelector('.admin-drawer-footer');
-        if (footer) {
-          footer.style.borderTopColor = isWhiteTheme ? 'rgba(196,160,106,0.12)' : 'rgba(196,160,106,0.08)';
+          header.style.borderBottomColor = isWhiteTheme ? 'rgba(160,120,64,0.12)' : 'rgba(196,160,106,0.08)';
         }
       }
     }
 
     /* ============================================================
-       CSS - ألوان متناسقة مع footer.js
+       CSS - ألوان متناسقة مع header.js و footer.js
     ============================================================ */
     const style = document.createElement('style');
     style.textContent = `
-      /* ===== المتغيرات العامة (متوافقة مع footer) ===== */
+      /* ===== المتغيرات العامة (متوافقة مع header/footer) ===== */
       :root {
         --admin-gold: #C4A06A;
         --admin-gold-light: #D4B896;
@@ -72,7 +71,7 @@
         --admin-bg2: var(--admin-bg2-light);
         --admin-text: var(--admin-text-light);
         --admin-text-muted: var(--admin-text-muted-light);
-        --admin-border: rgba(196,160,106,0.12);
+        --admin-border: rgba(160,120,64,0.12);
       }
       body:not(.white-theme) {
         --admin-bg: var(--admin-bg-dark);
@@ -91,10 +90,9 @@
         align-items: center;
         justify-content: space-between;
         direction: rtl;
-        padding: 0.55rem 1.5rem;
+        padding: 0.65rem 1.5rem;
         transition: all 0.3s ease;
-        background: var(--admin-bg2);
-        border-bottom: 1px solid var(--admin-border);
+        font-family: 'Tajawal', sans-serif;
       }
       .admin-topbar-brand {
         display: flex;
@@ -104,8 +102,8 @@
         font-size: 0.95rem;
         text-decoration: none;
         font-family: 'Tajawal', sans-serif;
-        color: var(--admin-text);
         letter-spacing: 0.5px;
+        transition: color 0.3s ease;
       }
       .admin-topbar-brand i {
         color: var(--admin-gold);
@@ -119,20 +117,19 @@
       .admin-page-label {
         font-size: 0.75rem;
         font-family: 'Tajawal', sans-serif;
-        color: var(--admin-text-muted);
       }
       .admin-hamburger {
         background: transparent;
         border: 1px solid var(--admin-border);
-        border-radius: 10px;
+        border-radius: 8px;
         padding: 0.4rem 0.7rem;
         cursor: pointer;
-        color: var(--admin-text-muted);
         font-size: 1rem;
         display: flex;
         align-items: center;
         gap: 0.4rem;
         transition: all 0.25s ease;
+        font-family: 'Tajawal', sans-serif;
       }
       .admin-hamburger:hover {
         border-color: var(--admin-gold);
@@ -165,7 +162,6 @@
         width: 295px;
         max-width: 85vw;
         height: 100%;
-        background: var(--admin-bg);
         z-index: 300;
         transition: right 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1), background 0.3s ease;
         display: flex;
@@ -174,6 +170,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+        font-family: 'Tajawal', sans-serif;
       }
       .admin-drawer::-webkit-scrollbar { width: 3px; }
       .admin-drawer::-webkit-scrollbar-track { background: transparent; }
@@ -198,6 +195,7 @@
         font-family: 'Tajawal', sans-serif;
         text-decoration: none;
         color: var(--admin-text);
+        transition: color 0.3s ease;
       }
       .admin-drawer-brand i {
         color: var(--admin-gold);
@@ -283,9 +281,9 @@
         background: rgba(0,0,0,0.12);
       }
       body.white-theme .adn-submenu {
-        background: rgba(196,160,106,0.05);
+        background: rgba(160,120,64,0.05);
       }
-      .adn-submenu.open { max-height: 450px; }
+      .adn-submenu.open { max-height: 350px; }
 
       .adn-sub-item {
         display: flex;
@@ -459,12 +457,13 @@
     /* ============================================================
        إضافة العناصر للصفحة
     ============================================================ */
-    document.body.insertBefore(topbar, document.body.firstChild);
+    const firstChild = document.body.firstChild;
+    document.body.insertBefore(topbar, firstChild);
     document.body.appendChild(overlay);
     document.body.appendChild(drawer);
 
     /* ============================================================
-       تطبيق الثيم ومراقبة تغييراته
+       تطبيق الثيم ومراقبة تغييراته (متوافق مع header.js)
     ============================================================ */
     function initThemeObserver() {
       applyThemeToAdmin();
@@ -533,7 +532,7 @@
       if (el.dataset.page === currentPage) el.classList.add('active');
     });
 
-    console.log('✅ Admin Drawer ready | متناسق مع footer.js | page:', currentPage);
+    console.log('✅ Admin Drawer ready | متوافق مع header.js و footer.js | page:', currentPage);
   }
 
   if (document.readyState === 'loading') {
