@@ -11,7 +11,7 @@
     
     // قائمة صفحات الإدارة (المحمية)
     const adminPages = [
-        'dashbord.html',
+        'dashboard.html',
         'admin-produits.html', 
         'admin-collections.html',
         'admin-orders.html',
@@ -33,8 +33,8 @@
     
     // حالة 2: مسجل دخول + في صفحة login → يروح لـ dashboard
     if (isLoggedIn && currentPage === ALLOWED_PAGE) {
-        console.log('✅ مسجل دخول بالفعل، جاري التوجيه إلى dashbord.html');
-        const redirectPage = sessionStorage.getItem('redirect_after_login') || 'dashbord.html';
+        console.log('✅ مسجل دخول بالفعل، جاري التوجيه إلى dashboard.html');
+        const redirectPage = sessionStorage.getItem('redirect_after_login') || 'dashboard.html';
         sessionStorage.removeItem('redirect_after_login');
         window.location.href = redirectPage;
         return;

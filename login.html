@@ -205,35 +205,12 @@
             color: #90D48F;
         }
 
-        .theme-toggle-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--bg-light);
-            border: 2px solid var(--border);
-            color: var(--gold);
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 99;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .theme-toggle-btn:hover {
-            transform: scale(1.1);
-            border-color: var(--gold);
-        }
+      
 
         @media (max-width: 480px) {
             .login-card { padding: 1.5rem; }
             .login-title { font-size: 1.3rem; }
-            .theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; }
-        }
+             }
     </style>
 </head>
 <body>
@@ -285,43 +262,10 @@
         </div>
     </div>
 
-    <button class="theme-toggle-btn" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </button>
+   
 
     <script>
-        // ========== THEME TOGGLE ==========
-        (function() {
-            const themeBtn = document.getElementById('themeToggle');
-            
-            function applySavedTheme() {
-                const saved = localStorage.getItem('almaya-theme');
-                if (saved === 'white') {
-                    document.body.classList.add('white-theme');
-                    themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                } else {
-                    document.body.classList.remove('white-theme');
-                    themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                }
-            }
-
-            function toggleTheme() {
-                const isWhite = document.body.classList.contains('white-theme');
-                if (isWhite) {
-                    document.body.classList.remove('white-theme');
-                    localStorage.setItem('almaya-theme', 'dark');
-                    themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                } else {
-                    document.body.classList.add('white-theme');
-                    localStorage.setItem('almaya-theme', 'white');
-                    themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                }
-            }
-
-            themeBtn.addEventListener('click', toggleTheme);
-            applySavedTheme();
-        })();
-
+     
         // ========== التحقق من وجود CONFIG ==========
         if (typeof CONFIG === 'undefined') {
             document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ ملف التكوين مفقود</div>';
@@ -444,7 +388,7 @@
         function checkSession() {
             const loggedIn = sessionStorage.getItem('admin_logged_in');
             if (loggedIn === 'true') {
-                window.location.href = 'dashbord.html';
+                window.location.href = 'dashboard.html';
             }
         }
 
@@ -489,7 +433,7 @@
                 if (result.success) {
                     showSuccess(`مرحباً ${result.admin.full_name || result.admin.username}! جاري التحويل...`);
                     setTimeout(() => {
-                        window.location.href = 'dashbord.html';
+                        window.location.href = 'dashboard.html';
                     }, 1500);
                 } else {
                     showError(result.error);

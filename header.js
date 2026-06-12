@@ -228,12 +228,12 @@
       // إذا كان المسؤول مسجل الدخول → عرض dashboard و logout
       // === CORRECTION XSS: Utilisation de escapedAdminName au lieu de adminName ===
       desktopLinks = `
-        <li><a href="dashbord.html" data-page="dashbord">لوحة التحكم</a></li>
+        <li><a href="dashboard.html" data-page="dashboard">لوحة التحكم</a></li>
         <li><div class="almaya-nav__user-info"><i class="fas fa-user-shield"></i> <span>${escapedAdminName}</span></div></li>
         <li><a href="#" data-page="logout" class="almaya-nav__logout-btn" id="logoutBtnDesktop"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
       `;
       mobileLinks = `
-        <li><a href="dashbord.html" data-page="dashbord">لوحة التحكم</a></li>
+        <li><a href="dashboard.html" data-page="dashboard">لوحة التحكم</a></li>
         <li><a href="#" data-page="logout" class="mobile-logout-btn" id="logoutBtnMobile"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
       `;
     } else {
