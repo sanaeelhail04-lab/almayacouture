@@ -11,7 +11,7 @@
     <script src="admin.js"></script>
     
     <style>
-        /* ========== ألوان متوافقة مع header.js و footer.js ========== */
+        /* ========== ألوان متوافقة مع الموقع ========== */
         :root {
             --gold: #C4A06A;
             --gold-light: #D4B896;
@@ -23,7 +23,6 @@
             --text-secondary: #A89880;
             --text-muted: #6B5F52;
             --border: rgba(196,160,106,0.12);
-            --border-hover: rgba(196,160,106,0.25);
             --success: #25D366;
             --danger: #FF4757;
             --warning: #FFA502;
@@ -87,6 +86,7 @@
             font-size: 0.85rem;
         }
 
+        /* ========== CARDS ========== */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -126,6 +126,7 @@
             color: var(--text-secondary);
         }
 
+        /* ========== BUTTONS ========== */
         .btn {
             padding: 0.5rem 1rem;
             border-radius: 8px;
@@ -185,6 +186,7 @@
             transform: translateY(-1px);
         }
 
+        /* ========== TABLE ========== */
         .table-container {
             background: var(--card);
             border: 1px solid var(--border);
@@ -194,7 +196,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 800px;
+            min-width: 750px;
         }
         th {
             text-align: right;
@@ -236,6 +238,7 @@
             color: var(--info);
         }
 
+        /* ========== MODAL ========== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -307,6 +310,7 @@
             word-break: break-word;
         }
 
+        /* ========== LOADER & EMPTY ========== */
         .loader {
             width: 40px;
             height: 40px;
@@ -317,7 +321,6 @@
             margin: 2rem auto;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -329,7 +332,8 @@
             opacity: 0.4;
         }
 
-        .message {
+        /* ========== TOAST MESSAGE ========== */
+        .toast-message {
             position: fixed;
             bottom: 30px;
             right: 30px;
@@ -343,9 +347,9 @@
             animation: slideIn 0.3s ease;
             display: none;
         }
-        .message.success { border-right: 3px solid var(--success); color: var(--success); }
-        .message.error { border-right: 3px solid var(--danger); color: var(--danger); }
-        .message.info { border-right: 3px solid var(--gold); color: var(--gold); }
+        .toast-message.success { border-right: 3px solid var(--success); color: var(--success); }
+        .toast-message.error { border-right: 3px solid var(--danger); color: var(--danger); }
+        .toast-message.info { border-right: 3px solid var(--gold); color: var(--gold); }
         @keyframes slideIn {
             from { transform: translateX(100px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -377,7 +381,7 @@
             </div>
 
             <div class="stats-row">
-                <div class="stat-box" data-filter="all" onclick="setFilter('all')">
+                <div class="stat-box active" data-filter="all" onclick="setFilter('all')">
                     <i class="fas fa-envelope"></i>
                     <div class="number" id="totalCount">0</div>
                     <div class="label">كل الرسائل</div>
@@ -399,7 +403,7 @@
                 </div>
             </div>
 
-            <div style="margin-bottom: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem; flex-wrap: wrap;">
+            <div style="margin-bottom: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
                 <button class="btn btn-primary" onclick="loadMessages()">
                     <i class="fas fa-sync-alt"></i> تحديث
                 </button>
@@ -415,7 +419,7 @@
 
     <div id="footer-container"></div>
 
-    <!-- Modal عرض التفاصيل -->
+    <!-- Modal التفاصيل -->
     <div class="modal-overlay" id="detailsModal">
         <div class="modal">
             <div class="modal-header">
@@ -426,20 +430,20 @@
         </div>
     </div>
 
-    <div class="message" id="message"></div>
+    <div class="toast-message" id="toastMessage"></div>
 
     <script src="header.js"></script>
     <script src="footer.js"></script>
 
     <script>
-        // التحقق من تسجيل الدخول
+        // ========== التحقق من تسجيل الدخول ==========
         if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('admin_logged_in') !== 'true') {
             window.location.href = 'login.html';
         }
 
         // ========== CONFIG ==========
         if (typeof CONFIG === 'undefined') {
-            showMessage('❌ CONFIG.js مفقود', 'error');
+            showToast('❌ CONFIG.js مفقود', 'error');
             throw new Error('CONFIG missing');
         }
 
@@ -448,17 +452,19 @@
         let currentFilter = 'all';
         let allMessages = [];
 
-        function showMessage(text, type) {
-            const msg = document.getElementById('message');
-            if (!msg) return;
-            msg.textContent = text;
-            msg.className = `message ${type}`;
-            msg.style.display = 'block';
+        // ========== عرض الإشعارات ==========
+        function showToast(text, type) {
+            const toast = document.getElementById('toastMessage');
+            if (!toast) return;
+            toast.textContent = text;
+            toast.className = `toast-message ${type}`;
+            toast.style.display = 'block';
             setTimeout(() => {
-                msg.style.display = 'none';
+                toast.style.display = 'none';
             }, 4000);
         }
 
+        // ========== طلب Supabase ==========
         async function supabaseRequest(endpoint, opts = {}) {
             try {
                 const url = `${SUPABASE_URL}${endpoint}`;
@@ -481,11 +487,12 @@
                 }
                 return data;
             } catch(e) {
-                console.error('❌ خطأ في Supabase:', e);
+                console.error('❌ خطأ:', e);
                 throw e;
             }
         }
 
+        // ========== تحميل الرسائل ==========
         async function loadMessages() {
             const container = document.getElementById('messagesTable');
             if (!container) return;
@@ -493,17 +500,16 @@
             container.innerHTML = '<div class="loader"></div>';
             
             try {
-                // محاولة جلب البيانات من جدول contact_messages
-                let messages = await supabaseRequest('/rest/v1/contact_messages?select=*&order=created_at.desc');
+                const messages = await supabaseRequest('/rest/v1/contact_messages?select=*&order=created_at.desc');
                 
                 if (!messages || messages.length === 0) {
                     container.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-inbox"></i>
                             <p>لا توجد رسائل</p>
-                            <p style="font-size:0.7rem; margin-top:0.5rem;">سيتم عرض الرسائل الواردة من العملاء هنا</p>
+                            <p style="font-size:0.7rem; margin-top:0.5rem;">الرسائل الواردة من العملاء ستظهر هنا</p>
                             <button class="btn btn-primary" style="margin-top:1rem;" onclick="loadMessages()">
-                                <i class="fas fa-sync-alt"></i> إعادة المحاولة
+                                <i class="fas fa-sync-alt"></i> تحديث
                             </button>
                         </div>
                     `;
@@ -514,9 +520,10 @@
                 allMessages = messages;
                 updateStats(allMessages);
                 renderMessages();
+                showToast(`✅ تم تحميل ${messages.length} رسالة`, 'success');
                 
             } catch(e) {
-                console.error('❌ خطأ في التحميل:', e);
+                console.error('❌ خطأ:', e);
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-exclamation-triangle"></i>
@@ -527,14 +534,15 @@
                         </button>
                     </div>
                 `;
-                showMessage('خطأ في تحميل البيانات: ' + e.message, 'error');
+                showToast('❌ خطأ في تحميل البيانات', 'error');
             }
         }
 
+        // ========== تحديث الإحصائيات ==========
         function updateStats(messages) {
             const total = messages.length;
-            const pending = messages.filter(m => m.status === 'pending' || m.is_read === false).length;
-            const read = messages.filter(m => m.status === 'read' || (m.is_read === true && m.status !== 'replied')).length;
+            const pending = messages.filter(m => m.status === 'pending').length;
+            const read = messages.filter(m => m.status === 'read').length;
             const replied = messages.filter(m => m.status === 'replied').length;
             
             const elements = {
@@ -550,18 +558,17 @@
             }
         }
 
-        function getStatusText(message) {
-            if (message.status === 'replied') return 'تم الرد';
-            if (message.status === 'read' || message.is_read === true) return 'مقروءة';
-            return 'قيد الانتظار';
+        // ========== الحصول على نص الحالة ==========
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'قيد الانتظار',
+                'read': 'مقروءة',
+                'replied': 'تم الرد'
+            };
+            return statusMap[status] || 'قيد الانتظار';
         }
 
-        function getStatusClass(message) {
-            if (message.status === 'replied') return 'replied';
-            if (message.status === 'read' || message.is_read === true) return 'read';
-            return 'pending';
-        }
-
+        // ========== تنسيق التاريخ ==========
         function formatDate(dateString) {
             if (!dateString) return '-';
             try {
@@ -578,6 +585,7 @@
             }
         }
 
+        // ========== تنسيق النص ==========
         function escapeHtml(str) {
             if (!str) return '';
             return String(str).replace(/[&<>]/g, function(m) {
@@ -588,13 +596,14 @@
             });
         }
 
+        // ========== عرض الرسائل في الجدول ==========
         function renderMessages() {
             let filtered = [...allMessages];
             
             if (currentFilter === 'pending') {
-                filtered = filtered.filter(m => m.status === 'pending' || m.is_read === false);
+                filtered = filtered.filter(m => m.status === 'pending');
             } else if (currentFilter === 'read') {
-                filtered = filtered.filter(m => m.status === 'read' || (m.is_read === true && m.status !== 'replied'));
+                filtered = filtered.filter(m => m.status === 'read');
             } else if (currentFilter === 'replied') {
                 filtered = filtered.filter(m => m.status === 'replied');
             }
@@ -626,7 +635,7 @@
                                 <td><strong>${escapeHtml(msg.name)}</strong></td>
                                 <td>${escapeHtml(msg.email)}</td>
                                 <td>${escapeHtml(msg.subject || 'بدون موضوع')}</td>
-                                <td><span class="status-badge status-${getStatusClass(msg)}">${getStatusText(msg)}</span></td>
+                                <td><span class="status-badge status-${msg.status}">${getStatusText(msg.status)}</span></td>
                                 <td>${formatDate(msg.created_at)}</td>
                                 <td style="white-space: nowrap;">
                                     <button class="btn btn-info" onclick="viewDetails(${msg.id})" style="padding:0.3rem 0.6rem;" title="عرض التفاصيل">
@@ -642,9 +651,10 @@
                 </table>
             `;
             
-            // تحديث الفلتر النشط في الإحصائيات
+            // تحديث الفلتر النشط
             document.querySelectorAll('.stat-box').forEach(box => {
-                if (box.dataset.filter === currentFilter) {
+                const filter = box.getAttribute('data-filter');
+                if (filter === currentFilter) {
                     box.classList.add('active');
                 } else {
                     box.classList.remove('active');
@@ -652,25 +662,23 @@
             });
         }
 
-        // عرض التفاصيل
+        // ========== عرض التفاصيل ==========
         window.viewDetails = async function(id) {
             const message = allMessages.find(m => m.id === id);
             if (!message) return;
             
             // تحديث حالة القراءة إذا كانت قيد الانتظار
-            if ((!message.is_read || message.status === 'pending') && message.status !== 'replied') {
+            if (message.status === 'pending') {
                 try {
                     await supabaseRequest(`/rest/v1/contact_messages?id=eq.${id}`, {
                         method: 'PATCH',
-                        body: { is_read: true, status: 'read' }
+                        body: { status: 'read', is_read: true }
                     });
-                    // تحديث البيانات المحلية
-                    message.is_read = true;
                     message.status = 'read';
                     updateStats(allMessages);
                     renderMessages();
                 } catch(e) {
-                    console.log('خطأ في تحديث حالة القراءة:', e);
+                    console.log('خطأ:', e);
                 }
             }
             
@@ -704,7 +712,7 @@
                 </div>
                 <div class="detail-row">
                     <div class="detail-label"><i class="fas fa-info-circle"></i> الحالة الحالية</div>
-                    <div class="detail-value"><span class="status-badge status-${getStatusClass(message)}">${getStatusText(message)}</span></div>
+                    <div class="detail-value"><span class="status-badge status-${message.status}">${getStatusText(message.status)}</span></div>
                 </div>
                 <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem; flex-wrap: wrap;">
                     <button class="btn btn-outline" onclick="closeDetailsModal()"><i class="fas fa-times"></i> إغلاق</button>
@@ -715,39 +723,40 @@
             modal.classList.add('active');
         };
         
+        // ========== إغلاق المودال ==========
         window.closeDetailsModal = function() {
             document.getElementById('detailsModal').classList.remove('active');
         };
         
-        // تحديث حالة الرسالة إلى تم الرد
+        // ========== تحديث الحالة إلى تم الرد ==========
         window.markAsReplied = async function(id) {
             try {
                 await supabaseRequest(`/rest/v1/contact_messages?id=eq.${id}`, {
                     method: 'PATCH',
                     body: { status: 'replied', is_read: true }
                 });
-                showMessage('✅ تم تحديث حالة الرسالة إلى "تم الرد"', 'success');
+                showToast('✅ تم تحديث حالة الرسالة إلى "تم الرد"', 'success');
                 closeDetailsModal();
                 await loadMessages();
             } catch(e) {
-                showMessage('❌ خطأ: ' + e.message, 'error');
+                showToast('❌ خطأ: ' + e.message, 'error');
             }
         };
         
-        // حذف رسالة
+        // ========== حذف رسالة ==========
         window.deleteMessage = async function(id) {
             if (!confirm('⚠️ هل أنت متأكد من حذف هذه الرسالة نهائياً؟')) return;
             
             try {
                 await supabaseRequest(`/rest/v1/contact_messages?id=eq.${id}`, { method: 'DELETE' });
-                showMessage('🗑 تم حذف الرسالة بنجاح', 'success');
+                showToast('🗑 تم حذف الرسالة بنجاح', 'success');
                 await loadMessages();
             } catch(e) {
-                showMessage('❌ خطأ في الحذف: ' + e.message, 'error');
+                showToast('❌ خطأ في الحذف: ' + e.message, 'error');
             }
         };
         
-        // تصفية
+        // ========== تصفية الرسائل ==========
         window.setFilter = function(filter) {
             currentFilter = filter;
             renderMessages();
@@ -755,7 +764,7 @@
         
         window.loadMessages = loadMessages;
         
-        // تحميل البيانات عند بدء التشغيل
+        // ========== تحميل البيانات عند بدء التشغيل ==========
         document.addEventListener('DOMContentLoaded', () => {
             loadMessages();
         });
