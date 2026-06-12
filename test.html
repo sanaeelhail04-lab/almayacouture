@@ -3,23 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>إضافة منتج | لوحة التحكم</title>
+  <title>إضافة منتج | Almaya Couture</title>
+  <link rel="icon" href="images/logo.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+  <script src="auth.js"></script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    /* ===== DARK THEME ===== */
     :root {
       --bg-primary: #0F0B08;
       --bg-secondary: #1A1510;
       --bg-card: #231D15;
       --gold: #C4A06A;
       --gold-dark: #A07840;
+      --gold-light: #D4B896;
       --text-primary: #F5EDD8;
       --text-secondary: #A89880;
       --text-muted: #6B5F52;
-      --border: rgba(196, 160, 106, 0.15);
+      --border: rgba(196,160,106,0.15);
+      --border-hover: rgba(196,160,106,0.4);
       --success: #25D366;
       --danger: #FF4757;
       --warning: #FFA502;
@@ -27,15 +34,39 @@
       --purple: #8B5CF6;
       --radius: 12px;
       --radius-lg: 16px;
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      --shadow: 0 4px 20px rgba(0,0,0,0.3);
       --transition: all 0.3s ease;
+    }
+
+    /* ===== WHITE THEME ===== */
+    body.white-theme {
+      --bg-primary: #F5F0E8;
+      --bg-secondary: #FDFCF8;
+      --bg-card: #FFFFFF;
+      --gold: #A07840;
+      --gold-dark: #8B6330;
+      --gold-light: #C4A06A;
+      --text-primary: #2A2218;
+      --text-secondary: #6B5F52;
+      --text-muted: #8B7B68;
+      --border: rgba(160,120,64,0.15);
+      --border-hover: rgba(160,120,64,0.4);
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
     body {
       background: var(--bg-primary);
       font-family: 'Tajawal', sans-serif;
       color: var(--text-primary);
+      min-height: 100vh;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    #header-container { position: sticky; top: 0; z-index: 50; }
 
     .admin-container {
       max-width: 1400px;
@@ -62,6 +93,9 @@
       gap: 0.8rem;
     }
 
+    .header-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    /* ===== BUTTONS ===== */
     .btn {
       padding: 0.7rem 1.5rem;
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -77,37 +111,36 @@
       gap: 0.5rem;
       font-size: 0.9rem;
     }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(196,160,106,0.3); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .btn-outline {
       background: transparent;
       border: 1.5px solid var(--gold);
       color: var(--gold);
     }
-
-    .btn-outline:hover {
-      background: rgba(196, 160, 106, 0.1);
-      transform: translateY(-2px);
-    }
+    .btn-outline:hover { background: rgba(196,160,106,0.1); transform: translateY(-2px); }
 
     .btn-save {
       background: linear-gradient(135deg, var(--success), #1da15f);
       color: white;
     }
+    .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37,211,102,0.3); }
 
-    .btn-save:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-    }
+    .btn-danger { background: linear-gradient(135deg, var(--danger), #e84118); color: white; }
 
+    /* ===== FORM LAYOUT ===== */
     .product-form {
       display: flex;
       gap: 1.5rem;
       flex-wrap: wrap;
+      align-items: flex-start;
     }
 
-    .main-column { flex: 2; min-width: 250px; }
+    .main-column { flex: 2; min-width: 280px; }
     .sidebar-column { flex: 1; min-width: 280px; }
 
+    /* ===== CARDS ===== */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -116,10 +149,7 @@
       overflow: hidden;
       transition: var(--transition);
     }
-
-    .card:hover {
-      border-color: rgba(196, 160, 106, 0.3);
-    }
+    .card:hover { border-color: var(--border-hover); }
 
     .card-header {
       padding: 1.2rem 1.5rem;
@@ -128,33 +158,23 @@
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      background: rgba(196, 160, 106, 0.05);
+      background: rgba(196,160,106,0.05);
+      user-select: none;
     }
-
     .card-header h3 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--gold);
       display: flex;
       align-items: center;
       gap: 0.6rem;
     }
+    .card-header .toggle-icon { transition: transform 0.3s; color: var(--text-muted); }
+    .card-header.collapsed .toggle-icon { transform: rotate(-90deg); }
 
-    .card-header i.fa-chevron-down {
-      transition: transform 0.3s;
-      color: var(--text-muted);
-    }
-
-    .card-header.collapsed i.fa-chevron-down {
-      transform: rotate(-90deg);
-    }
-
-    .card-body {
-      padding: 1.5rem;
-      transition: all 0.3s;
-    }
-
+    .card-body { padding: 1.5rem; }
     .card-body.collapsed { display: none; }
 
+    /* ===== FORM ELEMENTS ===== */
     .form-group { margin-bottom: 1.2rem; }
     .form-row { display: flex; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
     .form-row .form-group { flex: 1; margin-bottom: 0; }
@@ -166,11 +186,7 @@
       font-weight: 600;
       color: var(--text-secondary);
     }
-
-    .form-group label i {
-      color: var(--gold);
-      margin-left: 0.3rem;
-    }
+    .form-group label i { color: var(--gold); margin-left: 0.3rem; }
 
     .form-group input,
     .form-group textarea,
@@ -185,67 +201,50 @@
       font-size: 0.9rem;
       transition: var(--transition);
     }
-
     .form-group input:focus,
     .form-group textarea:focus,
     .form-group select:focus {
       outline: none;
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(196, 160, 106, 0.1);
+      box-shadow: 0 0 0 3px rgba(196,160,106,0.1);
     }
+    .form-group textarea { resize: vertical; }
+    .form-group select { cursor: pointer; }
 
-    /* حالة النشر */
-    .status-select {
-      background: var(--bg-secondary);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.8rem 1rem;
-      color: var(--text-primary);
-      font-family: inherit;
-      font-size: 0.9rem;
-      width: 100%;
-      cursor: pointer;
-    }
+    .required-star { color: var(--danger); }
 
-    .featured-checkbox {
+    /* ===== CHECKBOX ===== */
+    .checkbox-group {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin-top: 0.4rem;
     }
-
-    .featured-checkbox input {
-      width: auto;
-      transform: scale(1.2);
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
       cursor: pointer;
     }
+    .checkbox-group label { margin-bottom: 0; cursor: pointer; font-size: 0.9rem; }
 
-    .featured-checkbox label {
-      margin-bottom: 0;
-      cursor: pointer;
-    }
-
-    /* التصنيفات */
+    /* ===== CATEGORIES ===== */
     .categories-row {
       display: flex;
       gap: 1rem;
       margin-bottom: 1.2rem;
       flex-wrap: wrap;
     }
+    .categories-row .form-group { flex: 1; margin-bottom: 0; }
 
-    .categories-row .form-group {
-      flex: 1;
-      margin-bottom: 0;
-    }
-
-    /* المزايات الجديدة */
+    /* ===== FEATURES GRID ===== */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 0.8rem;
       margin-bottom: 1rem;
     }
-
     .feature-item {
       display: flex;
       align-items: center;
@@ -257,125 +256,46 @@
       cursor: pointer;
       transition: var(--transition);
     }
-
-    .feature-item:hover {
-      border-color: var(--gold);
-      background: rgba(196, 160, 106, 0.05);
-    }
-
+    .feature-item:hover,
     .feature-item.active {
       border-color: var(--gold);
-      background: rgba(196, 160, 106, 0.1);
+      background: rgba(196,160,106,0.08);
     }
-
     .feature-item input {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
+      width: 18px !important;
+      height: 18px !important;
       accent-color: var(--gold);
-    }
-
-    .feature-item label {
-      flex: 1;
       cursor: pointer;
-      margin-bottom: 0;
-      font-size: 0.85rem;
+      padding: 0 !important;
     }
+    .feature-item label { flex: 1; cursor: pointer; margin-bottom: 0 !important; font-size: 0.85rem; }
 
-    .range-control {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .range-control span {
-      color: var(--gold);
-      font-weight: bold;
-    }
-
-    .range-control input {
-      flex: 1;
-      min-width: 100px;
-    }
-
-    .countdown-row {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .countdown-item {
-      flex: 1;
-      text-align: center;
-    }
-
-    .countdown-item input {
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .countdown-item label {
-      display: block;
-      margin-top: 0.3rem;
-      font-size: 0.7rem;
-    }
-
-    /* أزرار المشاركة */
-    .share-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 0.5rem;
-    }
-
+    /* ===== SOCIAL SHARE ===== */
+    .share-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
     .share-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.5rem 1rem;
+      padding: 0.55rem 1.1rem;
       border-radius: var(--radius);
       cursor: pointer;
       transition: var(--transition);
       font-size: 0.85rem;
+      font-family: inherit;
+      border: none;
     }
-
+    .share-btn:hover { transform: translateY(-2px); opacity: 0.9; }
     .share-btn.facebook { background: #1877F2; color: white; }
     .share-btn.twitter { background: #1DA1F2; color: white; }
     .share-btn.whatsapp { background: #25D366; color: white; }
-    .share-btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
-    /* الصور والفيديو */
-    .media-upload-area {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      background: var(--bg-secondary);
-      margin-bottom: 1.5rem;
-    }
-
-    .media-upload-area:hover {
-      border-color: var(--gold);
-      background: rgba(196, 160, 106, 0.05);
-    }
-
-    .media-upload-area i {
-      font-size: 3rem;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
+    /* ===== MEDIA (Images / Video) ===== */
     .media-tabs {
       display: flex;
       gap: 0.5rem;
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
-
     .media-tab {
       padding: 0.7rem 1.2rem;
       cursor: pointer;
@@ -387,60 +307,55 @@
       transition: all 0.3s;
       position: relative;
     }
-
-    .media-tab.active {
-      color: var(--gold);
-    }
-
+    .media-tab.active { color: var(--gold); }
     .media-tab.active::after {
       content: '';
       position: absolute;
       bottom: -1px;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       height: 2px;
       background: var(--gold);
     }
+    .media-content { display: none; }
+    .media-content.active { display: block; }
 
-    .media-content {
-      display: none;
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: var(--bg-secondary);
+      margin-bottom: 1.2rem;
     }
-
-    .media-content.active {
-      display: block;
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--gold);
+      background: rgba(196,160,106,0.05);
     }
+    .upload-zone i { font-size: 2.5rem; color: var(--gold); margin-bottom: 0.6rem; display: block; }
+    .upload-zone p { color: var(--text-secondary); font-size: 0.85rem; }
+    .upload-zone small { color: var(--text-muted); font-size: 0.72rem; display: block; margin-top: 0.3rem; }
 
     .images-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 0.8rem;
     }
-
     .image-item {
       position: relative;
-      aspect-ratio: 1;
+      aspect-ratio: 3/4;
       background: var(--bg-secondary);
       border-radius: var(--radius);
       overflow: hidden;
       border: 2px solid var(--border);
       transition: all 0.3s;
     }
-
-    .image-item.main-image {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 2px rgba(196, 160, 106, 0.3);
-    }
-
-    .image-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
+    .image-item.main-image { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(196,160,106,0.3); }
+    .image-item img { width: 100%; height: 100%; object-fit: cover; }
     .image-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.72);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -448,149 +363,114 @@
       opacity: 0;
       transition: opacity 0.3s;
     }
-
-    .image-item:hover .image-overlay {
-      opacity: 1;
-    }
-
+    .image-item:hover .image-overlay { opacity: 1; }
     .image-overlay button {
-      background: var(--bg-card);
+      background: rgba(255,255,255,0.15);
       border: none;
       color: white;
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border-radius: 8px;
       cursor: pointer;
+      font-size: 0.85rem;
       transition: all 0.2s;
     }
-
-    .image-overlay button:hover {
-      transform: scale(1.1);
-    }
-
+    .image-overlay button:hover { transform: scale(1.1); }
     .main-badge {
       position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
+      top: 0.4rem; right: 0.4rem;
       background: var(--gold);
       color: #1A1510;
-      font-size: 0.7rem;
-      padding: 0.2rem 0.6rem;
+      font-size: 0.6rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 20px;
-      font-weight: 600;
+      font-weight: 700;
+      z-index: 2;
     }
 
+    /* Upload progress */
+    .upload-progress {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+    .upload-progress.show { display: block; }
+    .progress-label { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.4rem; }
+    .progress-bar { background: var(--border); border-radius: 10px; height: 5px; overflow: hidden; }
+    .progress-fill { background: var(--gold); width: 0%; height: 100%; transition: width 0.3s; }
+
+    /* Video container */
     .video-container {
-      position: relative;
       background: var(--bg-secondary);
       border-radius: var(--radius);
       overflow: hidden;
+      position: relative;
     }
-
-    .video-container video {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-    }
-
-    .video-actions {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .video-actions button {
-      background: rgba(0, 0, 0, 0.7);
-      border: none;
-      color: white;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
+    .video-container video { width: 100%; max-height: 220px; object-fit: cover; display: block; }
+    .video-remove {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,71,87,0.85);
+      border: none; color: white;
+      width: 30px; height: 30px;
+      border-radius: 50%; cursor: pointer;
+      font-size: 0.85rem;
       transition: all 0.2s;
     }
+    .video-remove:hover { background: var(--danger); transform: scale(1.05); }
 
-    .video-actions button:hover {
-      background: var(--danger);
-      transform: scale(1.05);
-    }
-
-    /* المتغيرات */
-    .variants-section {
-      margin-top: 1rem;
-    }
-
+    /* ===== VARIANTS ===== */
     .variant-options {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
-
     .variant-option {
+      flex: 1;
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1rem;
-      flex: 1;
     }
-
     .variant-option h4 {
       font-size: 0.9rem;
-      margin-bottom: 0.8rem;
       color: var(--gold);
+      margin-bottom: 0.8rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
-
-    .variant-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-      margin-bottom: 0.8rem;
-    }
-
+    .variant-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
     .variant-tag {
       background: var(--bg-primary);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 0.4rem 1rem;
-      font-size: 0.8rem;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.78rem;
       cursor: pointer;
       transition: var(--transition);
-    }
-
-    .variant-tag:hover {
-      border-color: var(--gold);
-      transform: translateY(-1px);
-    }
-
-    .variant-tag.selected {
-      background: rgba(196, 160, 106, 0.2);
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-
-    .add-value {
       display: flex;
-      gap: 0.5rem;
-      margin-top: 0.8rem;
+      align-items: center;
+      gap: 0.3rem;
     }
+    .variant-tag:hover { border-color: var(--gold); }
+    .variant-tag.selected { background: rgba(196,160,106,0.15); border-color: var(--gold); color: var(--gold); }
+    .variant-tag .remove-tag { font-size: 0.7rem; opacity: 0.7; cursor: pointer; }
+    .variant-tag .remove-tag:hover { opacity: 1; color: var(--danger); }
 
+    .add-value { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
     .add-value input {
       flex: 1;
-      padding: 0.5rem 0.8rem;
+      padding: 0.5rem 0.75rem;
       background: var(--bg-primary);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text-primary);
       font-size: 0.85rem;
+      font-family: inherit;
     }
-
+    .add-value input:focus { outline: none; border-color: var(--gold); }
     .add-value button {
       padding: 0.5rem 1rem;
       background: var(--gold);
@@ -598,169 +478,75 @@
       border-radius: 8px;
       cursor: pointer;
       color: #1A1510;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 0.85rem;
       transition: var(--transition);
     }
-
-    .add-value button:hover {
-      background: var(--gold-dark);
-      transform: scale(1.02);
-    }
+    .add-value button:hover { background: var(--gold-light); }
 
     .generate-btn {
       background: linear-gradient(135deg, var(--purple), #6d28d9);
       color: white;
       border: none;
       border-radius: var(--radius);
-      padding: 0.7rem 1.5rem;
+      padding: 0.6rem 1.3rem;
       cursor: pointer;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
       font-weight: 600;
+      font-size: 0.85rem;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       transition: var(--transition);
+      font-family: inherit;
     }
+    .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(139,92,246,0.3); }
 
-    .generate-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
-    }
-
-    .variants-table-wrapper {
-      overflow-x: auto;
-      margin-top: 1rem;
-    }
-
-    .variants-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-    }
-
-    .variants-table th,
-    .variants-table td {
-      padding: 0.8rem;
+    .variants-table-wrapper { overflow-x: auto; margin-top: 0.75rem; }
+    .variants-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 500px; }
+    .variants-table th, .variants-table td {
+      padding: 0.7rem 0.8rem;
       border: 1px solid var(--border);
       text-align: center;
       vertical-align: middle;
     }
-
-    .variants-table th {
-      background: var(--bg-secondary);
-      color: var(--gold);
-      font-weight: 600;
-    }
-
+    .variants-table th { background: var(--bg-secondary); color: var(--gold); font-weight: 600; }
     .variants-table input {
-      width: 100%;
-      padding: 0.4rem;
+      width: 100%; padding: 0.4rem;
       background: var(--bg-primary);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 6px;
       color: var(--text-primary);
       text-align: center;
+      font-size: 0.8rem;
     }
-
-    .variant-image-cell {
-      width: 60px;
-    }
-
-    .variant-image {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 8px;
-      cursor: pointer;
-      border: 2px solid var(--border);
-      transition: var(--transition);
-    }
-
-    .variant-image:hover {
-      border-color: var(--gold);
-      transform: scale(1.05);
-    }
-
-    .upload-variant-image {
-      background: var(--bg-primary);
-      border: 2px dashed var(--border);
-      border-radius: 8px;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .upload-variant-image:hover {
-      border-color: var(--gold);
-      background: rgba(196, 160, 106, 0.1);
-    }
-
-    .delete-variant {
-      background: var(--danger);
-      color: white;
+    .delete-variant-row {
+      background: rgba(255,71,87,0.15);
+      color: var(--danger);
       border: none;
       border-radius: 6px;
       padding: 0.3rem 0.6rem;
       cursor: pointer;
+      font-size: 0.8rem;
       transition: var(--transition);
     }
+    .delete-variant-row:hover { background: rgba(255,71,87,0.3); }
 
-    .delete-variant:hover {
-      background: #ff1a2c;
-      transform: scale(1.05);
-    }
-
+    /* ===== HELPER TEXT ===== */
     .helper-text {
-      margin-top: 1rem;
-      padding: 0.8rem;
-      background: rgba(196, 160, 106, 0.05);
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(196,160,106,0.05);
       border-radius: var(--radius);
       font-size: 0.75rem;
       color: var(--text-muted);
+      border: 1px solid var(--border);
     }
 
-    .dynamic-field {
-      display: none;
-    }
-
-    .dynamic-field.show {
-      display: block;
-    }
-
-    .upload-progress {
-      background: var(--bg-secondary);
-      border-radius: var(--radius);
-      padding: 1rem;
-      margin-top: 1rem;
-      display: none;
-    }
-
-    .upload-progress.show {
-      display: block;
-    }
-
-    .progress-bar {
-      background: var(--border);
-      border-radius: 10px;
-      height: 6px;
-      overflow: hidden;
-      margin-top: 0.5rem;
-    }
-
-    .progress-fill {
-      background: var(--gold);
-      width: 0%;
-      height: 100%;
-      transition: width 0.3s;
-    }
-
+    /* ===== MESSAGE ===== */
     .message {
       position: fixed;
-      bottom: 20px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
       background: var(--bg-card);
@@ -771,21 +557,22 @@
       display: none;
       animation: slideUp 0.3s ease;
       font-weight: 500;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow);
+      white-space: nowrap;
     }
-
-    .message.success { background: rgba(37, 211, 102, 0.2); border-color: var(--success); color: var(--success); }
-    .message.error { background: rgba(255, 71, 87, 0.2); border-color: var(--danger); color: var(--danger); }
-    .message.info { background: rgba(59, 130, 246, 0.2); border-color: var(--info); color: var(--info); }
-
+    .message.success { background: rgba(37,211,102,0.12); border-color: var(--success); color: var(--success); }
+    .message.error { background: rgba(255,71,87,0.12); border-color: var(--danger); color: var(--danger); }
+    .message.info { background: rgba(196,160,106,0.1); border-color: var(--gold); color: var(--gold); }
     @keyframes slideUp {
-      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      from { opacity: 0; transform: translateX(-50%) translateY(16px); }
       to { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
 
+    /* ===== LOADING OVERLAY ===== */
     .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.9);
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
       backdrop-filter: blur(8px);
       z-index: 2000;
       display: flex;
@@ -797,1102 +584,829 @@
       visibility: hidden;
       transition: all 0.3s;
     }
-
-    .loading-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
+    .loading-overlay.active { opacity: 1; visibility: visible; }
     .loading-spinner {
-      width: 50px;
-      height: 50px;
+      width: 50px; height: 50px;
       border: 3px solid var(--border);
       border-top-color: var(--gold);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
+    .loading-overlay p { color: var(--text-secondary); font-size: 0.9rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 992px) {
       .admin-container { padding: 1rem; }
       .product-form { flex-direction: column; }
     }
-
     @media (max-width: 768px) {
       .form-row { flex-direction: column; }
       .categories-row { flex-direction: column; }
       .variant-options { flex-direction: column; }
       .features-grid { grid-template-columns: 1fr; }
-      .countdown-row { flex-direction: column; }
+      .page-header h1 { font-size: 1.4rem; }
     }
   </style>
 </head>
 <body>
 
-<div class="admin-container">
-  <div class="page-header">
-    <h1><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h1>
-    <div class="header-actions">
-      <button class="btn btn-outline" onclick="resetForm()"><i class="fas fa-times"></i> إلغاء</button>
-      <button class="btn btn-save" onclick="saveProduct()"><i class="fas fa-save"></i> حفظ المنتج</button>
+  <!-- ===== HEADER ===== -->
+  <div id="header-container"></div>
+
+  <div class="admin-container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <h1><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h1>
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="resetForm()">
+          <i class="fas fa-redo"></i> إعادة تعيين
+        </button>
+        <button class="btn btn-save" id="saveBtn" onclick="saveProduct()">
+          <i class="fas fa-save"></i> حفظ المنتج
+        </button>
+      </div>
     </div>
-  </div>
 
-  <div class="product-form">
-    <div class="main-column">
-      
-      <!-- المعلومات الأساسية وحالة النشر -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-info-circle"></i> المعلومات الأساسية وحالة النشر</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label><i class="fas fa-heading"></i> اسم المنتج <span style="color: var(--danger);">*</span></label>
-            <input type="text" id="productName" placeholder="أدخل اسم المنتج...">
-          </div>
-          
-          <div class="form-group">
-            <label><i class="fas fa-align-left"></i> وصف المنتج</label>
-            <textarea id="description" rows="4" placeholder="وصف تفصيلي للمنتج..."></textarea>
-          </div>
+    <!-- PRODUCT FORM -->
+    <div class="product-form">
 
-          <!-- التصنيف الرئيسي والفرعي -->
-          <div class="categories-row">
+      <!-- ============ MAIN COLUMN ============ -->
+      <div class="main-column">
+
+        <!-- المعلومات الأساسية -->
+        <div class="card">
+          <div class="card-header" onclick="toggleCard(this)">
+            <h3><i class="fas fa-info-circle"></i> المعلومات الأساسية</h3>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="card-body">
+
             <div class="form-group">
-              <label><i class="fas fa-folder"></i> التصنيف الرئيسي</label>
-              <select id="mainCategory" onchange="updateSubCategories()">
-                <option value="">-- اختر التصنيف الرئيسي --</option>
-                <option value="الكترونيات">📱 إلكترونيات</option>
-                <option value="ملابس">👕 ملابس</option>
-                <option value="كتب">📚 كتب</option>
-                <option value="منزل">🏠 المنزل والمطبخ</option>
-                <option value="جمال">💄 الجمال والعناية</option>
-                <option value="رياضة">⚽ رياضة</option>
-                <option value="العاب">🎮 ألعاب</option>
-                <option value="اطفال">👶 أطفال</option>
-              </select>
+              <label><i class="fas fa-tag"></i> اسم المنتج <span class="required-star">*</span></label>
+              <input type="text" id="productName" placeholder="مثال: جلابة السهرة الذهبية...">
             </div>
+
             <div class="form-group">
-              <label><i class="fas fa-folder-open"></i> التصنيف الفرعي</label>
-              <select id="subCategory">
-                <option value="">-- اختر التصنيف الفرعي --</option>
-              </select>
+              <label><i class="fas fa-align-left"></i> وصف المنتج</label>
+              <textarea id="description" rows="4" placeholder="وصف تفصيلي للمنتج..."></textarea>
             </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label><i class="fas fa-eye"></i> حالة النشر</label>
-              <select class="status-select" id="visibility">
-                <option value="active">✅ منشور</option>
-                <option value="draft">📝 مسودة</option>
-                <option value="hidden">👻 مخفي</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-star"></i> منتج مميز</label>
-              <div class="featured-checkbox">
-                <input type="checkbox" id="featured">
-                <label for="featured">تفعيل كمنتج مميز</label>
-              </div>
-            </div>
-          </div>
-          
-          <div id="dynamicFields">
-            <div class="form-group dynamic-field" data-for="book">
-              <label><i class="fas fa-user-edit"></i> المؤلف</label>
-              <input type="text" id="author" placeholder="اسم المؤلف">
-            </div>
-            <div class="form-group dynamic-field" data-for="book">
-              <label><i class="fas fa-building"></i> الناشر</label>
-              <input type="text" id="publisher" placeholder="دار النشر">
-            </div>
-            <div class="form-group dynamic-field" data-for="physical,electronic">
-              <label><i class="fas fa-building"></i> الماركة</label>
-              <input type="text" id="brand" placeholder="اسم الماركة">
-            </div>
-            <div class="form-group dynamic-field" data-for="electronic">
-              <label><i class="fas fa-microchip"></i> الموديل</label>
-              <input type="text" id="model" placeholder="رقم الموديل">
-            </div>
-            <div class="form-group dynamic-field" data-for="food">
-              <label><i class="fas fa-calendar-alt"></i> تاريخ الصلاحية</label>
-              <input type="date" id="expiryDate">
-            </div>
-            <div class="form-group dynamic-field" data-for="digital">
-              <label><i class="fas fa-cloud-upload-alt"></i> رابط الملف الرقمي</label>
-              <input type="url" id="digitalFileUrl" placeholder="رابط التحميل">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- المزايات (الميزات) -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-star-of-life"></i> مزايا المنتج</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="features-grid" id="featuresGrid">
-            <div class="feature-item" data-feature="skip_cart">
-              <input type="checkbox" id="skip_cart">
-              <label for="skip_cart">🚀 تخطي عربة التسوق</label>
-            </div>
-            <div class="feature-item" data-feature="direct_checkout">
-              <input type="checkbox" id="direct_checkout">
-              <label for="direct_checkout">💳 صفحة الدفع المباشر</label>
-            </div>
-            <div class="feature-item" data-feature="mobile_install">
-              <input type="checkbox" id="mobile_install">
-              <label for="mobile_install">📱 تثبيت على الهاتف المحمول</label>
-            </div>
-            <div class="feature-item" data-feature="desktop_install">
-              <input type="checkbox" id="desktop_install">
-              <label for="desktop_install">💻 تثبيت على الحاسوب</label>
-            </div>
-            <div class="feature-item" data-feature="open_description">
-              <input type="checkbox" id="open_description">
-              <label for="open_description">📖 افتتاح الوصف</label>
-            </div>
-            <div class="feature-item" data-feature="quantity_select">
-              <input type="checkbox" id="quantity_select">
-              <label for="quantity_select">🔢 تحديد كمية المنتج</label>
-            </div>
-            <div class="feature-item" data-feature="direct_add_cart">
-              <input type="checkbox" id="direct_add_cart">
-              <label for="direct_add_cart">🛒 إضافة مباشرة إلى عربة التسوق</label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- المشاركة الاجتماعية -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-share-alt"></i> مشاركة على وسائل التواصل</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="share-buttons">
-            <div class="share-btn facebook" onclick="shareOnFacebook()">
-              <i class="fab fa-facebook-f"></i> مشاركة على فيسبوك
-            </div>
-            <div class="share-btn twitter" onclick="shareOnTwitter()">
-              <i class="fab fa-twitter"></i> مشاركة على إكس
-            </div>
-            <div class="share-btn whatsapp" onclick="shareOnWhatsApp()">
-              <i class="fab fa-whatsapp"></i> مشاركة على واتساب
-            </div>
-          </div>
-          <div class="helper-text" style="margin-top: 1rem;">
-            <i class="fas fa-info-circle"></i> سيتم استخدام رابط المنتج بعد الحفظ للمشاركة
-          </div>
-        </div>
-      </div>
-
-      <!-- تخصيص الزوار -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-users"></i> تخصيص الزوار</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label>عدد الزوار المعروضين</label>
-            <div class="range-control">
-              <span>أقل</span>
-              <input type="range" id="visitorMin" min="0" max="100" value="10" oninput="updateVisitorRange()">
-              <span>أكثر</span>
-              <input type="number" id="visitorMax" min="0" max="100" value="25" oninput="updateVisitorRangeReverse()">
-            </div>
-            <div class="form-row" style="margin-top: 0.5rem;">
+            <!-- التصنيف -->
+            <div class="categories-row">
               <div class="form-group">
-                <label>الحد الأدنى</label>
-                <input type="number" id="visitorMinValue" value="10" onchange="updateVisitorMin()">
+                <label><i class="fas fa-folder"></i> الفئة <span class="required-star">*</span></label>
+                <select id="mainCategory" onchange="loadDynamicFields()">
+                  <option value="">-- اختر الفئة --</option>
+                  <option value="الجلابة">👗 الجلابة</option>
+                  <option value="القفطان">👑 القفطان</option>
+                  <option value="التكشيطة">✨ التكشيطة</option>
+                  <option value="الجبادور">🧥 الجبادور</option>
+                  <option value="العباية">🌙 العباية</option>
+                </select>
               </div>
               <div class="form-group">
-                <label>الحد الأقصى</label>
-                <input type="number" id="visitorMaxValue" value="25" onchange="updateVisitorMax()">
+                <label><i class="fas fa-folder-open"></i> النوع الفرعي</label>
+                <select id="subCategory">
+                  <option value="">-- اختر الفئة أولاً --</option>
+                </select>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- تخصيص المخزون -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-boxes"></i> تخصيص المخزون</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label>نطاق المخزون المعروض</label>
-            <div class="range-control">
-              <span>أقل</span>
-              <input type="range" id="stockMin" min="0" max="50" value="5" oninput="updateStockRange()">
-              <span>أكثر</span>
-              <input type="number" id="stockMax" min="0" max="50" value="10" oninput="updateStockRangeReverse()">
-            </div>
-            <div class="form-row" style="margin-top: 0.5rem;">
+            <!-- الحالة والمميز -->
+            <div class="form-row">
               <div class="form-group">
-                <label>الحد الأدنى</label>
-                <input type="number" id="stockMinValue" value="5" onchange="updateStockMin()">
+                <label><i class="fas fa-eye"></i> حالة النشر</label>
+                <select id="visibility">
+                  <option value="active">✅ منشور ومرئي</option>
+                  <option value="draft">📝 مسودة (غير منشور)</option>
+                  <option value="hidden">👻 مخفي</option>
+                </select>
               </div>
               <div class="form-group">
-                <label>الحد الأقصى</label>
-                <input type="number" id="stockMaxValue" value="10" onchange="updateStockMax()">
+                <label><i class="fas fa-star"></i> منتج مميز</label>
+                <div class="checkbox-group" style="margin-top: 0.6rem;">
+                  <input type="checkbox" id="featured">
+                  <label for="featured">يظهر في الصفحة الرئيسية</label>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- العداد التنازلي -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-hourglass-half"></i> العداد التنازلي للعرض</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="countdown-row">
-            <div class="countdown-item">
-              <input type="number" id="countdownDays" value="1" min="0" max="365">
-              <label><i class="fas fa-calendar-day"></i> الأيام</label>
-            </div>
-            <div class="countdown-item">
-              <input type="number" id="countdownHours" value="0" min="0" max="23">
-              <label><i class="fas fa-clock"></i> الساعات</label>
-            </div>
-            <div class="countdown-item">
-              <input type="number" id="countdownMinutes" value="0" min="0" max="59">
-              <label><i class="fas fa-clock"></i> الدقائق</label>
-            </div>
-            <div class="countdown-item">
-              <input type="number" id="countdownSeconds" value="0" min="0" max="59">
-              <label><i class="fas fa-clock"></i> الثواني</label>
-            </div>
-          </div>
-          <div class="helper-text" style="margin-top: 1rem;">
-            <i class="fas fa-info-circle"></i> سيتم عرض عداد تنازلي للمنتج حتى انتهاء العرض
           </div>
         </div>
-      </div>
 
-      <!-- المتغيرات -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-palette"></i> المتغيرات (الألوان، المقاسات، الإصدارات...)</h3>
-          <i class="fas fa-chevron-down"></i>
+        <!-- مزايا المنتج -->
+        <div class="card">
+          <div class="card-header" onclick="toggleCard(this)">
+            <h3><i class="fas fa-sliders-h"></i> خيارات العرض</h3>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="card-body">
+            <div class="features-grid">
+              <div class="feature-item" onclick="toggleFeature(this)">
+                <input type="checkbox" id="feat_quick_order">
+                <label for="feat_quick_order">⚡ طلب سريع (واتساب مباشر)</label>
+              </div>
+              <div class="feature-item" onclick="toggleFeature(this)">
+                <input type="checkbox" id="feat_show_sizes">
+                <label for="feat_show_sizes">📐 عرض المقاسات</label>
+              </div>
+              <div class="feature-item" onclick="toggleFeature(this)">
+                <input type="checkbox" id="feat_custom_order">
+                <label for="feat_custom_order">🎨 يقبل التخصيص</label>
+              </div>
+              <div class="feature-item" onclick="toggleFeature(this)">
+                <input type="checkbox" id="feat_limited">
+                <label for="feat_limited">💎 كمية محدودة</label>
+              </div>
+              <div class="feature-item" onclick="toggleFeature(this)">
+                <input type="checkbox" id="feat_new_arrival">
+                <label for="feat_new_arrival">🆕 وصل حديثاً</label>
+              </div>
+              <div class="feature-item" onclick="toggleFeature(this)">
+                <input type="checkbox" id="feat_bestseller">
+                <label for="feat_bestseller">🔥 الأكثر طلباً</label>
+              </div>
+            </div>
+            <div class="helper-text">
+              <i class="fas fa-info-circle"></i>
+              هاد الخيارات كتبين كـ badges على بطاقة المنتج
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="variants-section">
+
+        <!-- مشاركة -->
+        <div class="card">
+          <div class="card-header" onclick="toggleCard(this)">
+            <h3><i class="fas fa-share-alt"></i> مشاركة على التواصل الاجتماعي</h3>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="card-body">
+            <div class="share-buttons">
+              <button class="share-btn facebook" onclick="shareOn('facebook')">
+                <i class="fab fa-facebook-f"></i> فيسبوك
+              </button>
+              <button class="share-btn twitter" onclick="shareOn('twitter')">
+                <i class="fab fa-twitter"></i> إكس (تويتر)
+              </button>
+              <button class="share-btn whatsapp" onclick="shareOn('whatsapp')">
+                <i class="fab fa-whatsapp"></i> واتساب
+              </button>
+            </div>
+            <div class="helper-text" style="margin-top: 1rem;">
+              <i class="fas fa-info-circle"></i>
+              الرابط غادي يتولد بعد حفظ المنتج
+            </div>
+          </div>
+        </div>
+
+        <!-- المتغيرات (المقاسات والألوان) -->
+        <div class="card">
+          <div class="card-header" onclick="toggleCard(this)">
+            <h3><i class="fas fa-palette"></i> المقاسات والألوان</h3>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="card-body">
             <div class="variant-options">
+
+              <!-- الألوان -->
               <div class="variant-option">
-                <h4><i class="fas fa-palette"></i> الخيار 1 (لون / إصدار / نوع)</h4>
-                <div class="variant-tags" id="option1Container">
-                  <span class="variant-tag" data-value="افتراضي" onclick="toggleVariantTag(this)">افتراضي</span>
+                <h4><i class="fas fa-circle"></i> الألوان المتاحة</h4>
+                <div class="variant-tags" id="colorTags">
+                  <span class="variant-tag selected" data-value="أسود">أسود <span class="remove-tag" onclick="removeTag(this, 'colors')">×</span></span>
+                  <span class="variant-tag selected" data-value="ذهبي">ذهبي <span class="remove-tag" onclick="removeTag(this, 'colors')">×</span></span>
+                  <span class="variant-tag selected" data-value="بيج">بيج <span class="remove-tag" onclick="removeTag(this, 'colors')">×</span></span>
                 </div>
                 <div class="add-value">
-                  <input type="text" id="newOption1" placeholder="أضف قيمة جديدة...">
-                  <button onclick="addVariantValue('option1')"><i class="fas fa-plus"></i> إضافة</button>
+                  <input type="text" id="newColor" placeholder="أضف لوناً..." onkeypress="if(event.key==='Enter')addTag('newColor','colorTags','colors')">
+                  <button onclick="addTag('newColor','colorTags','colors')"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
+
+              <!-- المقاسات -->
               <div class="variant-option">
-                <h4><i class="fas fa-ruler"></i> الخيار 2 (مقاس / سعة / كمية)</h4>
-                <div class="variant-tags" id="option2Container">
-                  <span class="variant-tag" data-value="واحد" onclick="toggleVariantTag(this)">واحد</span>
+                <h4><i class="fas fa-ruler"></i> المقاسات المتاحة</h4>
+                <div class="variant-tags" id="sizeTags">
+                  <span class="variant-tag selected" data-value="S">S <span class="remove-tag" onclick="removeTag(this, 'sizes')">×</span></span>
+                  <span class="variant-tag selected" data-value="M">M <span class="remove-tag" onclick="removeTag(this, 'sizes')">×</span></span>
+                  <span class="variant-tag selected" data-value="L">L <span class="remove-tag" onclick="removeTag(this, 'sizes')">×</span></span>
+                  <span class="variant-tag selected" data-value="XL">XL <span class="remove-tag" onclick="removeTag(this, 'sizes')">×</span></span>
                 </div>
                 <div class="add-value">
-                  <input type="text" id="newOption2" placeholder="أضف قيمة جديدة...">
-                  <button onclick="addVariantValue('option2')"><i class="fas fa-plus"></i> إضافة</button>
+                  <input type="text" id="newSize" placeholder="أضف مقاساً..." onkeypress="if(event.key==='Enter')addTag('newSize','sizeTags','sizes')">
+                  <button onclick="addTag('newSize','sizeTags','sizes')"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
+
             </div>
-            
+
             <button class="generate-btn" onclick="generateVariants()">
-              <i class="fas fa-magic"></i> إنشاء جميع المتغيرات
+              <i class="fas fa-magic"></i> توليد جدول المتغيرات
             </button>
-            
-            <div id="variantsContainer" style="display: none;">
+
+            <div id="variantsTableContainer" style="display:none;">
               <div class="variants-table-wrapper">
                 <table class="variants-table" id="variantsTable">
                   <thead>
                     <tr>
-                      <th>الصورة</th>
-                      <th>المتغير</th>
-                      <th>السعر</th>
-                      <th>الكمية</th>
+                      <th>اللون</th>
+                      <th>المقاس</th>
+                      <th>السعر (درهم)</th>
+                      <th>المخزون</th>
                       <th>SKU</th>
-                      <th></th>
+                      <th>إجراء</th>
                     </tr>
                   </thead>
                   <tbody id="variantsBody"></tbody>
                 </table>
               </div>
             </div>
-            
-            <div class="helper-text">
-              <i class="fas fa-info-circle"></i> مناسب للمنتجات التي لها خيارات مثل: الملابس (مقاسات/ألوان)، الإلكترونيات (سعة/لون). يمكنك إضافة صورة لكل متغير.
-            </div>
           </div>
         </div>
+
       </div>
 
-      <!-- الصور والفيديو -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-photo-video"></i> الصور والفيديو</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="media-tabs">
-            <button class="media-tab active" data-tab="images"><i class="fas fa-images"></i> الصور (<span id="imageCount">0</span>/10)</button>
-            <button class="media-tab" data-tab="video"><i class="fas fa-video"></i> الفيديو (<span id="videoCount">0</span>/1)</button>
-          </div>
+      <!-- ============ SIDEBAR COLUMN ============ -->
+      <div class="sidebar-column">
 
-          <div class="media-content active" id="imagesTab">
-            <div class="media-upload-area" onclick="document.getElementById('imageUpload').click()">
-              <i class="fas fa-cloud-upload-alt"></i>
-              <p><strong>اضغط لرفع الصور</strong> أو اسحبها هنا</p>
-              <p style="font-size: 0.8rem;">يمكنك رفع حتى 10 صور</p>
-            </div>
-            <input type="file" id="imageUpload" accept="image/*" multiple style="display: none" onchange="handleImageUpload(event)">
-            <div class="images-grid" id="imagesGrid"></div>
+        <!-- السعر والمخزون -->
+        <div class="card">
+          <div class="card-header" onclick="toggleCard(this)">
+            <h3><i class="fas fa-money-bill-wave"></i> السعر والمخزون</h3>
+            <i class="fas fa-chevron-down toggle-icon"></i>
           </div>
+          <div class="card-body">
 
-          <div class="media-content" id="videoTab">
-            <div class="media-upload-area" onclick="document.getElementById('videoUpload').click()">
-              <i class="fas fa-video"></i>
-              <p><strong>اضغط لرفع الفيديو</strong></p>
-              <p style="font-size: 0.8rem;">فيديو واحد كحد أقصى</p>
-            </div>
-            <input type="file" id="videoUpload" accept="video/*" style="display: none" onchange="handleVideoUpload(event)">
-            <div id="videoContainer"></div>
-          </div>
-
-          <div class="upload-progress" id="uploadProgress">
-            <div>جاري الرفع... <span id="uploadCount">0</span>/<span id="totalCount">0</span></div>
-            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- التسعير -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-tag"></i> التسعير والمخزون</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="form-row">
             <div class="form-group">
-              <label><i class="fas fa-dollar-sign"></i> السعر</label>
-              <input type="number" id="price" placeholder="0.00" step="0.01">
+              <label><i class="fas fa-tag"></i> نطاق السعر <span class="required-star">*</span></label>
+              <input type="text" id="priceRange" placeholder="مثال: 600-900 درهم">
             </div>
+
             <div class="form-group">
-              <label><i class="fas fa-chart-line"></i> سعر المقارنة</label>
-              <input type="number" id="comparePrice" placeholder="السعر الأصلي" step="0.01">
+              <label><i class="fas fa-sort-numeric-down"></i> ترتيب العرض</label>
+              <input type="number" id="displayOrder" value="0" min="0" placeholder="0 = أول">
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-boxes"></i> الكمية في المخزون</label>
+              <input type="number" id="stockQty" min="0" placeholder="اتركه فارغاً إذا غير محدود">
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-percent"></i> نسبة الخصم (%)</label>
+              <input type="number" id="discountPct" min="0" max="100" placeholder="0 = بدون خصم">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- الصور والفيديو -->
+        <div class="card">
+          <div class="card-header" onclick="toggleCard(this)">
+            <h3><i class="fas fa-images"></i> الصور والفيديو</h3>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="card-body">
+
+            <div class="media-tabs">
+              <button class="media-tab active" onclick="switchMediaTab('images', this)">
+                <i class="fas fa-images"></i> الصور
+              </button>
+              <button class="media-tab" onclick="switchMediaTab('video', this)">
+                <i class="fas fa-video"></i> فيديو
+              </button>
+            </div>
+
+            <!-- IMAGES -->
+            <div class="media-content active" id="imagesTab">
+              <div class="upload-zone" id="imageDropZone" onclick="document.getElementById('imageFilesInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>اسحب الصور هنا أو اضغط للاختيار</p>
+                <small>PNG, JPG, WEBP — حد أقصى 10MB — حتى 10 صور</small>
+              </div>
+              <input type="file" id="imageFilesInput" accept="image/*" multiple style="display:none" onchange="handleImageUpload(event)">
+
+              <div class="upload-progress" id="imgProgress">
+                <div class="progress-label" id="imgProgressLabel">جاري الرفع...</div>
+                <div class="progress-bar"><div class="progress-fill" id="imgProgressFill"></div></div>
+              </div>
+
+              <div class="images-grid" id="imagesGrid"></div>
+
+              <div class="helper-text" style="margin-top: 0.75rem;">
+                <i class="fas fa-info-circle"></i>
+                الصورة الأولى هي الرئيسية. اضغط على صورة لتغيير ترتيبها.
+              </div>
+            </div>
+
+            <!-- VIDEO -->
+            <div class="media-content" id="videoTab">
+              <div class="upload-zone" id="videoDropZone" onclick="document.getElementById('videoFileInput').click()">
+                <i class="fas fa-play-circle"></i>
+                <p>اضغط لرفع فيديو المنتج</p>
+                <small>MP4, MOV — حد أقصى 50MB</small>
+              </div>
+              <input type="file" id="videoFileInput" accept="video/*" style="display:none" onchange="handleVideoUpload(event)">
+
+              <div class="upload-progress" id="vidProgress">
+                <div class="progress-label" id="vidProgressLabel">جاري رفع الفيديو...</div>
+                <div class="progress-bar"><div class="progress-fill" id="vidProgressFill"></div></div>
+              </div>
+
+              <div id="videoPreviewContainer"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ملاحظات داخلية -->
+        <div class="card">
+          <div class="card-header" onclick="toggleCard(this)">
+            <h3><i class="fas fa-sticky-note"></i> ملاحظات داخلية</h3>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label><i class="fas fa-pen"></i> ملاحظة (للإدارة فقط)</label>
+              <textarea id="internalNotes" rows="3" placeholder="ملاحظات خاصة — لن تظهر للزبائن..."></textarea>
             </div>
           </div>
-          <div class="form-group">
-            <label><i class="fas fa-boxes"></i> الكمية المتوفرة</label>
-            <input type="number" id="stockQuantity" value="0">
-          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="sidebar-column">
-      
-      <!-- الشحن -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-truck"></i> معلومات الشحن</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label><i class="fas fa-weight-hanging"></i> الوزن (كجم)</label>
-            <input type="number" step="0.01" id="weight" placeholder="0.00">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-arrows-alt"></i> الأبعاد (سم)</label>
-            <input type="text" id="dimensions" placeholder="طول × عرض × ارتفاع">
-          </div>
-        </div>
       </div>
 
-      <!-- الأرقام التعريفية -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-barcode"></i> الأرقام التعريفية</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label><i class="fas fa-barcode"></i> SKU</label>
-            <input type="text" id="sku" placeholder="رمز المنتج">
-          </div>
-          <div class="form-group" id="isbnField">
-            <label><i class="fas fa-book"></i> ISBN</label>
-            <input type="text" id="isbn" placeholder="رقم ISBN">
-          </div>
-        </div>
-      </div>
+    </div><!-- /product-form -->
 
-      <!-- SEO -->
-      <div class="card">
-        <div class="card-header" onclick="toggleCard(this)">
-          <h3><i class="fas fa-chart-line"></i> تحسين محركات البحث (SEO)</h3>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label><i class="fas fa-link"></i> الرابط المخصص</label>
-            <input type="text" id="customSlug" placeholder="رابط المنتج المخصص (slug)">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-tag"></i> عنوان SEO</label>
-            <input type="text" id="metaTitle" placeholder="عنوان محسن لمحركات البحث">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-align-left"></i> وصف SEO</label>
-            <textarea id="metaDescription" rows="3" placeholder="وصف محسن لمحركات البحث"></textarea>
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-hashtag"></i> الكلمات المفتاحية</label>
-            <input type="text" id="tags" placeholder="كلمات مفتاحية، مفصولة بفاصلة">
-          </div>
-        </div>
-      </div>
-    </div>
+  </div><!-- /admin-container -->
+
+  <!-- LOADING OVERLAY -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p id="loadingText">جاري الحفظ...</p>
   </div>
-</div>
 
-<div id="message" class="message"></div>
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-spinner"></div>
-  <div>جاري حفظ المنتج...</div>
-</div>
+  <!-- MESSAGE -->
+  <div class="message" id="message"></div>
 
-<script src="config.js"></script>
-<script>
-  // التصنيفات الفرعية
-  const subCategoriesData = {
-    "الكترونيات": ["هواتف", "حواسيب", "أجهزة لوحية", "سماعات", "شواحن", "كاميرات", "أجهزة منزلية"],
-    "ملابس": ["رجالي", "نسائي", "أطفال", "أحذية", "اكسسوارات", "رياضي", "ملابس داخلية"],
-    "كتب": ["روايات", "تعليمية", "دينية", "تنمية بشرية", "أطفال", "علمية", "تاريخ"],
-    "منزل": ["أثاث", "أدوات مطبخ", "ديكور", "إضاءة", "منسوجات", "تنظيف", "حديقة"],
-    "جمال": ["عناية بالبشرة", "مكياج", "عطور", "عناية بالشعر", "أدوات تجميل", "عناية بالجسم"],
-    "رياضة": ["ملابس رياضية", "أحذية رياضية", "أجهزة رياضية", "مكملات غذائية", "معدات", "تمارين منزلية"],
-    "العاب": ["بلاي ستيشن", "إكس بوكس", "نينتندو", "ألعاب كمبيوتر", "ألعاب طاولة", "أكسسوارات"],
-    "اطفال": ["ألعاب", "ملابس", "حفاضات", "أدوات تغذية", "كتب أطفال", "عناية بالطفل"]
-  };
+  <!-- ===== FOOTER ===== -->
+  <div id="footer-container"></div>
 
-  // تحديث التصنيفات الفرعية
-  function updateSubCategories() {
-    const mainCategory = document.getElementById('mainCategory').value;
-    const subCategorySelect = document.getElementById('subCategory');
-    subCategorySelect.innerHTML = '<option value="">-- اختر التصنيف الفرعي --</option>';
-    
-    if (mainCategory && subCategoriesData[mainCategory]) {
-      subCategoriesData[mainCategory].forEach(sub => {
-        const option = document.createElement('option');
-        option.value = sub;
-        option.textContent = sub;
-        subCategorySelect.appendChild(option);
-      });
+  <script src="header.js"></script>
+  <script src="footer.js"></script>
+
+  <script>
+    // ============================================================
+    //  CONFIG CHECK
+    // ============================================================
+    if (typeof CONFIG === 'undefined') {
+      document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;font-family:sans-serif">❌ config.js مفقود</div>';
+      throw new Error('CONFIG missing');
     }
-  }
 
-  // دوال تخصيص الزوار
-  function updateVisitorRange() {
-    const min = document.getElementById('visitorMin').value;
-    document.getElementById('visitorMinValue').value = min;
-    if (parseInt(min) > parseInt(document.getElementById('visitorMax').value)) {
-      document.getElementById('visitorMax').value = min;
-      document.getElementById('visitorMaxValue').value = min;
-    }
-  }
+    const SUPA_URL    = CONFIG.SUPABASE_URL;
+    const SUPA_KEY    = CONFIG.SUPABASE_ANON_KEY;
+    const CL_CLOUD    = CONFIG.CLOUDINARY_CLOUD_NAME;
+    const CL_PRESET   = CONFIG.CLOUDINARY_UPLOAD_PRESET;
+    const CL_API_KEY  = CONFIG.CLOUDINARY_API_KEY;
+    const CL_SECRET   = CONFIG.CLOUDINARY_API_SECRET;
 
-  function updateVisitorRangeReverse() {
-    const max = document.getElementById('visitorMax').value;
-    document.getElementById('visitorMaxValue').value = max;
-    if (parseInt(max) < parseInt(document.getElementById('visitorMin').value)) {
-      document.getElementById('visitorMin').value = max;
-      document.getElementById('visitorMinValue').value = max;
-    }
-  }
+    // ============================================================
+    //  STATE
+    // ============================================================
+    let uploadedImages = [];  // [{url, public_id}]
+    let uploadedVideo  = null; // {url, public_id}
 
-  function updateVisitorMin() {
-    const val = parseInt(document.getElementById('visitorMinValue').value) || 0;
-    document.getElementById('visitorMin').value = val;
-    if (val > parseInt(document.getElementById('visitorMax').value)) {
-      document.getElementById('visitorMax').value = val;
-      document.getElementById('visitorMaxValue').value = val;
-    }
-  }
-
-  function updateVisitorMax() {
-    const val = parseInt(document.getElementById('visitorMaxValue').value) || 0;
-    document.getElementById('visitorMax').value = val;
-    if (val < parseInt(document.getElementById('visitorMin').value)) {
-      document.getElementById('visitorMin').value = val;
-      document.getElementById('visitorMinValue').value = val;
-    }
-  }
-
-  // دوال تخصيص المخزون
-  function updateStockRange() {
-    const min = document.getElementById('stockMin').value;
-    document.getElementById('stockMinValue').value = min;
-    if (parseInt(min) > parseInt(document.getElementById('stockMax').value)) {
-      document.getElementById('stockMax').value = min;
-      document.getElementById('stockMaxValue').value = min;
-    }
-  }
-
-  function updateStockRangeReverse() {
-    const max = document.getElementById('stockMax').value;
-    document.getElementById('stockMaxValue').value = max;
-    if (parseInt(max) < parseInt(document.getElementById('stockMin').value)) {
-      document.getElementById('stockMin').value = max;
-      document.getElementById('stockMinValue').value = max;
-    }
-  }
-
-  function updateStockMin() {
-    const val = parseInt(document.getElementById('stockMinValue').value) || 0;
-    document.getElementById('stockMin').value = val;
-    if (val > parseInt(document.getElementById('stockMax').value)) {
-      document.getElementById('stockMax').value = val;
-      document.getElementById('stockMaxValue').value = val;
-    }
-  }
-
-  function updateStockMax() {
-    const val = parseInt(document.getElementById('stockMaxValue').value) || 0;
-    document.getElementById('stockMax').value = val;
-    if (val < parseInt(document.getElementById('stockMin').value)) {
-      document.getElementById('stockMin').value = val;
-      document.getElementById('stockMinValue').value = val;
-    }
-  }
-
-  // دوال المشاركة
-  function shareOnFacebook() {
-    const productName = document.getElementById('productName').value || 'منتج جديد';
-    const url = window.location.href;
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(productName)}`, '_blank', 'width=600,height=400');
-    showMessage('تم فتح نافذة المشاركة على فيسبوك', 'info');
-  }
-
-  function shareOnTwitter() {
-    const productName = document.getElementById('productName').value || 'منتج جديد';
-    const url = window.location.href;
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(productName)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
-    showMessage('تم فتح نافذة المشاركة على إكس', 'info');
-  }
-
-  function shareOnWhatsApp() {
-    const productName = document.getElementById('productName').value || 'منتج جديد';
-    const url = window.location.href;
-    const text = `${productName}\n${url}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    showMessage('تم فتح واتساب للمشاركة', 'info');
-  }
-
-  // المتغيرات العامة
-  let currentImages = [];
-  let currentVideo = null;
-  let selectedOption1 = new Set();
-  let selectedOption2 = new Set();
-  let isUploading = false;
-
-  const MAX_IMAGES = 10;
-  const MAX_VIDEO = 1;
-
-  // عرض الرسائل
-  function showMessage(text, type) {
-    const msg = document.getElementById('message');
-    msg.textContent = text;
-    msg.className = `message ${type}`;
-    msg.style.display = 'block';
-    setTimeout(() => { msg.style.display = 'none'; }, 3000);
-  }
-
-  // تحديث العداد
-  function updateCounters() {
-    document.getElementById('imageCount').textContent = currentImages.filter(img => img).length;
-    document.getElementById('videoCount').textContent = currentVideo ? 1 : 0;
-  }
-
-  // فتح/غلق البطاقة
-  function toggleCard(header) {
-    const card = header.parentElement;
-    const body = card.querySelector('.card-body');
-    header.classList.toggle('collapsed');
-    body.classList.toggle('collapsed');
-  }
-
-  // عرض الصور
-  function renderImages() {
-    const grid = document.getElementById('imagesGrid');
-    grid.innerHTML = '';
-    
-    currentImages.forEach((img, index) => {
-      if (img) {
-        const div = document.createElement('div');
-        div.className = `image-item ${index === 0 ? 'main-image' : ''}`;
-        div.innerHTML = `
-          <img src="${img.url}" alt="صورة المنتج">
-          ${index === 0 ? '<div class="main-badge">الصورة الرئيسية</div>' : ''}
-          <div class="image-overlay">
-            ${index !== 0 ? '<button onclick="setMainImage(' + index + ')" title="تعيين كصورة رئيسية"><i class="fas fa-crown"></i></button>' : ''}
-            <button onclick="removeImage(${index})" title="حذف"><i class="fas fa-trash"></i></button>
-          </div>
-        `;
-        grid.appendChild(div);
-      }
-    });
-    
-    updateCounters();
-  }
-
-  // عرض الفيديو
-  function renderVideo() {
-    const container = document.getElementById('videoContainer');
-    if (currentVideo) {
-      container.innerHTML = `
-        <div class="video-container">
-          <video src="${currentVideo.url}" controls></video>
-          <div class="video-actions">
-            <button onclick="removeVideo()" title="حذف الفيديو"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <div class="empty-video" style="text-align: center; padding: 3rem; background: var(--bg-secondary); border-radius: var(--radius); color: var(--text-muted);">
-          <i class="fas fa-video" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-          <p>لا يوجد فيديو مرفق</p>
-          <p style="font-size: 0.8rem;">يمكنك رفع فيديو واحد للمنتج</p>
-        </div>
-      `;
-    }
-    updateCounters();
-  }
-
-  // رفع الصور
-  async function handleImageUpload(event) {
-    const files = Array.from(event.target.files);
-    if (isUploading) {
-      showMessage('يرجى الانتظار حتى انتهاء الرفع الحالي', 'error');
-      return;
-    }
-    
-    const remainingSlots = MAX_IMAGES - currentImages.filter(img => img).length;
-    if (files.length > remainingSlots) {
-      showMessage(`لا يمكن رفع أكثر من ${remainingSlots} صورة إضافية`, 'error');
-      return;
-    }
-    
-    await uploadFiles(files, 'image');
-    event.target.value = '';
-  }
-
-  // رفع الفيديو
-  async function handleVideoUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    if (currentVideo) {
-      showMessage('يوجد فيديو بالفعل. احذف الفيديو الحالي أولاً', 'error');
-      return;
-    }
-    
-    if (!file.type.startsWith('video/')) {
-      showMessage('الرجاء اختيار ملف فيديو صالح', 'error');
-      return;
-    }
-    
-    await uploadFiles([file], 'video');
-    event.target.value = '';
-  }
-
-  // رفع الملفات
-  async function uploadFiles(files, type) {
-    isUploading = true;
-    const progressDiv = document.getElementById('uploadProgress');
-    const uploadCount = document.getElementById('uploadCount');
-    const totalCount = document.getElementById('totalCount');
-    const progressFill = document.getElementById('progressFill');
-    
-    progressDiv.classList.add('show');
-    totalCount.textContent = files.length;
-    uploadCount.textContent = '0';
-    progressFill.style.width = '0%';
-    
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', window.CONFIG.CLOUDINARY_UPLOAD_PRESET);
-        formData.append('folder', type === 'video' ? 'product_videos' : 'product_images');
-        
-        const resourceType = type === 'video' ? 'video' : 'image';
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${window.CONFIG.CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`, {
-          method: 'POST',
-          body: formData
-        });
-        const data = await res.json();
-        
-        if (type === 'video') {
-          currentVideo = { url: data.secure_url };
-          renderVideo();
-        } else {
-          const emptyIndex = currentImages.findIndex(img => !img);
-          if (emptyIndex !== -1) {
-            currentImages[emptyIndex] = { url: data.secure_url };
-          } else {
-            currentImages.push({ url: data.secure_url });
-          }
-          renderImages();
-        }
-        
-        uploadCount.textContent = i + 1;
-        progressFill.style.width = `${((i + 1) / files.length) * 100}%`;
-        
-      } catch (error) {
-        showMessage(`فشل رفع ${file.name}`, 'error');
-      }
-    }
-    
-    setTimeout(() => {
-      progressDiv.classList.remove('show');
-    }, 1500);
-    
-    isUploading = false;
-    showMessage(`تم رفع ${files.length} ملف بنجاح`, 'success');
-  }
-
-  function setMainImage(index) {
-    if (index === 0) return;
-    const temp = currentImages[0];
-    currentImages[0] = currentImages[index];
-    currentImages[index] = temp;
-    renderImages();
-    showMessage('تم تعيين الصورة الرئيسية', 'success');
-  }
-
-  function removeImage(index) {
-    currentImages[index] = null;
-    renderImages();
-    showMessage('تم حذف الصورة', 'success');
-  }
-
-  function removeVideo() {
-    currentVideo = null;
-    renderVideo();
-    showMessage('تم حذف الفيديو', 'success');
-  }
-
-  // رفع صورة للمتغير
-  async function uploadVariantImage(rowIndex, input) {
-    const file = input.files[0];
-    if (!file) return;
-    
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', window.CONFIG.CLOUDINARY_UPLOAD_PRESET);
-      formData.append('folder', 'variant_images');
-      
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${window.CONFIG.CLOUDINARY_CLOUD_NAME}/image/upload`, {
-        method: 'POST',
-        body: formData
-      });
-      const data = await res.json();
-      
-      const imgElement = document.getElementById(`variant-img-${rowIndex}`);
-      if (imgElement) {
-        imgElement.src = data.secure_url;
-        imgElement.dataset.imageUrl = data.secure_url;
-      }
-      showMessage('تم رفع صورة المتغير بنجاح', 'success');
-    } catch (error) {
-      showMessage('فشل رفع صورة المتغير', 'error');
-    }
-    
-    input.value = '';
-  }
-
-  // المتغيرات
-  function toggleVariantTag(tag) {
-    tag.classList.toggle('selected');
-    const value = tag.dataset.value;
-    const container = tag.parentElement.parentElement;
-    const isOption1 = container.querySelector('h4').innerHTML.includes('الخيار 1');
-    
-    if (isOption1) {
-      if (tag.classList.contains('selected')) {
-        selectedOption1.add(value);
-      } else {
-        selectedOption1.delete(value);
-      }
-    } else {
-      if (tag.classList.contains('selected')) {
-        selectedOption2.add(value);
-      } else {
-        selectedOption2.delete(value);
-      }
-    }
-  }
-
-  function addVariantValue(option) {
-    let input, container;
-    if (option === 'option1') {
-      input = document.getElementById('newOption1');
-      container = document.getElementById('option1Container');
-    } else {
-      input = document.getElementById('newOption2');
-      container = document.getElementById('option2Container');
-    }
-    
-    const value = input.value.trim();
-    if (value && ![...container.querySelectorAll('.variant-tag')].some(t => t.dataset.value === value)) {
-      const tag = document.createElement('span');
-      tag.className = 'variant-tag';
-      tag.dataset.value = value;
-      tag.textContent = value;
-      tag.onclick = () => toggleVariantTag(tag);
-      container.appendChild(tag);
-      input.value = '';
-      showMessage(`تم إضافة ${value}`, 'success');
-    }
-  }
-
-  function generateVariants() {
-    const options1 = [...selectedOption1];
-    const options2 = [...selectedOption2];
-    
-    if (options1.length === 0 && options2.length === 0) {
-      showMessage('الرجاء اختيار قيمة واحدة على الأقل', 'error');
-      return;
-    }
-    
-    const variants = [];
-    if (options1.length > 0 && options2.length > 0) {
-      for (const opt1 of options1) {
-        for (const opt2 of options2) {
-          variants.push({ name: `${opt1} / ${opt2}`, price: 0, stock: 0, sku: '', image: null });
-        }
-      }
-    } else if (options1.length > 0) {
-      for (const opt1 of options1) {
-        variants.push({ name: opt1, price: 0, stock: 0, sku: '', image: null });
-      }
-    } else {
-      for (const opt2 of options2) {
-        variants.push({ name: opt2, price: 0, stock: 0, sku: '', image: null });
-      }
-    }
-    
-    displayVariants(variants);
-    showMessage(`تم إنشاء ${variants.length} متغير`, 'success');
-  }
-
-  function displayVariants(variants) {
-    const container = document.getElementById('variantsContainer');
-    const tbody = document.getElementById('variantsBody');
-    tbody.innerHTML = '';
-    
-    variants.forEach((v, i) => {
-      const row = tbody.insertRow();
-      const imageHtml = v.image ? 
-        `<img id="variant-img-${i}" class="variant-image" src="${v.image}" data-image-url="${v.image}" onclick="document.getElementById('variant-image-input-${i}').click()">` :
-        `<div id="variant-img-${i}" class="upload-variant-image" onclick="document.getElementById('variant-image-input-${i}').click()"><i class="fas fa-camera"></i></div>`;
-      
-      row.innerHTML = `
-        <td class="variant-image-cell">
-          ${imageHtml}
-          <input type="file" id="variant-image-input-${i}" accept="image/*" style="display: none" onchange="uploadVariantImage(${i}, this)">
-        </td>
-        <td>${v.name}<input type="hidden" class="variant-name" value="${v.name}"></td>
-        <td><input type="number" class="variant-price" placeholder="0.00" step="0.01" value="${v.price}"></td>
-        <td><input type="number" class="variant-stock" placeholder="0" value="${v.stock}"></td>
-        <td><input type="text" class="variant-sku" placeholder="SKU" value="${v.sku}"></td>
-        <td><button class="delete-variant" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>
-      `;
-    });
-    
-    container.style.display = 'block';
-  }
-
-  // تبديل علامات التبويب
-  function switchTab(tabName) {
-    document.querySelectorAll('.media-tab').forEach(tab => tab.classList.remove('active'));
-    document.querySelector(`.media-tab[data-tab="${tabName}"]`).classList.add('active');
-    
-    document.querySelectorAll('.media-content').forEach(content => content.classList.remove('active'));
-    document.getElementById(`${tabName}Tab`).classList.add('active');
-  }
-
-  // حفظ المنتج
-  async function saveProduct() {
-    const name = document.getElementById('productName').value.trim();
-    if (!name) {
-      showMessage('الرجاء إدخال اسم المنتج', 'error');
-      document.getElementById('productName').focus();
-      return;
-    }
-    
-    // جمع المزايا
-    const features = {
-      skip_cart: document.getElementById('skip_cart').checked,
-      direct_checkout: document.getElementById('direct_checkout').checked,
-      mobile_install: document.getElementById('mobile_install').checked,
-      desktop_install: document.getElementById('desktop_install').checked,
-      open_description: document.getElementById('open_description').checked,
-      quantity_select: document.getElementById('quantity_select').checked,
-      direct_add_cart: document.getElementById('direct_add_cart').checked
-    };
-    
-    // جمع المتغيرات مع الصور
-    const variants = [];
-    document.querySelectorAll('#variantsBody tr').forEach((row, index) => {
-      const imageElement = document.getElementById(`variant-img-${index}`);
-      variants.push({
-        name: row.querySelector('.variant-name')?.value,
-        price: parseFloat(row.querySelector('.variant-price')?.value) || 0,
-        stock: parseInt(row.querySelector('.variant-stock')?.value) || 0,
-        sku: row.querySelector('.variant-sku')?.value || '',
-        image: imageElement?.dataset?.imageUrl || null
-      });
-    });
-    
-    const productData = {
-      product_name: name,
-      description: document.getElementById('description').value,
-      main_category: document.getElementById('mainCategory').value,
-      sub_category: document.getElementById('subCategory').value,
-      regular_price: parseFloat(document.getElementById('price').value) || 0,
-      compare_price: parseFloat(document.getElementById('comparePrice').value) || null,
-      visibility: document.getElementById('visibility').value,
-      is_featured: document.getElementById('featured').checked,
-      stock_quantity: parseInt(document.getElementById('stockQuantity').value) || 0,
-      product_image_url: currentImages[0]?.url || null,
-      additional_images: currentImages.slice(1).filter(img => img?.url).map(img => img.url),
-      product_video_url: currentVideo?.url || null,
-      variants: JSON.stringify(variants),
-      features: JSON.stringify(features),
-      visitor_min: parseInt(document.getElementById('visitorMinValue').value) || 10,
-      visitor_max: parseInt(document.getElementById('visitorMaxValue').value) || 25,
-      stock_display_min: parseInt(document.getElementById('stockMinValue').value) || 5,
-      stock_display_max: parseInt(document.getElementById('stockMaxValue').value) || 10,
-      countdown_days: parseInt(document.getElementById('countdownDays').value) || 0,
-      countdown_hours: parseInt(document.getElementById('countdownHours').value) || 0,
-      countdown_minutes: parseInt(document.getElementById('countdownMinutes').value) || 0,
-      countdown_seconds: parseInt(document.getElementById('countdownSeconds').value) || 0,
-      custom_slug: document.getElementById('customSlug').value,
-      sku: document.getElementById('sku').value,
-      isbn: document.getElementById('isbn').value,
-      weight: parseFloat(document.getElementById('weight').value) || 0,
-      dimensions: document.getElementById('dimensions').value,
-      meta_title: document.getElementById('metaTitle').value,
-      meta_description: document.getElementById('metaDescription').value,
-      tags: document.getElementById('tags').value,
-      brand: document.getElementById('brand')?.value,
-      model: document.getElementById('model')?.value,
-      author: document.getElementById('author')?.value,
-      publisher: document.getElementById('publisher')?.value,
-      expiry_date: document.getElementById('expiryDate')?.value,
-      digital_file_url: document.getElementById('digitalFileUrl')?.value,
-      is_active: document.getElementById('visibility').value === 'active'
-    };
-    
-    showLoading(true);
-    
-    try {
-      const res = await fetch(`${window.CONFIG.SUPABASE_URL}/rest/v1/products`, {
-        method: 'POST',
+    // ============================================================
+    //  SUPABASE HELPER
+    // ============================================================
+    async function supaReq(endpoint, opts = {}) {
+      const res = await fetch(`${SUPA_URL}${endpoint}`, {
+        method: opts.method || 'GET',
         headers: {
-          'apikey': window.CONFIG.SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${window.CONFIG.SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json'
+          'apikey': SUPA_KEY,
+          'Authorization': `Bearer ${SUPA_KEY}`,
+          'Content-Type': 'application/json',
+          ...(opts.prefer ? { 'Prefer': opts.prefer } : {})
         },
-        body: JSON.stringify(productData)
+        body: opts.body ? JSON.stringify(opts.body) : undefined
       });
-      
-      if (res.ok) {
-        showMessage('تم حفظ المنتج بنجاح', 'success');
-        setTimeout(() => {
-          window.location.href = 'admin-products.html';
-        }, 1500);
-      } else {
-        throw new Error('فشل الحفظ');
+      if (res.status === 204) return null;
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
+      return data;
+    }
+
+    // ============================================================
+    //  CLOUDINARY UPLOAD
+    // ============================================================
+    async function clSign(pid) {
+      const ts  = Math.floor(Date.now() / 1000);
+      const str = `public_id=${pid}&timestamp=${ts}${CL_SECRET}`;
+      const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(str));
+      return {
+        sig: Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join(''),
+        ts
+      };
+    }
+
+    async function clUpload(file, type, onProg) {
+      return new Promise((resolve, reject) => {
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', CL_PRESET);
+        fd.append('folder', type === 'video' ? 'almaya-products/videos' : 'almaya-products/images');
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${CL_CLOUD}/${type}/upload`);
+        if (onProg) {
+          xhr.upload.onprogress = e => {
+            if (e.lengthComputable) onProg(Math.round(e.loaded / e.total * 100));
+          };
+        }
+        xhr.onload  = () => xhr.status < 300 ? resolve(JSON.parse(xhr.responseText)) : reject(new Error(xhr.status));
+        xhr.onerror = () => reject(new Error('خطأ في الاتصال'));
+        xhr.timeout = 300000;
+        xhr.send(fd);
+      });
+    }
+
+    async function clDel(pid, type) {
+      if (!pid) return;
+      try {
+        const { sig, ts } = await clSign(pid);
+        const fd = new FormData();
+        fd.append('public_id', pid);
+        fd.append('signature', sig);
+        fd.append('api_key', CL_API_KEY);
+        fd.append('timestamp', ts);
+        await fetch(`https://api.cloudinary.com/v1_1/${CL_CLOUD}/${type}/destroy`, { method: 'POST', body: fd });
+      } catch {}
+    }
+
+    function pubIdFromUrl(url) {
+      if (!url) return null;
+      const m = url.match(/\/upload\/v\d+\/(.+?)\.\w+$/);
+      return m ? m[1] : null;
+    }
+
+    // ============================================================
+    //  IMAGE UPLOAD HANDLER
+    // ============================================================
+    async function handleImageUpload(e) {
+      const files = Array.from(e.target.files);
+      e.target.value = '';
+      if (!files.length) return;
+      if (uploadedImages.length + files.length > 10) {
+        showMessage('الحد الأقصى 10 صور', 'error');
+        return;
       }
-    } catch (error) {
-      showMessage('فشل حفظ المنتج: ' + error.message, 'error');
+
+      const prog = document.getElementById('imgProgress');
+      const fill = document.getElementById('imgProgressFill');
+      const label = document.getElementById('imgProgressLabel');
+      prog.classList.add('show');
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.size > 10 * 1024 * 1024) { showMessage(`${file.name} — يتجاوز 10MB`, 'error'); continue; }
+        if (!file.type.startsWith('image/')) continue;
+
+        label.textContent = `جاري رفع ${i + 1}/${files.length}: ${file.name.substring(0,30)}`;
+        try {
+          const d = await clUpload(file, 'image', pct => {
+            fill.style.width = `${pct}%`;
+          });
+          uploadedImages.push({ url: d.secure_url, public_id: d.public_id });
+          renderImagesGrid();
+        } catch {
+          showMessage(`فشل رفع ${file.name}`, 'error');
+        }
+      }
+
+      prog.classList.remove('show');
+      fill.style.width = '0%';
     }
-    
-    showLoading(false);
-  }
 
-  function showLoading(show) {
-    document.getElementById('loadingOverlay').classList.toggle('active', show);
-  }
+    function renderImagesGrid() {
+      const grid = document.getElementById('imagesGrid');
+      if (!uploadedImages.length) { grid.innerHTML = ''; return; }
 
-  function resetForm() {
-    if (confirm('هل أنت متأكد من إلغاء جميع التغييرات؟')) {
-      window.location.reload();
+      grid.innerHTML = uploadedImages.map((img, i) => `
+        <div class="image-item ${i === 0 ? 'main-image' : ''}" draggable="true" data-index="${i}">
+          ${i === 0 ? '<span class="main-badge"><i class="fas fa-crown"></i></span>' : ''}
+          <img src="${img.url}" alt="">
+          <div class="image-overlay">
+            ${i !== 0 ? `<button title="تعيين كرئيسية" onclick="setMainImage(${i})"><i class="fas fa-crown"></i></button>` : ''}
+            <button title="حذف" onclick="removeImage(${i})" style="background:rgba(255,71,87,0.8)"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      `).join('');
     }
-  }
 
-  // ربط الأحداث
-  document.querySelectorAll('.media-tab').forEach(tab => {
-    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-  });
-  
-  // التهيئة
-  currentImages = new Array(MAX_IMAGES).fill(null);
-  renderImages();
-  renderVideo();
-  updateCounters();
-  
-  // جعل الدوال عامة
-  window.toggleCard = toggleCard;
-  window.setMainImage = setMainImage;
-  window.removeImage = removeImage;
-  window.removeVideo = removeVideo;
-  window.handleImageUpload = handleImageUpload;
-  window.handleVideoUpload = handleVideoUpload;
-  window.saveProduct = saveProduct;
-  window.resetForm = resetForm;
-  window.toggleVariantTag = toggleVariantTag;
-  window.addVariantValue = addVariantValue;
-  window.generateVariants = generateVariants;
-  window.uploadVariantImage = uploadVariantImage;
-  window.updateSubCategories = updateSubCategories;
-  window.shareOnFacebook = shareOnFacebook;
-  window.shareOnTwitter = shareOnTwitter;
-  window.shareOnWhatsApp = shareOnWhatsApp;
-  window.updateVisitorRange = updateVisitorRange;
-  window.updateVisitorRangeReverse = updateVisitorRangeReverse;
-  window.updateVisitorMin = updateVisitorMin;
-  window.updateVisitorMax = updateVisitorMax;
-  window.updateStockRange = updateStockRange;
-  window.updateStockRangeReverse = updateStockRangeReverse;
-  window.updateStockMin = updateStockMin;
-  window.updateStockMax = updateStockMax;
-</script>
+    window.setMainImage = function(i) {
+      const img = uploadedImages.splice(i, 1)[0];
+      uploadedImages.unshift(img);
+      renderImagesGrid();
+    };
+
+    window.removeImage = async function(i) {
+      const img = uploadedImages[i];
+      if (img?.public_id) await clDel(img.public_id, 'image');
+      uploadedImages.splice(i, 1);
+      renderImagesGrid();
+    };
+
+    // ============================================================
+    //  VIDEO UPLOAD HANDLER
+    // ============================================================
+    async function handleVideoUpload(e) {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      if (file.size > 50 * 1024 * 1024) { showMessage('الفيديو يتجاوز 50MB', 'error'); return; }
+      if (!file.type.startsWith('video/')) return;
+
+      const prog  = document.getElementById('vidProgress');
+      const fill  = document.getElementById('vidProgressFill');
+      const label = document.getElementById('vidProgressLabel');
+      prog.classList.add('show');
+      label.textContent = 'جاري رفع الفيديو...';
+
+      try {
+        if (uploadedVideo?.public_id) await clDel(uploadedVideo.public_id, 'video');
+        const d = await clUpload(file, 'video', pct => { fill.style.width = `${pct}%`; });
+        uploadedVideo = { url: d.secure_url, public_id: d.public_id };
+        document.getElementById('videoPreviewContainer').innerHTML = `
+          <div class="video-container" style="margin-top: 0.75rem;">
+            <video src="${d.secure_url}" controls></video>
+            <button class="video-remove" onclick="removeVideo()" title="حذف الفيديو"><i class="fas fa-times"></i></button>
+          </div>`;
+        showMessage('✅ تم رفع الفيديو', 'success');
+      } catch {
+        showMessage('فشل رفع الفيديو', 'error');
+      }
+
+      prog.classList.remove('show');
+      fill.style.width = '0%';
+    }
+
+    window.removeVideo = async function() {
+      if (uploadedVideo?.public_id) await clDel(uploadedVideo.public_id, 'video');
+      uploadedVideo = null;
+      document.getElementById('videoPreviewContainer').innerHTML = '';
+    };
+
+    // ============================================================
+    //  MEDIA TABS
+    // ============================================================
+    window.switchMediaTab = function(tab, btn) {
+      document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('imagesTab').classList.toggle('active', tab === 'images');
+      document.getElementById('videoTab').classList.toggle('active', tab === 'video');
+    };
+
+    // ============================================================
+    //  VARIANTS
+    // ============================================================
+    let colors = ['أسود', 'ذهبي', 'بيج'];
+    let sizes  = ['S', 'M', 'L', 'XL'];
+
+    window.addTag = function(inputId, containerId, type) {
+      const input = document.getElementById(inputId);
+      const val   = input.value.trim();
+      if (!val) return;
+
+      const arr = type === 'colors' ? colors : sizes;
+      if (arr.includes(val)) { showMessage('القيمة موجودة بالفعل', 'info'); return; }
+      arr.push(val);
+      input.value = '';
+
+      const tag = document.createElement('span');
+      tag.className = 'variant-tag selected';
+      tag.dataset.value = val;
+      tag.innerHTML = `${val} <span class="remove-tag" onclick="removeTag(this,'${type}')">×</span>`;
+      document.getElementById(containerId).appendChild(tag);
+    };
+
+    window.removeTag = function(el, type) {
+      const tag = el.closest('.variant-tag');
+      const val = tag.dataset.value;
+      const arr = type === 'colors' ? colors : sizes;
+      const idx = arr.indexOf(val);
+      if (idx > -1) arr.splice(idx, 1);
+      tag.remove();
+    };
+
+    window.generateVariants = function() {
+      if (!colors.length || !sizes.length) {
+        showMessage('أضف ألواناً ومقاسات أولاً', 'error'); return;
+      }
+      const tbody = document.getElementById('variantsBody');
+      tbody.innerHTML = '';
+      colors.forEach(color => {
+        sizes.forEach(size => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${color}</td>
+            <td>${size}</td>
+            <td><input type="number" placeholder="السعر" min="0"></td>
+            <td><input type="number" placeholder="المخزون" min="0"></td>
+            <td><input type="text" placeholder="SKU" value="${color}-${size}"></td>
+            <td><button class="delete-variant-row" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+      document.getElementById('variantsTableContainer').style.display = 'block';
+    };
+
+    // ============================================================
+    //  CATEGORIES SUB-TYPES
+    // ============================================================
+    const subCategories = {
+      'الجلابة': ['جلابة سهرة', 'جلابة يومية', 'جلابة حرير', 'جلابة فاخرة'],
+      'القفطان': ['قفطان ملكي', 'قفطان عصري', 'قفطان عروس'],
+      'التكشيطة': ['تكشيطة عروس', 'تكشيطة سهرة'],
+      'الجبادور': ['جبادور نسائي', 'جبادور عصري'],
+      'العباية': ['عباية كلاسيك', 'عباية عصرية', 'عباية كاجوال']
+    };
+
+    window.loadDynamicFields = function() {
+      const cat    = document.getElementById('mainCategory').value;
+      const subSel = document.getElementById('subCategory');
+      subSel.innerHTML = '<option value="">-- اختر النوع --</option>';
+      if (subCategories[cat]) {
+        subCategories[cat].forEach(s => {
+          const o = document.createElement('option');
+          o.value = o.textContent = s;
+          subSel.appendChild(o);
+        });
+      }
+    };
+
+    // ============================================================
+    //  FEATURES TOGGLE
+    // ============================================================
+    window.toggleFeature = function(el) {
+      el.classList.toggle('active');
+      const cb = el.querySelector('input[type="checkbox"]');
+      if (cb) cb.checked = !cb.checked;
+    };
+
+    // ============================================================
+    //  CARD TOGGLE
+    // ============================================================
+    window.toggleCard = function(header) {
+      const body = header.nextElementSibling;
+      body.classList.toggle('collapsed');
+      header.classList.toggle('collapsed');
+    };
+
+    // ============================================================
+    //  SOCIAL SHARE
+    // ============================================================
+    window.shareOn = function(platform) {
+      const name = document.getElementById('productName').value.trim() || 'منتج من Almaya Couture';
+      const url  = encodeURIComponent(window.location.origin + '/products.html');
+      const text = encodeURIComponent(`اكتشفي: ${name} - Almaya Couture`);
+      const links = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        twitter:  `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+        whatsapp: `https://wa.me/?text=${text}%20${url}`
+      };
+      window.open(links[platform], '_blank');
+    };
+
+    // ============================================================
+    //  SAVE PRODUCT
+    // ============================================================
+    window.saveProduct = async function() {
+      const name     = document.getElementById('productName').value.trim();
+      const category = document.getElementById('mainCategory').value;
+
+      if (!name) { showMessage('⚠️ اسم المنتج مطلوب', 'error'); document.getElementById('productName').focus(); return; }
+      if (!category) { showMessage('⚠️ يجب اختيار الفئة', 'error'); document.getElementById('mainCategory').focus(); return; }
+      if (!uploadedImages.length) { showMessage('⚠️ أضف صورة رئيسية واحدة على الأقل', 'error'); return; }
+
+      setLoading(true, 'جاري حفظ المنتج...');
+
+      const imgUrls = uploadedImages.map(i => i.url);
+      const badge   = getActiveBadge();
+
+      const data = {
+        category_name:       category,
+        product_name:        name,
+        product_description: document.getElementById('description').value.trim() || null,
+        price_range:         document.getElementById('priceRange').value.trim() || null,
+        display_order:       parseInt(document.getElementById('displayOrder').value) || 0,
+        is_featured:         document.getElementById('featured').checked,
+        is_active:           document.getElementById('visibility').value === 'active',
+        product_image_url:   imgUrls[0],
+        additional_images:   imgUrls.slice(1),
+        product_video_url:   uploadedVideo?.url || null,
+        badge:               badge || null
+      };
+
+      try {
+        await supaReq('/rest/v1/products', {
+          method: 'POST',
+          prefer: 'return=minimal',
+          body: data
+        });
+        showMessage('✅ تم حفظ المنتج بنجاح!', 'success');
+        setTimeout(() => window.location.href = 'admin-produits.html', 1600);
+      } catch(e) {
+        showMessage('❌ فشل الحفظ: ' + e.message, 'error');
+        setLoading(false);
+      }
+    };
+
+    function getActiveBadge() {
+      if (document.getElementById('feat_new_arrival')?.checked) return 'جديد';
+      if (document.getElementById('feat_bestseller')?.checked)  return 'الأكثر طلباً';
+      if (document.getElementById('feat_limited')?.checked)     return 'محدود';
+      return null;
+    }
+
+    // ============================================================
+    //  RESET FORM
+    // ============================================================
+    window.resetForm = async function() {
+      if (!confirm('هل تريد إعادة تعيين النموذج؟ سيتم حذف جميع الصور المرفوعة.')) return;
+
+      setLoading(true, 'جاري إعادة التعيين...');
+
+      // Delete uploaded images from Cloudinary
+      for (const img of uploadedImages) {
+        if (img?.public_id) await clDel(img.public_id, 'image');
+      }
+      if (uploadedVideo?.public_id) await clDel(uploadedVideo.public_id, 'video');
+
+      uploadedImages = [];
+      uploadedVideo  = null;
+
+      document.getElementById('productName').value   = '';
+      document.getElementById('description').value   = '';
+      document.getElementById('mainCategory').value  = '';
+      document.getElementById('subCategory').value   = '';
+      document.getElementById('priceRange').value    = '';
+      document.getElementById('displayOrder').value  = '0';
+      document.getElementById('stockQty').value      = '';
+      document.getElementById('discountPct').value   = '';
+      document.getElementById('internalNotes').value = '';
+      document.getElementById('featured').checked    = false;
+      document.getElementById('visibility').value    = 'active';
+
+      document.querySelectorAll('.feature-item').forEach(f => {
+        f.classList.remove('active');
+        const cb = f.querySelector('input[type="checkbox"]');
+        if (cb) cb.checked = false;
+      });
+
+      renderImagesGrid();
+      document.getElementById('videoPreviewContainer').innerHTML = '';
+      document.getElementById('variantsTableContainer').style.display = 'none';
+
+      setLoading(false);
+      showMessage('✅ تم إعادة التعيين', 'success');
+    };
+
+    // ============================================================
+    //  HELPERS
+    // ============================================================
+    function setLoading(show, text = 'جاري التحميل...') {
+      const ov  = document.getElementById('loadingOverlay');
+      const btn = document.getElementById('saveBtn');
+      ov.classList.toggle('active', show);
+      document.getElementById('loadingText').textContent = text;
+      if (btn) { btn.disabled = show; btn.innerHTML = show ? '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...' : '<i class="fas fa-save"></i> حفظ المنتج'; }
+    }
+
+    let _msgTimer;
+    function showMessage(text, type = 'info') {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.className   = `message ${type}`;
+      el.style.display = 'block';
+      clearTimeout(_msgTimer);
+      _msgTimer = setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+
+    // Drag & drop for image zone
+    const dropZone = document.getElementById('imageDropZone');
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const dt = e.dataTransfer;
+      if (dt.files.length) {
+        const fakeEvent = { target: { files: dt.files, value: '' } };
+        handleImageUpload(fakeEvent);
+      }
+    });
+  </script>
+
 </body>
 </html>
