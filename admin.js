@@ -360,6 +360,7 @@
       'admin-orders.html': 'الطلبيات',
       'admin-products.html': 'المنتجات',
       'admin-collections.html': 'التصنيفات',
+      'admin-stock.html' : 'المخزون'
       'admin-reviews.html': 'المراجعات',
       'admin-contact.html': 'الرسائل',
       'admin-login.html': 'المسؤولين'
