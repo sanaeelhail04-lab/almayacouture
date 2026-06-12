@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="config.js"></script>
+    <script src="auth.js"></script>
     <script src="admin.js"></script>
-  <script src="admin.js"></script>
     
     <style>
-        /* ========== ألوان متوافقة مع الموقع ========== */
         :root {
             --gold: #C4A06A;
             --gold-light: #D4B896;
@@ -63,7 +62,6 @@
             padding: 2rem 1.5rem;
         }
 
-        /* ========== HEADER ========== */
         .page-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -88,7 +86,6 @@
             font-size: 0.85rem;
         }
 
-        /* ========== STATS ========== */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -102,6 +99,7 @@
             padding: 1.2rem;
             text-align: center;
             transition: all 0.3s;
+            cursor: pointer;
         }
         .stat-card:hover {
             transform: translateY(-3px);
@@ -125,7 +123,6 @@
         .stat-card.warning .number { color: var(--warning); }
         .stat-card.danger .number { color: var(--danger); }
 
-        /* ========== BUTTONS ========== */
         .btn {
             padding: 0.5rem 1rem;
             border-radius: 8px;
@@ -166,17 +163,16 @@
             background: rgba(255,71,87,0.2);
             transform: translateY(-1px);
         }
-        .btn-success {
-            background: rgba(37,211,102,0.12);
-            color: var(--success);
-            border: 1px solid rgba(37,211,102,0.2);
+        .btn-info {
+            background: rgba(59,130,246,0.12);
+            color: var(--info);
+            border: 1px solid rgba(59,130,246,0.2);
         }
-        .btn-success:hover {
-            background: rgba(37,211,102,0.2);
+        .btn-info:hover {
+            background: rgba(59,130,246,0.2);
             transform: translateY(-1px);
         }
 
-        /* ========== SEARCH & FILTER ========== */
         .search-bar {
             background: var(--card);
             border: 1px solid var(--border);
@@ -188,7 +184,7 @@
             flex-wrap: wrap;
         }
         .search-bar input {
-            flex: 1;
+            flex: 2;
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -210,9 +206,12 @@
             font-family: inherit;
             font-size: 0.8rem;
             cursor: pointer;
+            min-width: 120px;
+        }
+        .search-bar .btn-primary {
+            margin-right: auto;
         }
 
-        /* ========== TABLE ========== */
         .table-container {
             background: var(--card);
             border: 1px solid var(--border);
@@ -222,7 +221,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 800px;
+            min-width: 850px;
         }
         th {
             text-align: right;
@@ -243,6 +242,13 @@
         tr:hover td {
             background: var(--gold-dim);
         }
+        .product-image {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: var(--bg2);
+        }
         .stock-badge {
             display: inline-block;
             padding: 0.25rem 0.6rem;
@@ -255,22 +261,6 @@
         .stock-low { background: rgba(255,71,87,0.15); color: var(--danger); }
         .stock-out { background: rgba(255,71,87,0.25); color: var(--danger); }
 
-        .stock-input {
-            width: 80px;
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.3rem 0.5rem;
-            color: var(--text);
-            font-family: inherit;
-            text-align: center;
-        }
-        .stock-input:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        /* ========== MODAL ========== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -297,7 +287,7 @@
             border-radius: 20px;
             padding: 2rem;
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
         }
         .modal-header {
             display: flex;
@@ -325,26 +315,25 @@
         }
         .form-group label {
             display: block;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--gold);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
         }
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group input {
             width: 100%;
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 0.6rem;
+            padding: 0.7rem;
             color: var(--text);
             font-family: inherit;
             font-size: 0.85rem;
         }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        .form-group input:focus {
             outline: none;
             border-color: var(--gold);
         }
 
-        /* ========== TOAST ========== */
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -356,6 +345,7 @@
             z-index: 1001;
             animation: slideIn 0.3s ease;
             display: none;
+            font-size: 0.85rem;
         }
         .toast-message.success { border-right: 3px solid var(--success); color: var(--success); }
         .toast-message.error { border-right: 3px solid var(--danger); color: var(--danger); }
@@ -386,17 +376,28 @@
             opacity: 0.4;
         }
 
+        .action-buttons {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .action-buttons button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
         @media (max-width: 768px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
             .container { padding: 1rem; }
             .search-bar { flex-direction: column; }
             .search-bar input, .search-bar select { width: 100%; }
+            .search-bar .btn-primary { margin-right: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div id="header-container"></div>
+    <div id="admin-navbar-placeholder"></div>
 
     <div class="main-content">
         <div class="container">
@@ -407,48 +408,45 @@
                 <p>إدارة كميات المنتجات ومتابعة المخزون</p>
             </div>
 
-            <!-- إحصائيات -->
             <div class="stats-row">
-                <div class="stat-card">
+                <div class="stat-card" onclick="filterByStock('all')">
                     <i class="fas fa-box"></i>
                     <div class="number" id="totalProducts">0</div>
                     <div class="label">إجمالي المنتجات</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" onclick="filterByStock('all')">
                     <i class="fas fa-chart-line"></i>
                     <div class="number" id="totalStock">0</div>
                     <div class="label">إجمالي القطع</div>
                 </div>
-                <div class="stat-card warning">
+                <div class="stat-card warning" onclick="filterByStock('low')">
                     <i class="fas fa-exclamation-triangle"></i>
                     <div class="number" id="lowStock">0</div>
                     <div class="label">مخزون منخفض (&lt;10)</div>
                 </div>
-                <div class="stat-card danger">
+                <div class="stat-card danger" onclick="filterByStock('out')">
                     <i class="fas fa-ban"></i>
                     <div class="number" id="outStock">0</div>
                     <div class="label">نفذ المخزون</div>
                 </div>
             </div>
 
-            <!-- بحث وتصفية -->
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="بحث عن منتج..." onkeyup="filterProducts()">
+                <input type="text" id="searchInput" placeholder="🔍 بحث عن منتج..." onkeyup="filterProducts()">
                 <select id="categoryFilter" onchange="filterProducts()">
-                    <option value="all">جميع التصنيفات</option>
+                    <option value="all">📂 جميع التصنيفات</option>
                 </select>
                 <select id="stockFilter" onchange="filterProducts()">
-                    <option value="all">جميع المنتجات</option>
-                    <option value="low">مخزون منخفض</option>
-                    <option value="out">نفذ المخزون</option>
-                    <option value="high">مخزون جيد</option>
+                    <option value="all">📊 جميع المنتجات</option>
+                    <option value="low">⚠️ مخزون منخفض</option>
+                    <option value="out">❌ نفذ المخزون</option>
+                    <option value="high">✅ مخزون جيد</option>
                 </select>
-                <button class="btn btn-primary" onclick="openAddModal()">
+                <button class="btn btn-primary" onclick="goToAddProduct()">
                     <i class="fas fa-plus"></i> إضافة منتج
                 </button>
             </div>
 
-            <!-- جدول المخزون -->
             <div class="table-container">
                 <div id="productsTable">
                     <div class="loader"></div>
@@ -457,54 +455,7 @@
         </div>
     </div>
 
-    <div id="footer-container"></div>
-
-    <!-- مودال إضافة/تعديل -->
-    <div class="modal-overlay" id="productModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="modalTitle"><i class="fas fa-plus"></i> إضافة منتج</h3>
-                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            </div>
-            <div id="modalContent">
-                <div class="form-group">
-                    <label><i class="fas fa-tag"></i> اسم المنتج</label>
-                    <input type="text" id="productName" placeholder="اسم المنتج">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-layer-group"></i> التصنيف</label>
-                    <select id="productCategory">
-                        <option value="جلابة">جلابة</option>
-                        <option value="قفطان">قفطان</option>
-                        <option value="تاكشيتا">تاكشيتا</option>
-                        <option value="إكسسوارات">إكسسوارات</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-barcode"></i> SKU (رمز المنتج)</label>
-                    <input type="text" id="productSku" placeholder="SKU-001">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-cubes"></i> الكمية المتاحة</label>
-                    <input type="number" id="productStock" value="0" min="0">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-dollar-sign"></i> السعر</label>
-                    <input type="number" id="productPrice" value="0" min="0">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-image"></i> رابط الصورة (اختياري)</label>
-                    <input type="text" id="productImage" placeholder="https://...">
-                </div>
-                <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem;">
-                    <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
-                    <button class="btn btn-primary" id="saveBtn" onclick="saveProduct()">حفظ</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- مودال تعديل الكمية -->
+    <!-- مودال تعديل الكمية السريع -->
     <div class="modal-overlay" id="stockModal">
         <div class="modal">
             <div class="modal-header">
@@ -512,8 +463,8 @@
                 <button class="modal-close" onclick="closeStockModal()"><i class="fas fa-times"></i></button>
             </div>
             <div class="form-group">
-                <label>المنتج: <span id="stockProductName"></span></label>
-                <input type="number" id="newStockValue" class="stock-input" style="width: 100%; margin-top: 0.5rem;">
+                <label>المنتج: <strong id="stockProductName" style="color: var(--gold);"></strong></label>
+                <input type="number" id="newStockValue" style="width: 100%; margin-top: 0.5rem; padding: 0.7rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
             </div>
             <div style="display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem;">
                 <button class="btn btn-outline" onclick="closeStockModal()">إلغاء</button>
@@ -523,350 +474,249 @@
     </div>
 
     <div class="toast-message" id="toastMessage"></div>
-
-    <script src="header.js"></script>
-    <script src="footer.js"></script>
-
+<script src="header.js"></script>
+<script src="footer.js"></script>
     <script>
-        // التحقق من تسجيل الدخول
-        if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('admin_logged_in') !== 'true') {
-            window.location.href = 'login.html';
-        }
+        (function() {
+            // التحقق من تسجيل الدخول
+            if (typeof sessionStorage !== 'undefined') {
+                if (sessionStorage.getItem('admin_logged_in') !== 'true' && 
+                    sessionStorage.getItem('isAdmin') !== 'true') {
+                    window.location.href = 'login.html';
+                    return;
+                }
+            }
 
-        // ========== CONFIG ==========
-        if (typeof CONFIG === 'undefined') {
-            showToast('❌ CONFIG.js مفقود', 'error');
-            throw new Error('CONFIG missing');
-        }
+            if (typeof CONFIG === 'undefined') {
+                document.body.innerHTML = '<div style="color:#FF4757;text-align:center;padding:2rem;">❌ config.js مفقود</div>';
+                throw new Error('CONFIG missing');
+            }
 
-        const SUPABASE_URL = CONFIG.SUPABASE_URL;
-        const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
-        let allProducts = [];
-        let editingId = null;
-        let currentStockProductId = null;
+            const SUPABASE_URL = CONFIG.SUPABASE_URL;
+            const SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY;
+            let allProducts = [];
+            let currentStockProductId = null;
 
-        // ========== دالة عرض الإشعارات ==========
-        function showToast(text, type) {
-            const toast = document.getElementById('toastMessage');
-            toast.textContent = text;
-            toast.className = `toast-message ${type}`;
-            toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 3000);
-        }
+            function showToast(text, type) {
+                const toast = document.getElementById('toastMessage');
+                if (!toast) return;
+                toast.textContent = text;
+                toast.className = `toast-message ${type}`;
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            }
 
-        // ========== طلب Supabase ==========
-        async function supabaseRequest(endpoint, opts = {}) {
-            try {
-                const url = `${SUPABASE_URL}${endpoint}`;
-                const res = await fetch(url, {
-                    method: opts.method || 'GET',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: opts.body ? JSON.stringify(opts.body) : undefined
+            async function supabaseRequest(endpoint, opts = {}) {
+                try {
+                    const url = `${SUPABASE_URL}${endpoint}`;
+                    const res = await fetch(url, {
+                        method: opts.method || 'GET',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: opts.body ? JSON.stringify(opts.body) : undefined
+                    });
+                    if (res.status === 204) return null;
+                    if (res.status === 404) return [];
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
+                    return data;
+                } catch(e) {
+                    console.error('❌ خطأ:', e);
+                    throw e;
+                }
+            }
+
+            async function loadProducts() {
+                const container = document.getElementById('productsTable');
+                if (container) container.innerHTML = '<div class="loader"></div>';
+                
+                try {
+                    const products = await supabaseRequest('/rest/v1/products?select=*&order=created_at.desc');
+                    allProducts = products || [];
+                    updateStats();
+                    loadCategories();
+                    renderProducts();
+                } catch(e) {
+                    console.error(e);
+                    if (container) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>خطأ في تحميل البيانات</p>
+                                <button class="btn btn-primary" style="margin-top:1rem;" onclick="location.reload()">
+                                    <i class="fas fa-sync-alt"></i> إعادة المحاولة
+                                </button>
+                            </div>
+                        `;
+                    }
+                    showToast('❌ خطأ في تحميل البيانات', 'error');
+                }
+            }
+
+            function updateStats() {
+                const total = allProducts.length;
+                const totalStock = allProducts.reduce((sum, p) => sum + (p.stock_quantity || p.stock || 0), 0);
+                const lowStock = allProducts.filter(p => {
+                    const stock = p.stock_quantity || p.stock || 0;
+                    return stock > 0 && stock < 10;
+                }).length;
+                const outStock = allProducts.filter(p => (p.stock_quantity || p.stock || 0) === 0).length;
+                
+                const elTotal = document.getElementById('totalProducts');
+                const elTotalStock = document.getElementById('totalStock');
+                const elLowStock = document.getElementById('lowStock');
+                const elOutStock = document.getElementById('outStock');
+                if (elTotal) elTotal.textContent = total;
+                if (elTotalStock) elTotalStock.textContent = totalStock;
+                if (elLowStock) elLowStock.textContent = lowStock;
+                if (elOutStock) elOutStock.textContent = outStock;
+            }
+
+            function loadCategories() {
+                const categories = [...new Set(allProducts.map(p => p.category_name).filter(Boolean))];
+                const select = document.getElementById('categoryFilter');
+                if (select) {
+                    select.innerHTML = '<option value="all">📂 جميع التصنيفات</option>';
+                    categories.forEach(cat => {
+                        select.innerHTML += `<option value="${cat}">${cat}</option>`;
+                    });
+                }
+            }
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                return String(str).replace(/[&<>]/g, m => {
+                    if (m === '&') return '&amp;';
+                    if (m === '<') return '&lt;';
+                    if (m === '>') return '&gt;';
+                    return m;
                 });
-                
-                if (res.status === 204) return null;
-                if (res.status === 404) return [];
-                
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.message || `خطأ ${res.status}`);
-                return data;
-            } catch(e) {
-                console.error('❌ خطأ:', e);
-                throw e;
             }
-        }
 
-        // ========== تحميل المنتجات ==========
-        async function loadProducts() {
-            const container = document.getElementById('productsTable');
-            container.innerHTML = '<div class="loader"></div>';
-            
-            try {
-                const products = await supabaseRequest('/rest/v1/products?select=*&order=created_at.desc');
-                allProducts = products || [];
-                updateStats();
-                loadCategories();
-                renderProducts();
-            } catch(e) {
-                console.error('❌ خطأ:', e);
+            function renderProducts() {
+                let filtered = [...allProducts];
+                const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+                const category = document.getElementById('categoryFilter')?.value || 'all';
+                const stockFilter = document.getElementById('stockFilter')?.value || 'all';
+                
+                if (search) filtered = filtered.filter(p => p.product_name?.toLowerCase().includes(search));
+                if (category !== 'all') filtered = filtered.filter(p => p.category_name === category);
+                if (stockFilter === 'low') filtered = filtered.filter(p => {
+                    const stock = p.stock_quantity || p.stock || 0;
+                    return stock > 0 && stock < 10;
+                });
+                else if (stockFilter === 'out') filtered = filtered.filter(p => (p.stock_quantity || p.stock || 0) === 0);
+                else if (stockFilter === 'high') filtered = filtered.filter(p => (p.stock_quantity || p.stock || 0) >= 10);
+                
+                const container = document.getElementById('productsTable');
+                if (!container) return;
+                
+                if (filtered.length === 0) {
+                    container.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><p>لا توجد منتجات</p></div>`;
+                    return;
+                }
+                
                 container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>خطأ في تحميل البيانات</p>
-                        <button class="btn btn-primary" style="margin-top:1rem;" onclick="loadProducts()">
-                            <i class="fas fa-sync-alt"></i> إعادة المحاولة
-                        </button>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr><th>الصورة</th><th>المنتج</th><th>التصنيف</th><th>SKU</th><th>السعر</th><th>الكمية</th><th>الحالة</th><th>إجراءات</th></tr>
+                        </thead>
+                        <tbody>
+                            ${filtered.map(product => {
+                                const stock = product.stock_quantity || product.stock || 0;
+                                let stockClass = 'stock-high', stockText = 'مخزون جيد';
+                                if (stock === 0) { stockClass = 'stock-out'; stockText = 'نفذ المخزون'; }
+                                else if (stock < 10) { stockClass = 'stock-low'; stockText = 'مخزون منخفض'; }
+                                else if (stock < 20) { stockClass = 'stock-medium'; stockText = 'مخزون متوسط'; }
+                                
+                                return `
+                                    <tr>
+                                        <td><img src="${escapeHtml(product.product_image_url) || 'images/logo.jpg'}" class="product-image" onerror="this.src='images/logo.jpg'"></td>
+                                        <td><strong>${escapeHtml(product.product_name)}</strong><br><small style="color: var(--text-muted);">${escapeHtml(product.sub_category || '')}</small></td>
+                                        <td>${escapeHtml(product.category_name || '-')}</td>
+                                        <td><code style="font-size:0.7rem;">${escapeHtml(product.sku || '-')}</code></td>
+                                        <td>${escapeHtml(product.price_range || '-')}</td>
+                                        <td><div style="display: flex; align-items: center; gap: 0.5rem;"><span style="font-weight: 700; font-size: 1rem;">${stock}</span><button class="btn btn-outline" onclick="openStockModal(${product.id}, '${escapeHtml(product.product_name).replace(/'/g, "\\'")}', ${stock})" style="padding:0.2rem 0.5rem;"><i class="fas fa-edit"></i></button></div></td>
+                                        <td><span class="stock-badge ${stockClass}">${stockText}</span></td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-info" onclick="goToEditProduct(${product.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-danger" onclick="deleteProduct(${product.id})" title="حذف"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
                 `;
-                showToast('❌ خطأ في تحميل البيانات', 'error');
             }
-        }
 
-        // ========== تحديث الإحصائيات ==========
-        function updateStats() {
-            const total = allProducts.length;
-            const totalStock = allProducts.reduce((sum, p) => sum + (p.stock || 0), 0);
-            const lowStock = allProducts.filter(p => (p.stock || 0) > 0 && (p.stock || 0) < 10).length;
-            const outStock = allProducts.filter(p => (p.stock || 0) === 0).length;
+            // الانتقال إلى صفحة إضافة منتج
+            window.goToAddProduct = function() {
+                window.location.href = 'admin-add-product.html';
+            };
+
+            // الانتقال إلى صفحة تعديل منتج
+            window.goToEditProduct = function(id) {
+                window.location.href = `admin-add-product.html?edit=${id}`;
+            };
+
+            window.filterProducts = function() { renderProducts(); };
             
-            document.getElementById('totalProducts').textContent = total;
-            document.getElementById('totalStock').textContent = totalStock;
-            document.getElementById('lowStock').textContent = lowStock;
-            document.getElementById('outStock').textContent = outStock;
-        }
+            window.filterByStock = function(type) {
+                const stockSelect = document.getElementById('stockFilter');
+                if (stockSelect) {
+                    if (type === 'low') stockSelect.value = 'low';
+                    else if (type === 'out') stockSelect.value = 'out';
+                    else stockSelect.value = 'all';
+                    renderProducts();
+                }
+            };
 
-        // ========== تحميل التصنيفات ==========
-        function loadCategories() {
-            const categories = [...new Set(allProducts.map(p => p.category).filter(Boolean))];
-            const select = document.getElementById('categoryFilter');
-            const existing = select.innerHTML;
-            select.innerHTML = '<option value="all">جميع التصنيفات</option>';
-            categories.forEach(cat => {
-                select.innerHTML += `<option value="${cat}">${cat}</option>`;
-            });
-        }
+            window.openStockModal = function(id, name, currentStock) {
+                currentStockProductId = id;
+                const nameEl = document.getElementById('stockProductName');
+                if (nameEl) nameEl.textContent = name;
+                const valEl = document.getElementById('newStockValue');
+                if (valEl) valEl.value = currentStock;
+                const modal = document.getElementById('stockModal');
+                if (modal) modal.classList.add('active');
+            };
 
-        // ========== عرض المنتجات ==========
-        function renderProducts() {
-            let filtered = [...allProducts];
-            const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
-            const category = document.getElementById('categoryFilter')?.value || 'all';
-            const stockFilter = document.getElementById('stockFilter')?.value || 'all';
-            
-            if (search) {
-                filtered = filtered.filter(p => p.name?.toLowerCase().includes(search));
-            }
-            if (category !== 'all') {
-                filtered = filtered.filter(p => p.category === category);
-            }
-            if (stockFilter === 'low') {
-                filtered = filtered.filter(p => (p.stock || 0) > 0 && (p.stock || 0) < 10);
-            } else if (stockFilter === 'out') {
-                filtered = filtered.filter(p => (p.stock || 0) === 0);
-            } else if (stockFilter === 'high') {
-                filtered = filtered.filter(p => (p.stock || 0) >= 10);
-            }
-            
-            const container = document.getElementById('productsTable');
-            
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><p>لا توجد منتجات</p></div>`;
-                return;
-            }
-            
-            container.innerHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>الصورة</th>
-                            <th>المنتج</th>
-                            <th>التصنيف</th>
-                            <th>SKU</th>
-                            <th>السعر</th>
-                            <th>الكمية</th>
-                            <th>الحالة</th>
-                            <th>إجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filtered.map(product => {
-                            const stock = product.stock || 0;
-                            let stockClass = 'stock-high';
-                            let stockText = 'مخزون جيد';
-                            if (stock === 0) {
-                                stockClass = 'stock-out';
-                                stockText = 'نفذ المخزون';
-                            } else if (stock < 10) {
-                                stockClass = 'stock-low';
-                                stockText = 'مخزون منخفض';
-                            } else if (stock < 20) {
-                                stockClass = 'stock-medium';
-                                stockText = 'مخزون متوسط';
-                            }
-                            return `
-                                <tr>
-                                    <td><img src="${product.image || 'images/logo.jpg'}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 8px;" onerror="this.src='images/logo.jpg'"></td>
-                                    <td><strong>${escapeHtml(product.name)}</strong></td>
-                                    <td>${escapeHtml(product.category || '-')}</td>
-                                    <td><code style="font-size:0.7rem;">${escapeHtml(product.sku || '-')}</code></td>
-                                    <td>${product.price ? product.price.toLocaleString() + ' د.م' : '-'}</td>
-                                    <td>
-                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                            <span style="font-weight: 700; font-size: 1.1rem;">${stock}</span>
-                                            <button class="btn btn-outline" onclick="openStockModal(${product.id}, '${escapeHtml(product.name).replace(/'/g, "\\'")}', ${stock})" style="padding:0.2rem 0.5rem;">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td><span class="stock-badge ${stockClass}">${stockText}</span></td>
-                                    <td style="white-space: nowrap;">
-                                        <button class="btn btn-info" onclick="editProduct(${product.id})" style="padding:0.3rem 0.6rem;" title="تعديل">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})" style="padding:0.3rem 0.6rem;" title="حذف">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            `;
-                        }).join('')}
-                    </tbody>
-                </table>
-            `;
-        }
+            window.updateStock = async function() {
+                const newStock = parseInt(document.getElementById('newStockValue')?.value) || 0;
+                try {
+                    await supabaseRequest(`/rest/v1/products?id=eq.${currentStockProductId}`, {
+                        method: 'PATCH',
+                        body: { stock_quantity: newStock, stock: newStock, updated_at: new Date().toISOString() }
+                    });
+                    showToast('✅ تم تحديث الكمية بنجاح', 'success');
+                    closeStockModal();
+                    await loadProducts();
+                } catch(e) { showToast('❌ خطأ في التحديث: ' + e.message, 'error'); }
+            };
 
-        // ========== تصفية المنتجات ==========
-        function filterProducts() {
-            renderProducts();
-        }
+            window.deleteProduct = async function(id) {
+                if (!confirm('⚠️ هل أنت متأكد من حذف هذا المنتج نهائياً؟')) return;
+                try {
+                    await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method: 'DELETE' });
+                    showToast('🗑 تم حذف المنتج بنجاح', 'success');
+                    await loadProducts();
+                } catch(e) { showToast('❌ خطأ في الحذف: ' + e.message, 'error'); }
+            };
 
-        // ========== فتح مودال الإضافة ==========
-        function openAddModal() {
-            editingId = null;
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus"></i> إضافة منتج';
-            document.getElementById('productName').value = '';
-            document.getElementById('productCategory').value = 'جلابة';
-            document.getElementById('productSku').value = '';
-            document.getElementById('productStock').value = 0;
-            document.getElementById('productPrice').value = 0;
-            document.getElementById('productImage').value = '';
-            document.getElementById('productModal').classList.add('active');
-        }
-
-        // ========== تعديل منتج ==========
-        async function editProduct(id) {
-            const product = allProducts.find(p => p.id === id);
-            if (!product) return;
-            
-            editingId = id;
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> تعديل المنتج';
-            document.getElementById('productName').value = product.name || '';
-            document.getElementById('productCategory').value = product.category || 'جلابة';
-            document.getElementById('productSku').value = product.sku || '';
-            document.getElementById('productStock').value = product.stock || 0;
-            document.getElementById('productPrice').value = product.price || 0;
-            document.getElementById('productImage').value = product.image || '';
-            document.getElementById('productModal').classList.add('active');
-        }
-
-        // ========== حفظ المنتج ==========
-        async function saveProduct() {
-            const productData = {
-                name: document.getElementById('productName').value,
-                category: document.getElementById('productCategory').value,
-                sku: document.getElementById('productSku').value,
-                stock: parseInt(document.getElementById('productStock').value) || 0,
-                price: parseFloat(document.getElementById('productPrice').value) || 0,
-                image: document.getElementById('productImage').value || null,
-                updated_at: new Date().toISOString()
+            window.closeStockModal = function() {
+                const modal = document.getElementById('stockModal');
+                if (modal) modal.classList.remove('active');
+                currentStockProductId = null;
             };
             
-            if (!productData.name) {
-                showToast('❌ الرجاء إدخال اسم المنتج', 'error');
-                return;
-            }
+            window.loadProducts = loadProducts;
             
-            try {
-                if (editingId) {
-                    await supabaseRequest(`/rest/v1/products?id=eq.${editingId}`, {
-                        method: 'PATCH',
-                        body: productData
-                    });
-                    showToast('✅ تم تحديث المنتج بنجاح', 'success');
-                } else {
-                    productData.created_at = new Date().toISOString();
-                    await supabaseRequest('/rest/v1/products', {
-                        method: 'POST',
-                        body: productData
-                    });
-                    showToast('✅ تم إضافة المنتج بنجاح', 'success');
-                }
-                closeModal();
-                await loadProducts();
-            } catch(e) {
-                showToast('❌ خطأ في الحفظ: ' + e.message, 'error');
-            }
-        }
-
-        // ========== فتح مودال تعديل الكمية ==========
-        function openStockModal(id, name, currentStock) {
-            currentStockProductId = id;
-            document.getElementById('stockProductName').textContent = name;
-            document.getElementById('newStockValue').value = currentStock;
-            document.getElementById('stockModal').classList.add('active');
-        }
-
-        // ========== تحديث الكمية ==========
-        async function updateStock() {
-            const newStock = parseInt(document.getElementById('newStockValue').value) || 0;
-            
-            try {
-                await supabaseRequest(`/rest/v1/products?id=eq.${currentStockProductId}`, {
-                    method: 'PATCH',
-                    body: { stock: newStock, updated_at: new Date().toISOString() }
-                });
-                showToast('✅ تم تحديث الكمية بنجاح', 'success');
-                closeStockModal();
-                await loadProducts();
-            } catch(e) {
-                showToast('❌ خطأ في التحديث: ' + e.message, 'error');
-            }
-        }
-
-        // ========== حذف منتج ==========
-        async function deleteProduct(id) {
-            if (!confirm('⚠️ هل أنت متأكد من حذف هذا المنتج نهائياً؟')) return;
-            
-            try {
-                await supabaseRequest(`/rest/v1/products?id=eq.${id}`, { method: 'DELETE' });
-                showToast('🗑 تم حذف المنتج بنجاح', 'success');
-                await loadProducts();
-            } catch(e) {
-                showToast('❌ خطأ في الحذف: ' + e.message, 'error');
-            }
-        }
-
-        // ========== إغلاق المودال ==========
-        function closeModal() {
-            document.getElementById('productModal').classList.remove('active');
-            editingId = null;
-        }
-        
-        function closeStockModal() {
-            document.getElementById('stockModal').classList.remove('active');
-            currentStockProductId = null;
-        }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str).replace(/[&<>]/g, m => {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
-        // تصدير الدوال العامة
-        window.loadProducts = loadProducts;
-        window.filterProducts = filterProducts;
-        window.openAddModal = openAddModal;
-        window.editProduct = editProduct;
-        window.saveProduct = saveProduct;
-        window.openStockModal = openStockModal;
-        window.updateStock = updateStock;
-        window.deleteProduct = deleteProduct;
-        window.closeModal = closeModal;
-        window.closeStockModal = closeStockModal;
-
-        // تحميل البيانات
-        loadProducts();
+            loadProducts();
+        })();
     </script>
 </body>
 </html>

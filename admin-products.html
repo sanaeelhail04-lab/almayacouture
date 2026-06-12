@@ -7,7 +7,8 @@
   <meta name="robots" content="noindex, nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
   <style>
     * {
       margin: 0;
@@ -48,13 +49,11 @@
       flex-direction: column;
     }
 
-    /* الهيدر والفوتر */
     #header-placeholder,
     #footer-placeholder {
       width: 100%;
     }
 
-    /* المحتوى الرئيسي */
     .admin-main-content {
       flex: 1;
       padding: 1rem;
@@ -65,7 +64,6 @@
       margin: 0 auto;
     }
 
-    /* رأس الصفحة */
     .page-header {
       margin-bottom: 1.5rem;
       padding-bottom: 1rem;
@@ -80,7 +78,6 @@
       gap: 0.5rem;
     }
 
-    /* شبكة الإحصائيات */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -133,7 +130,6 @@
       margin-top: 4px;
     }
 
-    /* شريط الإجراءات */
     .actions-bar {
       display: flex;
       flex-wrap: wrap;
@@ -173,7 +169,6 @@
       border-color: var(--gold);
     }
 
-    /* أزرار */
     .btn-group-actions {
       display: flex;
       flex-wrap: wrap;
@@ -216,7 +211,6 @@
       color: white;
     }
 
-    /* حاوية الجدول */
     .table-wrapper {
       overflow-x: auto;
       border-radius: var(--radius-lg);
@@ -225,11 +219,10 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* الجدول */
     .products-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 600px;
+      min-width: 900px;
     }
 
     .products-table th {
@@ -252,7 +245,6 @@
       background: rgba(196, 160, 106, 0.02);
     }
 
-    /* صورة المنتج */
     .product-thumb {
       width: 45px;
       height: 56px;
@@ -261,7 +253,6 @@
       display: block;
     }
 
-    /* اسم المنتج */
     .product-name {
       color: var(--text-primary);
       font-weight: 600;
@@ -274,7 +265,39 @@
       margin-top: 4px;
     }
 
-    /* حالة المنتج */
+    .product-sku {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      direction: ltr;
+      display: inline-block;
+      background: var(--bg-secondary);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .stock-badge {
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .stock-high { background: rgba(37, 211, 102, 0.15); color: var(--success); }
+    .stock-medium { background: rgba(255, 165, 2, 0.15); color: var(--warning); }
+    .stock-low { background: rgba(255, 71, 87, 0.15); color: var(--danger); }
+    .stock-out { background: rgba(255, 71, 87, 0.25); color: var(--danger); }
+
+    .discount-badge {
+      background: rgba(255, 71, 87, 0.2);
+      color: var(--danger);
+      padding: 0.2rem 0.4rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
     .status-badge {
       padding: 0.25rem 0.6rem;
       border-radius: 20px;
@@ -293,7 +316,6 @@
       color: var(--danger);
     }
 
-    /* أزرار الإجراءات */
     .action-buttons {
       display: flex;
       gap: 0.4rem;
@@ -335,7 +357,6 @@
       color: #1A1510;
     }
 
-    /* حالات خاصة */
     .empty-state {
       text-align: center;
       padding: 3rem;
@@ -356,7 +377,6 @@
       to { transform: rotate(360deg); }
     }
 
-    /* مودال */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -387,7 +407,6 @@
       text-align: center;
     }
 
-    /* إشعار */
     .message {
       position: fixed;
       top: 80px;
@@ -426,7 +445,6 @@
       color: var(--danger);
     }
 
-    /* إشعار التراجع */
     .undo-toast {
       position: fixed;
       bottom: 20px;
@@ -453,124 +471,45 @@
       pointer-events: all;
     }
 
-    /* ========== تحسينات الشاشات الصغيرة ========== */
     @media (max-width: 768px) {
-      .admin-main-content {
-        padding: 0.6rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.6rem;
-      }
-
-      .stat-card {
-        padding: 0.7rem;
-      }
-
-      .stat-icon {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-      }
-
-      .actions-bar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .search-box {
-        width: 100%;
-      }
-
-      .btn-group-actions {
-        justify-content: center;
-      }
-
-      .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-      }
-
-      .products-table th,
-      .products-table td {
-        padding: 0.6rem;
-      }
-
-      .product-thumb {
-        width: 38px;
-        height: 48px;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        gap: 0.3rem;
-      }
-
-      .action-btn {
-        text-align: center;
-      }
+      .admin-main-content { padding: 0.6rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+      .stat-card { padding: 0.7rem; }
+      .stat-icon { width: 38px; height: 38px; font-size: 1rem; }
+      .actions-bar { flex-direction: column; align-items: stretch; }
+      .search-box { width: 100%; }
+      .btn-group-actions { justify-content: center; }
+      .btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+      .products-table th, .products-table td { padding: 0.6rem; }
+      .product-thumb { width: 38px; height: 48px; }
+      .action-buttons { flex-direction: column; gap: 0.3rem; }
+      .action-btn { text-align: center; }
     }
 
     @media (max-width: 480px) {
-      .admin-main-content {
-        padding: 0.4rem;
-      }
-
-      .page-header h1 {
-        font-size: 1.1rem;
-      }
-
-      .stats-grid {
-        gap: 0.5rem;
-      }
-
-      .stat-card {
-        padding: 0.5rem;
-      }
-
-      .stat-value {
-        font-size: 1rem;
-      }
-
-      .stat-label {
-        font-size: 0.6rem;
-      }
-
-      .products-table th {
-        font-size: 0.7rem;
-        padding: 0.5rem;
-      }
-
-      .products-table td {
-        font-size: 0.75rem;
-        padding: 0.5rem;
-      }
-
-      .product-name {
-        font-size: 0.75rem;
-      }
-
-      .action-btn {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.65rem;
-      }
+      .admin-main-content { padding: 0.4rem; }
+      .page-header h1 { font-size: 1.1rem; }
+      .stats-grid { gap: 0.5rem; }
+      .stat-card { padding: 0.5rem; }
+      .stat-value { font-size: 1rem; }
+      .stat-label { font-size: 0.6rem; }
+      .products-table th { font-size: 0.7rem; padding: 0.5rem; }
+      .products-table td { font-size: 0.75rem; padding: 0.5rem; }
+      .product-name { font-size: 0.75rem; }
+      .action-btn { padding: 0.25rem 0.5rem; font-size: 0.65rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- Header -->
 <div id="header-placeholder"></div>
 
-<!-- المحتوى الرئيسي -->
 <div class="admin-main-content">
   <div class="admin-container">
     <div class="page-header">
       <h1><i class="fas fa-boxes"></i> إدارة المنتجات</h1>
     </div>
 
-    <!-- إحصائيات -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-boxes"></i></div>
@@ -594,49 +533,54 @@
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-image"></i></div>
+        <div class="stat-icon"><i class="fas fa-box"></i></div>
         <div class="stat-info">
-          <div class="stat-value" id="totalImages">0</div>
-          <div class="stat-label">إجمالي الصور</div>
+          <div class="stat-value" id="totalStock">0</div>
+          <div class="stat-label">إجمالي القطع</div>
         </div>
       </div>
     </div>
 
-    <!-- شريط الإجراءات -->
     <div class="actions-bar">
       <div class="search-box">
         <i class="fas fa-search"></i>
         <input type="text" id="searchInput" placeholder="بحث عن منتج...">
       </div>
       <div class="btn-group-actions">
+        <button class="btn" onclick="window.location.href='admin-add-product.html'">
+          <i class="fas fa-plus"></i> إضافة منتج
+        </button>
         <button class="btn btn-outline" onclick="exportProducts()">
           <i class="fas fa-download"></i> تصدير
         </button>
-        <label class="btn btn-outline">
-          <i class="fas fa-upload"></i> استيراد
-          <input type="file" accept=".json" onchange="importProducts(this.files[0])" style="display: none">
-        </label>
       </div>
     </div>
 
-    <!-- جدول المنتجات -->
     <div class="table-wrapper">
       <table class="products-table">
         <thead>
-          <tr><th>الصورة</th><th>المنتج</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>الإجراءات</th></tr>
+          <tr>
+            <th>الصورة</th>
+            <th>المنتج</th>
+            <th>SKU</th>
+            <th>الفئة</th>
+            <th>السعر</th>
+            <th>المخزون</th>
+            <th>الخصم</th>
+            <th>الحالة</th>
+            <th>الإجراءات</th>
+          </tr>
         </thead>
         <tbody id="productsTableBody">
-          <tr><td colspan="6"><div class="loader"></div></td></tr>
+          <tr><td colspan="9"><div class="loader"></div></tr>
         </tbody>
-       </table>
+      </table>
     </div>
   </div>
 </div>
 
-<!-- Footer -->
 <div id="footer-placeholder"></div>
 
-<!-- مودال حذف -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; color: var(--danger);"></i>
@@ -649,27 +593,22 @@
   </div>
 </div>
 
-<!-- إشعار التراجع -->
 <div class="undo-toast" id="undoToast">
   <i class="fas fa-undo-alt" style="color: var(--gold);"></i>
   <span id="undoMessage">تم حذف المنتج</span>
   <button class="btn btn-outline" onclick="undoDelete()">تراجع</button>
 </div>
 
-<!-- رسالة -->
 <div id="message" class="message"></div>
 
-<!-- السكريبتات -->
 <script src="header.js"></script>
 <script src="footer.js"></script>
-<script src="config.js"></script>
 <script>
   let allProducts = [];
   let pendingDeletions = [];
   let undoTimeout = null;
   let deleteId = null;
 
-  // عرض الرسائل
   function showMessage(text, type = 'info') {
     const msgDiv = document.getElementById('message');
     msgDiv.textContent = text;
@@ -680,7 +619,6 @@
     }, 3000);
   }
 
-  // طلب Supabase
   async function supabaseRequest(endpoint, options = {}) {
     if (!window.CONFIG) {
       throw new Error('CONFIG غير موجود');
@@ -711,7 +649,6 @@
     }
   }
 
-  // تحميل المنتجات
   async function loadProducts() {
     try {
       allProducts = await supabaseRequest('/rest/v1/products?select=*&order=display_order') || [];
@@ -720,28 +657,36 @@
       console.log('✅ تم تحميل', allProducts.length, 'منتج');
     } catch (error) {
       console.error('خطأ في تحميل المنتجات:', error);
-      document.getElementById('productsTableBody').innerHTML = '<tr><td colspan="6"><div class="empty-state">❌ فشل تحميل المنتجات</div></td></tr>';
+      document.getElementById('productsTableBody').innerHTML = '<tr><td colspan="9"><div class="empty-state">❌ فشل تحميل المنتجات</div></td></tr>';
       showMessage('❌ فشل تحميل المنتجات', 'error');
     }
   }
 
-  // تحديث الإحصائيات
   function updateStats() {
     const active = allProducts.filter(p => p.is_active === true).length;
     const featured = allProducts.filter(p => p.is_featured === true).length;
-    let totalImages = 0;
-    allProducts.forEach(p => {
-      totalImages++;
-      if (p.additional_images) totalImages += p.additional_images.length;
-    });
+    const totalStock = allProducts.reduce((sum, p) => sum + (p.stock_quantity || 0), 0);
     
     document.getElementById('totalProducts').textContent = allProducts.length;
     document.getElementById('activeProducts').textContent = active;
     document.getElementById('featuredProducts').textContent = featured;
-    document.getElementById('totalImages').textContent = totalImages;
+    document.getElementById('totalStock').textContent = totalStock;
   }
 
-  // عرض الجدول
+  function getStockClass(stock) {
+    if (stock === 0) return 'stock-out';
+    if (stock < 5) return 'stock-low';
+    if (stock < 15) return 'stock-medium';
+    return 'stock-high';
+  }
+
+  function getStockText(stock) {
+    if (stock === 0) return 'نفذ المخزون';
+    if (stock < 5) return 'مخزون منخفض جداً';
+    if (stock < 15) return 'مخزون منخفض';
+    return 'مخزون جيد';
+  }
+
   function renderProductsTable() {
     const tbody = document.getElementById('productsTableBody');
     const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
@@ -750,46 +695,65 @@
     if (searchTerm) {
       filtered = allProducts.filter(p => 
         p.product_name?.toLowerCase().includes(searchTerm) ||
-        p.category_name?.toLowerCase().includes(searchTerm)
+        p.category_name?.toLowerCase().includes(searchTerm) ||
+        p.sku?.toLowerCase().includes(searchTerm)
       );
     }
     
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">📦 لا توجد منتجات</div></td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state">📦 لا توجد منتجات</div></td></tr>';
       return;
     }
     
-    tbody.innerHTML = filtered.map(product => `
-      <tr>
-        <td><img src="${product.product_image_url || 'https://placehold.co/50x63'}" class="product-thumb" onerror="this.src='https://placehold.co/50x63'" alt=""></td>
-        <td>
-          <div class="product-name">${escapeHtml(product.product_name)}</div>
-          ${product.is_featured ? '<div class="product-featured">⭐ مميز</div>' : ''}
-        </td>
-        <td>${escapeHtml(product.category_name)}</td>
-        <td style="color: var(--gold);">${escapeHtml(product.price_range || '—')}</td>
-        <td><span class="status-badge ${product.is_active ? 'status-active' : 'status-hidden'}">${product.is_active ? 'نشط' : 'مخفي'}</span></td>
-        <td>
-          <div class="action-buttons">
-            <button class="action-btn toggle" onclick="toggleStatus(${product.id})" title="${product.is_active ? 'إخفاء' : 'إظهار'}">
-              <i class="fas fa-${product.is_active ? 'eye-slash' : 'eye'}"></i>
-            </button>
-            <button class="action-btn edit" onclick="editProduct(${product.id})" title="تعديل">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="action-btn duplicate" onclick="duplicateProduct(${product.id})" title="نسخ">
-              <i class="fas fa-copy"></i>
-            </button>
-            <button class="action-btn delete" onclick="openDeleteModal(${product.id}, '${escapeHtml(product.product_name)}')" title="حذف">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = filtered.map(product => {
+      const stock = product.stock_quantity || 0;
+      const stockClass = getStockClass(stock);
+      const stockText = getStockText(stock);
+      const discount = product.discount_pct || 0;
+      
+      return `
+        <tr>
+          <td><img src="${product.product_image_url || 'https://placehold.co/50x63'}" class="product-thumb" onerror="this.src='https://placehold.co/50x63'" alt=""></td>
+          <td>
+            <div class="product-name">${escapeHtml(product.product_name)}</div>
+            ${product.is_featured ? '<div class="product-featured">⭐ مميز</div>' : ''}
+            ${product.badge ? `<div class="product-featured">🏷️ ${escapeHtml(product.badge)}</div>` : ''}
+          </td>
+          <td><code class="product-sku">${escapeHtml(product.sku) || '—'}</code></td>
+          <td>${escapeHtml(product.category_name)}</td>
+          <td style="color: var(--gold);">${escapeHtml(product.price_range || '—')}</td>
+          <td>
+            <span class="stock-badge ${stockClass}">${stockText} (${stock})</span>
+          </td>
+          <td>
+            ${discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : '—'}
+          </td>
+          <td>
+            <span class="status-badge ${product.is_active ? 'status-active' : 'status-hidden'}">
+              ${product.is_active ? 'نشط' : 'مخفي'}
+            </span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-btn toggle" onclick="toggleStatus(${product.id})" title="${product.is_active ? 'إخفاء' : 'إظهار'}">
+                <i class="fas fa-${product.is_active ? 'eye-slash' : 'eye'}"></i>
+              </button>
+              <button class="action-btn edit" onclick="editProduct(${product.id})" title="تعديل">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-btn duplicate" onclick="duplicateProduct(${product.id})" title="نسخ">
+                <i class="fas fa-copy"></i>
+              </button>
+              <button class="action-btn delete" onclick="openDeleteModal(${product.id}, '${escapeHtml(product.product_name)}')" title="حذف">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
   }
 
-  // تغيير حالة المنتج
   async function toggleStatus(id) {
     const product = allProducts.find(p => p.id === id);
     if (!product) return;
@@ -806,12 +770,10 @@
     }
   }
 
-  // تعديل المنتج
   function editProduct(id) {
     window.location.href = `admin-add-product.html?edit=${id}`;
   }
 
-  // نسخ المنتج
   async function duplicateProduct(id) {
     const product = allProducts.find(p => p.id === id);
     if (!product) return;
@@ -832,20 +794,17 @@
     }
   }
 
-  // فتح مودال الحذف
   function openDeleteModal(id, name) {
     deleteId = id;
     document.getElementById('deleteProductName').textContent = name;
     document.getElementById('deleteModal').classList.add('active');
   }
   
-  // إغلاق مودال الحذف
   function closeDeleteModal() {
     deleteId = null;
     document.getElementById('deleteModal').classList.remove('active');
   }
   
-  // تأكيد الحذف
   async function confirmDelete() {
     if (!deleteId) return;
     
@@ -866,7 +825,6 @@
     deleteId = null;
   }
   
-  // عرض رسالة التراجع
   function showUndoMessage(productName) {
     const toast = document.getElementById('undoToast');
     document.getElementById('undoMessage').innerHTML = `تم حذف "${productName.substring(0, 30)}"`;
@@ -879,7 +837,6 @@
     }, 5000);
   }
   
-  // التراجع عن الحذف
   async function undoDelete() {
     const toast = document.getElementById('undoToast');
     toast.classList.remove('show');
@@ -902,9 +859,22 @@
     if (undoTimeout) clearTimeout(undoTimeout);
   }
   
-  // تصدير المنتجات
   function exportProducts() {
-    const dataStr = JSON.stringify(allProducts, null, 2);
+    const exportData = allProducts.map(p => ({
+      id: p.id,
+      product_name: p.product_name,
+      category_name: p.category_name,
+      sku: p.sku,
+      price_range: p.price_range,
+      stock_quantity: p.stock_quantity,
+      discount_pct: p.discount_pct,
+      is_active: p.is_active,
+      is_featured: p.is_featured,
+      badge: p.badge,
+      product_image_url: p.product_image_url
+    }));
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -915,31 +885,6 @@
     showMessage('✅ تم تصدير المنتجات', 'success');
   }
   
-  // استيراد المنتجات
-  async function importProducts(file) {
-    if (!file) return;
-    
-    try {
-      const text = await file.text();
-      const products = JSON.parse(text);
-      let imported = 0;
-      
-      for (const product of products) {
-        if (product.product_name) {
-          const { id, created_at, updated_at, ...cleanProduct } = product;
-          await supabaseRequest('/rest/v1/products', { method: 'POST', body: cleanProduct });
-          imported++;
-        }
-      }
-      
-      await loadProducts();
-      showMessage(`✅ تم استيراد ${imported} منتج`, 'success');
-    } catch (error) {
-      showMessage('❌ فشل الاستيراد', 'error');
-    }
-  }
-  
-  // هروب النصوص
   function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
@@ -950,24 +895,20 @@
     });
   }
   
-  // فلترة المنتجات
   function filterProducts() {
     renderProductsTable();
   }
   
-  // الأحداث
   document.getElementById('searchInput')?.addEventListener('input', filterProducts);
   
-  // التحقق من CONFIG
   if (typeof window.CONFIG !== 'undefined') {
     console.log('✅ CONFIG موجود:', window.CONFIG);
     loadProducts();
   } else {
     console.error('❌ CONFIG غير موجود');
-    document.getElementById('productsTableBody').innerHTML = '<tr><td colspan="6"><div class="empty-state">❌ ملف config.js مفقود</div></td></tr>';
+    document.getElementById('productsTableBody').innerHTML = '<tr><td colspan="9"><div class="empty-state">❌ ملف config.js مفقود</div></td></tr>';
   }
   
-  // جعل الدوال عامة
   window.toggleStatus = toggleStatus;
   window.editProduct = editProduct;
   window.duplicateProduct = duplicateProduct;
@@ -976,7 +917,6 @@
   window.confirmDelete = confirmDelete;
   window.undoDelete = undoDelete;
   window.exportProducts = exportProducts;
-  window.importProducts = importProducts;
 </script>
 </body>
 </html>

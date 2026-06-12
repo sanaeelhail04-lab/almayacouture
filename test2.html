@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إضافة منتج | Almaya Couture</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0F0B08;
+      --bg-secondary: #1A1510;
+      --bg-card: #231D15;
+      --gold: #C4A06A;
+      --gold-light: #D4B896;
+      --gold-dark: #A07840;
+      --text-primary: #F5EDD8;
+      --text-secondary: #A89880;
+      --text-muted: #6B5F52;
+      --border: rgba(196, 160, 106, 0.15);
+      --border-hover: rgba(196, 160, 106, 0.4);
+      --success: #25D366;
+      --danger: #FF4757;
+      --warning: #FFA502;
+      --radius: 16px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      background: var(--bg-primary);
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      flex: 1;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-link {
+      padding: 0.5rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover, .nav-link.active {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .f-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .f-label i {
+      color: var(--gold);
+    }
+
+    .req {
+      color: var(--danger);
+    }
+
+    .f-input, .f-textarea, .f-select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .f-input:focus, .f-textarea:focus, .f-select:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .f-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .imgs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .img-card {
+      aspect-ratio: 3/4;
+      background: var(--bg-secondary);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .img-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .img-card.has-img {
+      border-style: solid;
+      border-color: var(--border-hover);
+    }
+
+    .img-card.is-main {
+      border-color: var(--gold);
+      border-width: 2.5px;
+    }
+
+    .img-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .upload-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    .upload-placeholder i {
+      font-size: 2rem;
+    }
+
+    .img-actions {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 0.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .img-card:hover .img-actions {
+      opacity: 1;
+    }
+
+    .img-actions button {
+      background: rgba(0,0,0,0.7);
+      border: none;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .img-actions button:hover {
+      background: var(--gold);
+      color: #1A1510;
+    }
+
+    .progress-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .progress-bar {
+      width: 80%;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      width: 0%;
+      transition: width 0.2s;
+    }
+
+    .main-badge {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: var(--gold);
+      color: #1A1510;
+      font-size: 0.6rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      z-index: 5;
+    }
+
+    .video-upload-area {
+      background: var(--bg-secondary);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .video-upload-area:hover {
+      border-color: var(--gold);
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #1A1510;
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(196, 160, 106, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-outline:hover {
+      background: rgba(196, 160, 106, 0.1);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      display: none;
+    }
+
+    .message.success {
+      background: rgba(37, 211, 102, 0.1);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      color: var(--success);
+    }
+
+    .message.error {
+      background: rgba(255, 71, 87, 0.1);
+      border: 1px solid rgba(255, 71, 87, 0.3);
+      color: var(--danger);
+    }
+
+    @media (max-width: 768px) {
+      .admin-container {
+        padding: 1rem;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div id="header-placeholder"></div>
+
+<div class="admin-container">
+  <div class="header">
+    <h1><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h1>
+    <div class="nav-links">
+      <a href="admin-products.html" class="nav-link"><i class="fas fa-list-ul"></i> إدارة المنتجات</a>
+    </div>
+  </div>
+
+  <div class="message" id="message"></div>
+
+  <div class="form-card">
+    <form id="productForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="f-label"><i class="fas fa-tag"></i> الفئة <span class="req">*</span></label>
+          <select class="f-select" id="categoryName" required>
+            <option value="">اختر الفئة...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="f-label"><i class="fas fa-tshirt"></i> اسم المنتج <span class="req">*</span></label>
+          <input type="text" class="f-input" id="productName" required placeholder="مثال: جلابة مغربية فاخرة">
+        </div>
+        <div class="form-group">
+          <label class="f-label"><i class="fas fa-money-bill-wave"></i> السعر</label>
+          <input type="text" class="f-input" id="priceRange" placeholder="مثال: 600-900 درهم">
+        </div>
+        <div class="form-group">
+          <label class="f-label"><i class="fas fa-sort-numeric-down"></i> ترتيب العرض</label>
+          <input type="number" class="f-input" id="displayOrder" value="0">
+        </div>
+        <div class="form-group full">
+          <label class="f-label"><i class="fas fa-align-left"></i> وصف المنتج</label>
+          <textarea class="f-textarea" id="productDescription" rows="3" maxlength="500" placeholder="وصف جذاب للمنتج..."></textarea>
+        </div>
+      </div>
+
+      <hr class="sep">
+
+      <div class="form-group full">
+        <label class="f-label"><i class="fas fa-images"></i> صور المنتج <span class="req">*</span></label>
+        <div class="imgs-grid" id="imagesGrid"></div>
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('bulkImages').click()" style="margin-top: 1rem; width: 100%;">
+          <i class="fas fa-cloud-upload-alt"></i> إضافة صور (حد أقصى 10)
+        </button>
+        <input type="file" id="bulkImages" accept="image/*" multiple style="display: none" onchange="handleBulkImages(event)">
+      </div>
+
+      <hr class="sep">
+
+      <div class="form-group full">
+        <label class="f-label"><i class="fas fa-video"></i> فيديو المنتج (اختياري)</label>
+        <div class="video-upload-area" id="videoUploadArea" onclick="document.getElementById('videoInput').click()">
+          <i class="fas fa-play-circle" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem; display: block;"></i>
+          <p style="color: var(--text-muted); font-size: 0.8rem;">اضغط لإضافة فيديو (حد أقصى 50MB)</p>
+          <div id="videoPreview"></div>
+        </div>
+        <input type="file" id="videoInput" accept="video/*" style="display: none" onchange="handleVideo(event)">
+      </div>
+
+      <hr class="sep">
+
+      <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="isFeatured"> <i class="fas fa-star" style="color: var(--gold);"></i> منتج مميز
+        </label>
+        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="isActive" checked> <i class="fas fa-eye" style="color: var(--success);"></i> نشط
+        </label>
+      </div>
+
+      <input type="hidden" id="editId" value="">
+
+      <div class="btn-group">
+        <button type="submit" class="btn" id="submitBtn">
+          <i class="fas fa-save"></i> حفظ المنتج
+        </button>
+        <button type="button" class="btn btn-outline" onclick="resetForm()">
+          <i class="fas fa-redo"></i> إعادة تعيين
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<script src="config.js"></script>
+<script>
+  let currentImages = [];
+  let currentVideo = null;
+  let currentEditId = null;
+
+  function showMessage(text, type = 'info') {
+    const msgDiv = document.getElementById('message');
+    msgDiv.textContent = text;
+    msgDiv.className = `message ${type}`;
+    msgDiv.style.display = 'block';
+    setTimeout(() => {
+      msgDiv.style.display = 'none';
+    }, 4000);
+  }
+
+  async function uploadToCloudinary(file, type, onProgress) {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', window.CONFIG.CLOUDINARY_UPLOAD_PRESET);
+      formData.append('folder', type === 'video' ? 'almaya-products/videos' : 'almaya-products/images');
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `https://api.cloudinary.com/v1_1/${window.CONFIG.CLOUDINARY_CLOUD_NAME}/${type}/upload`);
+      
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable && onProgress) {
+          onProgress(Math.round((e.loaded / e.total) * 100));
+        }
+      };
+      
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText));
+        } else {
+          reject(new Error(`فشل الرفع: ${xhr.status}`));
+        }
+      };
+      
+      xhr.onerror = () => reject(new Error('خطأ في الاتصال'));
+      xhr.timeout = 120000;
+      xhr.send(formData);
+    });
+  }
+
+  async function supabaseRequest(endpoint, options = {}) {
+    const url = `${window.CONFIG.SUPABASE_URL}${endpoint}`;
+    const headers = {
+      'apikey': window.CONFIG.SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${window.CONFIG.SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json'
+    };
+
+    const config = {
+      method: options.method || 'GET',
+      headers: headers,
+      body: options.body ? JSON.stringify(options.body) : undefined
+    };
+
+    const response = await fetch(url, config);
+    if (response.status === 204) return null;
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || `خطأ ${response.status}`);
+    return data;
+  }
+
+  async function loadCategories() {
+    try {
+      const categories = await supabaseRequest('/rest/v1/cat_overlay?select=category_name&is_active=eq.true&order=display_order');
+      const select = document.getElementById('categoryName');
+      select.innerHTML = '<option value="">اختر الفئة...</option>';
+      if (categories) {
+        categories.forEach(cat => {
+          select.innerHTML += `<option value="${escapeHtml(cat.category_name)}">${escapeHtml(cat.category_name)}</option>`;
+        });
+      }
+    } catch (error) {
+      showMessage('❌ فشل تحميل الفئات', 'error');
+    }
+  }
+
+  function renderImagesGrid() {
+    const grid = document.getElementById('imagesGrid');
+    grid.innerHTML = '';
+    
+    for (let i = 0; i < 10; i++) {
+      const imageData = currentImages[i];
+      const card = document.createElement('div');
+      card.className = 'img-card';
+      if (imageData?.url) card.classList.add('has-img');
+      if (i === 0 && imageData?.url) card.classList.add('is-main');
+      
+      if (imageData?.uploading) {
+        card.innerHTML = `
+          <div class="progress-overlay">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${imageData.progress || 0}%"></div>
+            </div>
+            <div class="progress-text">${imageData.progress || 0}%</div>
+          </div>
+        `;
+      } else if (imageData?.url) {
+        card.innerHTML = `
+          <img src="${imageData.url}" alt="صورة ${i + 1}">
+          <div class="main-badge">${i === 0 ? 'رئيسية' : ''}</div>
+          <div class="img-actions">
+            ${i !== 0 ? `<button onclick="setMainImage(${i})" title="تعيين كرئيسية"><i class="fas fa-crown"></i></button>` : ''}
+            <button onclick="removeImage(${i})" title="حذف"><i class="fas fa-trash"></i></button>
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="upload-placeholder" onclick="document.getElementById('imageInput${i}').click()">
+            <i class="fas fa-plus-circle"></i>
+            <span style="font-size: 0.7rem;">صورة ${i + 1}</span>
+          </div>
+          <input type="file" id="imageInput${i}" accept="image/*" style="display: none" onchange="uploadImage(${i}, this.files[0])">
+        `;
+      }
+      
+      grid.appendChild(card);
+    }
+  }
+
+  async function uploadImage(index, file) {
+    if (!file) return;
+    
+    if (file.size > 10 * 1024 * 1024) {
+      showMessage('❌ حجم الصورة يتجاوز 10 ميجابايت', 'error');
+      return;
+    }
+    
+    currentImages[index] = { uploading: true, progress: 0 };
+    renderImagesGrid();
+    
+    try {
+      const result = await uploadToCloudinary(file, 'image', (progress) => {
+        if (currentImages[index]?.uploading) {
+          currentImages[index].progress = progress;
+          renderImagesGrid();
+        }
+      });
+      
+      currentImages[index] = { url: result.secure_url, publicId: result.public_id };
+      showMessage(`✅ تم رفع الصورة ${index + 1}`, 'success');
+    } catch (error) {
+      currentImages[index] = null;
+      showMessage(`❌ فشل رفع الصورة`, 'error');
+    }
+    
+    renderImagesGrid();
+  }
+
+  async function handleBulkImages(event) {
+    const files = Array.from(event.target.files);
+    event.target.value = '';
+    
+    for (const file of files) {
+      const emptyIndex = currentImages.findIndex(img => !img || !img.url);
+      if (emptyIndex === -1) {
+        showMessage('⚠️ الحد الأقصى 10 صور', 'warning');
+        break;
+      }
+      await uploadImage(emptyIndex, file);
+    }
+  }
+
+  function setMainImage(index) {
+    if (index === 0 || !currentImages[index]?.url) return;
+    const temp = currentImages[0];
+    currentImages[0] = currentImages[index];
+    currentImages[index] = temp;
+    renderImagesGrid();
+    showMessage('✅ تم تعيين الصورة الرئيسية', 'success');
+  }
+
+  async function removeImage(index) {
+    currentImages[index] = null;
+    renderImagesGrid();
+    showMessage('🗑️ تم حذف الصورة', 'info');
+  }
+
+  async function handleVideo(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    if (file.size > 50 * 1024 * 1024) {
+      showMessage('❌ حجم الفيديو يتجاوز 50 ميجابايت', 'error');
+      return;
+    }
+    
+    const area = document.getElementById('videoUploadArea');
+    area.innerHTML = `<i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i><p>جاري رفع الفيديو...</p>`;
+    
+    try {
+      const result = await uploadToCloudinary(file, 'video');
+      currentVideo = { url: result.secure_url, publicId: result.public_id };
+      
+      area.innerHTML = `
+        <video controls style="width: 100%; max-height: 200px; border-radius: 12px;">
+          <source src="${result.secure_url}" type="video/mp4">
+        </video>
+        <button class="btn btn-outline" onclick="removeVideo()" style="margin-top: 0.5rem;">حذف الفيديو</button>
+      `;
+      showMessage('✅ تم رفع الفيديو', 'success');
+    } catch (error) {
+      area.innerHTML = `<i class="fas fa-play-circle" style="font-size: 2.5rem;"></i><p>اضغط لإضافة فيديو</p>`;
+      showMessage('❌ فشل رفع الفيديو', 'error');
+    }
+  }
+
+  function removeVideo() {
+    currentVideo = null;
+    const area = document.getElementById('videoUploadArea');
+    area.innerHTML = `<i class="fas fa-play-circle" style="font-size: 2.5rem;"></i><p>اضغط لإضافة فيديو</p>`;
+    showMessage('🗑️ تم حذف الفيديو', 'info');
+  }
+
+  async function addOrUpdateProduct(event) {
+    event.preventDefault();
+    
+    const category = document.getElementById('categoryName').value;
+    const name = document.getElementById('productName').value.trim();
+    const description = document.getElementById('productDescription').value;
+    const price = document.getElementById('priceRange').value;
+    const displayOrder = parseInt(document.getElementById('displayOrder').value) || 0;
+    const isFeatured = document.getElementById('isFeatured').checked;
+    const isActive = document.getElementById('isActive').checked;
+    
+    if (!category || !name) {
+      showMessage('❌ الرجاء تعبئة الفئة واسم المنتج', 'error');
+      return;
+    }
+    
+    const mainImage = currentImages[0]?.url;
+    if (!mainImage && !currentEditId) {
+      showMessage('❌ الصورة الرئيسية مطلوبة', 'error');
+      return;
+    }
+    
+    const additionalImages = currentImages.slice(1).filter(img => img?.url).map(img => img.url);
+    
+    const productData = {
+      category_name: category,
+      product_name: name,
+      product_description: description || null,
+      price_range: price || null,
+      display_order: displayOrder,
+      is_featured: isFeatured,
+      is_active: isActive,
+      product_image_url: mainImage,
+      additional_images: additionalImages,
+      product_video_url: currentVideo?.url || null
+    };
+    
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+    
+    try {
+      if (currentEditId) {
+        await supabaseRequest(`/rest/v1/products?id=eq.${currentEditId}`, {
+          method: 'PATCH',
+          body: productData
+        });
+        showMessage('✅ تم تحديث المنتج', 'success');
+      } else {
+        await supabaseRequest('/rest/v1/products', {
+          method: 'POST',
+          body: productData
+        });
+        showMessage('✅ تم إضافة المنتج', 'success');
+      }
+      
+      resetForm();
+    } catch (error) {
+      showMessage(`❌ فشل الحفظ: ${error.message}`, 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ المنتج';
+    }
+  }
+
+  function resetForm() {
+    document.getElementById('productForm').reset();
+    document.getElementById('isActive').checked = true;
+    document.getElementById('editId').value = '';
+    currentEditId = null;
+    currentImages = [];
+    currentVideo = null;
+    renderImagesGrid();
+    
+    const area = document.getElementById('videoUploadArea');
+    area.innerHTML = `<i class="fas fa-play-circle" style="font-size: 2.5rem;"></i><p>اضغط لإضافة فيديو</p>`;
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // التحقق من وجود edit parameter في الرابط
+  const urlParams = new URLSearchParams(window.location.search);
+  const editId = urlParams.get('edit');
+  if (editId) {
+    // سيتم تحميل بيانات المنتج للتعديل
+    currentEditId = editId;
+  }
+
+  document.getElementById('productForm').addEventListener('submit', addOrUpdateProduct);
+  
+  if (typeof window.CONFIG !== 'undefined') {
+    loadCategories();
+    renderImagesGrid();
+  } else {
+    document.body.innerHTML = '<div style="color: red; text-align: center; padding: 2rem;">❌ ملف config.js مفقود</div>';
+  }
+
+  window.setMainImage = setMainImage;
+  window.removeImage = removeImage;
+  window.uploadImage = uploadImage;
+  window.handleBulkImages = handleBulkImages;
+  window.handleVideo = handleVideo;
+  window.removeVideo = removeVideo;
+  window.resetForm = resetForm;
+</script>
+</body>
+</html>
