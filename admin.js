@@ -3,6 +3,38 @@
   function createAdminMenu() {
     if (document.getElementById('admin-navbar')) return;
 
+    // استخدام نظام الثيم من AlmayaTheme إذا كان موجوداً
+    function applyThemeToAdmin() {
+      const isWhiteTheme = document.body.classList.contains('white-theme');
+      const topbar = document.getElementById('admin-navbar');
+      const drawer = document.getElementById('adminDrawer');
+      const overlay = document.getElementById('adminOverlay');
+      
+      if (topbar) {
+        if (isWhiteTheme) {
+          topbar.style.background = '#f5f0e8';
+          topbar.style.borderBottom = '1px solid rgba(160,120,64,0.15)';
+          topbar.querySelector('.admin-topbar-brand')?.style.setProperty('color', '#5A4E3C', 'important');
+        } else {
+          topbar.style.background = '#1e2a3a';
+          topbar.style.borderBottom = '1px solid rgba(255,255,255,0.08)';
+          topbar.querySelector('.admin-topbar-brand')?.style.setProperty('color', 'var(--gold, #C4A06A)', 'important');
+        }
+      }
+      
+      if (drawer) {
+        drawer.style.background = isWhiteTheme ? '#FDFCF8' : '#253045';
+        const header = drawer.querySelector('.admin-drawer-header');
+        if (header) {
+          header.style.borderBottomColor = isWhiteTheme ? 'rgba(160,120,64,0.12)' : 'rgba(255,255,255,0.08)';
+        }
+        const footer = drawer.querySelector('.admin-drawer-footer');
+        if (footer) {
+          footer.style.borderTopColor = isWhiteTheme ? 'rgba(160,120,64,0.12)' : 'rgba(255,255,255,0.07)';
+        }
+      }
+    }
+
     /* ============================================================
        CSS
     ============================================================ */
@@ -10,9 +42,6 @@
     style.textContent = `
       /* ===== TOP BAR ===== */
       .admin-topbar {
-        background: #1e2a3a;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        padding: 0.55rem 1rem;
         position: sticky;
         top: 0;
         z-index: 100;
@@ -20,12 +49,13 @@
         align-items: center;
         justify-content: space-between;
         direction: rtl;
+        padding: 0.55rem 1rem;
+        transition: all 0.3s ease;
       }
       .admin-topbar-brand {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: var(--gold, #C4A06A);
         font-weight: 700;
         font-size: 0.95rem;
         text-decoration: none;
@@ -49,27 +79,23 @@
         gap: 0.4rem;
         transition: all 0.2s;
       }
+      body.white-theme .admin-hamburger {
+        border-color: rgba(160,120,64,0.25);
+        color: #5A4E3C;
+      }
       .admin-hamburger:hover {
         border-color: var(--gold, #C4A06A);
         color: var(--gold, #C4A06A);
       }
-      .admin-refresh-top {
-        background: none;
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 8px;
-        padding: 0.35rem 0.55rem;
-        cursor: pointer;
-        color: rgba(255,255,255,0.5);
-        font-size: 0.8rem;
-        transition: all 0.2s;
-      }
-      .admin-refresh-top:hover { color: rgba(255,255,255,0.8); }
       
       /* Current page indicator */
       .admin-page-label {
         color: rgba(255,255,255,0.45);
         font-size: 0.75rem;
         font-family: 'Tajawal', sans-serif;
+      }
+      body.white-theme .admin-page-label {
+        color: #8B7B68;
       }
 
       /* ===== OVERLAY ===== */
@@ -96,7 +122,6 @@
         width: 295px;
         max-width: 88vw;
         height: 100%;
-        background: #253045;
         z-index: 300;
         transition: right 0.38s cubic-bezier(0.23, 1, 0.32, 1);
         display: flex;
@@ -104,9 +129,11 @@
         direction: rtl;
         overflow-y: auto;
         overflow-x: hidden;
+        transition: background 0.3s ease, right 0.38s cubic-bezier(0.23, 1, 0.32, 1);
       }
       .admin-drawer::-webkit-scrollbar { width: 3px; }
       .admin-drawer::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+      body.white-theme .admin-drawer::-webkit-scrollbar-thumb { background: rgba(160,120,64,0.2); }
       .admin-drawer.open { right: 0; }
 
       /* ===== DRAWER HEADER ===== */
@@ -117,16 +144,20 @@
         align-items: center;
         justify-content: space-between;
         flex-shrink: 0;
+        transition: border-color 0.3s ease;
       }
       .admin-drawer-brand {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: #fff;
         font-weight: 700;
         font-size: 1rem;
         font-family: 'Tajawal', sans-serif;
         text-decoration: none;
+        color: #fff;
+      }
+      body.white-theme .admin-drawer-brand {
+        color: #2A2218;
       }
       .admin-drawer-brand i {
         color: var(--gold, #C4A06A);
@@ -142,7 +173,11 @@
         line-height: 1;
         transition: color 0.2s;
       }
+      body.white-theme .admin-drawer-close {
+        color: rgba(90,78,60,0.5);
+      }
       .admin-drawer-close:hover { color: #fff; }
+      body.white-theme .admin-drawer-close:hover { color: #A07840; }
 
       /* ===== NAV ===== */
       .admin-drawer-nav {
@@ -156,7 +191,6 @@
         align-items: center;
         justify-content: space-between;
         padding: 0.95rem 1.1rem;
-        color: rgba(255,255,255,0.72);
         font-size: 1rem;
         font-family: 'Tajawal', sans-serif;
         font-weight: 500;
@@ -166,15 +200,28 @@
         text-decoration: none;
         position: relative;
         user-select: none;
+        color: rgba(255,255,255,0.72);
+      }
+      body.white-theme .adn-item {
+        color: rgba(42,34,24,0.7);
+        border-bottom-color: rgba(160,120,64,0.08);
       }
       .adn-item:hover {
         background: rgba(255,255,255,0.06);
         color: #fff;
       }
+      body.white-theme .adn-item:hover {
+        background: rgba(160,120,64,0.06);
+        color: #A07840;
+      }
       .adn-item.active {
         background: rgba(255,255,255,0.07);
         color: #fff;
         border-right: 3px solid var(--gold, #C4A06A);
+      }
+      body.white-theme .adn-item.active {
+        background: rgba(160,120,64,0.08);
+        color: #A07840;
       }
       .adn-item-right {
         display: flex;
@@ -188,15 +235,25 @@
         width: 22px;
         text-align: center;
       }
+      body.white-theme .adn-icon {
+        color: rgba(90,78,60,0.4);
+      }
       .adn-item.active .adn-icon,
       .adn-item:hover .adn-icon {
         color: rgba(255,255,255,0.7);
+      }
+      body.white-theme .adn-item.active .adn-icon,
+      body.white-theme .adn-item:hover .adn-icon {
+        color: #A07840;
       }
       .adn-chevron {
         font-size: 0.65rem;
         color: rgba(255,255,255,0.3);
         transition: transform 0.28s ease;
         margin-left: 2px;
+      }
+      body.white-theme .adn-chevron {
+        color: rgba(90,78,60,0.3);
       }
       .adn-item.expanded .adn-chevron {
         transform: rotate(180deg);
@@ -223,6 +280,9 @@
         transition: max-height 0.38s ease;
         background: rgba(0,0,0,0.18);
       }
+      body.white-theme .adn-submenu {
+        background: rgba(160,120,64,0.05);
+      }
       .adn-submenu.open { max-height: 500px; }
 
       .adn-sub-item {
@@ -230,7 +290,6 @@
         align-items: center;
         justify-content: space-between;
         padding: 0.7rem 1.4rem 0.7rem 1rem;
-        color: rgba(255,255,255,0.55);
         font-size: 0.88rem;
         font-family: 'Tajawal', sans-serif;
         cursor: pointer;
@@ -238,10 +297,19 @@
         border-bottom: 1px solid rgba(255,255,255,0.04);
         transition: background 0.15s, color 0.15s;
         gap: 0.5rem;
+        color: rgba(255,255,255,0.55);
+      }
+      body.white-theme .adn-sub-item {
+        color: rgba(42,34,24,0.6);
+        border-bottom-color: rgba(160,120,64,0.05);
       }
       .adn-sub-item:hover {
         background: rgba(255,255,255,0.05);
         color: rgba(255,255,255,0.9);
+      }
+      body.white-theme .adn-sub-item:hover {
+        background: rgba(160,120,64,0.05);
+        color: #A07840;
       }
       .adn-sub-item.active {
         color: var(--gold, #C4A06A);
@@ -252,6 +320,9 @@
         color: rgba(255,255,255,0.2);
         flex-shrink: 0;
       }
+      body.white-theme .adn-sub-icon {
+        color: rgba(90,78,60,0.3);
+      }
       .adn-sub-item.active .adn-sub-icon { color: var(--gold, #C4A06A); }
 
       /* ===== DRAWER FOOTER ===== */
@@ -261,31 +332,7 @@
         display: flex;
         gap: 0.5rem;
         flex-shrink: 0;
-      }
-      .admin-footer-btn {
-        flex: 1;
-        padding: 0.5rem;
-        border-radius: 8px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: rgba(255,255,255,0.05);
-        color: rgba(255,255,255,0.5);
-        font-size: 0.72rem;
-        font-family: 'Tajawal', sans-serif;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.4rem;
-        transition: all 0.2s;
-      }
-      .admin-footer-btn:hover {
-        background: rgba(255,255,255,0.1);
-        color: #fff;
-        border-color: rgba(255,255,255,0.2);
-      }
-      .admin-footer-btn.danger:hover {
-        color: #ff6b7a;
-        border-color: rgba(255,107,122,0.3);
+        transition: border-color 0.3s ease;
       }
 
       /* ===== ANIMATION ===== */
@@ -344,9 +391,6 @@
       </a>
       <div class="admin-topbar-actions">
         <span class="admin-page-label">${pageLabel}</span>
-        <button class="admin-refresh-top" id="adminRefreshTop" title="تحديث">
-          <i class="fas fa-sync-alt"></i>
-        </button>
         <button class="admin-hamburger" id="adminHamburger" aria-label="القائمة" aria-expanded="false">
           <i class="fas fa-bars"></i>
         </button>
@@ -420,22 +464,9 @@
 
         <div class="adn-submenu ${isProductSub ? 'open' : ''}" id="productsSubmenu">
           ${subItem('admin-produits.html', 'fas fa-list', 'جميع المنتجات', currentPage === 'admin-produits.html')}
-          ${subItem('admin-produits.html', 'fas fa-plus', 'منتج جديد', false)}
           ${subItem('admin-collections.html', 'fas fa-layer-group', 'التصنيفات', currentPage === 'admin-collections.html')}
           ${subItem('admin-reviews.html', 'fas fa-star', 'المراجعات', currentPage === 'admin-reviews.html')}
-          ${subItem('#', 'fas fa-warehouse', 'المخزون', false)}
-          ${subItem('#', 'fas fa-box-open', 'الحزم', false, 'جديد')}
         </div>
-
-        <!-- Up Sells -->
-        <div class="adn-item ${currentPage === 'upsells.html' ? 'active expanded' : ''}" id="upSellsParent">
-          <span>Up Sells</span>
-          <div class="adn-item-right">
-            <i class="fas fa-chevron-down adn-chevron"></i>
-            <i class="fas fa-arrow-trend-up adn-icon"></i>
-          </div>
-        </div>
-        <div class="adn-submenu" id="upSellsSubmenu"></div>
 
         ${navItem('admin-contact.html', 'fas fa-envelope', 'الرسائل', currentPage === 'admin-contact.html')}
 
@@ -443,14 +474,8 @@
 
       </nav>
 
-      <!-- Footer -->
+      <!-- Footer - removed buttons (update & logout) -->
       <div class="admin-drawer-footer">
-        <button class="admin-footer-btn" id="adminRefreshDrawer">
-          <i class="fas fa-sync-alt"></i> تحديث
-        </button>
-        <button class="admin-footer-btn danger" id="adminLogoutDrawer">
-          <i class="fas fa-sign-out-alt"></i> خروج
-        </button>
       </div>
     `;
 
@@ -463,17 +488,30 @@
     document.body.appendChild(drawer);
 
     /* ============================================================
+       مراقبة تغييرات الثيم من AlmayaTheme
+    ============================================================ */
+    if (window.AlmayaTheme) {
+      // تطبيق الثيم عند التحميل
+      applyThemeToAdmin();
+      
+      // مراقبة تغييرات الثيم عبر MutationObserver
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'class') {
+            applyThemeToAdmin();
+          }
+        });
+      });
+      observer.observe(document.body, { attributes: true });
+    }
+
+    /* ============================================================
        EVENTS
     ============================================================ */
     const hamburger = document.getElementById('adminHamburger');
     const drawerClose = document.getElementById('adminDrawerClose');
     const productsParent = document.getElementById('productsParent');
     const productsSubmenu = document.getElementById('productsSubmenu');
-    const upSellsParent = document.getElementById('upSellsParent');
-    const upSellsSubmenu = document.getElementById('upSellsSubmenu');
-    const refreshTop = document.getElementById('adminRefreshTop');
-    const refreshDrawer = document.getElementById('adminRefreshDrawer');
-    const logoutBtn = document.getElementById('adminLogoutDrawer');
 
     function openDrawer() {
       drawer.classList.add('open');
@@ -506,19 +544,6 @@
 
     if (productsParent) {
       productsParent.addEventListener('click', () => toggleSubmenu(productsParent, productsSubmenu));
-    }
-    if (upSellsParent) {
-      upSellsParent.addEventListener('click', () => toggleSubmenu(upSellsParent, upSellsSubmenu));
-    }
-
-    if (refreshTop)     refreshTop.addEventListener('click', () => window.location.reload());
-    if (refreshDrawer)  refreshDrawer.addEventListener('click', () => window.location.reload());
-
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', () => {
-        sessionStorage.clear();
-        window.location.href = 'login.html';
-      });
     }
 
     // Close drawer on nav link click (mobile)
