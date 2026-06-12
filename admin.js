@@ -283,7 +283,7 @@
       body.white-theme .adn-submenu {
         background: rgba(160,120,64,0.05);
       }
-      .adn-submenu.open { max-height: 350px; }
+      .adn-submenu.open { max-height: 450px; }
 
       .adn-sub-item {
         display: flex;
@@ -337,6 +337,7 @@
       .admin-drawer.open .adn-item:nth-child(3) { animation-delay: 0.09s; }
       .admin-drawer.open .adn-item:nth-child(4) { animation-delay: 0.12s; }
       .admin-drawer.open .adn-item:nth-child(5) { animation-delay: 0.15s; }
+      .admin-drawer.open .adn-item:nth-child(6) { animation-delay: 0.18s; }
 
       /* ===== RESPONSIVE ===== */
       @media (max-width: 768px) {
@@ -352,15 +353,16 @@
        تحديد الصفحة الحالية
     ============================================================ */
     const currentPage = window.location.pathname.split('/').pop() || 'dashbord.html';
-    const productPages = ['admin-produits.html', 'admin-collections.html', 'admin-reviews.html'];
+    const productPages = ['admin-products.html', 'admin-produits.html', 'admin-collections.html', 'admin-reviews.html'];
     const isProductSub = productPages.includes(currentPage);
 
     const pageLabelMap = {
       'dashbord.html': 'لوحة التحكم',
       'admin-orders.html': 'الطلبيات',
       'admin-products.html': 'المنتجات',
+      'admin-produits.html': 'المنتجات',
+      'admin-stock.html': 'المخزون',
       'admin-collections.html': 'التصنيفات',
-      'admin-stock.html' : 'المخزون'
       'admin-reviews.html': 'المراجعات',
       'admin-contact.html': 'الرسائل',
       'admin-login.html': 'المسؤولين'
@@ -433,6 +435,7 @@
       <nav class="admin-drawer-nav">
         ${navItem('dashbord.html', 'fas fa-home', 'لوحة التحكم', currentPage === 'dashbord.html')}
         ${navItem('admin-orders.html', 'fas fa-cube', 'الطلبيات', currentPage === 'admin-orders.html')}
+        ${navItem('admin-stock.html', 'fas fa-boxes', 'المخزون', currentPage === 'admin-stock.html')}
 
         <div class="adn-item ${isProductSub ? 'active expanded' : ''}" id="productsParent">
           <span>المنتجات</span>
@@ -443,7 +446,7 @@
         </div>
 
         <div class="adn-submenu ${isProductSub ? 'open' : ''}" id="productsSubmenu">
-          ${subItem('admin-products.html', 'fas fa-list', 'جميع المنتجات', currentPage === 'admin-produits.html')}
+          ${subItem('admin-products.html', 'fas fa-list', 'جميع المنتجات', currentPage === 'admin-products.html' || currentPage === 'admin-produits.html')}
           ${subItem('admin-collections.html', 'fas fa-layer-group', 'التصنيفات', currentPage === 'admin-collections.html')}
           ${subItem('admin-reviews.html', 'fas fa-star', 'المراجعات', currentPage === 'admin-reviews.html')}
         </div>
